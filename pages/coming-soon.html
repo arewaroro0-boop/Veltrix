@@ -1,0 +1,4897 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Veltrix Coming Soon — The next generation of business management is almost ready."
+    >
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+    <title data-translate="true">Coming Soon — Veltrix</title>
+
+    <!-- =========================================================
+         VELTRIX — COMING SOON PAGE
+         Version: 1.0.0
+         Purpose: Premium SaaS / Business Dashboard Template
+         ========================================================= -->
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- =========================================================
+         PAGE-SPECIFIC STYLES
+         ========================================================= -->
+    <style>
+        /* =====================================================
+           COMING SOON — CORE
+           ===================================================== */
+
+        :root {
+            --cs-primary: #6366f1;
+            --cs-primary-2: #8b5cf6;
+            --cs-accent: #14b8a6;
+            --cs-success: #22c55e;
+            --cs-warning: #f59e0b;
+            --cs-danger: #ef4444;
+
+            --cs-card-bg: rgba(255, 255, 255, 0.78);
+            --cs-card-border: rgba(15, 23, 42, 0.08);
+            --cs-text: #0f172a;
+            --cs-muted: #64748b;
+            --cs-soft: rgba(99, 102, 241, 0.08);
+
+            --cs-shadow:
+                0 24px 70px rgba(15, 23, 42, 0.10);
+
+            --cs-radius-xl: 28px;
+            --cs-radius-lg: 22px;
+            --cs-radius-md: 16px;
+        }
+
+        html[data-theme="dark"],
+        body.dark,
+        body[data-theme="dark"] {
+            --cs-card-bg: rgba(15, 23, 42, 0.72);
+            --cs-card-border: rgba(255, 255, 255, 0.08);
+            --cs-text: #f8fafc;
+            --cs-muted: #94a3b8;
+            --cs-soft: rgba(99, 102, 241, 0.14);
+
+            --cs-shadow:
+                0 24px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .coming-soon-page {
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* =====================================================
+           BACKGROUND EFFECTS
+           ===================================================== */
+
+        .cs-background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cs-orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(70px);
+            opacity: 0.32;
+            animation: csOrbFloat 14s ease-in-out infinite alternate;
+        }
+
+        .cs-orb-1 {
+            width: 380px;
+            height: 380px;
+            top: 7%;
+            left: 12%;
+            background: rgba(99, 102, 241, 0.28);
+        }
+
+        .cs-orb-2 {
+            width: 330px;
+            height: 330px;
+            right: 10%;
+            top: 25%;
+            background: rgba(20, 184, 166, 0.22);
+            animation-delay: -4s;
+        }
+
+        .cs-orb-3 {
+            width: 300px;
+            height: 300px;
+            bottom: 5%;
+            left: 38%;
+            background: rgba(139, 92, 246, 0.20);
+            animation-delay: -8s;
+        }
+
+        @keyframes csOrbFloat {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            to {
+                transform: translate3d(35px, -25px, 0) scale(1.08);
+            }
+        }
+
+        .cs-grid {
+            position: absolute;
+            inset: 0;
+            opacity: 0.24;
+            background-image:
+                linear-gradient(
+                    rgba(99, 102, 241, 0.07) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(99, 102, 241, 0.07) 1px,
+                    transparent 1px
+                );
+            background-size: 45px 45px;
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 80%
+            );
+        }
+
+        .cs-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .cs-stars span {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.18;
+            animation: csStarPulse 4s ease-in-out infinite;
+        }
+
+        .cs-stars span:nth-child(1) {
+            top: 12%;
+            left: 24%;
+        }
+
+        .cs-stars span:nth-child(2) {
+            top: 28%;
+            left: 76%;
+            animation-delay: -1s;
+        }
+
+        .cs-stars span:nth-child(3) {
+            top: 61%;
+            left: 14%;
+            animation-delay: -2s;
+        }
+
+        .cs-stars span:nth-child(4) {
+            top: 73%;
+            left: 83%;
+            animation-delay: -3s;
+        }
+
+        .cs-stars span:nth-child(5) {
+            top: 42%;
+            left: 49%;
+            animation-delay: -1.5s;
+        }
+
+        @keyframes csStarPulse {
+            0%,
+            100% {
+                transform: scale(0.6);
+                opacity: 0.12;
+            }
+
+            50% {
+                transform: scale(1.6);
+                opacity: 0.4;
+            }
+        }
+
+        /* =====================================================
+           PAGE CONTENT
+           ===================================================== */
+
+        .cs-main {
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        .cs-container {
+            width: min(1400px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           BREADCRUMB
+           ===================================================== */
+
+        .cs-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 22px 0;
+            color: var(--cs-muted);
+            font-size: 13px;
+        }
+
+        .cs-breadcrumb a {
+            color: inherit;
+            text-decoration: none;
+            transition: 0.25s ease;
+        }
+
+        .cs-breadcrumb a:hover {
+            color: var(--cs-primary);
+        }
+
+        .cs-breadcrumb-current {
+            color: var(--cs-text);
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .cs-hero {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.7fr);
+            gap: 34px;
+            align-items: stretch;
+            margin-top: 10px;
+        }
+
+        .cs-hero-main {
+            position: relative;
+            overflow: hidden;
+            min-height: 580px;
+            padding: clamp(34px, 5vw, 72px);
+            border: 1px solid var(--cs-card-border);
+            border-radius: var(--cs-radius-xl);
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(99, 102, 241, 0.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 15% 85%,
+                    rgba(20, 184, 166, 0.12),
+                    transparent 32%
+                ),
+                var(--cs-card-bg);
+            box-shadow: var(--cs-shadow);
+            backdrop-filter: blur(24px);
+        }
+
+        .cs-hero-main::before {
+            content: "";
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            right: -90px;
+            top: -90px;
+            border-radius: 50%;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            box-shadow:
+                0 0 0 30px rgba(99, 102, 241, 0.03),
+                0 0 0 60px rgba(99, 102, 241, 0.02);
+        }
+
+        .cs-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
+        }
+
+        .cs-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 14px;
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--cs-primary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.08);
+        }
+
+        .cs-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cs-accent);
+            box-shadow:
+                0 0 0 5px rgba(20, 184, 166, 0.10),
+                0 0 18px rgba(20, 184, 166, 0.6);
+            animation: csPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes csPulse {
+            0%,
+            100% {
+                transform: scale(0.85);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        .cs-hero-title {
+            margin: 28px 0 18px;
+            font-size: clamp(42px, 6vw, 78px);
+            line-height: 0.98;
+            letter-spacing: -0.055em;
+            color: var(--cs-text);
+            font-weight: 900;
+        }
+
+        .cs-gradient-text {
+            background:
+                linear-gradient(
+                    100deg,
+                    var(--cs-primary),
+                    var(--cs-primary-2),
+                    var(--cs-accent)
+                );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cs-hero-description {
+            max-width: 700px;
+            margin: 0;
+            color: var(--cs-muted);
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* =====================================================
+           HERO ACTIONS
+           ===================================================== */
+
+        .cs-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .cs-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 46px;
+            padding: 0 18px;
+            border: 1px solid transparent;
+            border-radius: 14px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .cs-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .cs-btn-primary {
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--cs-primary),
+                    var(--cs-primary-2)
+                );
+            box-shadow:
+                0 12px 28px rgba(99, 102, 241, 0.25);
+        }
+
+        .cs-btn-primary:hover {
+            box-shadow:
+                0 18px 38px rgba(99, 102, 241, 0.35);
+        }
+
+        .cs-btn-secondary {
+            color: var(--cs-text);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--cs-card-border);
+        }
+
+        .cs-btn-secondary:hover {
+            border-color: rgba(99, 102, 241, 0.35);
+            box-shadow:
+                0 12px 30px rgba(99, 102, 241, 0.08);
+        }
+
+        /* =====================================================
+           COUNTDOWN
+           ===================================================== */
+
+        .cs-countdown {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 42px;
+        }
+
+        .cs-count-box {
+            position: relative;
+            overflow: hidden;
+            min-width: 0;
+            padding: 18px 12px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.035);
+            text-align: center;
+        }
+
+        .cs-count-box::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cs-primary),
+                    transparent
+                );
+            opacity: 0.7;
+        }
+
+        .cs-count-value {
+            display: block;
+            font-size: clamp(28px, 4vw, 48px);
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            color: var(--cs-text);
+        }
+
+        .cs-count-label {
+            display: block;
+            margin-top: 9px;
+            color: var(--cs-muted);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+        }
+
+        /* =====================================================
+           HERO SIDE CARD
+           ===================================================== */
+
+        .cs-launch-card {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 580px;
+            padding: 30px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: var(--cs-radius-xl);
+            background: var(--cs-card-bg);
+            box-shadow: var(--cs-shadow);
+            backdrop-filter: blur(24px);
+        }
+
+        .cs-launch-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -80px;
+            right: -60px;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(20, 184, 166, 0.18),
+                    transparent 70%
+                );
+        }
+
+        .cs-launch-top {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cs-mini-label {
+            color: var(--cs-muted);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .cs-launch-date {
+            margin-top: 10px;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.035em;
+            color: var(--cs-text);
+        }
+
+        .cs-launch-time {
+            margin-top: 6px;
+            color: var(--cs-muted);
+            font-size: 13px;
+        }
+
+        .cs-launch-icon {
+            display: grid;
+            place-items: center;
+            width: 86px;
+            height: 86px;
+            margin: 35px auto;
+            border-radius: 26px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--cs-primary),
+                    var(--cs-accent)
+                );
+            box-shadow:
+                0 20px 45px rgba(99, 102, 241, 0.25);
+            font-size: 36px;
+            animation: csRocketFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes csRocketFloat {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+
+            50% {
+                transform: translateY(-9px) rotate(2deg);
+            }
+        }
+
+        .cs-status {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 22px;
+            color: var(--cs-success);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .cs-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cs-success);
+            box-shadow:
+                0 0 0 5px rgba(34, 197, 94, 0.09),
+                0 0 15px rgba(34, 197, 94, 0.5);
+        }
+
+        /* =====================================================
+           SECTION
+           ===================================================== */
+
+        .cs-section {
+            margin-top: 34px;
+        }
+
+        .cs-section-header {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .cs-section-title {
+            margin: 0;
+            color: var(--cs-text);
+            font-size: clamp(22px, 3vw, 32px);
+            line-height: 1.15;
+            letter-spacing: -0.035em;
+            font-weight: 900;
+        }
+
+        .cs-section-subtitle {
+            max-width: 650px;
+            margin: 7px 0 0;
+            color: var(--cs-muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           PROGRESS
+           ===================================================== */
+
+        .cs-progress-card {
+            position: relative;
+            overflow: hidden;
+            padding: 26px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: var(--cs-radius-lg);
+            background: var(--cs-card-bg);
+            box-shadow: var(--cs-shadow);
+        }
+
+        .cs-progress-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .cs-progress-title {
+            color: var(--cs-text);
+            font-weight: 850;
+        }
+
+        .cs-progress-number {
+            color: var(--cs-primary);
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .cs-progress-track {
+            height: 12px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(100, 116, 139, 0.12);
+        }
+
+        .cs-progress-fill {
+            width: 78%;
+            height: 100%;
+            border-radius: inherit;
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--cs-primary),
+                    var(--cs-primary-2),
+                    var(--cs-accent)
+                );
+            box-shadow:
+                0 0 22px rgba(99, 102, 241, 0.32);
+            transition: width 1s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .cs-progress-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 12px;
+            color: var(--cs-muted);
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           FEATURES
+           ===================================================== */
+
+        .cs-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .cs-feature {
+            position: relative;
+            overflow: hidden;
+            padding: 25px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: var(--cs-radius-lg);
+            background: var(--cs-card-bg);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+            transition:
+                transform 0.28s ease,
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
+        }
+
+        .cs-feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.22);
+            box-shadow:
+                0 24px 55px rgba(99, 102, 241, 0.11);
+        }
+
+        .cs-feature-icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 18px;
+            border-radius: 15px;
+            color: var(--cs-primary);
+            background: var(--cs-soft);
+            font-size: 20px;
+        }
+
+        .cs-feature-title {
+            margin: 0;
+            color: var(--cs-text);
+            font-size: 16px;
+            font-weight: 850;
+        }
+
+        .cs-feature-text {
+            margin: 9px 0 0;
+            color: var(--cs-muted);
+            font-size: 12px;
+            line-height: 1.75;
+        }
+
+        /* =====================================================
+           SCHEDULE
+           ===================================================== */
+
+        .cs-two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 18px;
+        }
+
+        .cs-panel {
+            padding: 26px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: var(--cs-radius-lg);
+            background: var(--cs-card-bg);
+            box-shadow: var(--cs-shadow);
+        }
+
+        .cs-timeline {
+            position: relative;
+            margin-top: 6px;
+        }
+
+        .cs-timeline::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 7px;
+            width: 1px;
+            background: rgba(100, 116, 139, 0.18);
+        }
+
+        .cs-timeline-item {
+            position: relative;
+            display: grid;
+            grid-template-columns: 16px 1fr;
+            gap: 14px;
+            padding: 13px 0;
+        }
+
+        .cs-timeline-dot {
+            position: relative;
+            z-index: 1;
+            width: 15px;
+            height: 15px;
+            margin-top: 3px;
+            border: 3px solid var(--cs-card-bg);
+            border-radius: 50%;
+            background: var(--cs-primary);
+            box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.2);
+        }
+
+        .cs-timeline-item.done .cs-timeline-dot {
+            background: var(--cs-success);
+        }
+
+        .cs-timeline-item.active .cs-timeline-dot {
+            background: var(--cs-accent);
+            box-shadow:
+                0 0 0 5px rgba(20, 184, 166, 0.10),
+                0 0 18px rgba(20, 184, 166, 0.4);
+        }
+
+        .cs-timeline-date {
+            color: var(--cs-muted);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .cs-timeline-title {
+            margin-top: 4px;
+            color: var(--cs-text);
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .cs-timeline-description {
+            margin-top: 4px;
+            color: var(--cs-muted);
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        /* =====================================================
+           TIMEZONE
+           ===================================================== */
+
+        .cs-timezone-box {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 18px;
+            margin-top: 20px;
+            border-radius: 18px;
+            background: var(--cs-soft);
+        }
+
+        .cs-timezone-icon {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            color: var(--cs-primary);
+            background: rgba(99, 102, 241, 0.12);
+        }
+
+        .cs-timezone-label {
+            color: var(--cs-muted);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .cs-timezone-value {
+            margin-top: 4px;
+            color: var(--cs-text);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* =====================================================
+           NOTIFY CARD
+           ===================================================== */
+
+        .cs-notify {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
+            gap: 30px;
+            align-items: center;
+            padding: 34px;
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            border-radius: var(--cs-radius-xl);
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(99, 102, 241, 0.10),
+                    rgba(20, 184, 166, 0.07)
+                ),
+                var(--cs-card-bg);
+            box-shadow: var(--cs-shadow);
+        }
+
+        .cs-notify h2 {
+            margin: 0;
+            color: var(--cs-text);
+            font-size: clamp(24px, 3vw, 36px);
+            letter-spacing: -0.04em;
+        }
+
+        .cs-notify p {
+            max-width: 620px;
+            margin: 10px 0 0;
+            color: var(--cs-muted);
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        .cs-email-form {
+            display: flex;
+            gap: 9px;
+            padding: 7px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: 17px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .cs-email-input {
+            width: 100%;
+            min-width: 0;
+            height: 44px;
+            padding: 0 13px;
+            border: 0;
+            outline: 0;
+            color: var(--cs-text);
+            background: transparent;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .cs-email-input::placeholder {
+            color: var(--cs-muted);
+        }
+
+        .cs-email-form .cs-btn {
+            flex: 0 0 auto;
+        }
+
+        .cs-form-message {
+            min-height: 18px;
+            margin-top: 9px;
+            color: var(--cs-muted);
+            font-size: 11px;
+        }
+
+        .cs-form-message.success {
+            color: var(--cs-success);
+        }
+
+        .cs-form-message.error {
+            color: var(--cs-danger);
+        }
+
+        /* =====================================================
+           FAQ
+           ===================================================== */
+
+        .cs-faq {
+            display: grid;
+            gap: 10px;
+        }
+
+        .cs-faq-item {
+            overflow: hidden;
+            border: 1px solid var(--cs-card-border);
+            border-radius: 17px;
+            background: var(--cs-card-bg);
+            transition: border-color 0.25s ease;
+        }
+
+        .cs-faq-item.open {
+            border-color: rgba(99, 102, 241, 0.25);
+        }
+
+        .cs-faq-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            width: 100%;
+            padding: 20px;
+            border: 0;
+            color: var(--cs-text);
+            background: transparent;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 850;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .cs-faq-chevron {
+            transition: transform 0.25s ease;
+        }
+
+        .cs-faq-item.open .cs-faq-chevron {
+            transform: rotate(180deg);
+        }
+
+        .cs-faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease;
+        }
+
+        .cs-faq-item.open .cs-faq-answer {
+            grid-template-rows: 1fr;
+        }
+
+        .cs-faq-answer-inner {
+            overflow: hidden;
+            padding: 0 20px;
+            color: var(--cs-muted);
+            font-size: 12px;
+            line-height: 1.75;
+        }
+
+        .cs-faq-item.open .cs-faq-answer-inner {
+            padding-bottom: 20px;
+        }
+
+        /* =====================================================
+           FINAL CTA
+           ===================================================== */
+
+        .cs-final-cta {
+            position: relative;
+            overflow: hidden;
+            padding: 45px 30px;
+            text-align: center;
+            border-radius: var(--cs-radius-xl);
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(99, 102, 241, 0.25),
+                    transparent 50%
+                ),
+                var(--cs-card-bg);
+            border: 1px solid var(--cs-card-border);
+            box-shadow: var(--cs-shadow);
+        }
+
+        .cs-final-cta h2 {
+            margin: 0;
+            color: var(--cs-text);
+            font-size: clamp(26px, 4vw, 42px);
+            font-weight: 900;
+            letter-spacing: -0.04em;
+        }
+
+        .cs-final-cta p {
+            max-width: 650px;
+            margin: 12px auto 0;
+            color: var(--cs-muted);
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        .cs-final-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        /* =====================================================
+           LAUNCH STATUS CHIPS
+           ===================================================== */
+
+        .cs-status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .cs-status-card {
+            padding: 18px;
+            border: 1px solid var(--cs-card-border);
+            border-radius: 17px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .cs-status-card-label {
+            color: var(--cs-muted);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+
+        .cs-status-card-value {
+            margin-top: 7px;
+            color: var(--cs-text);
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1150px) {
+            .cs-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .cs-launch-card {
+                min-height: auto;
+            }
+
+            .cs-launch-icon {
+                margin: 25px auto;
+            }
+
+            .cs-feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .cs-notify {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .cs-container {
+                width: min(100% - 30px, 720px);
+            }
+
+            .cs-two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .cs-status-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .cs-hero-main {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .cs-container {
+                width: min(100% - 20px, 520px);
+            }
+
+            .cs-main {
+                padding-bottom: 45px;
+            }
+
+            .cs-hero-main {
+                padding: 28px 20px;
+                border-radius: 22px;
+            }
+
+            .cs-launch-card {
+                padding: 22px;
+                border-radius: 22px;
+            }
+
+            .cs-hero-title {
+                font-size: 43px;
+                margin-top: 22px;
+            }
+
+            .cs-hero-description {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .cs-countdown {
+                gap: 7px;
+                margin-top: 28px;
+            }
+
+            .cs-count-box {
+                padding: 14px 6px;
+                border-radius: 14px;
+            }
+
+            .cs-count-value {
+                font-size: 26px;
+            }
+
+            .cs-count-label {
+                font-size: 8px;
+            }
+
+            .cs-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+
+            .cs-btn {
+                width: 100%;
+            }
+
+            .cs-feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cs-status-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .cs-notify {
+                padding: 25px 18px;
+                border-radius: 22px;
+            }
+
+            .cs-email-form {
+                flex-direction: column;
+            }
+
+            .cs-email-form .cs-btn {
+                width: 100%;
+            }
+
+            .cs-section-header {
+                display: block;
+            }
+
+            .cs-breadcrumb {
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cs-orb,
+            .cs-stars span,
+            .cs-launch-icon,
+            .cs-badge-dot {
+                animation: none !important;
+            }
+
+            .cs-btn,
+            .cs-feature {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="coming-soon-page"
+    data-page="coming-soon"
+    data-launch-end="2026-12-31T23:59:59"
+>
+
+    <!-- =========================================================
+         BACKGROUND
+         ========================================================= -->
+
+    <div class="cs-background" aria-hidden="true">
+        <div class="cs-grid"></div>
+
+        <div class="cs-orb cs-orb-1"></div>
+        <div class="cs-orb cs-orb-2"></div>
+        <div class="cs-orb cs-orb-3"></div>
+
+        <div class="cs-stars">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         MOBILE OVERLAY
+         ========================================================= -->
+
+    <div
+        class="sidebar-overlay"
+        data-sidebar-overlay
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- =========================================================
+         GLOBAL APP
+         ========================================================= -->
+
+    <div class="app-shell">
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+
+        <aside
+            class="sidebar"
+            data-sidebar
+            aria-label="Main navigation"
+        >
+
+            <div class="sidebar-header">
+
+                <a
+                    href="../index.html"
+                    class="brand"
+                    data-nav-link
+                    aria-label="Veltrix Dashboard"
+                >
+                    <span class="brand-mark">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                    <span class="brand-text">
+                        <strong>Veltrix</strong>
+                        <small data-translate="true">
+                            Business Platform
+                        </small>
+                    </span>
+                </a>
+
+                <button
+                    type="button"
+                    class="icon-button sidebar-close"
+                    data-sidebar-close
+                    aria-label="Close navigation"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Workspace -->
+
+            <div class="workspace-selector">
+
+                <button
+                    type="button"
+                    class="workspace-button"
+                    data-workspace-trigger
+                    aria-expanded="false"
+                >
+                    <span class="workspace-avatar">
+                        V
+                    </span>
+
+                    <span class="workspace-info">
+                        <strong>Veltrix HQ</strong>
+                        <small data-translate="true">
+                            Main workspace
+                        </small>
+                    </span>
+
+                    <span class="workspace-chevron">
+                        ▾
+                    </span>
+                </button>
+
+
+                <div
+                    class="workspace-menu"
+                    data-workspace-menu
+                    hidden
+                >
+                    <button
+                        type="button"
+                        data-workspace="Veltrix HQ"
+                    >
+                        <span>V</span>
+                        <span>
+                            <strong>Veltrix HQ</strong>
+                            <small data-translate="true">
+                                Main workspace
+                            </small>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-workspace="Creative Lab"
+                    >
+                        <span>CL</span>
+                        <span>
+                            <strong>Creative Lab</strong>
+                            <small data-translate="true">
+                                Design workspace
+                            </small>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-workspace="Growth Team"
+                    >
+                        <span>GT</span>
+                        <span>
+                            <strong>Growth Team</strong>
+                            <small data-translate="true">
+                                Marketing workspace
+                            </small>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- Sidebar Navigation -->
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-section-title">
+                    <span data-translate="true">Overview</span>
+                </div>
+
+                <a
+                    href="../index.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span data-translate="true">Dashboard</span>
+                </a>
+
+                <a
+                    href="analytics.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">◒</span>
+                    <span data-translate="true">Analytics</span>
+                </a>
+
+                <a
+                    href="orders.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">▤</span>
+                    <span data-translate="true">Orders</span>
+                </a>
+
+                <a
+                    href="customers.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">♙</span>
+                    <span data-translate="true">Customers</span>
+                </a>
+
+
+                <div class="nav-section-title">
+                    <span data-translate="true">Management</span>
+                </div>
+
+                <a
+                    href="products.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">▦</span>
+                    <span data-translate="true">Products</span>
+                </a>
+
+                <a
+                    href="invoices.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">▥</span>
+                    <span data-translate="true">Invoices</span>
+                </a>
+
+                <a
+                    href="messages.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">◌</span>
+                    <span data-translate="true">Messages</span>
+                    <span class="nav-count">4</span>
+                </a>
+
+                <a
+                    href="notifications.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">♢</span>
+                    <span data-translate="true">Notifications</span>
+                </a>
+
+
+                <div class="nav-section-title">
+                    <span data-translate="true">Tools</span>
+                </div>
+
+                <a
+                    href="calculator.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">▣</span>
+                    <span data-translate="true">Calculator</span>
+                </a>
+
+                <a
+                    href="ai-workspace.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">✦</span>
+                    <span data-translate="true">AI Workspace</span>
+                    <span class="nav-badge">AI</span>
+                </a>
+
+
+                <div class="nav-section-title">
+                    <span data-translate="true">System</span>
+                </div>
+
+                <a
+                    href="settings.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span data-translate="true">Settings</span>
+                </a>
+
+                <a
+                    href="profile.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">◉</span>
+                    <span data-translate="true">Profile</span>
+                </a>
+
+                <a
+                    href="upgrade.html"
+                    class="nav-item"
+                    data-nav-link
+                >
+                    <span class="nav-icon">◆</span>
+                    <span data-translate="true">Upgrade</span>
+                </a>
+
+            </nav>
+
+
+            <!-- Sidebar Bottom -->
+
+            <div class="sidebar-bottom">
+
+                <a
+                    href="upgrade.html"
+                    class="sidebar-promo"
+                    data-nav-link
+                >
+                    <span class="sidebar-promo-icon">
+                        ◆
+                    </span>
+
+                    <span>
+                        <strong data-translate="true">
+                            Upgrade plan
+                        </strong>
+
+                        <small data-translate="true">
+                            Unlock more features
+                        </small>
+                    </span>
+                </a>
+
+                <div class="sidebar-footer">
+                    <span>Veltrix</span>
+                    <span>v1.0.0</span>
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN APP
+             ===================================================== -->
+
+        <div class="app-main">
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        class="icon-button mobile-menu-button"
+                        data-sidebar-open
+                        aria-label="Open navigation"
+                    >
+                        ☰
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-button sidebar-collapse-button"
+                        data-sidebar-toggle
+                        aria-label="Collapse navigation"
+                    >
+                        ⇤
+                    </button>
+
+                    <div class="topbar-breadcrumb">
+
+                        <span data-translate="true">
+                            System
+                        </span>
+
+                        <span>/</span>
+
+                        <strong data-translate="true">
+                            Coming Soon
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <!-- Search -->
+
+                    <button
+                        type="button"
+                        class="topbar-action"
+                        data-search-open
+                        aria-label="Search"
+                    >
+                        <span>⌕</span>
+                        <span
+                            class="topbar-action-label"
+                            data-translate="true"
+                        >
+                            Search
+                        </span>
+                        <kbd>⌘K</kbd>
+                    </button>
+
+
+                    <!-- Quick Create -->
+
+                    <button
+                        type="button"
+                        class="topbar-action topbar-create"
+                        data-quick-create-open
+                    >
+                        <span>＋</span>
+                        <span data-translate="true">
+                            Create
+                        </span>
+                    </button>
+
+
+                    <!-- Language -->
+
+                    <div
+                        class="dropdown"
+                        data-dropdown
+                    >
+
+                        <button
+                            type="button"
+                            class="topbar-action"
+                            data-dropdown-trigger
+                            aria-expanded="false"
+                        >
+                            <span>◎</span>
+
+                            <span
+                                class="language-current"
+                                data-current-language
+                            >
+                                EN
+                            </span>
+
+                            <span>▾</span>
+                        </button>
+
+
+                        <div
+                            class="dropdown-menu language-menu"
+                            data-language-menu
+                            hidden
+                        >
+
+                            <!-- script.js fills all 21 languages -->
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Notifications -->
+
+                    <button
+                        type="button"
+                        class="topbar-action notification-trigger"
+                        data-notifications-open
+                        aria-label="Notifications"
+                    >
+                        <span>♢</span>
+                        <span class="notification-dot"></span>
+                    </button>
+
+
+                    <!-- Theme -->
+
+                    <button
+                        type="button"
+                        class="topbar-action"
+                        data-theme-toggle
+                        aria-label="Toggle theme"
+                    >
+                        <span data-theme-icon>☾</span>
+                    </button>
+
+
+                    <!-- Profile -->
+
+                    <a
+                        href="profile.html"
+                        class="topbar-profile"
+                        data-nav-link
+                    >
+                        <span class="topbar-avatar">
+                            A
+                        </span>
+
+                        <span class="topbar-profile-info">
+                            <strong>Arwa</strong>
+                            <small>Admin</small>
+                        </span>
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 PAGE
+                 ================================================= -->
+
+            <main class="cs-main">
+
+                <div class="cs-container">
+
+
+                    <!-- Breadcrumb -->
+
+                    <div class="cs-breadcrumb">
+
+                        <a
+                            href="../index.html"
+                            data-nav-link
+                            data-translate="true"
+                        >
+                            Dashboard
+                        </a>
+
+                        <span>/</span>
+
+                        <span
+                            class="cs-breadcrumb-current"
+                            data-translate="true"
+                        >
+                            Coming Soon
+                        </span>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         HERO
+                         ================================================= -->
+
+                    <section class="cs-hero">
+
+                        <div class="cs-hero-main">
+
+                            <div class="cs-hero-content">
+
+                                <span class="cs-badge">
+
+                                    <span class="cs-badge-dot"></span>
+
+                                    <span data-translate="true">
+                                        Launch preparation in progress
+                                    </span>
+
+                                </span>
+
+
+                                <h1
+                                    class="cs-hero-title"
+                                    data-translate="true"
+                                >
+                                    Something
+                                    <span class="cs-gradient-text">
+                                        amazing
+                                    </span>
+                                    is coming.
+                                </h1>
+
+
+                                <p
+                                    class="cs-hero-description"
+                                    data-translate="true"
+                                >
+                                    Veltrix is preparing its next major
+                                    experience. A smarter, faster and more
+                                    powerful business management platform is
+                                    almost ready for launch.
+                                </p>
+
+
+                                <!-- Hero Actions -->
+
+                                <div class="cs-actions">
+
+                                    <button
+                                        type="button"
+                                        class="cs-btn cs-btn-primary"
+                                        data-scroll-target="#notify"
+                                    >
+                                        <span>✦</span>
+                                        <span data-translate="true">
+                                            Notify me
+                                        </span>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="cs-btn cs-btn-secondary"
+                                        data-copy-launch
+                                    >
+                                        <span>⧉</span>
+                                        <span data-translate="true">
+                                            Copy launch link
+                                        </span>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="cs-btn cs-btn-secondary"
+                                        data-refresh-page
+                                    >
+                                        <span>↻</span>
+                                        <span data-translate="true">
+                                            Refresh status
+                                        </span>
+                                    </button>
+
+                                </div>
+
+
+                                <!-- Countdown -->
+
+                                <div
+                                    class="cs-countdown"
+                                    data-countdown
+                                    aria-live="polite"
+                                >
+
+                                    <div class="cs-count-box">
+                                        <span
+                                            class="cs-count-value"
+                                            data-days
+                                        >
+                                            000
+                                        </span>
+
+                                        <span
+                                            class="cs-count-label"
+                                            data-translate="true"
+                                        >
+                                            Days
+                                        </span>
+                                    </div>
+
+
+                                    <div class="cs-count-box">
+                                        <span
+                                            class="cs-count-value"
+                                            data-hours
+                                        >
+                                            00
+                                        </span>
+
+                                        <span
+                                            class="cs-count-label"
+                                            data-translate="true"
+                                        >
+                                            Hours
+                                        </span>
+                                    </div>
+
+
+                                    <div class="cs-count-box">
+                                        <span
+                                            class="cs-count-value"
+                                            data-minutes
+                                        >
+                                            00
+                                        </span>
+
+                                        <span
+                                            class="cs-count-label"
+                                            data-translate="true"
+                                        >
+                                            Minutes
+                                        </span>
+                                    </div>
+
+
+                                    <div class="cs-count-box">
+                                        <span
+                                            class="cs-count-value"
+                                            data-seconds
+                                        >
+                                            00
+                                        </span>
+
+                                        <span
+                                            class="cs-count-label"
+                                            data-translate="true"
+                                        >
+                                            Seconds
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             LAUNCH CARD
+                             ================================================= -->
+
+                        <aside class="cs-launch-card">
+
+                            <div class="cs-launch-top">
+
+                                <div class="cs-mini-label">
+                                    <span data-translate="true">
+                                        Official launch
+                                    </span>
+                                </div>
+
+
+                                <div
+                                    class="cs-launch-date"
+                                    data-launch-date
+                                >
+                                    December 31, 2026
+                                </div>
+
+
+                                <div
+                                    class="cs-launch-time"
+                                    data-launch-time
+                                >
+                                    23:59:59
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="cs-launch-icon">
+                                    🚀
+                                </div>
+
+                                <div
+                                    class="cs-status"
+                                    data-launch-status
+                                >
+                                    <span class="cs-status-dot"></span>
+
+                                    <span data-translate="true">
+                                        Final preparation
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div>
+
+                                <div class="cs-mini-label">
+                                    <span data-translate="true">
+                                        Launch channel
+                                    </span>
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:8px;
+                                        color:var(--cs-text);
+                                        font-weight:850;
+                                        font-size:14px;
+                                    "
+                                    data-translate="true"
+                                >
+                                    Veltrix Business Platform
+                                </div>
+
+                                <div
+                                    style="
+                                        margin-top:5px;
+                                        color:var(--cs-muted);
+                                        font-size:11px;
+                                        line-height:1.6;
+                                    "
+                                    data-translate="true"
+                                >
+                                    Global release · Web platform ·
+                                    Responsive experience
+                                </div>
+
+                            </div>
+
+                        </aside>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         LAUNCH PROGRESS
+                         ================================================= -->
+
+                    <section class="cs-section">
+
+                        <div class="cs-section-header">
+
+                            <div>
+                                <h2
+                                    class="cs-section-title"
+                                    data-translate="true"
+                                >
+                                    Launch progress
+                                </h2>
+
+                                <p
+                                    class="cs-section-subtitle"
+                                    data-translate="true"
+                                >
+                                    The core platform is nearly ready.
+                                    We are currently polishing the final
+                                    experience, performance and launch
+                                    preparation.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="cs-progress-card">
+
+                            <div class="cs-progress-top">
+
+                                <span
+                                    class="cs-progress-title"
+                                    data-translate="true"
+                                >
+                                    Overall readiness
+                                </span>
+
+                                <strong
+                                    class="cs-progress-number"
+                                    data-progress-number
+                                >
+                                    78%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="cs-progress-track">
+
+                                <div
+                                    class="cs-progress-fill"
+                                    data-progress-fill
+                                    style="width:78%"
+                                ></div>
+
+                            </div>
+
+
+                            <div class="cs-progress-meta">
+
+                                <span data-translate="true">
+                                    Development
+                                </span>
+
+                                <span data-translate="true">
+                                    Final polish
+                                </span>
+
+                                <span data-translate="true">
+                                    Launch
+                                </span>
+
+                            </div>
+
+
+                            <div class="cs-status-grid">
+
+                                <div class="cs-status-card">
+
+                                    <div
+                                        class="cs-status-card-label"
+                                        data-translate="true"
+                                    >
+                                        Core platform
+                                    </div>
+
+                                    <div
+                                        class="cs-status-card-value"
+                                        data-translate="true"
+                                    >
+                                        Ready
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-status-card">
+
+                                    <div
+                                        class="cs-status-card-label"
+                                        data-translate="true"
+                                    >
+                                        Interface
+                                    </div>
+
+                                    <div
+                                        class="cs-status-card-value"
+                                        data-translate="true"
+                                    >
+                                        94%
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-status-card">
+
+                                    <div
+                                        class="cs-status-card-label"
+                                        data-translate="true"
+                                    >
+                                        Testing
+                                    </div>
+
+                                    <div
+                                        class="cs-status-card-value"
+                                        data-translate="true"
+                                    >
+                                        82%
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-status-card">
+
+                                    <div
+                                        class="cs-status-card-label"
+                                        data-translate="true"
+                                    >
+                                        Launch
+                                    </div>
+
+                                    <div
+                                        class="cs-status-card-value"
+                                        data-translate="true"
+                                    >
+                                        Soon
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         FEATURES
+                         ================================================= -->
+
+                    <section class="cs-section">
+
+                        <div class="cs-section-header">
+
+                            <div>
+
+                                <h2
+                                    class="cs-section-title"
+                                    data-translate="true"
+                                >
+                                    What's coming
+                                </h2>
+
+                                <p
+                                    class="cs-section-subtitle"
+                                    data-translate="true"
+                                >
+                                    A complete toolkit designed to make
+                                    modern business management easier.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cs-feature-grid">
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ◈
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    Intelligent Dashboard
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    Understand your business at a glance
+                                    with real-time KPIs, charts, targets
+                                    and activity insights.
+                                </p>
+
+                            </article>
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ✦
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    AI Workspace
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    A dedicated workspace for intelligent
+                                    workflows, ideas, automation and
+                                    productivity.
+                                </p>
+
+                            </article>
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ◫
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    Advanced Analytics
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    Turn business data into clear insights
+                                    with powerful reports and visual
+                                    analytics.
+                                </p>
+
+                            </article>
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ♢
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    Customer Management
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    Organize customers, activity, contacts
+                                    and relationships from one workspace.
+                                </p>
+
+                            </article>
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ▤
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    Orders & Invoices
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    Keep orders, invoices and business
+                                    operations organized in one place.
+                                </p>
+
+                            </article>
+
+
+                            <article class="cs-feature">
+
+                                <div class="cs-feature-icon">
+                                    ⚡
+                                </div>
+
+                                <h3
+                                    class="cs-feature-title"
+                                    data-translate="true"
+                                >
+                                    Fast & Responsive
+                                </h3>
+
+                                <p
+                                    class="cs-feature-text"
+                                    data-translate="true"
+                                >
+                                    Designed for smooth experiences across
+                                    desktop, tablet and mobile devices.
+                                </p>
+
+                            </article>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         SCHEDULE + TIMEZONE
+                         ================================================= -->
+
+                    <section class="cs-section">
+
+                        <div class="cs-two-column">
+
+
+                            <!-- Schedule -->
+
+                            <div class="cs-panel">
+
+                                <div class="cs-section-header">
+
+                                    <div>
+
+                                        <h2
+                                            class="cs-section-title"
+                                            style="font-size:24px"
+                                            data-translate="true"
+                                        >
+                                            Launch schedule
+                                        </h2>
+
+                                        <p
+                                            class="cs-section-subtitle"
+                                            data-translate="true"
+                                        >
+                                            Follow the final milestones
+                                            before release.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-timeline">
+
+
+                                    <div class="cs-timeline-item done">
+
+                                        <span class="cs-timeline-dot"></span>
+
+                                        <div>
+
+                                            <div
+                                                class="cs-timeline-date"
+                                                data-translate="true"
+                                            >
+                                                Phase 01 · Completed
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-title"
+                                                data-translate="true"
+                                            >
+                                                Core architecture
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-description"
+                                                data-translate="true"
+                                            >
+                                                Dashboard architecture,
+                                                navigation and shared
+                                                systems completed.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="cs-timeline-item done">
+
+                                        <span class="cs-timeline-dot"></span>
+
+                                        <div>
+
+                                            <div
+                                                class="cs-timeline-date"
+                                                data-translate="true"
+                                            >
+                                                Phase 02 · Completed
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-title"
+                                                data-translate="true"
+                                            >
+                                                Feature integration
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-description"
+                                                data-translate="true"
+                                            >
+                                                Business modules and
+                                                productivity tools integrated.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="cs-timeline-item active">
+
+                                        <span class="cs-timeline-dot"></span>
+
+                                        <div>
+
+                                            <div
+                                                class="cs-timeline-date"
+                                                data-translate="true"
+                                            >
+                                                Phase 03 · Current
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-title"
+                                                data-translate="true"
+                                            >
+                                                Final polish
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-description"
+                                                data-translate="true"
+                                            >
+                                                Performance, responsive
+                                                behavior and visual polish
+                                                are being finalized.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="cs-timeline-item">
+
+                                        <span class="cs-timeline-dot"></span>
+
+                                        <div>
+
+                                            <div
+                                                class="cs-timeline-date"
+                                                data-translate="true"
+                                            >
+                                                Phase 04 · Upcoming
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-title"
+                                                data-translate="true"
+                                            >
+                                                Public launch
+                                            </div>
+
+                                            <div
+                                                class="cs-timeline-description"
+                                                data-translate="true"
+                                            >
+                                                Veltrix will be ready for
+                                                the next stage.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- Timezone / Launch information -->
+
+                            <div class="cs-panel">
+
+                                <div class="cs-section-header">
+
+                                    <div>
+
+                                        <h2
+                                            class="cs-section-title"
+                                            style="font-size:24px"
+                                            data-translate="true"
+                                        >
+                                            Launch information
+                                        </h2>
+
+                                        <p
+                                            class="cs-section-subtitle"
+                                            data-translate="true"
+                                        >
+                                            Important information about
+                                            the scheduled release.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-timezone-box">
+
+                                    <div class="cs-timezone-icon">
+                                        ◷
+                                    </div>
+
+                                    <div>
+
+                                        <div
+                                            class="cs-timezone-label"
+                                            data-translate="true"
+                                        >
+                                            Countdown timezone
+                                        </div>
+
+                                        <div
+                                            class="cs-timezone-value"
+                                            data-user-timezone
+                                        >
+                                            Detecting timezone...
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-timezone-box">
+
+                                    <div class="cs-timezone-icon">
+                                        ◉
+                                    </div>
+
+                                    <div>
+
+                                        <div
+                                            class="cs-timezone-label"
+                                            data-translate="true"
+                                        >
+                                            Release type
+                                        </div>
+
+                                        <div
+                                            class="cs-timezone-value"
+                                            data-translate="true"
+                                        >
+                                            Global web release
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="cs-timezone-box">
+
+                                    <div class="cs-timezone-icon">
+                                        ✓
+                                    </div>
+
+                                    <div>
+
+                                        <div
+                                            class="cs-timezone-label"
+                                            data-translate="true"
+                                        >
+                                            Current status
+                                        </div>
+
+                                        <div
+                                            class="cs-timezone-value"
+                                            data-translate="true"
+                                        >
+                                            Final preparation
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <button
+                                    type="button"
+                                    class="cs-btn cs-btn-secondary"
+                                    style="
+                                        width:100%;
+                                        margin-top:18px;
+                                    "
+                                    data-copy-launch
+                                >
+                                    <span>⧉</span>
+                                    <span data-translate="true">
+                                        Copy launch link
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         NOTIFY ME
+                         ================================================= -->
+
+                    <section
+                        class="cs-section"
+                        id="notify"
+                    >
+
+                        <div class="cs-notify">
+
+                            <div>
+
+                                <h2 data-translate="true">
+                                    Be first to know.
+                                </h2>
+
+                                <p data-translate="true">
+                                    Enter your email and we'll save your
+                                    notification preference on this device.
+                                    This front-end template does not send
+                                    emails until connected to a real backend
+                                    or email service.
+                                </p>
+
+                            </div>
+
+
+                            <div>
+
+                                <form
+                                    class="cs-email-form"
+                                    data-notify-form
+                                    novalidate
+                                >
+
+                                    <input
+                                        type="email"
+                                        class="cs-email-input"
+                                        data-notify-email
+                                        placeholder="Enter your email address"
+                                        data-translate="true"
+                                        autocomplete="email"
+                                        aria-label="Email address"
+                                        required
+                                    >
+
+                                    <button
+                                        type="submit"
+                                        class="cs-btn cs-btn-primary"
+                                    >
+                                        <span>→</span>
+                                        <span data-translate="true">
+                                            Notify me
+                                        </span>
+                                    </button>
+
+                                </form>
+
+
+                                <div
+                                    class="cs-form-message"
+                                    data-form-message
+                                    aria-live="polite"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         FAQ
+                         ================================================= -->
+
+                    <section class="cs-section">
+
+                        <div class="cs-section-header">
+
+                            <div>
+
+                                <h2
+                                    class="cs-section-title"
+                                    data-translate="true"
+                                >
+                                    Frequently asked questions
+                                </h2>
+
+                                <p
+                                    class="cs-section-subtitle"
+                                    data-translate="true"
+                                >
+                                    Everything you need to know before
+                                    the launch.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="cs-faq">
+
+
+                            <article class="cs-faq-item">
+
+                                <button
+                                    type="button"
+                                    class="cs-faq-button"
+                                    data-faq-toggle
+                                    aria-expanded="false"
+                                >
+                                    <span data-translate="true">
+                                        When will Veltrix launch?
+                                    </span>
+
+                                    <span class="cs-faq-chevron">
+                                        ▾
+                                    </span>
+                                </button>
+
+
+                                <div class="cs-faq-answer">
+
+                                    <div
+                                        class="cs-faq-answer-inner"
+                                        data-translate="true"
+                                    >
+                                        The current demo launch date is
+                                        December 31, 2026 at 23:59:59.
+                                        The date is configurable from the
+                                        page configuration.
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="cs-faq-item">
+
+                                <button
+                                    type="button"
+                                    class="cs-faq-button"
+                                    data-faq-toggle
+                                    aria-expanded="false"
+                                >
+                                    <span data-translate="true">
+                                        Can I receive a launch notification?
+                                    </span>
+
+                                    <span class="cs-faq-chevron">
+                                        ▾
+                                    </span>
+                                </button>
+
+
+                                <div class="cs-faq-answer">
+
+                                    <div
+                                        class="cs-faq-answer-inner"
+                                        data-translate="true"
+                                    >
+                                        Yes. Enter your email in the
+                                        notification form. In this front-end
+                                        demo, the preference is stored locally
+                                        in your browser.
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="cs-faq-item">
+
+                                <button
+                                    type="button"
+                                    class="cs-faq-button"
+                                    data-faq-toggle
+                                    aria-expanded="false"
+                                >
+                                    <span data-translate="true">
+                                        Does the countdown work automatically?
+                                    </span>
+
+                                    <span class="cs-faq-chevron">
+                                        ▾
+                                    </span>
+                                </button>
+
+
+                                <div class="cs-faq-answer">
+
+                                    <div
+                                        class="cs-faq-answer-inner"
+                                        data-translate="true"
+                                    >
+                                        Yes. The countdown calculates the
+                                        remaining time from the configured
+                                        launch date and updates every second.
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="cs-faq-item">
+
+                                <button
+                                    type="button"
+                                    class="cs-faq-button"
+                                    data-faq-toggle
+                                    aria-expanded="false"
+                                >
+                                    <span data-translate="true">
+                                        Is this page connected to a backend?
+                                    </span>
+
+                                    <span class="cs-faq-chevron">
+                                        ▾
+                                    </span>
+                                </button>
+
+
+                                <div class="cs-faq-answer">
+
+                                    <div
+                                        class="cs-faq-answer-inner"
+                                        data-translate="true"
+                                    >
+                                        The page is designed as a
+                                        front-end template. Forms and local
+                                        interactions work in the browser,
+                                        while production email delivery,
+                                        authentication and databases require
+                                        your preferred backend.
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="cs-faq-item">
+
+                                <button
+                                    type="button"
+                                    class="cs-faq-button"
+                                    data-faq-toggle
+                                    aria-expanded="false"
+                                >
+                                    <span data-translate="true">
+                                        Will the page work on mobile?
+                                    </span>
+
+                                    <span class="cs-faq-chevron">
+                                        ▾
+                                    </span>
+                                </button>
+
+
+                                <div class="cs-faq-answer">
+
+                                    <div
+                                        class="cs-faq-answer-inner"
+                                        data-translate="true"
+                                    >
+                                        Yes. The Coming Soon experience is
+                                        fully responsive and adapts its
+                                        layout for desktop, tablet and mobile.
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         FINAL CTA
+                         ================================================= -->
+
+                    <section class="cs-section">
+
+                        <div class="cs-final-cta">
+
+                            <h2 data-translate="true">
+                                Ready when you are.
+                            </h2>
+
+                            <p data-translate="true">
+                                Keep an eye on the countdown and come back
+                                when Veltrix is ready to launch.
+                            </p>
+
+
+                            <div class="cs-final-actions">
+
+                                <a
+                                    href="../index.html"
+                                    class="cs-btn cs-btn-primary"
+                                    data-nav-link
+                                >
+                                    <span>⌂</span>
+                                    <span data-translate="true">
+                                        Back to dashboard
+                                    </span>
+                                </a>
+
+
+                                <button
+                                    type="button"
+                                    class="cs-btn cs-btn-secondary"
+                                    data-scroll-target="#notify"
+                                >
+                                    <span>✦</span>
+                                    <span data-translate="true">
+                                        Notify me
+                                    </span>
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="cs-btn cs-btn-secondary"
+                                    data-refresh-page
+                                >
+                                    <span>↻</span>
+                                    <span data-translate="true">
+                                        Refresh
+                                    </span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+            </main>
+
+
+            <!-- =====================================================
+                 FOOTER
+                 ===================================================== -->
+
+            <footer class="app-footer">
+
+                <div>
+                    © 2026 Veltrix.
+                    <span data-translate="true">
+                        All rights reserved.
+                    </span>
+                </div>
+
+                <div class="footer-links">
+
+                    <a
+                        href="settings.html"
+                        data-nav-link
+                        data-translate="true"
+                    >
+                        Settings
+                    </a>
+
+                    <a
+                        href="profile.html"
+                        data-nav-link
+                        data-translate="true"
+                    >
+                        Account
+                    </a>
+
+                    <a
+                        href="upgrade.html"
+                        data-nav-link
+                        data-translate="true"
+                    >
+                        Upgrade
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         GLOBAL SEARCH MODAL
+         ========================================================= -->
+
+    <div
+        class="modal-backdrop"
+        data-modal="search"
+        hidden
+    >
+
+        <div
+            class="modal search-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="search-modal-title"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <span
+                        class="modal-eyebrow"
+                        data-translate="true"
+                    >
+                        Global
+                    </span>
+
+                    <h2
+                        id="search-modal-title"
+                        data-translate="true"
+                    >
+                        Search Veltrix
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="search-input-wrap">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="search"
+                        data-global-search-input
+                        placeholder="Search pages, customers, orders..."
+                        data-translate="true"
+                        autocomplete="off"
+                    >
+
+                    <kbd>ESC</kbd>
+
+                </div>
+
+
+                <div
+                    class="search-results"
+                    data-search-results
+                >
+
+                    <div class="search-empty">
+                        <span>⌕</span>
+
+                        <strong data-translate="true">
+                            Start searching
+                        </strong>
+
+                        <small data-translate="true">
+                            Find pages and actions across Veltrix.
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         QUICK CREATE MODAL
+         ========================================================= -->
+
+    <div
+        class="modal-backdrop"
+        data-modal="quick-create"
+        hidden
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-create-title"
+        >
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span
+                        class="modal-eyebrow"
+                        data-translate="true"
+                    >
+                        Shortcut
+                    </span>
+
+                    <h2
+                        id="quick-create-title"
+                        data-translate="true"
+                    >
+                        Quick Create
+                    </h2>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div
+                    class="quick-create-grid"
+                    data-quick-create-grid
+                >
+
+                    <button
+                        type="button"
+                        data-create-action="order"
+                    >
+                        <span>▤</span>
+
+                        <strong data-translate="true">
+                            New order
+                        </strong>
+
+                        <small data-translate="true">
+                            Create a business order
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-create-action="customer"
+                    >
+                        <span>♙</span>
+
+                        <strong data-translate="true">
+                            New customer
+                        </strong>
+
+                        <small data-translate="true">
+                            Add a customer
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-create-action="invoice"
+                    >
+                        <span>▥</span>
+
+                        <strong data-translate="true">
+                            New invoice
+                        </strong>
+
+                        <small data-translate="true">
+                            Create an invoice
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        data-create-action="message"
+                    >
+                        <span>◌</span>
+
+                        <strong data-translate="true">
+                            New message
+                        </strong>
+
+                        <small data-translate="true">
+                            Start a conversation
+                        </small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         NOTIFICATION MODAL
+         ========================================================= -->
+
+    <div
+        class="modal-backdrop"
+        data-modal="notifications"
+        hidden
+    >
+
+        <div
+            class="modal notification-modal"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span
+                        class="modal-eyebrow"
+                        data-translate="true"
+                    >
+                        Inbox
+                    </span>
+
+                    <h2 data-translate="true">
+                        Notifications
+                    </h2>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="notification-list">
+
+                    <button
+                        type="button"
+                        class="notification-item"
+                    >
+                        <span class="notification-item-icon">
+                            🚀
+                        </span>
+
+                        <span>
+                            <strong data-translate="true">
+                                Launch preparation updated
+                            </strong>
+
+                            <small data-translate="true">
+                                Veltrix is now in final preparation.
+                            </small>
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="notification-item"
+                    >
+                        <span class="notification-item-icon">
+                            ✓
+                        </span>
+
+                        <span>
+                            <strong data-translate="true">
+                                System check completed
+                            </strong>
+
+                            <small data-translate="true">
+                                Core modules are ready.
+                            </small>
+                        </span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="notification-item"
+                    >
+                        <span class="notification-item-icon">
+                            ✦
+                        </span>
+
+                        <span>
+                            <strong data-translate="true">
+                                New feature preview
+                            </strong>
+
+                            <small data-translate="true">
+                                Explore what's coming to Veltrix.
+                            </small>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         GLOBAL TOAST
+         ========================================================= -->
+
+    <div
+        class="toast-container"
+        data-toast-container
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+    <!-- =========================================================
+         SCREEN READER ANNOUNCER
+         ========================================================= -->
+
+    <div
+        class="sr-only"
+        data-sr-announcer
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+    <!-- =========================================================
+         GOOGLE TRANSLATE HOLDER
+         script.js initializes this.
+         ========================================================= -->
+
+    <div
+        id="google_translate_element"
+        aria-hidden="true"
+        style="
+            position:fixed;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+            opacity:0;
+            pointer-events:none;
+            left:-9999px;
+            top:-9999px;
+        "
+    ></div>
+
+
+    <!-- =========================================================
+         PAGE-SPECIFIC JAVASCRIPT
+         ========================================================= -->
+
+    <script>
+        (() => {
+
+            "use strict";
+
+
+            /* =====================================================
+               CONFIG
+               ===================================================== */
+
+            const pageConfig = {
+                storageKey: "veltrix_coming_soon",
+                launchAttribute: "data-launch-end",
+                progress: 78
+            };
+
+
+            /* =====================================================
+               HELPERS
+               ===================================================== */
+
+            const $ = (selector, root = document) =>
+                root.querySelector(selector);
+
+            const $$ = (selector, root = document) =>
+                Array.from(root.querySelectorAll(selector));
+
+
+            const safeStorage = {
+
+                get(key, fallback = null) {
+
+                    try {
+
+                        const value =
+                            localStorage.getItem(key);
+
+                        return value === null
+                            ? fallback
+                            : value;
+
+                    } catch {
+
+                        return fallback;
+
+                    }
+
+                },
+
+
+                set(key, value) {
+
+                    try {
+
+                        localStorage.setItem(
+                            key,
+                            value
+                        );
+
+                        return true;
+
+                    } catch {
+
+                        return false;
+
+                    }
+
+                },
+
+
+                remove(key) {
+
+                    try {
+
+                        localStorage.removeItem(key);
+
+                    } catch {}
+
+                }
+
+            };
+
+
+            /* =====================================================
+               TOAST BRIDGE
+               ===================================================== */
+
+            function notify(message, type = "success") {
+
+                if (
+                    window.Veltrix &&
+                    window.Veltrix.toast &&
+                    typeof window.Veltrix.toast.show === "function"
+                ) {
+
+                    window.Veltrix.toast.show(
+                        message,
+                        type
+                    );
+
+                    return;
+
+                }
+
+
+                const container =
+                    $("[data-toast-container]");
+
+                if (!container) return;
+
+
+                const toast =
+                    document.createElement("div");
+
+                toast.className =
+                    `toast toast-${type}`;
+
+                toast.textContent =
+                    message;
+
+                container.appendChild(toast);
+
+
+                requestAnimationFrame(() => {
+
+                    toast.classList.add("show");
+
+                });
+
+
+                setTimeout(() => {
+
+                    toast.classList.remove("show");
+
+                    setTimeout(() => {
+
+                        toast.remove();
+
+                    }, 300);
+
+                }, 2800);
+
+            }
+
+
+            /* =====================================================
+               COUNTDOWN
+               ===================================================== */
+
+            const countdown = {
+
+                timer: null,
+
+
+                getLaunchDate() {
+
+                    const body =
+                        document.body;
+
+                    const attribute =
+                        body.getAttribute(
+                            pageConfig.launchAttribute
+                        );
+
+
+                    const stored =
+                        safeStorage.get(
+                            `${pageConfig.storageKey}_launch`
+                        );
+
+
+                    const source =
+                        stored ||
+                        attribute ||
+                        "2026-12-31T23:59:59";
+
+
+                    const date =
+                        new Date(source);
+
+
+                    if (
+                        Number.isNaN(
+                            date.getTime()
+                        )
+                    ) {
+
+                        return new Date(
+                            "2026-12-31T23:59:59"
+                        );
+
+                    }
+
+
+                    return date;
+
+                },
+
+
+                pad(value) {
+
+                    return String(
+                        Math.max(0, value)
+                    ).padStart(2, "0");
+
+                },
+
+
+                update() {
+
+                    const target =
+                        this.getLaunchDate();
+
+                    const now =
+                        new Date();
+
+                    const difference =
+                        target.getTime() -
+                        now.getTime();
+
+
+                    const days =
+                        $("[data-days]");
+
+                    const hours =
+                        $("[data-hours]");
+
+                    const minutes =
+                        $("[data-minutes]");
+
+                    const seconds =
+                        $("[data-seconds]");
+
+
+                    if (
+                        difference <= 0
+                    ) {
+
+                        if (days)
+                            days.textContent = "000";
+
+                        if (hours)
+                            hours.textContent = "00";
+
+                        if (minutes)
+                            minutes.textContent = "00";
+
+                        if (seconds)
+                            seconds.textContent = "00";
+
+
+                        this.onLaunch();
+
+                        return false;
+
+                    }
+
+
+                    const totalSeconds =
+                        Math.floor(
+                            difference / 1000
+                        );
+
+
+                    const dayValue =
+                        Math.floor(
+                            totalSeconds / 86400
+                        );
+
+
+                    const hourValue =
+                        Math.floor(
+                            (totalSeconds % 86400) /
+                            3600
+                        );
+
+
+                    const minuteValue =
+                        Math.floor(
+                            (totalSeconds % 3600) /
+                            60
+                        );
+
+
+                    const secondValue =
+                        totalSeconds % 60;
+
+
+                    if (days) {
+
+                        days.textContent =
+                            String(dayValue)
+                                .padStart(3, "0");
+
+                    }
+
+
+                    if (hours) {
+
+                        hours.textContent =
+                            this.pad(hourValue);
+
+                    }
+
+
+                    if (minutes) {
+
+                        minutes.textContent =
+                            this.pad(minuteValue);
+
+                    }
+
+
+                    if (seconds) {
+
+                        seconds.textContent =
+                            this.pad(secondValue);
+
+                    }
+
+
+                    return true;
+
+                },
+
+
+                onLaunch() {
+
+                    const status =
+                        $("[data-launch-status]");
+
+                    if (!status) return;
+
+
+                    status.innerHTML = `
+                        <span class="cs-status-dot"></span>
+                        <span data-translate="true">
+                            Launch day
+                        </span>
+                    `;
+
+                },
+
+
+                start() {
+
+                    this.stop();
+
+                    this.update();
+
+                    this.timer =
+                        setInterval(
+                            () => {
+
+                                const active =
+                                    this.update();
+
+                                if (!active) {
+
+                                    this.stop();
+
+                                }
+
+                            },
+                            1000
+                        );
+
+                },
+
+
+                stop() {
+
+                    if (this.timer) {
+
+                        clearInterval(
+                            this.timer
+                        );
+
+                        this.timer = null;
+
+                    }
+
+                }
+
+            };
+
+
+            /* =====================================================
+               LAUNCH DATE DISPLAY
+               ===================================================== */
+
+            function updateLaunchInformation() {
+
+                const date =
+                    countdown.getLaunchDate();
+
+
+                const dateElement =
+                    $("[data-launch-date]");
+
+
+                const timeElement =
+                    $("[data-launch-time]");
+
+
+                if (
+                    dateElement
+                ) {
+
+                    dateElement.textContent =
+                        new Intl.DateTimeFormat(
+                            undefined,
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric"
+                            }
+                        ).format(date);
+
+                }
+
+
+                if (
+                    timeElement
+                ) {
+
+                    timeElement.textContent =
+                        new Intl.DateTimeFormat(
+                            undefined,
+                            {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit"
+                            }
+                        ).format(date);
+
+                }
+
+
+                const timezone =
+                    $("[data-user-timezone]");
+
+
+                if (timezone) {
+
+                    let timezoneName =
+                        "Local timezone";
+
+                    try {
+
+                        timezoneName =
+                            Intl.DateTimeFormat()
+                                .resolvedOptions()
+                                .timeZone ||
+                            timezoneName;
+
+                    } catch {}
+
+
+                    timezone.textContent =
+                        timezoneName;
+
+                }
+
+            }
+
+
+            /* =====================================================
+               PROGRESS ANIMATION
+               ===================================================== */
+
+            function initializeProgress() {
+
+                const fill =
+                    $("[data-progress-fill]");
+
+                const number =
+                    $("[data-progress-number]");
+
+
+                if (!fill) return;
+
+
+                const target =
+                    Number(
+                        fill.dataset.target ||
+                        pageConfig.progress
+                    );
+
+
+                fill.style.width = "0%";
+
+
+                setTimeout(() => {
+
+                    fill.style.width =
+                        `${target}%`;
+
+                }, 300);
+
+
+                if (number) {
+
+                    let current = 0;
+
+                    const interval =
+                        setInterval(() => {
+
+                            current += 1;
+
+                            number.textContent =
+                                `${current}%`;
+
+                            if (
+                                current >= target
+                            ) {
+
+                                clearInterval(
+                                    interval
+                                );
+
+                            }
+
+                        }, 18);
+
+                }
+
+            }
+
+
+            /* =====================================================
+               NOTIFY FORM
+               ===================================================== */
+
+            const notifyForm = {
+
+                key:
+                    `${pageConfig.storageKey}_email`,
+
+
+                isValidEmail(email) {
+
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                        .test(email);
+
+                },
+
+
+                submit(event) {
+
+                    event.preventDefault();
+
+
+                    const input =
+                        $("[data-notify-email]");
+
+                    const message =
+                        $("[data-form-message]");
+
+
+                    if (
+                        !input ||
+                        !message
+                    ) return;
+
+
+                    const email =
+                        input.value.trim();
+
+
+                    message.className =
+                        "cs-form-message";
+
+
+                    if (!email) {
+
+                        message.textContent =
+                            "Please enter your email address.";
+
+                        message.classList.add(
+                            "error"
+                        );
+
+                        input.focus();
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !this.isValidEmail(email)
+                    ) {
+
+                        message.textContent =
+                            "Please enter a valid email address.";
+
+                        message.classList.add(
+                            "error"
+                        );
+
+                        input.focus();
+
+                        return;
+
+                    }
+
+
+                    safeStorage.set(
+                        this.key,
+                        email
+                    );
+
+
+                    message.textContent =
+                        "You're on the notification list for this device.";
+
+                    message.classList.add(
+                        "success"
+                    );
+
+
+                    input.value = "";
+
+
+                    notify(
+                        "Notification preference saved.",
+                        "success"
+                    );
+
+                },
+
+
+                restore() {
+
+                    const stored =
+                        safeStorage.get(
+                            this.key
+                        );
+
+                    if (!stored) return;
+
+
+                    const message =
+                        $("[data-form-message]");
+
+
+                    if (!message) return;
+
+
+                    message.textContent =
+                        "Notification preference is already saved on this device.";
+
+                    message.classList.add(
+                        "success"
+                    );
+
+                }
+
+            };
+
+
+            /* =====================================================
+               COPY LAUNCH LINK
+               ===================================================== */
+
+            async function copyLaunchLink() {
+
+                const url =
+                    window.location.href;
+
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        url
+                    );
+
+
+                    notify(
+                        "Launch link copied.",
+                        "success"
+                    );
+
+                } catch {
+
+                    const textarea =
+                        document.createElement("textarea");
+
+
+                    textarea.value =
+                        url;
+
+                    textarea.style.position =
+                        "fixed";
+
+                    textarea.style.opacity =
+                        "0";
+
+                    document.body.appendChild(
+                        textarea
+                    );
+
+
+                    textarea.select();
+
+
+                    try {
+
+                        document.execCommand(
+                            "copy"
+                        );
+
+                        notify(
+                            "Launch link copied.",
+                            "success"
+                        );
+
+                    } catch {
+
+                        notify(
+                            "Unable to copy the launch link.",
+                            "error"
+                        );
+
+                    }
+
+
+                    textarea.remove();
+
+                }
+
+            }
+
+
+            /* =====================================================
+               FAQ
+               ===================================================== */
+
+            function initializeFAQ() {
+
+                $$("[data-faq-toggle]")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const item =
+                                    button.closest(
+                                        ".cs-faq-item"
+                                    );
+
+                                if (!item) return;
+
+
+                                const isOpen =
+                                    item.classList.contains(
+                                        "open"
+                                    );
+
+
+                                $$(
+                                    ".cs-faq-item.open"
+                                ).forEach(
+                                    other => {
+
+                                        if (
+                                            other !== item
+                                        ) {
+
+                                            other.classList.remove(
+                                                "open"
+                                            );
+
+                                            const otherButton =
+                                                $(
+                                                    "[data-faq-toggle]",
+                                                    other
+                                                );
+
+                                            if (
+                                                otherButton
+                                            ) {
+
+                                                otherButton
+                                                    .setAttribute(
+                                                        "aria-expanded",
+                                                        "false"
+                                                    );
+
+                                            }
+
+                                        }
+
+                                    }
+                                );
+
+
+                                item.classList.toggle(
+                                    "open",
+                                    !isOpen
+                                );
+
+
+                                button.setAttribute(
+                                    "aria-expanded",
+                                    String(!isOpen)
+                                );
+
+                            }
+                        );
+
+                    });
+
+            }
+
+
+            /* =====================================================
+               SCROLL TARGETS
+               ===================================================== */
+
+            function initializeScrollButtons() {
+
+                $$("[data-scroll-target]")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const selector =
+                                    button.getAttribute(
+                                        "data-scroll-target"
+                                    );
+
+
+                                const target =
+                                    selector
+                                        ? $(selector)
+                                        : null;
+
+
+                                if (!target) return;
+
+
+                                target.scrollIntoView({
+                                    behavior:
+                                        "smooth",
+                                    block:
+                                        "start"
+                                });
+
+                            }
+                        );
+
+                    });
+
+            }
+
+
+            /* =====================================================
+               REFRESH
+               ===================================================== */
+
+            function initializeRefresh() {
+
+                $$("[data-refresh-page]")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                button.disabled =
+                                    true;
+
+                                const original =
+                                    button.innerHTML;
+
+
+                                button.innerHTML = `
+                                    <span>↻</span>
+                                    <span data-translate="true">
+                                        Refreshing...
+                                    </span>
+                                `;
+
+
+                                setTimeout(() => {
+
+                                    countdown.start();
+
+                                    updateLaunchInformation();
+
+                                    initializeProgress();
+
+
+                                    button.innerHTML =
+                                        original;
+
+                                    button.disabled =
+                                        false;
+
+
+                                    notify(
+                                        "Launch status refreshed.",
+                                        "success"
+                                    );
+
+                                }, 650);
+
+                            }
+                        );
+
+                    });
+
+            }
+
+
+            /* =====================================================
+               COPY BUTTONS
+               ===================================================== */
+
+            function initializeCopyButtons() {
+
+                $$("[data-copy-launch]")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            copyLaunchLink
+                        );
+
+                    });
+
+            }
+
+
+            /* =====================================================
+               NOTIFY BUTTONS
+               ===================================================== */
+
+            function initializeNotifyForm() {
+
+                const form =
+                    $("[data-notify-form]");
+
+                if (!form) return;
+
+
+                form.addEventListener(
+                    "submit",
+                    event =>
+                        notifyForm.submit(event)
+                );
+
+
+                notifyForm.restore();
+
+            }
+
+
+            /* =====================================================
+               KEYBOARD SHORTCUTS
+               ===================================================== */
+
+            function initializeKeyboard() {
+
+                document.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            $$(
+                                ".cs-faq-item.open"
+                            ).forEach(
+                                item => {
+
+                                    item.classList.remove(
+                                        "open"
+                                    );
+
+                                    const button =
+                                        $(
+                                            "[data-faq-toggle]",
+                                            item
+                                        );
+
+                                    if (button) {
+
+                                        button.setAttribute(
+                                            "aria-expanded",
+                                            "false"
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        }
+
+
+                        if (
+                            (
+                                event.ctrlKey ||
+                                event.metaKey
+                            ) &&
+                            event.key.toLowerCase() === "l"
+                        ) {
+
+                            event.preventDefault();
+
+
+                            const notifySection =
+                                $("#notify");
+
+
+                            if (
+                                notifySection
+                            ) {
+
+                                notifySection.scrollIntoView({
+                                    behavior:
+                                        "smooth"
+                                });
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               LIVE CLOCK / STATUS
+               ===================================================== */
+
+            function initializeLiveStatus() {
+
+                const statusCards =
+                    $$(".cs-status-card-value");
+
+
+                if (!statusCards.length)
+                    return;
+
+
+                setTimeout(() => {
+
+                    document.body.classList.add(
+                        "coming-soon-ready"
+                    );
+
+                }, 100);
+
+            }
+
+
+            /* =====================================================
+               LOCAL STORAGE LAUNCH OVERRIDE
+               ===================================================== */
+
+            function initializeLaunchConfig() {
+
+                const current =
+                    safeStorage.get(
+                        `${pageConfig.storageKey}_launch`
+                    );
+
+
+                if (!current) {
+
+                    safeStorage.set(
+                        `${pageConfig.storageKey}_launch`,
+                        document.body.getAttribute(
+                            pageConfig.launchAttribute
+                        ) ||
+                        "2026-12-31T23:59:59"
+                    );
+
+                }
+
+            }
+
+
+            /* =====================================================
+               INTERACTION GLOW
+               ===================================================== */
+
+            function initializeGlowMovement() {
+
+                const elements =
+                    $$(".cs-feature, .cs-panel, .cs-progress-card");
+
+
+                elements.forEach(element => {
+
+                    element.addEventListener(
+                        "pointermove",
+                        event => {
+
+                            const rect =
+                                element.getBoundingClientRect();
+
+
+                            const x =
+                                event.clientX -
+                                rect.left;
+
+
+                            const y =
+                                event.clientY -
+                                rect.top;
+
+
+                            element.style.setProperty(
+                                "--mouse-x",
+                                `${x}px`
+                            );
+
+
+                            element.style.setProperty(
+                                "--mouse-y",
+                                `${y}px`
+                            );
+
+                        }
+                    );
+
+
+                    element.addEventListener(
+                        "pointerleave",
+                        () => {
+
+                            element.style.removeProperty(
+                                "--mouse-x"
+                            );
+
+                            element.style.removeProperty(
+                                "--mouse-y"
+                            );
+
+                        }
+                    );
+
+                });
+
+            }
+
+
+            /* =====================================================
+               INTERSECTION REVEAL
+               ===================================================== */
+
+            function initializeReveal() {
+
+                const sections =
+                    $$(".cs-section");
+
+
+                if (
+                    !("IntersectionObserver" in window)
+                ) {
+
+                    sections.forEach(
+                        section => {
+                            section.style.opacity = "1";
+                        }
+                    );
+
+                    return;
+
+                }
+
+
+                const observer =
+                    new IntersectionObserver(
+                        entries => {
+
+                            entries.forEach(
+                                entry => {
+
+                                    if (
+                                        entry.isIntersecting
+                                    ) {
+
+                                        entry.target.style.opacity =
+                                            "1";
+
+                                        entry.target.style.transform =
+                                            "translateY(0)";
+
+                                        observer.unobserve(
+                                            entry.target
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        },
+                        {
+                            threshold: 0.08
+                        }
+                    );
+
+
+                sections.forEach(
+                    section => {
+
+                        section.style.opacity =
+                            "0";
+
+                        section.style.transform =
+                            "translateY(18px)";
+
+                        section.style.transition =
+                            "opacity .65s ease, transform .65s ease";
+
+
+                        observer.observe(
+                            section
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               ONLINE / OFFLINE
+               ===================================================== */
+
+            function initializeNetworkStatus() {
+
+                const update =
+                    () => {
+
+                        if (
+                            !navigator.onLine
+                        ) {
+
+                            notify(
+                                "You are offline. Local page features remain available.",
+                                "warning"
+                            );
+
+                        }
+
+                    };
+
+
+                window.addEventListener(
+                    "offline",
+                    update
+                );
+
+            }
+
+
+            /* =====================================================
+               PAGE API
+               ===================================================== */
+
+            window.VeltrixComingSoon = {
+
+                countdown,
+
+                notifyForm,
+
+                copyLaunchLink,
+
+                refresh() {
+
+                    countdown.start();
+
+                    updateLaunchInformation();
+
+                    initializeProgress();
+
+                },
+
+                getLaunchDate() {
+
+                    return countdown.getLaunchDate();
+
+                }
+
+            };
+
+
+            /* =====================================================
+               INITIALIZATION
+               ===================================================== */
+
+            function init() {
+
+                initializeLaunchConfig();
+
+                updateLaunchInformation();
+
+                countdown.start();
+
+                initializeProgress();
+
+                initializeFAQ();
+
+                initializeScrollButtons();
+
+                initializeRefresh();
+
+                initializeCopyButtons();
+
+                initializeNotifyForm();
+
+                initializeKeyboard();
+
+                initializeLiveStatus();
+
+                initializeGlowMovement();
+
+                initializeReveal();
+
+                initializeNetworkStatus();
+
+            }
+
+
+            /* =====================================================
+               DOM READY
+               ===================================================== */
+
+            if (
+                document.readyState === "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    init,
+                    {
+                        once: true
+                    }
+                );
+
+            } else {
+
+                init();
+
+            }
+
+        })();
+    </script>
+
+
+    <!-- =========================================================
+         GLOBAL VELTRIX ENGINE
+         ========================================================= -->
+
+    <script
+        src="../js/script.js"
+        defer
+    ></script>
+
+</body>
+</html>
