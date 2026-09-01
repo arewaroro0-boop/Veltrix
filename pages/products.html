@@ -1,0 +1,5985 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1220">
+    <meta name="description" content="Veltrix Product Catalog and Inventory Management Center">
+    <title>Products — Veltrix</title>
+
+    <!-- =========================================================
+         VELTRIX GLOBAL CSS
+    ========================================================== -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- =========================================================
+         ICONS
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- =========================================================
+         CHART.JS
+    ========================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* =========================================================
+           PRODUCTS PAGE — LOCAL DESIGN SYSTEM
+           ========================================================== */
+
+        :root {
+            --product-primary: #14b8a6;
+            --product-primary-2: #06b6d4;
+            --product-success: #22c55e;
+            --product-warning: #f59e0b;
+            --product-danger: #ef4444;
+            --product-purple: #8b5cf6;
+            --product-blue: #3b82f6;
+            --product-surface: rgba(15, 23, 42, .82);
+            --product-surface-2: rgba(30, 41, 59, .72);
+            --product-border: rgba(148, 163, 184, .14);
+            --product-text: #f8fafc;
+            --product-muted: #94a3b8;
+            --product-radius: 20px;
+            --product-shadow: 0 20px 60px rgba(0, 0, 0, .22);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body.products-page {
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .products-page-shell {
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        /* =========================================================
+           TOP PAGE HEADER
+        ========================================================== */
+
+        .products-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .products-heading {
+            min-width: 0;
+        }
+
+        .products-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border: 1px solid rgba(20, 184, 166, .2);
+            border-radius: 999px;
+            background: rgba(20, 184, 166, .08);
+            color: #5eead4;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .products-heading h1 {
+            margin: 0 0 8px;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.05;
+            letter-spacing: -.035em;
+        }
+
+        .products-heading p {
+            margin: 0;
+            max-width: 720px;
+            color: var(--product-muted);
+            line-height: 1.7;
+        }
+
+        .products-header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .product-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 44px;
+            padding: 0 16px;
+            border-radius: 13px;
+            border: 1px solid var(--product-border);
+            background: rgba(15, 23, 42, .58);
+            color: var(--product-text);
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                border-color .2s ease,
+                background .2s ease;
+            white-space: nowrap;
+        }
+
+        .product-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(20, 184, 166, .45);
+            box-shadow:
+                0 0 0 1px rgba(20, 184, 166, .08),
+                0 12px 30px rgba(20, 184, 166, .12);
+        }
+
+        .product-btn.primary {
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--product-primary), var(--product-primary-2));
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(20, 184, 166, .2);
+        }
+
+        .product-btn.danger {
+            color: #fecaca;
+            border-color: rgba(239, 68, 68, .2);
+            background: rgba(239, 68, 68, .06);
+        }
+
+        .product-btn.success {
+            color: #bbf7d0;
+            border-color: rgba(34, 197, 94, .2);
+            background: rgba(34, 197, 94, .06);
+        }
+
+        .product-btn.warning {
+            color: #fde68a;
+            border-color: rgba(245, 158, 11, .2);
+            background: rgba(245, 158, 11, .06);
+        }
+
+        .product-btn.small {
+            min-height: 36px;
+            padding: 0 11px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .product-btn.icon-only {
+            width: 38px;
+            height: 38px;
+            min-height: 38px;
+            padding: 0;
+        }
+
+        /* =========================================================
+           KPI GRID
+        ========================================================== */
+
+        .product-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .product-kpi {
+            position: relative;
+            overflow: hidden;
+            min-height: 150px;
+            padding: 20px;
+            border: 1px solid var(--product-border);
+            border-radius: var(--product-radius);
+            background:
+                radial-gradient(circle at 90% 10%, rgba(20, 184, 166, .12), transparent 38%),
+                var(--product-surface);
+            box-shadow: var(--product-shadow);
+            transition: transform .25s ease, border-color .25s ease;
+        }
+
+        .product-kpi:hover {
+            transform: translateY(-4px);
+            border-color: rgba(20, 184, 166, .28);
+        }
+
+        .product-kpi::after {
+            content: "";
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            right: -65px;
+            bottom: -65px;
+            border-radius: 50%;
+            background: rgba(20, 184, 166, .08);
+            filter: blur(3px);
+            pointer-events: none;
+        }
+
+        .product-kpi-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .product-kpi-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: rgba(20, 184, 166, .1);
+            color: #5eead4;
+            font-size: 19px;
+        }
+
+        .product-kpi-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 8px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, .08);
+            color: #86efac;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .product-kpi-change.warning {
+            background: rgba(245, 158, 11, .08);
+            color: #fcd34d;
+        }
+
+        .product-kpi-label {
+            color: var(--product-muted);
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .product-kpi-value {
+            font-size: clamp(25px, 3vw, 32px);
+            font-weight: 900;
+            letter-spacing: -.035em;
+        }
+
+        /* =========================================================
+           ANALYTICS / INVENTORY OVERVIEW
+        ========================================================== */
+
+        .products-overview-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(300px, .85fr);
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+
+        .products-panel {
+            min-width: 0;
+            border: 1px solid var(--product-border);
+            border-radius: var(--product-radius);
+            background: var(--product-surface);
+            box-shadow: var(--product-shadow);
+            overflow: hidden;
+        }
+
+        .products-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--product-border);
+        }
+
+        .products-panel-title {
+            min-width: 0;
+        }
+
+        .products-panel-title h2,
+        .products-panel-title h3 {
+            margin: 0 0 5px;
+            font-size: 17px;
+            letter-spacing: -.015em;
+        }
+
+        .products-panel-title p {
+            margin: 0;
+            color: var(--product-muted);
+            font-size: 12px;
+        }
+
+        .products-panel-body {
+            padding: 22px;
+        }
+
+        .inventory-chart-wrap {
+            height: 290px;
+            position: relative;
+        }
+
+        .inventory-chart-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* =========================================================
+           INVENTORY HEALTH
+        ========================================================== */
+
+        .health-score {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 4px 0 22px;
+        }
+
+        .health-ring {
+            position: relative;
+            flex: 0 0 100px;
+            width: 100px;
+            height: 100px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background:
+                conic-gradient(
+                    var(--product-primary) 0deg,
+                    var(--product-primary) 277deg,
+                    rgba(148, 163, 184, .1) 277deg,
+                    rgba(148, 163, 184, .1) 360deg
+                );
+        }
+
+        .health-ring::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border-radius: 50%;
+            background: #0f172a;
+        }
+
+        .health-ring strong {
+            position: relative;
+            z-index: 2;
+            font-size: 22px;
+        }
+
+        .health-copy strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .health-copy span {
+            color: var(--product-muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .health-meter {
+            height: 9px;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(148, 163, 184, .09);
+            margin-bottom: 18px;
+        }
+
+        .health-meter > span {
+            display: block;
+            height: 100%;
+            width: 77%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--product-primary), var(--product-success));
+            transition: width .5s ease;
+        }
+
+        .health-list {
+            display: grid;
+            gap: 11px;
+        }
+
+        .health-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            color: var(--product-muted);
+            font-size: 12px;
+        }
+
+        .health-row strong {
+            color: var(--product-text);
+        }
+
+        /* =========================================================
+           STOCK COMMAND
+        ========================================================== */
+
+        .stock-command {
+            margin-bottom: 22px;
+        }
+
+        .stock-command-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stock-alert {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px;
+            border-radius: 15px;
+            border: 1px solid rgba(245, 158, 11, .15);
+            background: rgba(245, 158, 11, .045);
+            transition: .2s ease;
+        }
+
+        .stock-alert:hover {
+            transform: translateY(-2px);
+            border-color: rgba(245, 158, 11, .3);
+        }
+
+        .stock-alert-image {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+            background: linear-gradient(135deg, rgba(20, 184, 166, .16), rgba(59, 130, 246, .13));
+        }
+
+        .stock-alert-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .stock-alert-info strong {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .stock-alert-info span {
+            display: block;
+            margin-top: 4px;
+            color: var(--product-muted);
+            font-size: 11px;
+        }
+
+        .stock-alert-count {
+            flex: 0 0 auto;
+            text-align: right;
+        }
+
+        .stock-alert-count strong {
+            display: block;
+            color: #fbbf24;
+            font-size: 16px;
+        }
+
+        .stock-alert-count span {
+            color: var(--product-muted);
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           CATALOG PANEL
+        ========================================================== */
+
+        .catalog-panel {
+            margin-bottom: 22px;
+        }
+
+        .catalog-toolbar {
+            display: grid;
+            grid-template-columns: minmax(220px, 1.6fr) repeat(3, minmax(130px, .65fr)) auto;
+            gap: 10px;
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--product-border);
+            background: rgba(2, 6, 23, .14);
+        }
+
+        .product-input,
+        .product-select {
+            width: 100%;
+            height: 42px;
+            padding: 0 13px;
+            border-radius: 11px;
+            border: 1px solid var(--product-border);
+            outline: none;
+            background: rgba(15, 23, 42, .66);
+            color: var(--product-text);
+            transition: border-color .2s ease, box-shadow .2s ease;
+        }
+
+        .product-input::placeholder {
+            color: #64748b;
+        }
+
+        .product-input:focus,
+        .product-select:focus {
+            border-color: rgba(20, 184, 166, .45);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, .08);
+        }
+
+        .catalog-bulkbar {
+            display: none;
+            align-items: center;
+            gap: 9px;
+            flex-wrap: wrap;
+            padding: 12px 22px;
+            background: rgba(20, 184, 166, .045);
+            border-bottom: 1px solid rgba(20, 184, 166, .1);
+        }
+
+        .catalog-bulkbar.active {
+            display: flex;
+        }
+
+        .bulk-selected-count {
+            margin-right: auto;
+            color: #99f6e4;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           PRODUCT TABLE
+        ========================================================== */
+
+        .product-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .product-table {
+            width: 100%;
+            min-width: 1050px;
+            border-collapse: collapse;
+        }
+
+        .product-table th {
+            padding: 14px 18px;
+            text-align: left;
+            color: #64748b;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--product-border);
+            white-space: nowrap;
+        }
+
+        .product-table td {
+            padding: 15px 18px;
+            border-bottom: 1px solid rgba(148, 163, 184, .08);
+            vertical-align: middle;
+        }
+
+        .product-table tbody tr {
+            transition: background .18s ease;
+        }
+
+        .product-table tbody tr:hover {
+            background: rgba(20, 184, 166, .025);
+        }
+
+        .product-check {
+            width: 17px;
+            height: 17px;
+            accent-color: var(--product-primary);
+        }
+
+        .product-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 240px;
+        }
+
+        .product-avatar {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background:
+                linear-gradient(135deg, rgba(20, 184, 166, .16), rgba(59, 130, 246, .12));
+            border: 1px solid rgba(148, 163, 184, .1);
+            font-size: 21px;
+        }
+
+        .product-main-info {
+            min-width: 0;
+        }
+
+        .product-main-info strong {
+            display: block;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+        }
+
+        .product-main-info span {
+            display: block;
+            margin-top: 4px;
+            color: var(--product-muted);
+            font-size: 11px;
+        }
+
+        .product-price {
+            font-weight: 900;
+        }
+
+        .product-old-price {
+            display: block;
+            color: #64748b;
+            font-size: 10px;
+            text-decoration: line-through;
+            margin-top: 2px;
+        }
+
+        .stock-value {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+        }
+
+        .stock-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--product-success);
+            box-shadow: 0 0 10px rgba(34, 197, 94, .45);
+        }
+
+        .stock-dot.low {
+            background: var(--product-warning);
+            box-shadow: 0 0 10px rgba(245, 158, 11, .45);
+        }
+
+        .stock-dot.out {
+            background: var(--product-danger);
+            box-shadow: 0 0 10px rgba(239, 68, 68, .45);
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .status-pill.active {
+            color: #86efac;
+            background: rgba(34, 197, 94, .08);
+        }
+
+        .status-pill.draft {
+            color: #c4b5fd;
+            background: rgba(139, 92, 246, .08);
+        }
+
+        .status-pill.archived {
+            color: #94a3b8;
+            background: rgba(148, 163, 184, .08);
+        }
+
+        .status-pill::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .row-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================== */
+
+        .product-empty {
+            display: none;
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .product-empty.active {
+            display: block;
+        }
+
+        .product-empty-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 16px;
+            display: grid;
+            place-items: center;
+            border-radius: 22px;
+            background: rgba(20, 184, 166, .08);
+            color: #5eead4;
+            font-size: 28px;
+        }
+
+        .product-empty h3 {
+            margin: 0 0 8px;
+        }
+
+        .product-empty p {
+            margin: 0 auto 18px;
+            max-width: 420px;
+            color: var(--product-muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           PAGINATION
+        ========================================================== */
+
+        .product-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 16px 22px;
+            border-top: 1px solid var(--product-border);
+        }
+
+        .pagination-info {
+            color: var(--product-muted);
+            font-size: 11px;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .page-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            border: 1px solid var(--product-border);
+            background: rgba(15, 23, 42, .5);
+            color: var(--product-muted);
+        }
+
+        .page-number.active {
+            background: var(--product-primary);
+            border-color: var(--product-primary);
+            color: #fff;
+        }
+
+        /* =========================================================
+           BOTTOM QUICK ACTIONS
+        ========================================================== */
+
+        .product-bottom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .quick-product-action {
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+            border: 1px solid var(--product-border);
+            border-radius: var(--product-radius);
+            background: var(--product-surface);
+            transition: .25s ease;
+        }
+
+        .quick-product-action:hover {
+            transform: translateY(-3px);
+            border-color: rgba(20, 184, 166, .25);
+        }
+
+        .quick-product-action-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 15px;
+            border-radius: 13px;
+            background: rgba(20, 184, 166, .08);
+            color: #5eead4;
+        }
+
+        .quick-product-action h3 {
+            margin: 0 0 6px;
+            font-size: 15px;
+        }
+
+        .quick-product-action p {
+            min-height: 38px;
+            margin: 0 0 15px;
+            color: var(--product-muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        .product-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(2, 6, 23, .72);
+            backdrop-filter: blur(10px);
+        }
+
+        .product-modal.active {
+            display: flex;
+        }
+
+        .product-modal-card {
+            width: min(720px, 100%);
+            max-height: min(850px, 92vh);
+            overflow: auto;
+            border: 1px solid rgba(148, 163, 184, .16);
+            border-radius: 24px;
+            background: #0f172a;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, .45);
+            animation: productModalIn .25s ease;
+        }
+
+        @keyframes productModalIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .product-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 22px;
+            border-bottom: 1px solid var(--product-border);
+        }
+
+        .product-modal-header h2 {
+            margin: 0 0 5px;
+            font-size: 20px;
+        }
+
+        .product-modal-header p {
+            margin: 0;
+            color: var(--product-muted);
+            font-size: 11px;
+        }
+
+        .product-modal-body {
+            padding: 22px;
+        }
+
+        .product-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .product-form-field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .product-form-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .product-form-field label {
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .product-form-field textarea {
+            min-height: 100px;
+            padding: 12px;
+            resize: vertical;
+        }
+
+        .product-modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 9px;
+            padding: 18px 22px;
+            border-top: 1px solid var(--product-border);
+        }
+
+        /* =========================================================
+           DETAIL DRAWER
+        ========================================================== */
+
+        .product-drawer {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: none;
+            background: rgba(2, 6, 23, .55);
+            backdrop-filter: blur(5px);
+        }
+
+        .product-drawer.active {
+            display: block;
+        }
+
+        .product-drawer-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: min(530px, 100%);
+            height: 100%;
+            overflow-y: auto;
+            background: #0b1220;
+            border-left: 1px solid var(--product-border);
+            box-shadow: -30px 0 100px rgba(0, 0, 0, .3);
+            animation: drawerIn .28s ease;
+        }
+
+        @keyframes drawerIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .drawer-cover {
+            min-height: 190px;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(20, 184, 166, .25), transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, .2), transparent 45%),
+                linear-gradient(135deg, #0f172a, #111827);
+            font-size: 70px;
+            border-bottom: 1px solid var(--product-border);
+        }
+
+        .drawer-header {
+            position: relative;
+        }
+
+        .drawer-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 2;
+        }
+
+        .drawer-content {
+            padding: 24px;
+        }
+
+        .drawer-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .drawer-title-row h2 {
+            margin: 0 0 5px;
+            font-size: 25px;
+            letter-spacing: -.025em;
+        }
+
+        .drawer-title-row p {
+            margin: 0;
+            color: var(--product-muted);
+            font-size: 12px;
+        }
+
+        .drawer-price {
+            margin: 22px 0;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .drawer-section {
+            padding: 18px 0;
+            border-top: 1px solid var(--product-border);
+        }
+
+        .drawer-section h3 {
+            margin: 0 0 14px;
+            font-size: 13px;
+        }
+
+        .drawer-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .drawer-stat {
+            padding: 14px;
+            border: 1px solid var(--product-border);
+            border-radius: 14px;
+            background: rgba(15, 23, 42, .4);
+        }
+
+        .drawer-stat span {
+            display: block;
+            color: var(--product-muted);
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .drawer-stat strong {
+            font-size: 17px;
+        }
+
+        .stock-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            background: rgba(148, 163, 184, .045);
+            border: 1px solid var(--product-border);
+        }
+
+        .stock-control-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .drawer-description {
+            color: var(--product-muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        /* =========================================================
+           IMPORT MODAL
+        ========================================================== */
+
+        .import-zone {
+            padding: 35px 20px;
+            text-align: center;
+            border: 1px dashed rgba(20, 184, 166, .3);
+            border-radius: 18px;
+            background: rgba(20, 184, 166, .035);
+        }
+
+        .import-zone-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .import-zone h3 {
+            margin: 0 0 6px;
+        }
+
+        .import-zone p {
+            max-width: 420px;
+            margin: 0 auto 18px;
+            color: var(--product-muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        #productImportFile {
+            display: none;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media (max-width: 1200px) {
+            .product-kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-overview-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stock-command-list {
+                grid-template-columns: 1fr;
+            }
+
+            .catalog-toolbar {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .catalog-toolbar > :first-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .products-page-shell {
+                padding: 20px 14px;
+            }
+
+            .products-page-header {
+                flex-direction: column;
+            }
+
+            .products-header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .product-bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .product-kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-kpi {
+                min-height: 135px;
+            }
+
+            .catalog-toolbar {
+                grid-template-columns: 1fr;
+                padding: 14px;
+            }
+
+            .catalog-toolbar > :first-child {
+                grid-column: auto;
+            }
+
+            .products-panel-header {
+                padding: 17px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .products-panel-body {
+                padding: 17px;
+            }
+
+            .product-pagination {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .pagination-buttons {
+                justify-content: center;
+            }
+
+            .product-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-form-field.full {
+                grid-column: auto;
+            }
+
+            .product-modal {
+                padding: 8px;
+            }
+
+            .product-modal-card {
+                border-radius: 18px;
+            }
+
+            .health-score {
+                align-items: flex-start;
+            }
+
+            .products-header-actions .product-btn {
+                flex: 1;
+            }
+        }
+
+        /* =========================================================
+           LIGHT THEME SUPPORT
+        ========================================================== */
+
+        [data-theme="light"] .products-page-shell,
+        body.light-theme .products-page-shell {
+            --product-surface: rgba(255, 255, 255, .9);
+            --product-surface-2: rgba(248, 250, 252, .95);
+            --product-border: rgba(15, 23, 42, .1);
+            --product-text: #0f172a;
+            --product-muted: #64748b;
+        }
+
+        [data-theme="light"] .product-btn,
+        body.light-theme .product-btn {
+            background: rgba(255, 255, 255, .9);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .product-input,
+        [data-theme="light"] .product-select,
+        body.light-theme .product-input,
+        body.light-theme .product-select {
+            background: #fff;
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .product-modal-card,
+        body.light-theme .product-modal-card {
+            background: #fff;
+        }
+
+        [data-theme="light"] .product-drawer-panel,
+        body.light-theme .product-drawer-panel {
+            background: #fff;
+        }
+
+        [data-theme="light"] .health-ring::before,
+        body.light-theme .health-ring::before {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body
+    id="veltrix-app"
+    class="app-body products-page"
+    data-page="products"
+    data-theme="dark"
+>
+
+    <!-- =========================================================
+         GLOBAL LOADER
+    ========================================================== -->
+
+    <div id="appLoader" class="app-loader" aria-hidden="true">
+        <div class="loader-inner">
+            <div class="loader-logo">V</div>
+            <div class="loader-line"></div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         MOBILE OVERLAY
+    ========================================================== -->
+
+    <div
+        id="sidebarOverlay"
+        class="sidebar-overlay"
+        aria-hidden="true"
+    ></div>
+
+    <!-- =========================================================
+         APPLICATION SHELL
+    ========================================================== -->
+
+    <div class="app-shell">
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside
+            id="appSidebar"
+            class="app-sidebar"
+            aria-label="Main navigation"
+        >
+
+            <div class="sidebar-brand">
+                <a href="../index.html" class="brand-link">
+                    <span class="brand-mark">V</span>
+
+                    <span class="brand-copy">
+                        <strong>Veltrix</strong>
+                        <small>Business Platform</small>
+                    </span>
+                </a>
+
+                <button
+                    type="button"
+                    id="sidebarCollapse"
+                    class="sidebar-collapse"
+                    aria-label="Collapse sidebar"
+                    data-action="toggle-sidebar"
+                >
+                    <span>‹</span>
+                </button>
+            </div>
+
+            <!-- Workspace -->
+
+            <div class="sidebar-workspace">
+                <button
+                    type="button"
+                    id="workspaceButton"
+                    class="workspace-selector"
+                    data-action="workspace-menu"
+                >
+                    <span class="workspace-avatar">V</span>
+
+                    <span class="workspace-copy">
+                        <small>Workspace</small>
+                        <strong>Veltrix HQ</strong>
+                    </span>
+
+                    <span class="workspace-chevron">⌄</span>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+
+            <nav class="sidebar-nav">
+
+                <div class="nav-section">
+                    <span class="nav-section-label">Overview</span>
+
+                    <a href="../index.html" class="nav-item">
+                        <span class="nav-icon">⌂</span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+
+                    <a href="analytics.html" class="nav-item">
+                        <span class="nav-icon">◫</span>
+                        <span class="nav-text">Analytics</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-label">Management</span>
+
+                    <a href="orders.html" class="nav-item">
+                        <span class="nav-icon">▤</span>
+                        <span class="nav-text">Orders</span>
+                    </a>
+
+                    <a href="customers.html" class="nav-item">
+                        <span class="nav-icon">♙</span>
+                        <span class="nav-text">Customers</span>
+                    </a>
+
+                    <a
+                        href="products.html"
+                        class="nav-item active"
+                        aria-current="page"
+                    >
+                        <span class="nav-icon">▦</span>
+                        <span class="nav-text">Products</span>
+                        <span class="nav-badge">NEW</span>
+                    </a>
+
+                    <a href="invoices.html" class="nav-item">
+                        <span class="nav-icon">▧</span>
+                        <span class="nav-text">Invoices</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-label">Communication</span>
+
+                    <a href="messages.html" class="nav-item">
+                        <span class="nav-icon">◌</span>
+                        <span class="nav-text">Messages</span>
+                        <span class="nav-count">4</span>
+                    </a>
+
+                    <a href="notifications.html" class="nav-item">
+                        <span class="nav-icon">♢</span>
+                        <span class="nav-text">Notifications</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-label">Tools</span>
+
+                    <a href="calculator.html" class="nav-item">
+                        <span class="nav-icon">▣</span>
+                        <span class="nav-text">Calculator</span>
+                    </a>
+
+                    <a href="ai-workspace.html" class="nav-item">
+                        <span class="nav-icon">✦</span>
+                        <span class="nav-text">AI Workspace</span>
+                        <span class="nav-badge ai">AI</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-label">Account</span>
+
+                    <a href="settings.html" class="nav-item">
+                        <span class="nav-icon">⚙</span>
+                        <span class="nav-text">Settings</span>
+                    </a>
+
+                    <a href="profile.html" class="nav-item">
+                        <span class="nav-icon">◎</span>
+                        <span class="nav-text">Profile</span>
+                    </a>
+
+                    <a href="upgrade.html" class="nav-item upgrade-nav">
+                        <span class="nav-icon">♛</span>
+                        <span class="nav-text">Upgrade</span>
+                    </a>
+                </div>
+
+            </nav>
+
+            <!-- Sidebar footer -->
+
+            <div class="sidebar-footer">
+
+                <div class="sidebar-storage">
+                    <div class="storage-heading">
+                        <span>Storage</span>
+                        <strong>68%</strong>
+                    </div>
+
+                    <div class="storage-bar">
+                        <span style="width:68%"></span>
+                    </div>
+
+                    <small>6.8 GB of 10 GB used</small>
+                </div>
+
+                <button
+                    type="button"
+                    class="sidebar-profile"
+                    data-action="profile-menu"
+                >
+                    <span class="sidebar-profile-avatar">A</span>
+
+                    <span class="sidebar-profile-copy">
+                        <strong>Account Owner</strong>
+                        <small>Administrator</small>
+                    </span>
+
+                    <span>⋮</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
+
+        <main class="app-main">
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="app-topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        id="mobileMenuButton"
+                        class="mobile-menu-button"
+                        aria-label="Open menu"
+                        data-action="mobile-menu"
+                    >
+                        ☰
+                    </button>
+
+                    <div class="breadcrumb">
+                        <a href="../index.html">Veltrix</a>
+                        <span>/</span>
+                        <strong>Products</strong>
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <!-- Search -->
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        data-action="open-search"
+                        aria-label="Search"
+                    >
+                        ⌕
+                    </button>
+
+                    <!-- Quick Create -->
+
+                    <button
+                        type="button"
+                        class="topbar-quick-create"
+                        data-action="quick-create"
+                    >
+                        <span>＋</span>
+                        <span>Quick Create</span>
+                    </button>
+
+                    <!-- Language -->
+
+                    <div
+                        class="topbar-dropdown language-dropdown"
+                        data-dropdown
+                    >
+                        <button
+                            type="button"
+                            class="topbar-language"
+                            data-dropdown-trigger
+                            aria-haspopup="true"
+                        >
+                            <span>◎</span>
+                            <span data-current-language>English</span>
+                            <span>⌄</span>
+                        </button>
+
+                        <div
+                            class="dropdown-menu language-menu"
+                            data-dropdown-menu
+                            data-language-menu
+                        >
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button notification-trigger"
+                        data-action="open-notifications"
+                        aria-label="Notifications"
+                    >
+                        ♢
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <!-- Theme -->
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        data-action="toggle-theme"
+                        aria-label="Toggle theme"
+                    >
+                        ◐
+                    </button>
+
+                    <!-- Profile -->
+
+                    <button
+                        type="button"
+                        class="topbar-avatar"
+                        data-action="profile-menu"
+                        aria-label="Account"
+                    >
+                        A
+                    </button>
+
+                </div>
+
+            </header>
+
+            <!-- =================================================
+                 PAGE
+            ================================================== -->
+
+            <div class="products-page-shell">
+
+                <!-- PAGE HEADER -->
+
+                <section class="products-page-header">
+
+                    <div class="products-heading">
+
+                        <span class="products-eyebrow">
+                            <span>▦</span>
+                            Inventory Command Center
+                        </span>
+
+                        <h1>Products & Inventory</h1>
+
+                        <p>
+                            Manage your complete product catalog, monitor stock
+                            health, control pricing, and keep your inventory
+                            moving from one powerful workspace.
+                        </p>
+
+                    </div>
+
+                    <div class="products-header-actions">
+
+                        <button
+                            type="button"
+                            id="refreshProductsButton"
+                            class="product-btn"
+                        >
+                            ↻
+                            <span>Sync Inventory</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="importProductsButton"
+                            class="product-btn"
+                        >
+                            ↑
+                            <span>Import</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="exportProductsButton"
+                            class="product-btn"
+                        >
+                            ↓
+                            <span>Export CSV</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="addProductButton"
+                            class="product-btn primary"
+                        >
+                            ＋
+                            <span>Add Product</span>
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- =================================================
+                     KPI CARDS
+                ================================================== -->
+
+                <section class="product-kpi-grid">
+
+                    <article class="product-kpi">
+
+                        <div class="product-kpi-top">
+                            <div class="product-kpi-icon">▦</div>
+                            <span class="product-kpi-change">
+                                ↑ 8.4%
+                            </span>
+                        </div>
+
+                        <div class="product-kpi-label">
+                            Total Products
+                        </div>
+
+                        <div
+                            class="product-kpi-value"
+                            id="totalProductsKpi"
+                        >
+                            0
+                        </div>
+
+                    </article>
+
+                    <article class="product-kpi">
+
+                        <div class="product-kpi-top">
+                            <div class="product-kpi-icon">✓</div>
+                            <span class="product-kpi-change">
+                                Healthy
+                            </span>
+                        </div>
+
+                        <div class="product-kpi-label">
+                            Active Products
+                        </div>
+
+                        <div
+                            class="product-kpi-value"
+                            id="activeProductsKpi"
+                        >
+                            0
+                        </div>
+
+                    </article>
+
+                    <article class="product-kpi">
+
+                        <div class="product-kpi-top">
+                            <div class="product-kpi-icon">!</div>
+                            <span class="product-kpi-change warning">
+                                Attention
+                            </span>
+                        </div>
+
+                        <div class="product-kpi-label">
+                            Low Stock
+                        </div>
+
+                        <div
+                            class="product-kpi-value"
+                            id="lowStockKpi"
+                        >
+                            0
+                        </div>
+
+                    </article>
+
+                    <article class="product-kpi">
+
+                        <div class="product-kpi-top">
+                            <div class="product-kpi-icon">$</div>
+                            <span class="product-kpi-change">
+                                ↑ 12.7%
+                            </span>
+                        </div>
+
+                        <div class="product-kpi-label">
+                            Inventory Value
+                        </div>
+
+                        <div
+                            class="product-kpi-value"
+                            id="inventoryValueKpi"
+                        >
+                            $0
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- =================================================
+                     OVERVIEW
+                ================================================== -->
+
+                <section class="products-overview-grid">
+
+                    <article class="products-panel">
+
+                        <div class="products-panel-header">
+
+                            <div class="products-panel-title">
+                                <h2>Inventory Overview</h2>
+                                <p>
+                                    Current stock distribution across the catalog
+                                </p>
+                            </div>
+
+                            <select
+                                id="inventoryChartPeriod"
+                                class="product-select"
+                                style="width:auto;min-width:125px"
+                            >
+                                <option value="7">7 days</option>
+                                <option value="30" selected>30 days</option>
+                                <option value="90">90 days</option>
+                            </select>
+
+                        </div>
+
+                        <div class="products-panel-body">
+
+                            <div class="inventory-chart-wrap">
+                                <canvas id="inventoryChart"></canvas>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                    <article class="products-panel">
+
+                        <div class="products-panel-header">
+
+                            <div class="products-panel-title">
+                                <h2>Inventory Health</h2>
+                                <p>
+                                    Overall stock condition
+                                </p>
+                            </div>
+
+                            <span class="status-pill active">
+                                Live
+                            </span>
+
+                        </div>
+
+                        <div class="products-panel-body">
+
+                            <div class="health-score">
+
+                                <div class="health-ring">
+                                    <strong id="healthScore">77%</strong>
+                                </div>
+
+                                <div class="health-copy">
+                                    <strong>Good condition</strong>
+                                    <span>
+                                        Most products have sufficient
+                                        stock levels.
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="health-meter">
+                                <span id="healthMeter"></span>
+                            </div>
+
+                            <div class="health-list">
+
+                                <div class="health-row">
+                                    <span>Healthy stock</span>
+                                    <strong id="healthyStockCount">0</strong>
+                                </div>
+
+                                <div class="health-row">
+                                    <span>Low stock</span>
+                                    <strong id="healthLowStockCount">0</strong>
+                                </div>
+
+                                <div class="health-row">
+                                    <span>Out of stock</span>
+                                    <strong id="healthOutStockCount">0</strong>
+                                </div>
+
+                                <div class="health-row">
+                                    <span>Archived</span>
+                                    <strong id="healthArchivedCount">0</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+                <!-- =================================================
+                     STOCK COMMAND
+                ================================================== -->
+
+                <section class="products-panel stock-command">
+
+                    <div class="products-panel-header">
+
+                        <div class="products-panel-title">
+                            <h2>Stock Command</h2>
+                            <p>
+                                Products that currently need your attention
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="product-btn small warning"
+                            id="showLowStockButton"
+                        >
+                            View all low stock
+                        </button>
+
+                    </div>
+
+                    <div class="products-panel-body">
+
+                        <div
+                            id="stockCommandList"
+                            class="stock-command-list"
+                        >
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- =================================================
+                     PRODUCT CATALOG
+                ================================================== -->
+
+                <section class="products-panel catalog-panel">
+
+                    <div class="products-panel-header">
+
+                        <div class="products-panel-title">
+
+                            <h2>Product Catalog</h2>
+
+                            <p>
+                                Search, filter, edit and control your products
+                            </p>
+
+                        </div>
+
+                        <div style="display:flex;gap:8px;align-items:center">
+
+                            <button
+                                type="button"
+                                id="gridViewButton"
+                                class="product-btn small"
+                            >
+                                ▦ Grid
+                            </button>
+
+                            <button
+                                type="button"
+                                id="tableViewButton"
+                                class="product-btn small primary"
+                            >
+                                ☷ Table
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- FILTER TOOLBAR -->
+
+                    <div class="catalog-toolbar">
+
+                        <div style="position:relative">
+
+                            <input
+                                type="search"
+                                id="productSearch"
+                                class="product-input"
+                                placeholder="Search products, SKU, category..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                        <select
+                            id="productCategoryFilter"
+                            class="product-select"
+                        >
+                            <option value="all">All categories</option>
+                        </select>
+
+                        <select
+                            id="productStatusFilter"
+                            class="product-select"
+                        >
+                            <option value="all">All statuses</option>
+                            <option value="active">Active</option>
+                            <option value="draft">Draft</option>
+                            <option value="archived">Archived</option>
+                        </select>
+
+                        <select
+                            id="productStockFilter"
+                            class="product-select"
+                        >
+                            <option value="all">All stock</option>
+                            <option value="healthy">Healthy</option>
+                            <option value="low">Low stock</option>
+                            <option value="out">Out of stock</option>
+                        </select>
+
+                        <select
+                            id="productSort"
+                            class="product-select"
+                        >
+                            <option value="newest">Newest</option>
+                            <option value="name">Name A-Z</option>
+                            <option value="price-high">Price high-low</option>
+                            <option value="price-low">Price low-high</option>
+                            <option value="stock-high">Stock high-low</option>
+                            <option value="stock-low">Stock low-high</option>
+                            <option value="sales-high">Best selling</option>
+                        </select>
+
+                    </div>
+
+                    <!-- BULK BAR -->
+
+                    <div
+                        id="catalogBulkbar"
+                        class="catalog-bulkbar"
+                    >
+
+                        <span
+                            id="bulkSelectedCount"
+                            class="bulk-selected-count"
+                        >
+                            0 selected
+                        </span>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            id="bulkActivateButton"
+                        >
+                            ✓ Activate
+                        </button>
+
+                        <button
+                            type="button"
+                            class="product-btn small warning"
+                            id="bulkDraftButton"
+                        >
+                            ◷ Draft
+                        </button>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            id="bulkArchiveButton"
+                        >
+                            Archive
+                        </button>
+
+                        <button
+                            type="button"
+                            class="product-btn small danger"
+                            id="bulkDeleteButton"
+                        >
+                            Delete
+                        </button>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            id="clearSelectionButton"
+                        >
+                            Clear
+                        </button>
+
+                    </div>
+
+                    <!-- TABLE -->
+
+                    <div
+                        id="productTableView"
+                        class="product-table-wrap"
+                    >
+
+                        <table class="product-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th style="width:35px">
+                                        <input
+                                            type="checkbox"
+                                            id="selectAllProducts"
+                                            class="product-check"
+                                            aria-label="Select all products"
+                                        >
+                                    </th>
+
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Sales</th>
+                                    <th>Status</th>
+                                    <th style="text-align:right">
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="productTableBody">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- GRID -->
+
+                    <div
+                        id="productGridView"
+                        style="
+                            display:none;
+                            padding:20px;
+                            grid-template-columns:
+                                repeat(auto-fill,minmax(220px,1fr));
+                            gap:14px;
+                        "
+                    >
+                    </div>
+
+                    <!-- EMPTY -->
+
+                    <div
+                        id="productEmpty"
+                        class="product-empty"
+                    >
+
+                        <div class="product-empty-icon">
+                            ⌕
+                        </div>
+
+                        <h3>No products found</h3>
+
+                        <p>
+                            Nothing matches your current filters.
+                            Try changing the search or add a new product.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="product-btn primary"
+                            id="emptyAddProductButton"
+                        >
+                            ＋ Add Product
+                        </button>
+
+                    </div>
+
+                    <!-- PAGINATION -->
+
+                    <div class="product-pagination">
+
+                        <div
+                            id="paginationInfo"
+                            class="pagination-info"
+                        >
+                            Showing 0 products
+                        </div>
+
+                        <div
+                            id="paginationButtons"
+                            class="pagination-buttons"
+                        >
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- =================================================
+                     QUICK ACTIONS
+                ================================================== -->
+
+                <section class="product-bottom-grid">
+
+                    <article class="quick-product-action">
+
+                        <div class="quick-product-action-icon">
+                            ⇅
+                        </div>
+
+                        <h3>Import Catalog</h3>
+
+                        <p>
+                            Import a CSV product list and prepare it
+                            for your Veltrix catalog.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            id="quickImportButton"
+                        >
+                            Import Products
+                        </button>
+
+                    </article>
+
+                    <article class="quick-product-action">
+
+                        <div class="quick-product-action-icon">
+                            ↓
+                        </div>
+
+                        <h3>Export Inventory</h3>
+
+                        <p>
+                            Download the currently filtered inventory
+                            as a CSV file.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            id="quickExportButton"
+                        >
+                            Download CSV
+                        </button>
+
+                    </article>
+
+                    <article class="quick-product-action">
+
+                        <div class="quick-product-action-icon">
+                            ⚡
+                        </div>
+
+                        <h3>Stock Adjustment</h3>
+
+                        <p>
+                            Quickly inspect products that require
+                            stock adjustments.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="product-btn small warning"
+                            id="quickStockButton"
+                        >
+                            Check Stock
+                        </button>
+
+                    </article>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- =========================================================
+         ADD / EDIT PRODUCT MODAL
+    ========================================================== -->
+
+    <div
+        id="productEditorModal"
+        class="product-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="product-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="productEditorTitle"
+        >
+
+            <div class="product-modal-header">
+
+                <div>
+                    <h2 id="productEditorTitle">
+                        Add Product
+                    </h2>
+
+                    <p id="productEditorSubtitle">
+                        Create a new catalog product.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="product-btn icon-only"
+                    data-close-product-modal
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <form id="productForm">
+
+                <div class="product-modal-body">
+
+                    <div class="product-form-grid">
+
+                        <div class="product-form-field full">
+
+                            <label for="productName">
+                                Product name
+                            </label>
+
+                            <input
+                                id="productName"
+                                name="name"
+                                class="product-input"
+                                required
+                                maxlength="100"
+                                placeholder="Example: Aurora Wireless Headphones"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productSku">
+                                SKU
+                            </label>
+
+                            <input
+                                id="productSku"
+                                name="sku"
+                                class="product-input"
+                                required
+                                maxlength="40"
+                                placeholder="VEL-001"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productCategory">
+                                Category
+                            </label>
+
+                            <input
+                                id="productCategory"
+                                name="category"
+                                class="product-input"
+                                required
+                                maxlength="50"
+                                placeholder="Electronics"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productPrice">
+                                Price ($)
+                            </label>
+
+                            <input
+                                id="productPrice"
+                                name="price"
+                                class="product-input"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                required
+                                placeholder="99.00"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productComparePrice">
+                                Compare-at price ($)
+                            </label>
+
+                            <input
+                                id="productComparePrice"
+                                name="comparePrice"
+                                class="product-input"
+                                type="number"
+                                min="0"
+                                step="0.01"
+                                placeholder="129.00"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productStock">
+                                Stock quantity
+                            </label>
+
+                            <input
+                                id="productStock"
+                                name="stock"
+                                class="product-input"
+                                type="number"
+                                min="0"
+                                step="1"
+                                required
+                                placeholder="100"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productLowStock">
+                                Low-stock threshold
+                            </label>
+
+                            <input
+                                id="productLowStock"
+                                name="lowStock"
+                                class="product-input"
+                                type="number"
+                                min="0"
+                                step="1"
+                                value="10"
+                                required
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productSales">
+                                Units sold
+                            </label>
+
+                            <input
+                                id="productSales"
+                                name="sales"
+                                class="product-input"
+                                type="number"
+                                min="0"
+                                step="1"
+                                value="0"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productStatus">
+                                Status
+                            </label>
+
+                            <select
+                                id="productStatus"
+                                name="status"
+                                class="product-select"
+                            >
+                                <option value="active">Active</option>
+                                <option value="draft">Draft</option>
+                                <option value="archived">Archived</option>
+                            </select>
+
+                        </div>
+
+                        <div class="product-form-field">
+
+                            <label for="productIcon">
+                                Product icon
+                            </label>
+
+                            <input
+                                id="productIcon"
+                                name="icon"
+                                class="product-input"
+                                maxlength="4"
+                                value="📦"
+                                placeholder="📦"
+                            >
+
+                        </div>
+
+                        <div class="product-form-field full">
+
+                            <label for="productDescription">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="productDescription"
+                                name="description"
+                                class="product-input"
+                                maxlength="500"
+                                placeholder="Describe the product..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="product-modal-footer">
+
+                    <button
+                        type="button"
+                        class="product-btn"
+                        data-close-product-modal
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="product-btn primary"
+                    >
+                        <span id="productSubmitText">
+                            Create Product
+                        </span>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         IMPORT MODAL
+    ========================================================== -->
+
+    <div
+        id="productImportModal"
+        class="product-modal"
+        aria-hidden="true"
+    >
+
+        <div class="product-modal-card">
+
+            <div class="product-modal-header">
+
+                <div>
+                    <h2>Import Product Catalog</h2>
+                    <p>
+                        Select a CSV file to simulate catalog import.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="product-btn icon-only"
+                    data-close-import-modal
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="product-modal-body">
+
+                <div class="import-zone">
+
+                    <div class="import-zone-icon">
+                        ⇅
+                    </div>
+
+                    <h3>Drop your CSV here</h3>
+
+                    <p>
+                        The demo supports a CSV containing:
+                        name, sku, category, price, stock and status.
+                    </p>
+
+                    <input
+                        type="file"
+                        id="productImportFile"
+                        accept=".csv,text/csv"
+                    >
+
+                    <button
+                        type="button"
+                        class="product-btn primary"
+                        id="chooseProductFileButton"
+                    >
+                        Choose CSV File
+                    </button>
+
+                    <div
+                        id="importFileName"
+                        style="
+                            margin-top:12px;
+                            color:#94a3b8;
+                            font-size:11px;
+                        "
+                    >
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="product-modal-footer">
+
+                <button
+                    type="button"
+                    class="product-btn"
+                    data-close-import-modal
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="product-btn primary"
+                    id="importDemoButton"
+                >
+                    Import Demo Products
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         PRODUCT DETAIL DRAWER
+    ========================================================== -->
+
+    <div
+        id="productDrawer"
+        class="product-drawer"
+        aria-hidden="true"
+    >
+
+        <aside class="product-drawer-panel">
+
+            <div class="drawer-header">
+
+                <div
+                    id="drawerCover"
+                    class="drawer-cover"
+                >
+                    📦
+                </div>
+
+                <button
+                    type="button"
+                    id="drawerCloseButton"
+                    class="product-btn icon-only drawer-close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="drawer-content">
+
+                <div class="drawer-title-row">
+
+                    <div>
+                        <h2 id="drawerProductName">
+                            Product
+                        </h2>
+
+                        <p id="drawerProductSku">
+                            SKU
+                        </p>
+                    </div>
+
+                    <span
+                        id="drawerProductStatus"
+                        class="status-pill active"
+                    >
+                        Active
+                    </span>
+
+                </div>
+
+                <div
+                    id="drawerProductPrice"
+                    class="drawer-price"
+                >
+                    $0
+                </div>
+
+                <div class="drawer-section">
+
+                    <h3>Performance</h3>
+
+                    <div class="drawer-stats">
+
+                        <div class="drawer-stat">
+                            <span>Units sold</span>
+                            <strong id="drawerSales">0</strong>
+                        </div>
+
+                        <div class="drawer-stat">
+                            <span>Current stock</span>
+                            <strong id="drawerStock">0</strong>
+                        </div>
+
+                        <div class="drawer-stat">
+                            <span>Inventory value</span>
+                            <strong id="drawerValue">$0</strong>
+                        </div>
+
+                        <div class="drawer-stat">
+                            <span>Category</span>
+                            <strong id="drawerCategory">—</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="drawer-section">
+
+                    <h3>Stock Control</h3>
+
+                    <div class="stock-control">
+
+                        <div>
+                            <span
+                                style="
+                                    display:block;
+                                    color:#94a3b8;
+                                    font-size:10px;
+                                    margin-bottom:5px;
+                                "
+                            >
+                                Available quantity
+                            </span>
+
+                            <strong id="drawerStockControl">
+                                0 units
+                            </strong>
+                        </div>
+
+                        <div class="stock-control-buttons">
+
+                            <button
+                                type="button"
+                                id="drawerDecreaseStock"
+                                class="product-btn small danger"
+                            >
+                                −
+                            </button>
+
+                            <button
+                                type="button"
+                                id="drawerIncreaseStock"
+                                class="product-btn small success"
+                            >
+                                ＋
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="drawer-section">
+
+                    <h3>Description</h3>
+
+                    <p
+                        id="drawerDescription"
+                        class="drawer-description"
+                    >
+                        No description.
+                    </p>
+
+                </div>
+
+                <div class="drawer-section">
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:8px;
+                            flex-wrap:wrap;
+                        "
+                    >
+
+                        <button
+                            type="button"
+                            id="drawerEditButton"
+                            class="product-btn"
+                        >
+                            ✎ Edit Product
+                        </button>
+
+                        <button
+                            type="button"
+                            id="drawerToggleStatusButton"
+                            class="product-btn"
+                        >
+                            Toggle Status
+                        </button>
+
+                        <button
+                            type="button"
+                            id="drawerDeleteButton"
+                            class="product-btn danger"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- =========================================================
+         GLOBAL SEARCH MODAL
+    ========================================================== -->
+
+    <div
+        id="globalSearchModal"
+        class="product-modal"
+        aria-hidden="true"
+    >
+
+        <div class="product-modal-card">
+
+            <div class="product-modal-header">
+
+                <div>
+                    <h2>Search Veltrix</h2>
+                    <p>
+                        Search products and workspace content.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="product-btn icon-only"
+                    data-action="close-search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="product-modal-body">
+
+                <input
+                    id="globalSearchInput"
+                    class="product-input"
+                    type="search"
+                    placeholder="Search..."
+                    autofocus
+                >
+
+                <div
+                    id="globalSearchResults"
+                    style="margin-top:15px"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script src="../js/script.js" defer></script>
+
+    <script>
+    (() => {
+
+        "use strict";
+
+        /* =========================================================
+           VELTRIX PRODUCTS ENGINE
+        ========================================================== */
+
+        const STORAGE_KEY = "veltrix_products_v1";
+
+        const state = {
+            products: [],
+            filtered: [],
+            selected: new Set(),
+            page: 1,
+            perPage: 8,
+            editingId: null,
+            drawerId: null,
+            view: "table",
+            chart: null,
+            syncRunning: false
+        };
+
+        /* =========================================================
+           DEFAULT PRODUCTS
+        ========================================================== */
+
+        const defaultProducts = [
+            {
+                id: "P-1001",
+                name: "Aurora Wireless Headphones",
+                sku: "VEL-AWH-001",
+                category: "Electronics",
+                price: 129,
+                comparePrice: 159,
+                stock: 84,
+                lowStock: 15,
+                sales: 1248,
+                status: "active",
+                icon: "🎧",
+                description:
+                    "Premium wireless headphones with adaptive noise cancellation and a long-lasting battery."
+            },
+
+            {
+                id: "P-1002",
+                name: "Nova Smart Watch",
+                sku: "VEL-NSW-002",
+                category: "Wearables",
+                price: 189,
+                comparePrice: 229,
+                stock: 37,
+                lowStock: 12,
+                sales: 928,
+                status: "active",
+                icon: "⌚",
+                description:
+                    "Modern smart watch with health tracking, notifications and customizable watch faces."
+            },
+
+            {
+                id: "P-1003",
+                name: "Orbit Mechanical Keyboard",
+                sku: "VEL-OMK-003",
+                category: "Accessories",
+                price: 99,
+                comparePrice: 119,
+                stock: 8,
+                lowStock: 10,
+                sales: 716,
+                status: "active",
+                icon: "⌨️",
+                description:
+                    "Compact mechanical keyboard designed for productivity and gaming."
+            },
+
+            {
+                id: "P-1004",
+                name: "Pulse Studio Microphone",
+                sku: "VEL-PSM-004",
+                category: "Audio",
+                price: 149,
+                comparePrice: 179,
+                stock: 4,
+                lowStock: 10,
+                sales: 481,
+                status: "active",
+                icon: "🎙️",
+                description:
+                    "Studio-quality USB microphone with clear vocal capture and monitoring."
+            },
+
+            {
+                id: "P-1005",
+                name: "Atlas Laptop Stand",
+                sku: "VEL-ALS-005",
+                category: "Office",
+                price: 69,
+                comparePrice: 79,
+                stock: 116,
+                lowStock: 20,
+                sales: 650,
+                status: "active",
+                icon: "💻",
+                description:
+                    "Adjustable aluminum laptop stand for comfortable desk setups."
+            },
+
+            {
+                id: "P-1006",
+                name: "Flux USB-C Hub",
+                sku: "VEL-FUH-006",
+                category: "Accessories",
+                price: 59,
+                comparePrice: 69,
+                stock: 52,
+                lowStock: 12,
+                sales: 885,
+                status: "active",
+                icon: "🔌",
+                description:
+                    "Multi-port USB-C hub with HDMI, USB-A and high-speed data connectivity."
+            },
+
+            {
+                id: "P-1007",
+                name: "Zen Desk Lamp",
+                sku: "VEL-ZDL-007",
+                category: "Office",
+                price: 79,
+                comparePrice: 99,
+                stock: 7,
+                lowStock: 12,
+                sales: 314,
+                status: "draft",
+                icon: "💡",
+                description:
+                    "Minimal desk lamp with adjustable brightness and a clean modern design."
+            },
+
+            {
+                id: "P-1008",
+                name: "Echo Portable Speaker",
+                sku: "VEL-EPS-008",
+                category: "Audio",
+                price: 89,
+                comparePrice: 109,
+                stock: 0,
+                lowStock: 10,
+                sales: 533,
+                status: "active",
+                icon: "🔊",
+                description:
+                    "Portable Bluetooth speaker with rich sound and all-day battery life."
+            },
+
+            {
+                id: "P-1009",
+                name: "Vertex Gaming Mouse",
+                sku: "VEL-VGM-009",
+                category: "Gaming",
+                price: 74,
+                comparePrice: 89,
+                stock: 73,
+                lowStock: 15,
+                sales: 1076,
+                status: "active",
+                icon: "🖱️",
+                description:
+                    "Lightweight gaming mouse with high precision tracking and programmable buttons."
+            },
+
+            {
+                id: "P-1010",
+                name: "Cloud Travel Backpack",
+                sku: "VEL-CTB-010",
+                category: "Lifestyle",
+                price: 119,
+                comparePrice: 139,
+                stock: 31,
+                lowStock: 10,
+                sales: 421,
+                status: "active",
+                icon: "🎒",
+                description:
+                    "Water-resistant travel backpack with dedicated laptop and accessory compartments."
+            },
+
+            {
+                id: "P-1011",
+                name: "Halo Webcam Pro",
+                sku: "VEL-HWP-011",
+                category: "Electronics",
+                price: 139,
+                comparePrice: 169,
+                stock: 22,
+                lowStock: 8,
+                sales: 384,
+                status: "active",
+                icon: "📷",
+                description:
+                    "Full HD webcam for meetings, streaming and professional video calls."
+            },
+
+            {
+                id: "P-1012",
+                name: "Aero Wireless Charger",
+                sku: "VEL-AWC-012",
+                category: "Accessories",
+                price: 45,
+                comparePrice: 59,
+                stock: 96,
+                lowStock: 20,
+                sales: 792,
+                status: "active",
+                icon: "⚡",
+                description:
+                    "Fast wireless charging pad with a minimal footprint and thermal protection."
+            },
+
+            {
+                id: "P-1013",
+                name: "Titan Gaming Chair",
+                sku: "VEL-TGC-013",
+                category: "Gaming",
+                price: 299,
+                comparePrice: 349,
+                stock: 12,
+                lowStock: 8,
+                sales: 189,
+                status: "active",
+                icon: "🪑",
+                description:
+                    "Ergonomic gaming chair with adjustable lumbar support and reclining back."
+            },
+
+            {
+                id: "P-1014",
+                name: "Luma Ambient Light",
+                sku: "VEL-LAL-014",
+                category: "Lifestyle",
+                price: 49,
+                comparePrice: 59,
+                stock: 44,
+                lowStock: 10,
+                sales: 544,
+                status: "draft",
+                icon: "🌈",
+                description:
+                    "Ambient smart lighting designed to add atmosphere to desks and rooms."
+            },
+
+            {
+                id: "P-1015",
+                name: "Core SSD 1TB",
+                sku: "VEL-CSD-015",
+                category: "Electronics",
+                price: 109,
+                comparePrice: 129,
+                stock: 26,
+                lowStock: 10,
+                sales: 934,
+                status: "active",
+                icon: "💾",
+                description:
+                    "High-speed 1TB solid-state drive for desktops, laptops and creative workflows."
+            },
+
+            {
+                id: "P-1016",
+                name: "Peak USB Microphone",
+                sku: "VEL-PUM-016",
+                category: "Audio",
+                price: 109,
+                comparePrice: 139,
+                stock: 3,
+                lowStock: 8,
+                sales: 264,
+                status: "archived",
+                icon: "🎤",
+                description:
+                    "Compact USB microphone designed for creators and voice recording."
+            }
+        ];
+
+        /* =========================================================
+           DOM HELPERS
+        ========================================================== */
+
+        const $ = (selector, root = document) =>
+            root.querySelector(selector);
+
+        const $$ = (selector, root = document) =>
+            Array.from(root.querySelectorAll(selector));
+
+        const escapeHtml = value => {
+            return String(value ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        };
+
+        const money = value => {
+            return "$" + Number(value || 0).toLocaleString(
+                "en-US",
+                {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                }
+            );
+        };
+
+        const notify = (message, type = "success") => {
+
+            if (
+                window.Veltrix &&
+                window.Veltrix.toast &&
+                typeof window.Veltrix.toast.show === "function"
+            ) {
+                window.Veltrix.toast.show(message, type);
+                return;
+            }
+
+            let container = $("#productLocalToast");
+
+            if (!container) {
+
+                container = document.createElement("div");
+
+                container.id = "productLocalToast";
+
+                Object.assign(
+                    container.style,
+                    {
+                        position: "fixed",
+                        right: "20px",
+                        bottom: "20px",
+                        zIndex: "20000",
+                        display: "grid",
+                        gap: "8px"
+                    }
+                );
+
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement("div");
+
+            Object.assign(
+                toast.style,
+                {
+                    padding: "12px 15px",
+                    borderRadius: "12px",
+                    background: "#111827",
+                    border: "1px solid rgba(148,163,184,.18)",
+                    color: "#fff",
+                    boxShadow: "0 20px 50px rgba(0,0,0,.3)",
+                    fontSize: "12px"
+                }
+            );
+
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        };
+
+        /* =========================================================
+           STORAGE
+        ========================================================== */
+
+        function loadProducts() {
+
+            try {
+
+                const raw = localStorage.getItem(STORAGE_KEY);
+
+                if (!raw) {
+                    state.products = structuredClone(defaultProducts);
+                    saveProducts();
+                    return;
+                }
+
+                const parsed = JSON.parse(raw);
+
+                if (Array.isArray(parsed) && parsed.length) {
+                    state.products = parsed;
+                } else {
+                    state.products = structuredClone(defaultProducts);
+                    saveProducts();
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "[Veltrix Products] Storage load failed:",
+                    error
+                );
+
+                state.products = structuredClone(defaultProducts);
+            }
+        }
+
+        function saveProducts() {
+
+            try {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(state.products)
+                );
+            } catch (error) {
+                console.warn(
+                    "[Veltrix Products] Storage save failed:",
+                    error
+                );
+            }
+        }
+
+        /* =========================================================
+           STOCK STATE
+        ========================================================== */
+
+        function getStockState(product) {
+
+            const stock = Number(product.stock || 0);
+            const threshold = Number(product.lowStock || 0);
+
+            if (stock <= 0) {
+                return "out";
+            }
+
+            if (stock <= threshold) {
+                return "low";
+            }
+
+            return "healthy";
+        }
+
+        function stockLabel(product) {
+
+            const type = getStockState(product);
+
+            if (type === "out") {
+                return "Out of stock";
+            }
+
+            if (type === "low") {
+                return "Low stock";
+            }
+
+            return "Healthy";
+        }
+
+        /* =========================================================
+           KPI RENDER
+        ========================================================== */
+
+        function renderKpis() {
+
+            const total = state.products.length;
+
+            const active = state.products.filter(
+                product => product.status === "active"
+            ).length;
+
+            const low = state.products.filter(
+                product => getStockState(product) === "low"
+            ).length;
+
+            const inventoryValue = state.products.reduce(
+                (sum, product) =>
+                    sum + Number(product.price || 0) *
+                    Number(product.stock || 0),
+                0
+            );
+
+            const out = state.products.filter(
+                product => getStockState(product) === "out"
+            ).length;
+
+            const healthy = state.products.filter(
+                product => getStockState(product) === "healthy"
+            ).length;
+
+            const archived = state.products.filter(
+                product => product.status === "archived"
+            ).length;
+
+            $("#totalProductsKpi").textContent =
+                total.toLocaleString();
+
+            $("#activeProductsKpi").textContent =
+                active.toLocaleString();
+
+            $("#lowStockKpi").textContent =
+                low.toLocaleString();
+
+            $("#inventoryValueKpi").textContent =
+                money(inventoryValue);
+
+            $("#healthyStockCount").textContent =
+                healthy.toLocaleString();
+
+            $("#healthLowStockCount").textContent =
+                low.toLocaleString();
+
+            $("#healthOutStockCount").textContent =
+                out.toLocaleString();
+
+            $("#healthArchivedCount").textContent =
+                archived.toLocaleString();
+
+            const denominator = Math.max(total, 1);
+
+            const score = Math.round(
+                (healthy / denominator) * 100
+            );
+
+            $("#healthScore").textContent =
+                score + "%";
+
+            $("#healthMeter").style.width =
+                score + "%";
+        }
+
+        /* =========================================================
+           CATEGORY FILTER
+        ========================================================== */
+
+        function renderCategories() {
+
+            const select = $("#productCategoryFilter");
+
+            if (!select) {
+                return;
+            }
+
+            const current = select.value;
+
+            const categories = [
+                ...new Set(
+                    state.products
+                        .map(product => product.category)
+                        .filter(Boolean)
+                )
+            ].sort(
+                (a, b) =>
+                    a.localeCompare(b)
+            );
+
+            select.innerHTML =
+                `<option value="all">All categories</option>` +
+                categories
+                    .map(
+                        category =>
+                            `<option value="${escapeHtml(category)}">
+                                ${escapeHtml(category)}
+                            </option>`
+                    )
+                    .join("");
+
+            if (
+                categories.includes(current)
+            ) {
+                select.value = current;
+            }
+        }
+
+        /* =========================================================
+           FILTER
+        ========================================================== */
+
+        function getFilteredProducts() {
+
+            const search =
+                ($("#productSearch")?.value || "")
+                    .trim()
+                    .toLowerCase();
+
+            const category =
+                $("#productCategoryFilter")?.value || "all";
+
+            const status =
+                $("#productStatusFilter")?.value || "all";
+
+            const stock =
+                $("#productStockFilter")?.value || "all";
+
+            const sort =
+                $("#productSort")?.value || "newest";
+
+            let products = state.products.filter(
+                product => {
+
+                    const searchable = [
+                        product.name,
+                        product.sku,
+                        product.category,
+                        product.description
+                    ]
+                        .join(" ")
+                        .toLowerCase();
+
+                    if (
+                        search &&
+                        !searchable.includes(search)
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        category !== "all" &&
+                        product.category !== category
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        status !== "all" &&
+                        product.status !== status
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        stock !== "all" &&
+                        getStockState(product) !== stock
+                    ) {
+                        return false;
+                    }
+
+                    return true;
+                }
+            );
+
+            products.sort(
+                (a, b) => {
+
+                    switch (sort) {
+
+                        case "name":
+                            return a.name.localeCompare(b.name);
+
+                        case "price-high":
+                            return Number(b.price) - Number(a.price);
+
+                        case "price-low":
+                            return Number(a.price) - Number(b.price);
+
+                        case "stock-high":
+                            return Number(b.stock) - Number(a.stock);
+
+                        case "stock-low":
+                            return Number(a.stock) - Number(b.stock);
+
+                        case "sales-high":
+                            return Number(b.sales) - Number(a.sales);
+
+                        default:
+                            return b.id.localeCompare(a.id);
+                    }
+                }
+            );
+
+            return products;
+        }
+
+        /* =========================================================
+           PRODUCT ROW
+        ========================================================== */
+
+        function productRow(product) {
+
+            const stockType =
+                getStockState(product);
+
+            const checked =
+                state.selected.has(product.id)
+                    ? "checked"
+                    : "";
+
+            const oldPrice =
+                Number(product.comparePrice || 0) >
+                Number(product.price || 0)
+                    ? `
+                        <span class="product-old-price">
+                            ${money(product.comparePrice)}
+                        </span>
+                    `
+                    : "";
+
+            return `
+                <tr data-product-row="${escapeHtml(product.id)}">
+
+                    <td>
+                        <input
+                            type="checkbox"
+                            class="product-check product-row-check"
+                            data-product-select="${escapeHtml(product.id)}"
+                            ${checked}
+                            aria-label="Select ${escapeHtml(product.name)}"
+                        >
+                    </td>
+
+                    <td>
+
+                        <div class="product-main">
+
+                            <div class="product-avatar">
+                                ${escapeHtml(product.icon || "📦")}
+                            </div>
+
+                            <div class="product-main-info">
+
+                                <strong>
+                                    ${escapeHtml(product.name)}
+                                </strong>
+
+                                <span>
+                                    ${escapeHtml(product.sku)}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <td>
+                        <span style="color:#cbd5e1;font-size:12px">
+                            ${escapeHtml(product.category)}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <span class="product-price">
+                            ${money(product.price)}
+                        </span>
+
+                        ${oldPrice}
+
+                    </td>
+
+                    <td>
+
+                        <span class="stock-value">
+
+                            <i class="stock-dot ${stockType}"></i>
+
+                            ${Number(product.stock).toLocaleString()}
+
+                        </span>
+
+                        <small
+                            style="
+                                display:block;
+                                margin-top:4px;
+                                color:#64748b;
+                                font-size:9px;
+                            "
+                        >
+                            ${stockLabel(product)}
+                        </small>
+
+                    </td>
+
+                    <td>
+                        <strong style="font-size:12px">
+                            ${Number(product.sales).toLocaleString()}
+                        </strong>
+                    </td>
+
+                    <td>
+
+                        <span class="status-pill ${escapeHtml(product.status)}">
+                            ${escapeHtml(
+                                product.status.charAt(0).toUpperCase() +
+                                product.status.slice(1)
+                            )}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="row-actions">
+
+                            <button
+                                type="button"
+                                class="product-btn small icon-only"
+                                data-product-action="view"
+                                data-product-id="${escapeHtml(product.id)}"
+                                title="View"
+                            >
+                                ◉
+                            </button>
+
+                            <button
+                                type="button"
+                                class="product-btn small icon-only"
+                                data-product-action="edit"
+                                data-product-id="${escapeHtml(product.id)}"
+                                title="Edit"
+                            >
+                                ✎
+                            </button>
+
+                            <button
+                                type="button"
+                                class="product-btn small icon-only danger"
+                                data-product-action="delete"
+                                data-product-id="${escapeHtml(product.id)}"
+                                title="Delete"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+        }
+
+        /* =========================================================
+           GRID CARD
+        ========================================================== */
+
+        function productCard(product) {
+
+            const stockType =
+                getStockState(product);
+
+            return `
+                <article
+                    style="
+                        position:relative;
+                        padding:16px;
+                        border:1px solid var(--product-border);
+                        border-radius:18px;
+                        background:rgba(15,23,42,.45);
+                    "
+                    data-product-card="${escapeHtml(product.id)}"
+                >
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:flex-start;
+                            gap:10px;
+                            margin-bottom:15px;
+                        "
+                    >
+
+                        <div
+                            style="
+                                width:55px;
+                                height:55px;
+                                display:grid;
+                                place-items:center;
+                                border-radius:15px;
+                                background:
+                                    linear-gradient(
+                                        135deg,
+                                        rgba(20,184,166,.16),
+                                        rgba(59,130,246,.12)
+                                    );
+                                font-size:25px;
+                            "
+                        >
+                            ${escapeHtml(product.icon || "📦")}
+                        </div>
+
+                        <span class="status-pill ${escapeHtml(product.status)}">
+                            ${escapeHtml(product.status)}
+                        </span>
+
+                    </div>
+
+                    <h3
+                        style="
+                            margin:0 0 5px;
+                            font-size:14px;
+                        "
+                    >
+                        ${escapeHtml(product.name)}
+                    </h3>
+
+                    <p
+                        style="
+                            margin:0 0 15px;
+                            color:#64748b;
+                            font-size:10px;
+                        "
+                    >
+                        ${escapeHtml(product.sku)}
+                    </p>
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:end;
+                            gap:10px;
+                            margin-bottom:15px;
+                        "
+                    >
+
+                        <div>
+                            <small
+                                style="
+                                    display:block;
+                                    color:#64748b;
+                                    font-size:9px;
+                                    margin-bottom:3px;
+                                "
+                            >
+                                Price
+                            </small>
+
+                            <strong style="font-size:19px">
+                                ${money(product.price)}
+                            </strong>
+                        </div>
+
+                        <div style="text-align:right">
+
+                            <small
+                                style="
+                                    display:block;
+                                    color:#64748b;
+                                    font-size:9px;
+                                    margin-bottom:3px;
+                                "
+                            >
+                                Stock
+                            </small>
+
+                            <strong>
+                                <i class="stock-dot ${stockType}"></i>
+                                ${Number(product.stock)}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:7px;
+                        "
+                    >
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            style="flex:1"
+                            data-product-action="view"
+                            data-product-id="${escapeHtml(product.id)}"
+                        >
+                            View
+                        </button>
+
+                        <button
+                            type="button"
+                            class="product-btn small"
+                            data-product-action="edit"
+                            data-product-id="${escapeHtml(product.id)}"
+                        >
+                            ✎
+                        </button>
+
+                    </div>
+
+                </article>
+            `;
+        }
+
+        /* =========================================================
+           PAGINATION
+        ========================================================== */
+
+        function renderPagination() {
+
+            const total = state.filtered.length;
+
+            const pages =
+                Math.max(
+                    1,
+                    Math.ceil(total / state.perPage)
+                );
+
+            if (state.page > pages) {
+                state.page = pages;
+            }
+
+            const start =
+                total === 0
+                    ? 0
+                    : (state.page - 1) * state.perPage + 1;
+
+            const end =
+                Math.min(
+                    total,
+                    state.page * state.perPage
+                );
+
+            $("#paginationInfo").textContent =
+                total === 0
+                    ? "Showing 0 products"
+                    : `Showing ${start}-${end} of ${total} products`;
+
+            const container =
+                $("#paginationButtons");
+
+            container.innerHTML = "";
+
+            const previous =
+                document.createElement("button");
+
+            previous.type = "button";
+            previous.className = "page-number";
+            previous.textContent = "‹";
+            previous.disabled = state.page === 1;
+
+            previous.addEventListener(
+                "click",
+                () => {
+                    if (state.page > 1) {
+                        state.page--;
+                        renderCatalog();
+                    }
+                }
+            );
+
+            container.appendChild(previous);
+
+            for (
+                let page = 1;
+                page <= pages;
+                page++
+            ) {
+
+                if (
+                    pages > 7 &&
+                    page > 3 &&
+                    page < pages - 2 &&
+                    Math.abs(page - state.page) > 1
+                ) {
+                    if (
+                        page === 4 ||
+                        page === pages - 3
+                    ) {
+                        const dots =
+                            document.createElement("span");
+
+                        dots.textContent = "…";
+                        dots.style.color = "#64748b";
+                        dots.style.padding = "0 4px";
+
+                        container.appendChild(dots);
+                    }
+
+                    continue;
+                }
+
+                const button =
+                    document.createElement("button");
+
+                button.type = "button";
+                button.className =
+                    "page-number" +
+                    (
+                        page === state.page
+                            ? " active"
+                            : ""
+                    );
+
+                button.textContent = page;
+
+                button.addEventListener(
+                    "click",
+                    () => {
+                        state.page = page;
+                        renderCatalog();
+                    }
+                );
+
+                container.appendChild(button);
+            }
+
+            const next =
+                document.createElement("button");
+
+            next.type = "button";
+            next.className = "page-number";
+            next.textContent = "›";
+            next.disabled = state.page === pages;
+
+            next.addEventListener(
+                "click",
+                () => {
+                    if (state.page < pages) {
+                        state.page++;
+                        renderCatalog();
+                    }
+                }
+            );
+
+            container.appendChild(next);
+        }
+
+        /* =========================================================
+           CATALOG RENDER
+        ========================================================== */
+
+        function renderCatalog() {
+
+            state.filtered =
+                getFilteredProducts();
+
+            const total =
+                state.filtered.length;
+
+            const start =
+                (state.page - 1) * state.perPage;
+
+            const visible =
+                state.filtered.slice(
+                    start,
+                    start + state.perPage
+                );
+
+            const table =
+                $("#productTableBody");
+
+            const grid =
+                $("#productGridView");
+
+            const empty =
+                $("#productEmpty");
+
+            table.innerHTML =
+                visible
+                    .map(productRow)
+                    .join("");
+
+            grid.innerHTML =
+                visible
+                    .map(productCard)
+                    .join("");
+
+            const hasProducts =
+                total > 0;
+
+            empty.classList.toggle(
+                "active",
+                !hasProducts
+            );
+
+            $("#productTableView").style.display =
+                state.view === "table" && hasProducts
+                    ? "block"
+                    : "none";
+
+            grid.style.display =
+                state.view === "grid" && hasProducts
+                    ? "grid"
+                    : "none";
+
+            renderPagination();
+            renderBulkBar();
+        }
+
+        /* =========================================================
+           BULK BAR
+        ========================================================== */
+
+        function renderBulkBar() {
+
+            const count =
+                state.selected.size;
+
+            const bar =
+                $("#catalogBulkbar");
+
+            bar.classList.toggle(
+                "active",
+                count > 0
+            );
+
+            $("#bulkSelectedCount").textContent =
+                `${count} selected`;
+
+            const allVisibleSelected =
+                state.filtered.length > 0 &&
+                state.filtered.every(
+                    product =>
+                        state.selected.has(product.id)
+                );
+
+            $("#selectAllProducts").checked =
+                allVisibleSelected;
+        }
+
+        /* =========================================================
+           STOCK COMMAND
+        ========================================================== */
+
+        function renderStockCommand() {
+
+            const lowProducts =
+                state.products
+                    .filter(
+                        product =>
+                            getStockState(product) !== "healthy"
+                    )
+                    .sort(
+                        (a, b) =>
+                            Number(a.stock) -
+                            Number(b.stock)
+                    )
+                    .slice(0, 3);
+
+            const container =
+                $("#stockCommandList");
+
+            if (!lowProducts.length) {
+
+                container.innerHTML = `
+                    <div
+                        style="
+                            grid-column:1/-1;
+                            padding:25px;
+                            text-align:center;
+                            color:#94a3b8;
+                            font-size:12px;
+                        "
+                    >
+                        ✓ All products have healthy stock levels.
+                    </div>
+                `;
+
+                return;
+            }
+
+            container.innerHTML =
+                lowProducts
+                    .map(
+                        product => `
+                            <div class="stock-alert">
+
+                                <div class="stock-alert-image">
+                                    ${escapeHtml(product.icon || "📦")}
+                                </div>
+
+                                <div class="stock-alert-info">
+                                    <strong>
+                                        ${escapeHtml(product.name)}
+                                    </strong>
+
+                                    <span>
+                                        ${escapeHtml(product.sku)}
+                                    </span>
+                                </div>
+
+                                <div class="stock-alert-count">
+                                    <strong>
+                                        ${Number(product.stock)}
+                                    </strong>
+
+                                    <span>
+                                        units left
+                                    </span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="product-btn small"
+                                    data-stock-alert-id="${escapeHtml(product.id)}"
+                                >
+                                    Fix
+                                </button>
+
+                            </div>
+                        `
+                    )
+                    .join("");
+        }
+
+        /* =========================================================
+           CHART
+        ========================================================== */
+
+        function renderChart() {
+
+            const canvas =
+                $("#inventoryChart");
+
+            if (!canvas || !window.Chart) {
+                return;
+            }
+
+            const ctx =
+                canvas.getContext("2d");
+
+            const categories = [
+                ...new Set(
+                    state.products.map(
+                        product => product.category
+                    )
+                )
+            ];
+
+            const values =
+                categories.map(
+                    category =>
+                        state.products
+                            .filter(
+                                product =>
+                                    product.category === category
+                            )
+                            .reduce(
+                                (sum, product) =>
+                                    sum +
+                                    Number(product.stock || 0),
+                                0
+                            )
+                );
+
+            if (state.chart) {
+                state.chart.destroy();
+            }
+
+            state.chart =
+                new Chart(
+                    ctx,
+                    {
+                        type: "bar",
+
+                        data: {
+                            labels: categories,
+
+                            datasets: [
+                                {
+                                    label: "Units in stock",
+                                    data: values,
+                                    borderRadius: 8,
+                                    borderSkipped: false
+                                }
+                            ]
+                        },
+
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+
+                            interaction: {
+                                intersect: false,
+                                mode: "index"
+                            },
+
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+
+                                tooltip: {
+                                    backgroundColor: "#0f172a",
+                                    padding: 12,
+                                    cornerRadius: 10
+                                }
+                            },
+
+                            scales: {
+
+                                x: {
+                                    grid: {
+                                        display: false
+                                    },
+
+                                    ticks: {
+                                        color: "#64748b",
+                                        font: {
+                                            size: 10
+                                        }
+                                    }
+                                },
+
+                                y: {
+                                    beginAtZero: true,
+
+                                    grid: {
+                                        color:
+                                            "rgba(148,163,184,.08)"
+                                    },
+
+                                    ticks: {
+                                        color: "#64748b",
+                                        font: {
+                                            size: 10
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                );
+        }
+
+        /* =========================================================
+           MODAL
+        ========================================================== */
+
+        function openProductModal(product = null) {
+
+            state.editingId =
+                product
+                    ? product.id
+                    : null;
+
+            $("#productEditorTitle").textContent =
+                product
+                    ? "Edit Product"
+                    : "Add Product";
+
+            $("#productEditorSubtitle").textContent =
+                product
+                    ? "Update catalog and inventory information."
+                    : "Create a new catalog product.";
+
+            $("#productSubmitText").textContent =
+                product
+                    ? "Save Changes"
+                    : "Create Product";
+
+            $("#productName").value =
+                product?.name || "";
+
+            $("#productSku").value =
+                product?.sku || "";
+
+            $("#productCategory").value =
+                product?.category || "";
+
+            $("#productPrice").value =
+                product?.price ?? "";
+
+            $("#productComparePrice").value =
+                product?.comparePrice ?? "";
+
+            $("#productStock").value =
+                product?.stock ?? "";
+
+            $("#productLowStock").value =
+                product?.lowStock ?? 10;
+
+            $("#productSales").value =
+                product?.sales ?? 0;
+
+            $("#productStatus").value =
+                product?.status || "active";
+
+            $("#productIcon").value =
+                product?.icon || "📦";
+
+            $("#productDescription").value =
+                product?.description || "";
+
+            const modal =
+                $("#productEditorModal");
+
+            modal.classList.add("active");
+            modal.setAttribute("aria-hidden", "false");
+
+            setTimeout(
+                () => $("#productName").focus(),
+                50
+            );
+        }
+
+        function closeProductModal() {
+
+            const modal =
+                $("#productEditorModal");
+
+            modal.classList.remove("active");
+            modal.setAttribute("aria-hidden", "true");
+
+            state.editingId = null;
+        }
+
+        /* =========================================================
+           ADD / EDIT SUBMIT
+        ========================================================== */
+
+        function handleProductSubmit(event) {
+
+            event.preventDefault();
+
+            const form =
+                new FormData(event.currentTarget);
+
+            const name =
+                String(form.get("name") || "").trim();
+
+            const sku =
+                String(form.get("sku") || "").trim();
+
+            const category =
+                String(form.get("category") || "").trim();
+
+            const price =
+                Number(form.get("price") || 0);
+
+            const comparePrice =
+                Number(form.get("comparePrice") || 0);
+
+            const stock =
+                Math.max(
+                    0,
+                    Number(form.get("stock") || 0)
+                );
+
+            const lowStock =
+                Math.max(
+                    0,
+                    Number(form.get("lowStock") || 0)
+                );
+
+            const sales =
+                Math.max(
+                    0,
+                    Number(form.get("sales") || 0)
+                );
+
+            const status =
+                String(form.get("status") || "active");
+
+            const icon =
+                String(form.get("icon") || "📦");
+
+            const description =
+                String(form.get("description") || "").trim();
+
+            if (!name || !sku || !category) {
+
+                notify(
+                    "Please complete the required fields.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const duplicateSku =
+                state.products.some(
+                    product =>
+                        product.sku.toLowerCase() ===
+                        sku.toLowerCase() &&
+                        product.id !== state.editingId
+                );
+
+            if (duplicateSku) {
+
+                notify(
+                    "That SKU is already in use.",
+                    "error"
+                );
+
+                return;
+            }
+
+            const productData = {
+                name,
+                sku,
+                category,
+                price,
+                comparePrice,
+                stock,
+                lowStock,
+                sales,
+                status,
+                icon,
+                description
+            };
+
+            if (state.editingId) {
+
+                const index =
+                    state.products.findIndex(
+                        product =>
+                            product.id === state.editingId
+                    );
+
+                if (index !== -1) {
+
+                    state.products[index] = {
+                        ...state.products[index],
+                        ...productData
+                    };
+
+                    notify(
+                        "Product updated successfully."
+                    );
+                }
+
+            } else {
+
+                const newProduct = {
+                    id:
+                        "P-" +
+                        Date.now()
+                            .toString()
+                            .slice(-8),
+
+                    ...productData
+                };
+
+                state.products.unshift(
+                    newProduct
+                );
+
+                notify(
+                    "Product created successfully."
+                );
+            }
+
+            saveProducts();
+            renderAll();
+            closeProductModal();
+        }
+
+        /* =========================================================
+           DRAWER
+        ========================================================== */
+
+        function openDrawer(productId) {
+
+            const product =
+                state.products.find(
+                    item =>
+                        item.id === productId
+                );
+
+            if (!product) {
+                return;
+            }
+
+            state.drawerId = productId;
+
+            $("#drawerCover").textContent =
+                product.icon || "📦";
+
+            $("#drawerProductName").textContent =
+                product.name;
+
+            $("#drawerProductSku").textContent =
+                product.sku;
+
+            $("#drawerProductPrice").textContent =
+                money(product.price);
+
+            $("#drawerSales").textContent =
+                Number(product.sales).toLocaleString();
+
+            $("#drawerStock").textContent =
+                Number(product.stock).toLocaleString();
+
+            $("#drawerValue").textContent =
+                money(
+                    Number(product.price) *
+                    Number(product.stock)
+                );
+
+            $("#drawerCategory").textContent =
+                product.category;
+
+            $("#drawerStockControl").textContent =
+                `${Number(product.stock).toLocaleString()} units`;
+
+            $("#drawerDescription").textContent =
+                product.description ||
+                "No description available.";
+
+            const status =
+                $("#drawerProductStatus");
+
+            status.className =
+                `status-pill ${product.status}`;
+
+            status.textContent =
+                product.status
+                    .charAt(0)
+                    .toUpperCase() +
+                product.status.slice(1);
+
+            $("#drawerToggleStatusButton").textContent =
+                product.status === "active"
+                    ? "Move to Draft"
+                    : "Activate Product";
+
+            const drawer =
+                $("#productDrawer");
+
+            drawer.classList.add("active");
+            drawer.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+        }
+
+        function closeDrawer() {
+
+            const drawer =
+                $("#productDrawer");
+
+            drawer.classList.remove("active");
+            drawer.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            state.drawerId = null;
+        }
+
+        /* =========================================================
+           EDIT FROM DRAWER
+        ========================================================== */
+
+        function editProduct(productId) {
+
+            const product =
+                state.products.find(
+                    item =>
+                        item.id === productId
+                );
+
+            if (!product) {
+                return;
+            }
+
+            closeDrawer();
+            openProductModal(product);
+        }
+
+        /* =========================================================
+           DELETE
+        ========================================================== */
+
+        function deleteProduct(productId) {
+
+            const product =
+                state.products.find(
+                    item =>
+                        item.id === productId
+                );
+
+            if (!product) {
+                return;
+            }
+
+            const confirmed =
+                window.confirm(
+                    `Delete "${product.name}"? This demo action cannot be undone.`
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+            state.products =
+                state.products.filter(
+                    item =>
+                        item.id !== productId
+                );
+
+            state.selected.delete(productId);
+
+            saveProducts();
+            renderAll();
+
+            if (state.drawerId === productId) {
+                closeDrawer();
+            }
+
+            notify(
+                "Product deleted."
+            );
+        }
+
+        /* =========================================================
+           STATUS
+        ========================================================== */
+
+        function toggleProductStatus(productId) {
+
+            const product =
+                state.products.find(
+                    item =>
+                        item.id === productId
+                );
+
+            if (!product) {
+                return;
+            }
+
+            product.status =
+                product.status === "active"
+                    ? "draft"
+                    : "active";
+
+            saveProducts();
+            renderAll();
+
+            if (state.drawerId === productId) {
+                openDrawer(productId);
+            }
+
+            notify(
+                `Product moved to ${product.status}.`
+            );
+        }
+
+        /* =========================================================
+           STOCK CHANGE
+        ========================================================== */
+
+        function adjustStock(productId, amount) {
+
+            const product =
+                state.products.find(
+                    item =>
+                        item.id === productId
+                );
+
+            if (!product) {
+                return;
+            }
+
+            product.stock =
+                Math.max(
+                    0,
+                    Number(product.stock || 0) +
+                    Number(amount)
+                );
+
+            saveProducts();
+            renderAll();
+
+            if (state.drawerId === productId) {
+                openDrawer(productId);
+            }
+
+            notify(
+                amount > 0
+                    ? `Added ${amount} unit${amount === 1 ? "" : "s"}.`
+                    : `Removed ${Math.abs(amount)} unit${Math.abs(amount) === 1 ? "" : "s"}.`
+            );
+        }
+
+        /* =========================================================
+           BULK ACTION
+        ========================================================== */
+
+        function bulkStatus(status) {
+
+            if (!state.selected.size) {
+                return;
+            }
+
+            state.products.forEach(
+                product => {
+
+                    if (
+                        state.selected.has(product.id)
+                    ) {
+                        product.status = status;
+                    }
+                }
+            );
+
+            saveProducts();
+
+            state.selected.clear();
+
+            renderAll();
+
+            notify(
+                `Selected products moved to ${status}.`
+            );
+        }
+
+        function bulkDelete() {
+
+            if (!state.selected.size) {
+                return;
+            }
+
+            const count =
+                state.selected.size;
+
+            const confirmed =
+                window.confirm(
+                    `Delete ${count} selected product${count === 1 ? "" : "s"}?`
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+            state.products =
+                state.products.filter(
+                    product =>
+                        !state.selected.has(product.id)
+                );
+
+            state.selected.clear();
+
+            saveProducts();
+            renderAll();
+
+            notify(
+                `${count} product${count === 1 ? "" : "s"} deleted.`
+            );
+        }
+
+        /* =========================================================
+           EXPORT CSV
+        ========================================================== */
+
+        function exportCSV() {
+
+            const products =
+                state.filtered.length
+                    ? state.filtered
+                    : state.products;
+
+            const headers = [
+                "id",
+                "name",
+                "sku",
+                "category",
+                "price",
+                "comparePrice",
+                "stock",
+                "lowStock",
+                "sales",
+                "status",
+                "description"
+            ];
+
+            const escapeCSV =
+                value => {
+                    const text =
+                        String(value ?? "");
+
+                    return `"${text.replaceAll('"', '""')}"`;
+                };
+
+            const lines = [
+                headers.join(",")
+            ];
+
+            products.forEach(
+                product => {
+
+                    lines.push(
+                        headers
+                            .map(
+                                key =>
+                                    escapeCSV(
+                                        product[key]
+                                    )
+                            )
+                            .join(",")
+                    );
+                }
+            );
+
+            const blob =
+                new Blob(
+                    [lines.join("\n")],
+                    {
+                        type: "text/csv;charset=utf-8;"
+                    }
+                );
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const anchor =
+                document.createElement("a");
+
+            anchor.href = url;
+
+            anchor.download =
+                `veltrix-products-${new Date()
+                    .toISOString()
+                    .slice(0, 10)}.csv`;
+
+            document.body.appendChild(anchor);
+
+            anchor.click();
+
+            anchor.remove();
+
+            URL.revokeObjectURL(url);
+
+            notify(
+                `${products.length} products exported as CSV.`
+            );
+        }
+
+        /* =========================================================
+           IMPORT
+        ========================================================== */
+
+        function openImportModal() {
+
+            const modal =
+                $("#productImportModal");
+
+            modal.classList.add("active");
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+        }
+
+        function closeImportModal() {
+
+            const modal =
+                $("#productImportModal");
+
+            modal.classList.remove("active");
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+        }
+
+        function importDemoProducts() {
+
+            const demo = [
+                {
+                    id: "P-" + Date.now(),
+                    name: "Flow Portable SSD",
+                    sku: "VEL-FPS-" + Math.floor(Math.random() * 900),
+                    category: "Electronics",
+                    price: 119,
+                    comparePrice: 139,
+                    stock: 28,
+                    lowStock: 8,
+                    sales: 0,
+                    status: "active",
+                    icon: "💿",
+                    description:
+                        "Fast portable storage for creators and professionals."
+                },
+
+                {
+                    id: "P-" + (Date.now() + 1),
+                    name: "Mono Desk Mat",
+                    sku: "VEL-MDM-" + Math.floor(Math.random() * 900),
+                    category: "Office",
+                    price: 29,
+                    comparePrice: 39,
+                    stock: 65,
+                    lowStock: 15,
+                    sales: 0,
+                    status: "active",
+                    icon: "🖥️",
+                    description:
+                        "Minimal desk mat designed for clean workspaces."
+                }
+            ];
+
+            state.products.unshift(...demo);
+
+            saveProducts();
+            renderAll();
+            closeImportModal();
+
+            notify(
+                "2 demo products imported."
+            );
+        }
+
+        function handleCSVImport(file) {
+
+            if (!file) {
+                return;
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                event => {
+
+                    const text =
+                        String(
+                            event.target.result || ""
+                        );
+
+                    const lines =
+                        text
+                            .split(/\r?\n/)
+                            .filter(Boolean);
+
+                    if (lines.length < 2) {
+
+                        notify(
+                            "The CSV file does not contain product rows.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+                    const headers =
+                        lines[0]
+                            .split(",")
+                            .map(
+                                item =>
+                                    item
+                                        .trim()
+                                        .replace(/^"|"$/g, "")
+                            );
+
+                    let imported = 0;
+
+                    for (
+                        let index = 1;
+                        index < lines.length;
+                        index++
+                    ) {
+
+                        const columns =
+                            lines[index]
+                                .split(",")
+                                .map(
+                                    item =>
+                                        item
+                                            .trim()
+                                            .replace(/^"|"$/g, "")
+                                );
+
+                        const row = {};
+
+                        headers.forEach(
+                            (header, headerIndex) => {
+                                row[header] =
+                                    columns[headerIndex] ?? "";
+                            }
+                        );
+
+                        if (!row.name) {
+                            continue;
+                        }
+
+                        state.products.unshift(
+                            {
+                                id:
+                                    "P-" +
+                                    Date.now() +
+                                    "-" +
+                                    index,
+
+                                name:
+                                    row.name,
+
+                                sku:
+                                    row.sku ||
+                                    "IMPORTED-" +
+                                    index,
+
+                                category:
+                                    row.category ||
+                                    "Imported",
+
+                                price:
+                                    Number(row.price || 0),
+
+                                comparePrice:
+                                    Number(
+                                        row.comparePrice || 0
+                                    ),
+
+                                stock:
+                                    Number(row.stock || 0),
+
+                                lowStock:
+                                    Number(
+                                        row.lowStock || 10
+                                    ),
+
+                                sales:
+                                    Number(row.sales || 0),
+
+                                status:
+                                    ["active", "draft", "archived"]
+                                        .includes(row.status)
+                                        ? row.status
+                                        : "active",
+
+                                icon:
+                                    row.icon || "📦",
+
+                                description:
+                                    row.description || ""
+                            }
+                        );
+
+                        imported++;
+                    }
+
+                    if (imported) {
+
+                        saveProducts();
+                        renderAll();
+
+                        closeImportModal();
+
+                        notify(
+                            `${imported} product${imported === 1 ? "" : "s"} imported successfully.`
+                        );
+
+                    } else {
+
+                        notify(
+                            "No valid products were found.",
+                            "error"
+                        );
+                    }
+                };
+
+            reader.readAsText(file);
+        }
+
+        /* =========================================================
+           SYNC
+        ========================================================== */
+
+        function syncInventory() {
+
+            if (state.syncRunning) {
+                return;
+            }
+
+            state.syncRunning = true;
+
+            const button =
+                $("#refreshProductsButton");
+
+            const original =
+                button.innerHTML;
+
+            button.disabled = true;
+            button.innerHTML =
+                "↻ Syncing...";
+
+            setTimeout(
+                () => {
+
+                    state.products.forEach(
+                        product => {
+
+                            /*
+                             * Demo synchronization:
+                             * slightly updates sales for active
+                             * products without changing user data
+                             * dramatically.
+                             */
+
+                            if (
+                                product.status === "active"
+                            ) {
+                                product.sales +=
+                                    Math.random() > .65
+                                        ? 1
+                                        : 0;
+                            }
+                        }
+                    );
+
+                    saveProducts();
+                    renderAll();
+
+                    state.syncRunning = false;
+
+                    button.disabled = false;
+                    button.innerHTML = original;
+
+                    notify(
+                        "Inventory synchronized successfully."
+                    );
+
+                },
+                1200
+            );
+        }
+
+        /* =========================================================
+           VIEW MODE
+        ========================================================== */
+
+        function setView(view) {
+
+            state.view =
+                view === "grid"
+                    ? "grid"
+                    : "table";
+
+            $("#tableViewButton")?.classList.toggle(
+                "primary",
+                state.view === "table"
+            );
+
+            $("#gridViewButton")?.classList.toggle(
+                "primary",
+                state.view === "grid"
+            );
+
+            renderCatalog();
+        }
+
+        /* =========================================================
+           RENDER EVERYTHING
+        ========================================================== */
+
+        function renderAll() {
+
+            renderKpis();
+            renderCategories();
+            renderCatalog();
+            renderStockCommand();
+            renderChart();
+        }
+
+        /* =========================================================
+           EVENT: PRODUCT TABLE ACTIONS
+        ========================================================== */
+
+        function bindCatalogDelegation() {
+
+            const table =
+                $("#productTableView");
+
+            const grid =
+                $("#productGridView");
+
+            const handler =
+                event => {
+
+                    const actionButton =
+                        event.target.closest(
+                            "[data-product-action]"
+                        );
+
+                    if (!actionButton) {
+                        return;
+                    }
+
+                    const action =
+                        actionButton.dataset.productAction;
+
+                    const id =
+                        actionButton.dataset.productId;
+
+                    if (!id) {
+                        return;
+                    }
+
+                    if (action === "view") {
+                        openDrawer(id);
+                    }
+
+                    if (action === "edit") {
+                        editProduct(id);
+                    }
+
+                    if (action === "delete") {
+                        deleteProduct(id);
+                    }
+                };
+
+            table.addEventListener(
+                "click",
+                handler
+            );
+
+            grid.addEventListener(
+                "click",
+                handler
+            );
+        }
+
+        /* =========================================================
+           SELECT PRODUCT
+        ========================================================== */
+
+        function bindSelection() {
+
+            $("#productTableBody")
+                .addEventListener(
+                    "change",
+                    event => {
+
+                        const checkbox =
+                            event.target.closest(
+                                "[data-product-select]"
+                            );
+
+                        if (!checkbox) {
+                            return;
+                        }
+
+                        const id =
+                            checkbox.dataset.productSelect;
+
+                        if (checkbox.checked) {
+                            state.selected.add(id);
+                        } else {
+                            state.selected.delete(id);
+                        }
+
+                        renderBulkBar();
+                    }
+                );
+
+            $("#selectAllProducts")
+                .addEventListener(
+                    "change",
+                    event => {
+
+                        if (event.target.checked) {
+
+                            state.filtered.forEach(
+                                product =>
+                                    state.selected.add(
+                                        product.id
+                                    )
+                            );
+
+                        } else {
+
+                            state.filtered.forEach(
+                                product =>
+                                    state.selected.delete(
+                                        product.id
+                                    )
+                            );
+                        }
+
+                        renderCatalog();
+                    }
+                );
+        }
+
+        /* =========================================================
+           SEARCH / FILTER EVENTS
+        ========================================================== */
+
+        function bindFilters() {
+
+            [
+                "#productSearch",
+                "#productCategoryFilter",
+                "#productStatusFilter",
+                "#productStockFilter",
+                "#productSort"
+            ].forEach(
+                selector => {
+
+                    const element =
+                        $(selector);
+
+                    if (!element) {
+                        return;
+                    }
+
+                    element.addEventListener(
+                        "input",
+                        () => {
+
+                            state.page = 1;
+                            renderCatalog();
+                        }
+                    );
+
+                    element.addEventListener(
+                        "change",
+                        () => {
+
+                            state.page = 1;
+                            renderCatalog();
+                        }
+                    );
+                }
+            );
+        }
+
+        /* =========================================================
+           STOCK COMMAND ACTION
+        ========================================================== */
+
+        function bindStockCommand() {
+
+            $("#stockCommandList")
+                .addEventListener(
+                    "click",
+                    event => {
+
+                        const button =
+                            event.target.closest(
+                                "[data-stock-alert-id]"
+                            );
+
+                        if (!button) {
+                            return;
+                        }
+
+                        const id =
+                            button.dataset.stockAlertId;
+
+                        openDrawer(id);
+                    }
+                );
+
+            $("#showLowStockButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        $("#productStockFilter").value =
+                            "low";
+
+                        state.page = 1;
+
+                        renderCatalog();
+
+                        document
+                            .querySelector(".catalog-panel")
+                            ?.scrollIntoView(
+                                {
+                                    behavior: "smooth",
+                                    block: "start"
+                                }
+                            );
+
+                        notify(
+                            "Showing low-stock products."
+                        );
+                    }
+                );
+        }
+
+        /* =========================================================
+           DRAWER ACTIONS
+        ========================================================== */
+
+        function bindDrawer() {
+
+            $("#drawerCloseButton")
+                .addEventListener(
+                    "click",
+                    closeDrawer
+                );
+
+            $("#productDrawer")
+                .addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            $("#productDrawer")
+                        ) {
+                            closeDrawer();
+                        }
+                    }
+                );
+
+            $("#drawerIncreaseStock")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.drawerId) {
+                            adjustStock(
+                                state.drawerId,
+                                1
+                            );
+                        }
+                    }
+                );
+
+            $("#drawerDecreaseStock")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.drawerId) {
+                            adjustStock(
+                                state.drawerId,
+                                -1
+                            );
+                        }
+                    }
+                );
+
+            $("#drawerEditButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.drawerId) {
+                            editProduct(
+                                state.drawerId
+                            );
+                        }
+                    }
+                );
+
+            $("#drawerDeleteButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.drawerId) {
+                            deleteProduct(
+                                state.drawerId
+                            );
+                        }
+                    }
+                );
+
+            $("#drawerToggleStatusButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.drawerId) {
+                            toggleProductStatus(
+                                state.drawerId
+                            );
+                        }
+                    }
+                );
+        }
+
+        /* =========================================================
+           MODAL EVENTS
+        ========================================================== */
+
+        function bindModals() {
+
+            $("#addProductButton")
+                .addEventListener(
+                    "click",
+                    () => openProductModal()
+                );
+
+            $("#emptyAddProductButton")
+                .addEventListener(
+                    "click",
+                    () => openProductModal()
+                );
+
+            $$("[data-close-product-modal]")
+                .forEach(
+                    button =>
+                        button.addEventListener(
+                            "click",
+                            closeProductModal
+                        )
+                );
+
+            $("#productEditorModal")
+                .addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            $("#productEditorModal")
+                        ) {
+                            closeProductModal();
+                        }
+                    }
+                );
+
+            $("#productForm")
+                .addEventListener(
+                    "submit",
+                    handleProductSubmit
+                );
+
+            $("#importProductsButton")
+                .addEventListener(
+                    "click",
+                    openImportModal
+                );
+
+            $("#quickImportButton")
+                .addEventListener(
+                    "click",
+                    openImportModal
+                );
+
+            $$("[data-close-import-modal]")
+                .forEach(
+                    button =>
+                        button.addEventListener(
+                            "click",
+                            closeImportModal
+                        )
+                );
+
+            $("#productImportModal")
+                .addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            $("#productImportModal")
+                        ) {
+                            closeImportModal();
+                        }
+                    }
+                );
+
+            $("#chooseProductFileButton")
+                .addEventListener(
+                    "click",
+                    () =>
+                        $("#productImportFile").click()
+                );
+
+            $("#productImportFile")
+                .addEventListener(
+                    "change",
+                    event => {
+
+                        const file =
+                            event.target.files?.[0];
+
+                        if (!file) {
+                            return;
+                        }
+
+                        $("#importFileName").textContent =
+                            file.name;
+
+                        handleCSVImport(file);
+                    }
+                );
+
+            $("#importDemoButton")
+                .addEventListener(
+                    "click",
+                    importDemoProducts
+                );
+        }
+
+        /* =========================================================
+           BULK EVENTS
+        ========================================================== */
+
+        function bindBulkActions() {
+
+            $("#bulkActivateButton")
+                .addEventListener(
+                    "click",
+                    () =>
+                        bulkStatus("active")
+                );
+
+            $("#bulkDraftButton")
+                .addEventListener(
+                    "click",
+                    () =>
+                        bulkStatus("draft")
+                );
+
+            $("#bulkArchiveButton")
+                .addEventListener(
+                    "click",
+                    () =>
+                        bulkStatus("archived")
+                );
+
+            $("#bulkDeleteButton")
+                .addEventListener(
+                    "click",
+                    bulkDelete
+                );
+
+            $("#clearSelectionButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        state.selected.clear();
+                        renderCatalog();
+
+                    }
+                );
+        }
+
+        /* =========================================================
+           HEADER ACTIONS
+        ========================================================== */
+
+        function bindHeaderActions() {
+
+            $("#refreshProductsButton")
+                .addEventListener(
+                    "click",
+                    syncInventory
+                );
+
+            $("#exportProductsButton")
+                .addEventListener(
+                    "click",
+                    exportCSV
+                );
+
+            $("#quickExportButton")
+                .addEventListener(
+                    "click",
+                    exportCSV
+                );
+
+            $("#quickStockButton")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        $("#productStockFilter").value =
+                            "low";
+
+                        state.page = 1;
+
+                        renderCatalog();
+
+                        document
+                            .querySelector(".catalog-panel")
+                            ?.scrollIntoView(
+                                {
+                                    behavior: "smooth"
+                                }
+                            );
+
+                        notify(
+                            "Stock review opened."
+                        );
+                    }
+                );
+
+            $("#tableViewButton")
+                .addEventListener(
+                    "click",
+                    () => setView("table")
+                );
+
+            $("#gridViewButton")
+                .addEventListener(
+                    "click",
+                    () => setView("grid")
+                );
+
+            $("#inventoryChartPeriod")
+                .addEventListener(
+                    "change",
+                    event => {
+
+                        const period =
+                            event.target.value;
+
+                        notify(
+                            `Inventory chart updated to ${period}-day view.`
+                        );
+
+                        renderChart();
+                    }
+                );
+        }
+
+        /* =========================================================
+           KEYBOARD SHORTCUTS
+        ========================================================== */
+
+        function bindKeyboard() {
+
+            document.addEventListener(
+                "keydown",
+                event => {
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        closeProductModal();
+                        closeImportModal();
+                        closeDrawer();
+
+                        return;
+                    }
+
+                    const target =
+                        event.target;
+
+                    const isTyping =
+                        target &&
+                        (
+                            target.matches("input") ||
+                            target.matches("textarea") ||
+                            target.matches("select")
+                        );
+
+                    if (
+                        event.key.toLowerCase() === "n" &&
+                        !isTyping
+                    ) {
+
+                        event.preventDefault();
+
+                        openProductModal();
+                    }
+
+                    if (
+                        event.key === "/" &&
+                        !isTyping
+                    ) {
+
+                        event.preventDefault();
+
+                        $("#productSearch").focus();
+                    }
+                }
+            );
+        }
+
+        /* =========================================================
+           INITIALIZE
+        ========================================================== */
+
+        function init() {
+
+            loadProducts();
+
+            renderAll();
+
+            bindCatalogDelegation();
+            bindSelection();
+            bindFilters();
+            bindStockCommand();
+            bindDrawer();
+            bindModals();
+            bindBulkActions();
+            bindHeaderActions();
+            bindKeyboard();
+
+            /*
+             * Small delay allows the global Veltrix engine to finish
+             * booting before this page performs its own final refresh.
+             */
+
+            setTimeout(
+                renderAll,
+                500
+            );
+        }
+
+        /* =========================================================
+           GLOBAL PAGE API
+        ========================================================== */
+
+        window.VeltrixProducts = {
+            version: "1.0.0",
+
+            getProducts: () =>
+                structuredClone(state.products),
+
+            addProduct: product => {
+
+                state.products.unshift({
+                    id:
+                        "P-" +
+                        Date.now(),
+
+                    ...product
+                });
+
+                saveProducts();
+                renderAll();
+            },
+
+            updateProduct: (
+                id,
+                changes
+            ) => {
+
+                const product =
+                    state.products.find(
+                        item =>
+                            item.id === id
+                    );
+
+                if (!product) {
+                    return false;
+                }
+
+                Object.assign(
+                    product,
+                    changes
+                );
+
+                saveProducts();
+                renderAll();
+
+                return true;
+            },
+
+            deleteProduct,
+
+            adjustStock,
+
+            exportCSV,
+
+            refresh: renderAll
+        };
+
+        /* =========================================================
+           START
+        ========================================================== */
+
+        if (
+            document.readyState === "loading"
+        ) {
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                init,
+                {
+                    once: true
+                }
+            );
+
+        } else {
+
+            init();
+        }
+
+    })();
+    </script>
+
+</body>
+</html>
