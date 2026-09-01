@@ -1,0 +1,3654 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Veltrix Business Management Platform — Cute 404 Page"
+    >
+
+    <meta name="theme-color" content="#8b5cf6">
+
+    <title>404 — Page Not Found | Veltrix</title>
+
+    <!-- =========================================================
+         VELTRIX GLOBAL STYLES
+    ========================================================== -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- =========================================================
+         OPTIONAL GOOGLE FONT
+         The page still works if the font is unavailable.
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================================================
+         CHART / ICON SUPPORT
+         script.js handles the main application logic.
+    ========================================================== -->
+    <script src="../js/script.js" defer></script>
+
+    <!-- =========================================================
+         CUTE 404 PAGE STYLES
+    ========================================================== -->
+    <style>
+        /* =====================================================
+           ROOT
+        ====================================================== */
+
+        :root {
+            --cute-pink: #f472b6;
+            --cute-pink-soft: #fce7f3;
+            --cute-purple: #a78bfa;
+            --cute-purple-soft: #ede9fe;
+            --cute-blue: #7dd3fc;
+            --cute-blue-soft: #e0f2fe;
+            --cute-mint: #86efac;
+            --cute-mint-soft: #dcfce7;
+            --cute-peach: #fdba74;
+            --cute-peach-soft: #ffedd5;
+
+            --cute-text: #30263d;
+            --cute-muted: #786c84;
+
+            --cute-card: rgba(255, 255, 255, 0.82);
+            --cute-border: rgba(255, 255, 255, 0.72);
+
+            --cute-shadow:
+                0 30px 80px rgba(79, 48, 103, 0.12),
+                0 10px 30px rgba(244, 114, 182, 0.08);
+
+            --cute-radius-xl: 34px;
+            --cute-radius-lg: 26px;
+            --cute-radius-md: 20px;
+
+            --cute-transition:
+                280ms cubic-bezier(.2, .8, .2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Nunito", "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* =====================================================
+           PAGE WRAPPER
+        ====================================================== */
+
+        .veltrix-404-page {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .veltrix-404-page *,
+        .veltrix-404-page *::before,
+        .veltrix-404-page *::after {
+            box-sizing: border-box;
+        }
+
+        /* =====================================================
+           DREAMY BACKGROUND
+        ====================================================== */
+
+        .cute-background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            overflow: hidden;
+            pointer-events: none;
+            background:
+                radial-gradient(
+                    circle at 12% 12%,
+                    rgba(244, 114, 182, .12),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 88% 18%,
+                    rgba(167, 139, 250, .13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(125, 211, 252, .11),
+                    transparent 30%
+                );
+        }
+
+        .cute-background::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            top: -320px;
+            left: -220px;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244, 114, 182, .18) 0%,
+                    rgba(244, 114, 182, .06) 38%,
+                    transparent 70%
+                );
+            filter: blur(8px);
+            animation: backgroundFloatOne 12s ease-in-out infinite;
+        }
+
+        .cute-background::after {
+            content: "";
+            position: absolute;
+            width: 650px;
+            height: 650px;
+            right: -260px;
+            bottom: -300px;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(167, 139, 250, .18) 0%,
+                    rgba(125, 211, 252, .06) 42%,
+                    transparent 72%
+                );
+            animation: backgroundFloatTwo 14s ease-in-out infinite;
+        }
+
+        @keyframes backgroundFloatOne {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(50px, 30px, 0) scale(1.08);
+            }
+        }
+
+        @keyframes backgroundFloatTwo {
+            0%, 100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            50% {
+                transform: translate3d(-45px, -35px, 0) scale(1.1);
+            }
+        }
+
+        /* =====================================================
+           FLOATING DECORATIONS
+        ====================================================== */
+
+        .cute-decor {
+            position: fixed;
+            z-index: -2;
+            pointer-events: none;
+            user-select: none;
+            line-height: 1;
+            opacity: .72;
+        }
+
+        .cute-decor.one {
+            top: 14%;
+            left: 9%;
+            font-size: 25px;
+            animation: cuteFloat 5s ease-in-out infinite;
+        }
+
+        .cute-decor.two {
+            top: 23%;
+            right: 12%;
+            font-size: 20px;
+            animation: cuteFloat 6s ease-in-out infinite reverse;
+        }
+
+        .cute-decor.three {
+            bottom: 20%;
+            left: 15%;
+            font-size: 18px;
+            animation: cuteFloat 7s ease-in-out infinite;
+        }
+
+        .cute-decor.four {
+            bottom: 14%;
+            right: 16%;
+            font-size: 26px;
+            animation: cuteFloat 5.5s ease-in-out infinite reverse;
+        }
+
+        .cute-decor.five {
+            top: 11%;
+            left: 45%;
+            font-size: 14px;
+            animation: cuteTwinkle 3s ease-in-out infinite;
+        }
+
+        .cute-decor.six {
+            top: 38%;
+            left: 5%;
+            font-size: 16px;
+            animation: cuteTwinkle 4s ease-in-out infinite reverse;
+        }
+
+        .cute-decor.seven {
+            top: 48%;
+            right: 5%;
+            font-size: 16px;
+            animation: cuteTwinkle 3.8s ease-in-out infinite;
+        }
+
+        @keyframes cuteFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-4deg);
+            }
+            50% {
+                transform: translateY(-16px) rotate(5deg);
+            }
+        }
+
+        @keyframes cuteTwinkle {
+            0%, 100% {
+                opacity: .25;
+                transform: scale(.85) rotate(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.18) rotate(12deg);
+            }
+        }
+
+        /* =====================================================
+           MAIN ERROR AREA
+        ====================================================== */
+
+        .cute-404-main {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding:
+                110px
+                clamp(18px, 4vw, 50px)
+                70px;
+        }
+
+        .cute-404-container {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           TOP MINI BADGE
+        ====================================================== */
+
+        .cute-status-badge {
+            width: fit-content;
+            max-width: 100%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 9px 15px;
+            border: 1px solid rgba(244, 114, 182, .22);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .66);
+            box-shadow:
+                0 8px 30px rgba(244, 114, 182, .09);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            color: var(--cute-muted);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .01em;
+        }
+
+        .cute-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(
+                135deg,
+                var(--cute-pink),
+                var(--cute-purple)
+            );
+            box-shadow:
+                0 0 0 5px rgba(244, 114, 182, .08),
+                0 0 18px rgba(244, 114, 182, .38);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: .7;
+            }
+        }
+
+        /* =====================================================
+           HERO GRID
+        ====================================================== */
+
+        .cute-404-grid {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1.08fr)
+                minmax(360px, .92fr);
+            gap: clamp(25px, 5vw, 72px);
+            align-items: center;
+        }
+
+        /* =====================================================
+           LEFT CONTENT
+        ====================================================== */
+
+        .cute-copy {
+            position: relative;
+            z-index: 2;
+            padding: clamp(8px, 2vw, 20px) 0;
+        }
+
+        .cute-small-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: var(--cute-pink);
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .cute-small-label::before {
+            content: "";
+            width: 26px;
+            height: 2px;
+            border-radius: 999px;
+            background: linear-gradient(
+                90deg,
+                var(--cute-pink),
+                var(--cute-purple)
+            );
+        }
+
+        .cute-title {
+            margin: 0;
+            max-width: 720px;
+            color: var(--cute-text);
+            font-size: clamp(42px, 6vw, 78px);
+            line-height: .98;
+            font-weight: 900;
+            letter-spacing: -.055em;
+        }
+
+        .cute-title-highlight {
+            position: relative;
+            display: inline-block;
+            background:
+                linear-gradient(
+                    110deg,
+                    #f472b6 0%,
+                    #a78bfa 48%,
+                    #60a5fa 100%
+                );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter:
+                drop-shadow(0 10px 22px rgba(167, 139, 250, .12));
+        }
+
+        .cute-title-highlight::after {
+            content: "";
+            position: absolute;
+            left: 4%;
+            right: 4%;
+            bottom: -8px;
+            height: 9px;
+            border-radius: 999px;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(244,114,182,.15),
+                    rgba(167,139,250,.2)
+                );
+            transform: rotate(-2deg);
+            filter: blur(2px);
+        }
+
+        .cute-description {
+            max-width: 590px;
+            margin: 24px 0 0;
+            color: var(--cute-muted);
+            font-size: clamp(15px, 1.5vw, 18px);
+            line-height: 1.75;
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           ACTIONS
+        ====================================================== */
+
+        .cute-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .cute-btn {
+            position: relative;
+            min-height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 0 20px;
+            border: 1px solid transparent;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 900;
+            text-decoration: none;
+            cursor: pointer;
+            overflow: hidden;
+            transition:
+                transform var(--cute-transition),
+                box-shadow var(--cute-transition),
+                border-color var(--cute-transition),
+                background var(--cute-transition);
+        }
+
+        .cute-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.42),
+                    transparent
+                );
+            transform: skewX(-18deg);
+            transition: left .65s ease;
+        }
+
+        .cute-btn:hover::before {
+            left: 150%;
+        }
+
+        .cute-btn:hover {
+            transform: translateY(-4px);
+        }
+
+        .cute-btn:active {
+            transform: translateY(-1px) scale(.98);
+        }
+
+        .cute-btn-primary {
+            color: #fff;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f472b6 0%,
+                    #a78bfa 52%,
+                    #7c83fd 100%
+                );
+            box-shadow:
+                0 14px 30px rgba(167, 139, 250, .23),
+                0 5px 12px rgba(244, 114, 182, .12);
+        }
+
+        .cute-btn-primary:hover {
+            box-shadow:
+                0 18px 42px rgba(167, 139, 250, .30),
+                0 8px 20px rgba(244, 114, 182, .18);
+        }
+
+        .cute-btn-secondary {
+            color: var(--cute-text);
+            background: rgba(255,255,255,.72);
+            border-color: rgba(167,139,250,.18);
+            box-shadow:
+                0 10px 25px rgba(79,48,103,.06);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .cute-btn-secondary:hover {
+            border-color: rgba(244,114,182,.35);
+            box-shadow:
+                0 15px 35px rgba(79,48,103,.09);
+        }
+
+        .cute-btn-icon {
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        /* =====================================================
+           URL STATUS CARD
+        ====================================================== */
+
+        .cute-url-card {
+            margin-top: 28px;
+            width: min(590px, 100%);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            border: 1px solid rgba(167,139,250,.14);
+            border-radius: 18px;
+            background: rgba(255,255,255,.56);
+            box-shadow:
+                0 10px 28px rgba(79,48,103,.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .cute-url-icon {
+            flex: 0 0 auto;
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(244,114,182,.14),
+                    rgba(167,139,250,.15)
+                );
+            font-size: 18px;
+        }
+
+        .cute-url-content {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .cute-url-label {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--cute-muted);
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .cute-url {
+            display: block;
+            max-width: 100%;
+            overflow: hidden;
+            color: var(--cute-text);
+            font-family: "DM Sans", monospace;
+            font-size: 12px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cute-copy-url {
+            flex: 0 0 auto;
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border: 0;
+            border-radius: 11px;
+            background: rgba(167,139,250,.09);
+            color: var(--cute-purple);
+            cursor: pointer;
+            font-size: 15px;
+            transition:
+                transform var(--cute-transition),
+                background var(--cute-transition);
+        }
+
+        .cute-copy-url:hover {
+            transform: translateY(-2px);
+            background: rgba(244,114,182,.13);
+        }
+
+        /* =====================================================
+           RIGHT ILLUSTRATION
+        ====================================================== */
+
+        .cute-visual {
+            position: relative;
+            min-height: 500px;
+            display: grid;
+            place-items: center;
+        }
+
+        .cute-orbit {
+            position: absolute;
+            width: min(470px, 90%);
+            aspect-ratio: 1;
+            border: 1px dashed rgba(167,139,250,.20);
+            border-radius: 50%;
+            animation: orbitRotate 24s linear infinite;
+        }
+
+        .cute-orbit::before,
+        .cute-orbit::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 7px rgba(244,114,182,.05),
+                0 0 20px rgba(244,114,182,.2);
+        }
+
+        .cute-orbit::before {
+            top: 16%;
+            left: 5%;
+            background: var(--cute-pink);
+        }
+
+        .cute-orbit::after {
+            right: 7%;
+            bottom: 15%;
+            background: var(--cute-purple);
+        }
+
+        @keyframes orbitRotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cute-glow {
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(244,114,182,.18) 0%,
+                    rgba(167,139,250,.11) 40%,
+                    transparent 72%
+                );
+            filter: blur(18px);
+            animation: mascotGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes mascotGlow {
+            0%, 100% {
+                transform: scale(.96);
+                opacity: .75;
+            }
+            50% {
+                transform: scale(1.07);
+                opacity: 1;
+            }
+        }
+
+        /* =====================================================
+           MASCOT
+        ====================================================== */
+
+        .cute-mascot {
+            position: relative;
+            width: 270px;
+            height: 310px;
+            z-index: 3;
+            animation: mascotFloat 4.8s ease-in-out infinite;
+            filter:
+                drop-shadow(0 25px 25px rgba(78, 56, 95, .12));
+        }
+
+        @keyframes mascotFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+            50% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+        }
+
+        .mascot-shadow {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            width: 150px;
+            height: 28px;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            background: rgba(78,56,95,.10);
+            filter: blur(10px);
+            animation: mascotShadow 4.8s ease-in-out infinite;
+        }
+
+        @keyframes mascotShadow {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                opacity: .7;
+            }
+            50% {
+                transform: translateX(-50%) scale(.82);
+                opacity: .4;
+            }
+        }
+
+        .mascot-ear {
+            position: absolute;
+            top: 31px;
+            width: 60px;
+            height: 90px;
+            border-radius: 50% 50% 44% 44%;
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff,
+                    #fff6fb
+                );
+            border: 4px solid rgba(236, 205, 225, .82);
+            z-index: 0;
+        }
+
+        .mascot-ear::after {
+            content: "";
+            position: absolute;
+            inset: 11px 14px;
+            border-radius: inherit;
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffd7e9,
+                    #f7c4dd
+                );
+        }
+
+        .mascot-ear.left {
+            left: 45px;
+            transform: rotate(-16deg);
+        }
+
+        .mascot-ear.right {
+            right: 45px;
+            transform: rotate(16deg);
+        }
+
+        .mascot-body {
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            width: 215px;
+            height: 225px;
+            transform: translateX(-50%);
+            border-radius:
+                48%
+                48%
+                44%
+                44%
+                /
+                52%
+                52%
+                42%
+                42%;
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff 0%,
+                    #fffafd 50%,
+                    #f8effa 100%
+                );
+            border: 4px solid rgba(236,205,225,.82);
+            box-shadow:
+                inset 0 -15px 30px rgba(167,139,250,.06),
+                inset 0 8px 15px rgba(255,255,255,.9);
+            z-index: 2;
+        }
+
+        .mascot-body::before {
+            content: "";
+            position: absolute;
+            top: 19px;
+            left: 28px;
+            width: 46px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.82);
+            transform: rotate(-25deg);
+            filter: blur(2px);
+        }
+
+        .mascot-face {
+            position: absolute;
+            inset: 0;
+        }
+
+        .mascot-eye {
+            position: absolute;
+            top: 91px;
+            width: 15px;
+            height: 21px;
+            border-radius: 50%;
+            background: #49384f;
+        }
+
+        .mascot-eye::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            width: 5px;
+            height: 7px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .mascot-eye.left {
+            left: 67px;
+        }
+
+        .mascot-eye.right {
+            right: 67px;
+        }
+
+        .mascot-blush {
+            position: absolute;
+            top: 117px;
+            width: 32px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(244,114,182,.26);
+            filter: blur(1px);
+        }
+
+        .mascot-blush.left {
+            left: 35px;
+            transform: rotate(-8deg);
+        }
+
+        .mascot-blush.right {
+            right: 35px;
+            transform: rotate(8deg);
+        }
+
+        .mascot-mouth {
+            position: absolute;
+            top: 116px;
+            left: 50%;
+            width: 28px;
+            height: 16px;
+            transform: translateX(-50%);
+        }
+
+        .mascot-mouth::before,
+        .mascot-mouth::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            width: 14px;
+            height: 9px;
+            border-bottom: 3px solid #49384f;
+        }
+
+        .mascot-mouth::before {
+            left: 0;
+            border-radius: 0 0 0 14px;
+            transform: rotate(8deg);
+        }
+
+        .mascot-mouth::after {
+            right: 0;
+            border-radius: 0 0 14px 0;
+            transform: rotate(-8deg);
+        }
+
+        .mascot-cheek-heart {
+            position: absolute;
+            bottom: 46px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 21px;
+            color: var(--cute-pink);
+            animation: tinyHeart 2.4s ease-in-out infinite;
+        }
+
+        @keyframes tinyHeart {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+        }
+
+        /* =====================================================
+           MASCOT PAWS
+        ====================================================== */
+
+        .mascot-paw {
+            position: absolute;
+            top: 152px;
+            width: 44px;
+            height: 62px;
+            border-radius: 50%;
+            background: #fff8fc;
+            border: 4px solid rgba(236,205,225,.8);
+            z-index: 3;
+        }
+
+        .mascot-paw.left {
+            left: -12px;
+            transform: rotate(28deg);
+        }
+
+        .mascot-paw.right {
+            right: -12px;
+            transform: rotate(-28deg);
+        }
+
+        .mascot-paw::before,
+        .mascot-paw::after {
+            content: "•";
+            position: absolute;
+            color: #f5b4d0;
+            font-size: 17px;
+        }
+
+        .mascot-paw::before {
+            top: 10px;
+            left: 13px;
+        }
+
+        .mascot-paw::after {
+            top: 20px;
+            left: 19px;
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           FLOATING HEART
+        ====================================================== */
+
+        .mascot-heart {
+            position: absolute;
+            top: 13px;
+            right: 14px;
+            z-index: 5;
+            color: var(--cute-pink);
+            font-size: 35px;
+            filter:
+                drop-shadow(
+                    0 8px 12px rgba(244,114,182,.2)
+                );
+            animation: heartFloat 2.7s ease-in-out infinite;
+        }
+
+        @keyframes heartFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(7deg);
+            }
+            50% {
+                transform: translateY(-11px) rotate(-7deg);
+            }
+        }
+
+        /* =====================================================
+           MASCOT BUBBLES
+        ====================================================== */
+
+        .mascot-bubble {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,.82);
+            border: 1px solid rgba(255,255,255,.95);
+            box-shadow:
+                0 10px 25px rgba(79,48,103,.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 4;
+        }
+
+        .mascot-bubble.one {
+            top: 62px;
+            left: 10px;
+            width: 46px;
+            height: 46px;
+            font-size: 17px;
+            animation: bubbleFloat 3.4s ease-in-out infinite;
+        }
+
+        .mascot-bubble.two {
+            right: -4px;
+            bottom: 55px;
+            width: 42px;
+            height: 42px;
+            font-size: 16px;
+            animation: bubbleFloat 4s ease-in-out infinite reverse;
+        }
+
+        .mascot-bubble.three {
+            left: 24px;
+            bottom: 28px;
+            width: 35px;
+            height: 35px;
+            font-size: 13px;
+            animation: bubbleFloat 3.7s ease-in-out infinite;
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* =====================================================
+           404 NUMBER
+        ====================================================== */
+
+        .cute-404-number {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            white-space: nowrap;
+            color: rgba(167,139,250,.055);
+            font-size: clamp(150px, 20vw, 260px);
+            line-height: .75;
+            font-weight: 900;
+            letter-spacing: -.12em;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* =====================================================
+           QUICK LINKS
+        ====================================================== */
+
+        .cute-quick-links {
+            width: 100%;
+            margin-top: 55px;
+        }
+
+        .cute-section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .cute-section-heading h2 {
+            margin: 0;
+            color: var(--cute-text);
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: -.025em;
+        }
+
+        .cute-section-heading p {
+            margin: 0;
+            color: var(--cute-muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cute-links-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 13px;
+        }
+
+        .cute-link-card {
+            position: relative;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 15px;
+            border: 1px solid rgba(167,139,250,.12);
+            border-radius: 20px;
+            background: rgba(255,255,255,.56);
+            box-shadow:
+                0 10px 30px rgba(79,48,103,.045);
+            text-decoration: none;
+            overflow: hidden;
+            transition:
+                transform var(--cute-transition),
+                border-color var(--cute-transition),
+                box-shadow var(--cute-transition);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .cute-link-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            background:
+                radial-gradient(
+                    circle at 0 0,
+                    rgba(244,114,182,.12),
+                    transparent 50%
+                );
+            transition: opacity var(--cute-transition);
+            pointer-events: none;
+        }
+
+        .cute-link-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(244,114,182,.22);
+            box-shadow:
+                0 18px 38px rgba(79,48,103,.08);
+        }
+
+        .cute-link-card:hover::after {
+            opacity: 1;
+        }
+
+        .cute-link-icon {
+            flex: 0 0 auto;
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            font-size: 18px;
+        }
+
+        .cute-link-card:nth-child(1) .cute-link-icon {
+            background: var(--cute-pink-soft);
+        }
+
+        .cute-link-card:nth-child(2) .cute-link-icon {
+            background: var(--cute-purple-soft);
+        }
+
+        .cute-link-card:nth-child(3) .cute-link-icon {
+            background: var(--cute-blue-soft);
+        }
+
+        .cute-link-card:nth-child(4) .cute-link-icon {
+            background: var(--cute-mint-soft);
+        }
+
+        .cute-link-content {
+            min-width: 0;
+        }
+
+        .cute-link-content strong {
+            display: block;
+            overflow: hidden;
+            color: var(--cute-text);
+            font-size: 13px;
+            font-weight: 900;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cute-link-content span {
+            display: block;
+            margin-top: 3px;
+            overflow: hidden;
+            color: var(--cute-muted);
+            font-size: 10px;
+            font-weight: 700;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cute-link-arrow {
+            margin-left: auto;
+            color: rgba(120,108,132,.65);
+            font-size: 16px;
+            transition:
+                transform var(--cute-transition),
+                color var(--cute-transition);
+        }
+
+        .cute-link-card:hover .cute-link-arrow {
+            color: var(--cute-pink);
+            transform: translateX(4px);
+        }
+
+        /* =====================================================
+           FUN FACT CARD
+        ====================================================== */
+
+        .cute-fun-card {
+            position: relative;
+            margin-top: 16px;
+            padding: 19px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-radius: 22px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(244,114,182,.09),
+                    rgba(167,139,250,.09),
+                    rgba(125,211,252,.08)
+                );
+            border: 1px solid rgba(167,139,250,.11);
+            overflow: hidden;
+        }
+
+        .cute-fun-card::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -120px;
+            right: -60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.5);
+            filter: blur(3px);
+        }
+
+        .cute-fun-icon {
+            position: relative;
+            flex: 0 0 auto;
+            width: 45px;
+            height: 45px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: rgba(255,255,255,.72);
+            box-shadow:
+                0 7px 20px rgba(79,48,103,.05);
+            font-size: 20px;
+        }
+
+        .cute-fun-copy {
+            position: relative;
+        }
+
+        .cute-fun-copy strong {
+            display: block;
+            color: var(--cute-text);
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .cute-fun-copy span {
+            display: block;
+            margin-top: 3px;
+            color: var(--cute-muted);
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .cute-footer {
+            margin-top: 35px;
+            padding-top: 22px;
+            border-top: 1px solid rgba(167,139,250,.09);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            color: var(--cute-muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .cute-footer-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--cute-text);
+            font-weight: 900;
+        }
+
+        .cute-footer-logo {
+            width: 25px;
+            height: 25px;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            color: white;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f472b6,
+                    #a78bfa
+                );
+            font-size: 11px;
+            box-shadow:
+                0 5px 13px rgba(167,139,250,.18);
+        }
+
+        /* =====================================================
+           SEARCH MODAL
+        ====================================================== */
+
+        .cute-search-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding:
+                clamp(70px, 12vh, 130px)
+                18px
+                30px;
+            background: rgba(39, 29, 49, .28);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .cute-search-modal.is-open {
+            display: flex;
+            animation: modalFadeIn .22s ease both;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .cute-search-dialog {
+            width: min(650px, 100%);
+            border-radius: 27px;
+            padding: 20px;
+            background:
+                rgba(255,255,255,.94);
+            border: 1px solid rgba(255,255,255,.95);
+            box-shadow:
+                0 30px 100px rgba(39,29,49,.20);
+            transform-origin: top center;
+            animation: dialogDrop .28s cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        @keyframes dialogDrop {
+            from {
+                transform: translateY(-15px) scale(.97);
+            }
+            to {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .cute-search-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 14px;
+        }
+
+        .cute-search-header h3 {
+            margin: 0;
+            color: var(--cute-text);
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .cute-search-close {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 11px;
+            background: rgba(167,139,250,.08);
+            color: var(--cute-muted);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cute-search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px;
+            border: 1px solid rgba(167,139,250,.15);
+            border-radius: 17px;
+            background: rgba(249,247,252,.85);
+        }
+
+        .cute-search-box span {
+            padding-left: 10px;
+            font-size: 17px;
+        }
+
+        .cute-search-input {
+            width: 100%;
+            height: 43px;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--cute-text);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .cute-search-input::placeholder {
+            color: #a79bab;
+        }
+
+        .cute-search-results {
+            margin-top: 12px;
+            display: grid;
+            gap: 7px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .cute-search-result {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 0;
+            border-radius: 14px;
+            background: transparent;
+            color: var(--cute-text);
+            text-align: left;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background var(--cute-transition);
+        }
+
+        .cute-search-result:hover {
+            background: rgba(244,114,182,.07);
+        }
+
+        .cute-search-result-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--cute-purple-soft);
+        }
+
+        .cute-search-result-text strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .cute-search-result-text span {
+            display: block;
+            margin-top: 2px;
+            color: var(--cute-muted);
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        .cute-local-toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 10000;
+            max-width: min(360px, calc(100vw - 44px));
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 16px;
+            border: 1px solid rgba(255,255,255,.9);
+            border-radius: 16px;
+            background: rgba(255,255,255,.92);
+            color: var(--cute-text);
+            box-shadow:
+                0 18px 50px rgba(39,29,49,.14);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            font-size: 12px;
+            font-weight: 800;
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+        }
+
+        .cute-local-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cute-local-toast-icon {
+            width: 31px;
+            height: 31px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: var(--cute-pink-soft);
+        }
+
+        /* =====================================================
+           DARK MODE
+        ====================================================== */
+
+        [data-theme="dark"] .veltrix-404-page {
+            --cute-text: #f7f2fa;
+            --cute-muted: #b9adbf;
+            --cute-card: rgba(32, 25, 40, .78);
+            --cute-border: rgba(255,255,255,.08);
+        }
+
+        [data-theme="dark"] .cute-background {
+            background:
+                radial-gradient(
+                    circle at 12% 12%,
+                    rgba(244,114,182,.10),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 88% 18%,
+                    rgba(167,139,250,.10),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 90%,
+                    rgba(125,211,252,.07),
+                    transparent 30%
+                );
+        }
+
+        [data-theme="dark"] .cute-status-badge,
+        [data-theme="dark"] .cute-url-card,
+        [data-theme="dark"] .cute-btn-secondary,
+        [data-theme="dark"] .cute-link-card,
+        [data-theme="dark"] .cute-fun-card {
+            background: rgba(31,24,40,.68);
+            border-color: rgba(255,255,255,.07);
+        }
+
+        [data-theme="dark"] .cute-status-badge {
+            box-shadow: 0 8px 30px rgba(0,0,0,.16);
+        }
+
+        [data-theme="dark"] .cute-btn-secondary {
+            color: #f7f2fa;
+        }
+
+        [data-theme="dark"] .cute-mascot .mascot-body,
+        [data-theme="dark"] .cute-mascot .mascot-ear,
+        [data-theme="dark"] .cute-mascot .mascot-paw {
+            background:
+                linear-gradient(
+                    145deg,
+                    #31283a,
+                    #29212f
+                );
+            border-color: rgba(255,255,255,.10);
+        }
+
+        [data-theme="dark"] .mascot-ear::after {
+            background:
+                linear-gradient(
+                    145deg,
+                    #6e4058,
+                    #633e59
+                );
+            opacity: .9;
+        }
+
+        [data-theme="dark"] .mascot-eye {
+            background: #f9eef9;
+        }
+
+        [data-theme="dark"] .mascot-eye::after {
+            background: #3d3045;
+        }
+
+        [data-theme="dark"] .mascot-mouth::before,
+        [data-theme="dark"] .mascot-mouth::after {
+            border-color: #f9eef9;
+        }
+
+        [data-theme="dark"] .cute-search-dialog {
+            background: rgba(31,24,40,.96);
+            border-color: rgba(255,255,255,.07);
+        }
+
+        [data-theme="dark"] .cute-search-box {
+            background: rgba(22,17,29,.8);
+            border-color: rgba(255,255,255,.08);
+        }
+
+        [data-theme="dark"] .cute-search-input {
+            color: #f7f2fa;
+        }
+
+        [data-theme="dark"] .cute-local-toast {
+            background: rgba(31,24,40,.95);
+            border-color: rgba(255,255,255,.08);
+            color: #f7f2fa;
+        }
+
+        /* =====================================================
+           ACCESSIBILITY
+        ====================================================== */
+
+        .cute-btn:focus-visible,
+        .cute-copy-url:focus-visible,
+        .cute-link-card:focus-visible,
+        .cute-search-close:focus-visible,
+        .cute-search-result:focus-visible {
+            outline: 3px solid rgba(167,139,250,.35);
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .001ms !important;
+            }
+        }
+
+        /* =====================================================
+           TABLET
+        ====================================================== */
+
+        @media (max-width: 1050px) {
+            .cute-404-grid {
+                grid-template-columns:
+                    minmax(0, 1fr)
+                    minmax(300px, .8fr);
+                gap: 30px;
+            }
+
+            .cute-visual {
+                min-height: 430px;
+            }
+
+            .cute-mascot {
+                transform: scale(.88);
+            }
+
+            .cute-links-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 760px) {
+            .cute-404-main {
+                padding:
+                    95px
+                    15px
+                    45px;
+            }
+
+            .cute-404-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cute-copy {
+                order: 1;
+            }
+
+            .cute-visual {
+                order: 2;
+                min-height: 390px;
+                margin-top: -5px;
+            }
+
+            .cute-status-badge {
+                margin-bottom: 17px;
+            }
+
+            .cute-small-label {
+                justify-content: center;
+            }
+
+            .cute-title {
+                font-size: clamp(43px, 13vw, 65px);
+            }
+
+            .cute-description {
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 15px;
+            }
+
+            .cute-actions {
+                justify-content: center;
+            }
+
+            .cute-url-card {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+            }
+
+            .cute-orbit {
+                width: 340px;
+            }
+
+            .cute-glow {
+                width: 280px;
+                height: 280px;
+            }
+
+            .cute-mascot {
+                transform: scale(.78);
+            }
+
+            .cute-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cute-section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .cute-footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cute-decor.one {
+                left: 3%;
+            }
+
+            .cute-decor.two {
+                right: 4%;
+            }
+
+            .cute-decor.three {
+                left: 5%;
+            }
+
+            .cute-decor.four {
+                right: 6%;
+            }
+        }
+
+        /* =====================================================
+           SMALL PHONES
+        ====================================================== */
+
+        @media (max-width: 430px) {
+            .cute-404-main {
+                padding-top: 82px;
+            }
+
+            .cute-title {
+                font-size: 43px;
+            }
+
+            .cute-actions {
+                flex-direction: column;
+            }
+
+            .cute-btn {
+                width: 100%;
+            }
+
+            .cute-url-card {
+                padding: 12px;
+            }
+
+            .cute-url-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .cute-copy-url {
+                width: 34px;
+                height: 34px;
+            }
+
+            .cute-visual {
+                min-height: 350px;
+            }
+
+            .cute-orbit {
+                width: 290px;
+            }
+
+            .cute-mascot {
+                transform: scale(.68);
+            }
+
+            .cute-404-number {
+                font-size: 140px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         VELTRIX PAGE ROOT
+    ========================================================== -->
+    <div class="veltrix-404-page">
+
+        <!-- =====================================================
+             BACKGROUND
+        ====================================================== -->
+        <div class="cute-background" aria-hidden="true"></div>
+
+        <!-- Floating decorative elements -->
+        <div class="cute-decor one" aria-hidden="true">♡</div>
+        <div class="cute-decor two" aria-hidden="true">✦</div>
+        <div class="cute-decor three" aria-hidden="true">♡</div>
+        <div class="cute-decor four" aria-hidden="true">✧</div>
+        <div class="cute-decor five" aria-hidden="true">✦</div>
+        <div class="cute-decor six" aria-hidden="true">·</div>
+        <div class="cute-decor seven" aria-hidden="true">✦</div>
+
+
+        <!-- =====================================================
+             OPTIONAL GLOBAL GOOGLE TRANSLATE TARGET
+             script.js controls this automatically.
+        ====================================================== -->
+        <div
+            id="google_translate_element"
+            aria-hidden="true"
+            style="
+                position:absolute;
+                width:1px;
+                height:1px;
+                overflow:hidden;
+                opacity:0;
+                pointer-events:none;
+            "
+        ></div>
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+        <main class="cute-404-main">
+
+            <div class="cute-404-container">
+
+                <!-- Status badge -->
+                <div
+                    class="cute-status-badge"
+                    data-translate="true"
+                    aria-label="Page status"
+                >
+                    <span class="cute-status-dot"></span>
+                    <span>Oops… something wandered away</span>
+                </div>
+
+
+                <!-- =================================================
+                     HERO
+                ================================================== -->
+                <section
+                    class="cute-404-grid"
+                    aria-labelledby="cute404Title"
+                >
+
+                    <!-- =================================================
+                         COPY
+                    ================================================== -->
+                    <div class="cute-copy">
+
+                        <div
+                            class="cute-small-label"
+                            data-translate="true"
+                        >
+                            Veltrix error 404
+                        </div>
+
+                        <h1
+                            id="cute404Title"
+                            class="cute-title"
+                            data-translate="true"
+                        >
+                            Oh no! This page
+                            <span class="cute-title-highlight">
+                                got lost.
+                            </span>
+                        </h1>
+
+                        <p
+                            class="cute-description"
+                            data-translate="true"
+                        >
+                            Looks like this little page took a wrong turn
+                            somewhere. Don't worry — we can help you find
+                            your way back to your Veltrix workspace.
+                        </p>
+
+
+                        <!-- =================================================
+                             ACTION BUTTONS
+                        ================================================== -->
+                        <div class="cute-actions">
+
+                            <a
+                                href="../index.html"
+                                class="cute-btn cute-btn-primary"
+                                data-action="go-home"
+                                data-translate="true"
+                            >
+                                <span class="cute-btn-icon">⌂</span>
+                                <span>Take me home</span>
+                            </a>
+
+                            <button
+                                type="button"
+                                class="cute-btn cute-btn-secondary"
+                                id="cuteBackButton"
+                                data-action="go-back"
+                                data-translate="true"
+                            >
+                                <span class="cute-btn-icon">↶</span>
+                                <span>Go back</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="cute-btn cute-btn-secondary"
+                                id="cuteSearchButton"
+                                data-action="open-search"
+                                data-translate="true"
+                            >
+                                <span class="cute-btn-icon">⌕</span>
+                                <span>Search Veltrix</span>
+                            </button>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             CURRENT URL
+                        ================================================== -->
+                        <div class="cute-url-card">
+
+                            <div
+                                class="cute-url-icon"
+                                aria-hidden="true"
+                            >
+                                🔗
+                            </div>
+
+                            <div class="cute-url-content">
+
+                                <span
+                                    class="cute-url-label"
+                                    data-translate="true"
+                                >
+                                    You tried to visit
+                                </span>
+
+                                <span
+                                    id="currentUrlDisplay"
+                                    class="cute-url"
+                                >
+                                    Loading current address…
+                                </span>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="cute-copy-url"
+                                id="copyUrlButton"
+                                title="Copy URL"
+                                aria-label="Copy current URL"
+                                data-action="copy-url"
+                            >
+                                ⧉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CUTE MASCOT
+                    ================================================== -->
+                    <div class="cute-visual">
+
+                        <div
+                            class="cute-orbit"
+                            aria-hidden="true"
+                        ></div>
+
+                        <div
+                            class="cute-glow"
+                            aria-hidden="true"
+                        ></div>
+
+                        <div
+                            class="cute-404-number"
+                            aria-hidden="true"
+                        >
+                            404
+                        </div>
+
+
+                        <div
+                            class="cute-mascot"
+                            role="img"
+                            aria-label="Cute lost Veltrix mascot"
+                        >
+
+                            <!-- Ears -->
+                            <div class="mascot-ear left"></div>
+                            <div class="mascot-ear right"></div>
+
+                            <!-- Floating heart -->
+                            <div class="mascot-heart">
+                                ♥
+                            </div>
+
+                            <!-- Bubble decorations -->
+                            <div class="mascot-bubble one">
+                                ✦
+                            </div>
+
+                            <div class="mascot-bubble two">
+                                ♡
+                            </div>
+
+                            <div class="mascot-bubble three">
+                                ✧
+                            </div>
+
+                            <!-- Body -->
+                            <div class="mascot-body">
+
+                                <div class="mascot-face">
+
+                                    <div class="mascot-eye left"></div>
+                                    <div class="mascot-eye right"></div>
+
+                                    <div class="mascot-blush left"></div>
+                                    <div class="mascot-blush right"></div>
+
+                                    <div class="mascot-mouth"></div>
+
+                                    <div class="mascot-cheek-heart">
+                                        ♡
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Paws -->
+                            <div class="mascot-paw left"></div>
+                            <div class="mascot-paw right"></div>
+
+                            <!-- Ground shadow -->
+                            <div class="mascot-shadow"></div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =====================================================
+                     QUICK LINKS
+                ====================================================== -->
+                <section class="cute-quick-links">
+
+                    <div class="cute-section-heading">
+
+                        <div>
+                            <h2 data-translate="true">
+                                Maybe you're looking for…
+                            </h2>
+                        </div>
+
+                        <p data-translate="true">
+                            Quick shortcuts around Veltrix
+                        </p>
+
+                    </div>
+
+
+                    <div class="cute-links-grid">
+
+                        <!-- Dashboard -->
+                        <a
+                            href="../index.html"
+                            class="cute-link-card"
+                            data-action="quick-dashboard"
+                        >
+
+                            <span
+                                class="cute-link-icon"
+                                aria-hidden="true"
+                            >
+                                🏠
+                            </span>
+
+                            <span class="cute-link-content">
+                                <strong data-translate="true">
+                                    Dashboard
+                                </strong>
+
+                                <span data-translate="true">
+                                    Your main workspace
+                                </span>
+                            </span>
+
+                            <span
+                                class="cute-link-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <!-- Analytics -->
+                        <a
+                            href="analytics.html"
+                            class="cute-link-card"
+                            data-action="quick-analytics"
+                        >
+
+                            <span
+                                class="cute-link-icon"
+                                aria-hidden="true"
+                            >
+                                📊
+                            </span>
+
+                            <span class="cute-link-content">
+                                <strong data-translate="true">
+                                    Analytics
+                                </strong>
+
+                                <span data-translate="true">
+                                    Explore your numbers
+                                </span>
+                            </span>
+
+                            <span
+                                class="cute-link-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <!-- Messages -->
+                        <a
+                            href="messages.html"
+                            class="cute-link-card"
+                            data-action="quick-messages"
+                        >
+
+                            <span
+                                class="cute-link-icon"
+                                aria-hidden="true"
+                            >
+                                💌
+                            </span>
+
+                            <span class="cute-link-content">
+                                <strong data-translate="true">
+                                    Messages
+                                </strong>
+
+                                <span data-translate="true">
+                                    Check your conversations
+                                </span>
+                            </span>
+
+                            <span
+                                class="cute-link-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <!-- Settings -->
+                        <a
+                            href="settings.html"
+                            class="cute-link-card"
+                            data-action="quick-settings"
+                        >
+
+                            <span
+                                class="cute-link-icon"
+                                aria-hidden="true"
+                            >
+                                ⚙️
+                            </span>
+
+                            <span class="cute-link-content">
+                                <strong data-translate="true">
+                                    Settings
+                                </strong>
+
+                                <span data-translate="true">
+                                    Customize your workspace
+                                </span>
+                            </span>
+
+                            <span
+                                class="cute-link-arrow"
+                                aria-hidden="true"
+                            >
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FUN MESSAGE
+                    ================================================== -->
+                    <div class="cute-fun-card">
+
+                        <div
+                            class="cute-fun-icon"
+                            aria-hidden="true"
+                        >
+                            🐰
+                        </div>
+
+                        <div class="cute-fun-copy">
+
+                            <strong data-translate="true">
+                                Our little mascot says hi! ♡
+                            </strong>
+
+                            <span data-translate="true">
+                                Even the cutest dashboards sometimes lose
+                                a page. Let's get you somewhere useful.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =====================================================
+                     FOOTER
+                ====================================================== -->
+                <footer class="cute-footer">
+
+                    <div class="cute-footer-brand">
+
+                        <span
+                            class="cute-footer-logo"
+                            aria-hidden="true"
+                        >
+                            V
+                        </span>
+
+                        <span>
+                            Veltrix
+                        </span>
+
+                    </div>
+
+                    <span
+                        id="cuteFooterYear"
+                        data-translate="true"
+                    >
+                        © 2026 Veltrix. Made with a little sparkle.
+                    </span>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+
+        <!-- =========================================================
+             SEARCH MODAL
+        ========================================================== -->
+        <div
+            class="cute-search-modal"
+            id="cuteSearchModal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cuteSearchTitle"
+        >
+
+            <div class="cute-search-dialog">
+
+                <div class="cute-search-header">
+
+                    <h3
+                        id="cuteSearchTitle"
+                        data-translate="true"
+                    >
+                        Search Veltrix
+                    </h3>
+
+                    <button
+                        type="button"
+                        class="cute-search-close"
+                        id="cuteSearchClose"
+                        aria-label="Close search"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="cute-search-box">
+
+                    <span aria-hidden="true">
+                        ⌕
+                    </span>
+
+                    <input
+                        id="cuteSearchInput"
+                        class="cute-search-input"
+                        type="search"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder="Search pages…"
+                        data-translate-placeholder="true"
+                    >
+
+                </div>
+
+
+                <div
+                    class="cute-search-results"
+                    id="cuteSearchResults"
+                >
+
+                    <!-- Dashboard -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="dashboard home workspace"
+                        data-href="../index.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            🏠
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Dashboard
+                            </strong>
+                            <span data-translate="true">
+                                Main workspace and overview
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Analytics -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="analytics statistics charts reports"
+                        data-href="analytics.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            📊
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Analytics
+                            </strong>
+                            <span data-translate="true">
+                                Statistics and business insights
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Orders -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="orders purchases transactions"
+                        data-href="orders.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            🛍️
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Orders
+                            </strong>
+                            <span data-translate="true">
+                                Manage orders and transactions
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Customers -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="customers clients users"
+                        data-href="customers.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            👥
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Customers
+                            </strong>
+                            <span data-translate="true">
+                                Customer management
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Products -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="products inventory catalog"
+                        data-href="products.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            📦
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Products
+                            </strong>
+                            <span data-translate="true">
+                                Products and inventory
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Invoices -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="invoices billing payments"
+                        data-href="invoices.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            🧾
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Invoices
+                            </strong>
+                            <span data-translate="true">
+                                Billing and invoices
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Messages -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="messages chat communication"
+                        data-href="messages.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            💌
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Messages
+                            </strong>
+                            <span data-translate="true">
+                                Conversations and communication
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Notifications -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="notifications alerts updates"
+                        data-href="notifications.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            🔔
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Notifications
+                            </strong>
+                            <span data-translate="true">
+                                Alerts and recent updates
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Calculator -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="calculator calculations percentage"
+                        data-href="calculator.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            🧮
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Calculator
+                            </strong>
+                            <span data-translate="true">
+                                Smart calculations
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- AI Workspace -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="ai artificial intelligence workspace"
+                        data-href="ai-workspace.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            ✨
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                AI Workspace
+                            </strong>
+                            <span data-translate="true">
+                                AI-powered productivity tools
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Settings -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="settings preferences configuration"
+                        data-href="settings.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            ⚙️
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Settings
+                            </strong>
+                            <span data-translate="true">
+                                Workspace preferences
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Profile -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="profile account user"
+                        data-href="profile.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            👤
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Profile
+                            </strong>
+                            <span data-translate="true">
+                                Account and profile
+                            </span>
+                        </span>
+
+                    </button>
+
+
+                    <!-- Upgrade -->
+                    <button
+                        type="button"
+                        class="cute-search-result"
+                        data-search-item
+                        data-search-text="upgrade pricing plans premium subscription"
+                        data-href="upgrade.html"
+                    >
+
+                        <span class="cute-search-result-icon">
+                            💎
+                        </span>
+
+                        <span class="cute-search-result-text">
+                            <strong data-translate="true">
+                                Upgrade
+                            </strong>
+                            <span data-translate="true">
+                                Plans and premium features
+                            </span>
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================================
+             LOCAL TOAST
+        ========================================================== -->
+        <div
+            class="cute-local-toast"
+            id="cuteLocalToast"
+            role="status"
+            aria-live="polite"
+        >
+            <span
+                class="cute-local-toast-icon"
+                id="cuteToastIcon"
+            >
+                ✨
+            </span>
+
+            <span id="cuteToastText">
+                Done!
+            </span>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         PAGE-SPECIFIC JAVASCRIPT
+         Works alongside Veltrix js/script.js.
+    ========================================================== -->
+    <script>
+        (() => {
+            "use strict";
+
+            /* =====================================================
+               ELEMENTS
+            ====================================================== */
+
+            const backButton =
+                document.getElementById("cuteBackButton");
+
+            const searchButton =
+                document.getElementById("cuteSearchButton");
+
+            const searchModal =
+                document.getElementById("cuteSearchModal");
+
+            const searchClose =
+                document.getElementById("cuteSearchClose");
+
+            const searchInput =
+                document.getElementById("cuteSearchInput");
+
+            const searchResults =
+                document.getElementById("cuteSearchResults");
+
+            const currentUrlDisplay =
+                document.getElementById("currentUrlDisplay");
+
+            const copyUrlButton =
+                document.getElementById("copyUrlButton");
+
+            const toast =
+                document.getElementById("cuteLocalToast");
+
+            const toastText =
+                document.getElementById("cuteToastText");
+
+            const toastIcon =
+                document.getElementById("cuteToastIcon");
+
+            const footerYear =
+                document.getElementById("cuteFooterYear");
+
+
+            /* =====================================================
+               CURRENT URL
+            ====================================================== */
+
+            function updateCurrentUrl() {
+
+                if (!currentUrlDisplay) {
+                    return;
+                }
+
+                let url = window.location.href;
+
+                try {
+                    url = decodeURIComponent(url);
+                } catch (error) {
+                    /* Keep original URL */
+                }
+
+                currentUrlDisplay.textContent = url;
+            }
+
+
+            /* =====================================================
+               YEAR
+            ====================================================== */
+
+            function updateYear() {
+
+                if (!footerYear) {
+                    return;
+                }
+
+                const year = new Date().getFullYear();
+
+                footerYear.textContent =
+                    `© ${year} Veltrix. Made with a little sparkle.`;
+            }
+
+
+            /* =====================================================
+               TOAST
+            ====================================================== */
+
+            let toastTimer = null;
+
+            function showCuteToast(
+                message,
+                icon = "✨"
+            ) {
+
+                if (!toast || !toastText) {
+                    return;
+                }
+
+                toastText.textContent = message;
+
+                if (toastIcon) {
+                    toastIcon.textContent = icon;
+                }
+
+                toast.classList.add("show");
+
+                window.clearTimeout(toastTimer);
+
+                toastTimer = window.setTimeout(() => {
+                    toast.classList.remove("show");
+                }, 2600);
+            }
+
+
+            /* =====================================================
+               GO BACK
+            ====================================================== */
+
+            function goBack() {
+
+                if (
+                    window.history.length > 1 &&
+                    document.referrer
+                ) {
+                    window.history.back();
+                    return;
+                }
+
+                window.location.href = "../index.html";
+            }
+
+
+            /* =====================================================
+               OPEN SEARCH
+            ====================================================== */
+
+            function openSearch() {
+
+                if (!searchModal) {
+                    return;
+                }
+
+                searchModal.classList.add("is-open");
+
+                document.body.style.overflow = "hidden";
+
+                window.setTimeout(() => {
+
+                    if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+
+                }, 60);
+            }
+
+
+            /* =====================================================
+               CLOSE SEARCH
+            ====================================================== */
+
+            function closeSearch() {
+
+                if (!searchModal) {
+                    return;
+                }
+
+                searchModal.classList.remove("is-open");
+
+                document.body.style.overflow = "";
+
+                if (searchInput) {
+                    searchInput.value = "";
+                }
+
+                filterSearchResults("");
+            }
+
+
+            /* =====================================================
+               SEARCH FILTER
+            ====================================================== */
+
+            function filterSearchResults(query) {
+
+                if (!searchResults) {
+                    return;
+                }
+
+                const normalized =
+                    String(query || "")
+                        .trim()
+                        .toLowerCase();
+
+                const items =
+                    searchResults.querySelectorAll(
+                        "[data-search-item]"
+                    );
+
+                let visibleCount = 0;
+
+                items.forEach((item) => {
+
+                    const searchable =
+                        String(
+                            item.dataset.searchText || ""
+                        ).toLowerCase();
+
+                    const text =
+                        String(
+                            item.textContent || ""
+                        ).toLowerCase();
+
+                    const matches =
+                        !normalized ||
+                        searchable.includes(normalized) ||
+                        text.includes(normalized);
+
+                    item.style.display =
+                        matches ? "flex" : "none";
+
+                    if (matches) {
+                        visibleCount++;
+                    }
+
+                });
+
+                let empty =
+                    searchResults.querySelector(
+                        "[data-search-empty]"
+                    );
+
+                if (!visibleCount) {
+
+                    if (!empty) {
+
+                        empty =
+                            document.createElement("div");
+
+                        empty.dataset.searchEmpty = "true";
+
+                        empty.style.padding = "28px 15px";
+                        empty.style.textAlign = "center";
+                        empty.style.color = "#8c8194";
+                        empty.style.fontSize = "12px";
+                        empty.style.fontWeight = "800";
+
+                        empty.textContent =
+                            "No matching pages found ♡";
+
+                        searchResults.appendChild(empty);
+                    }
+
+                } else if (empty) {
+
+                    empty.remove();
+
+                }
+            }
+
+
+            /* =====================================================
+               SEARCH RESULT NAVIGATION
+            ====================================================== */
+
+            function navigateFromSearch(item) {
+
+                if (!item) {
+                    return;
+                }
+
+                const href = item.dataset.href;
+
+                if (!href) {
+                    return;
+                }
+
+                closeSearch();
+
+                /*
+                 * Keep the current selected language.
+                 * script.js already persists the language globally.
+                 */
+                try {
+
+                    if (
+                        window.Veltrix &&
+                        window.Veltrix.language
+                    ) {
+                        const current =
+                            window.Veltrix.language.get();
+
+                        if (current) {
+                            localStorage.setItem(
+                                "veltrix_language",
+                                current
+                            );
+                        }
+                    }
+
+                } catch (error) {
+                    /* Navigation still works */
+                }
+
+                window.location.href = href;
+            }
+
+
+            /* =====================================================
+               COPY URL
+            ====================================================== */
+
+            async function copyCurrentUrl() {
+
+                const url =
+                    window.location.href;
+
+                try {
+
+                    if (
+                        navigator.clipboard &&
+                        navigator.clipboard.writeText
+                    ) {
+
+                        await navigator.clipboard.writeText(url);
+
+                    } else {
+
+                        const textarea =
+                            document.createElement("textarea");
+
+                        textarea.value = url;
+
+                        textarea.style.position = "fixed";
+                        textarea.style.opacity = "0";
+
+                        document.body.appendChild(textarea);
+
+                        textarea.focus();
+                        textarea.select();
+
+                        document.execCommand("copy");
+
+                        textarea.remove();
+                    }
+
+                    showCuteToast(
+                        "Current URL copied! ♡",
+                        "📋"
+                    );
+
+                    if (
+                        window.Veltrix &&
+                        window.Veltrix.toast &&
+                        typeof window.Veltrix.toast.show === "function"
+                    ) {
+                        try {
+                            window.Veltrix.toast.show(
+                                "Current URL copied!"
+                            );
+                        } catch (error) {
+                            /* Local toast already handled it */
+                        }
+                    }
+
+                } catch (error) {
+
+                    showCuteToast(
+                        "Couldn't copy the URL.",
+                        "🥺"
+                    );
+                }
+            }
+
+
+            /* =====================================================
+               BUTTON EVENTS
+            ====================================================== */
+
+            if (backButton) {
+
+                backButton.addEventListener(
+                    "click",
+                    goBack
+                );
+
+            }
+
+
+            if (searchButton) {
+
+                searchButton.addEventListener(
+                    "click",
+                    openSearch
+                );
+
+            }
+
+
+            if (searchClose) {
+
+                searchClose.addEventListener(
+                    "click",
+                    closeSearch
+                );
+
+            }
+
+
+            if (copyUrlButton) {
+
+                copyUrlButton.addEventListener(
+                    "click",
+                    copyCurrentUrl
+                );
+
+            }
+
+
+            /* =====================================================
+               SEARCH INPUT
+            ====================================================== */
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    "input",
+                    (event) => {
+
+                        filterSearchResults(
+                            event.target.value
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               SEARCH RESULT EVENTS
+            ====================================================== */
+
+            if (searchResults) {
+
+                searchResults.addEventListener(
+                    "click",
+                    (event) => {
+
+                        const item =
+                            event.target.closest(
+                                "[data-search-item]"
+                            );
+
+                        if (!item) {
+                            return;
+                        }
+
+                        navigateFromSearch(item);
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               CLOSE MODAL ON BACKDROP
+            ====================================================== */
+
+            if (searchModal) {
+
+                searchModal.addEventListener(
+                    "click",
+                    (event) => {
+
+                        if (
+                            event.target === searchModal
+                        ) {
+                            closeSearch();
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               KEYBOARD SHORTCUTS
+            ====================================================== */
+
+            document.addEventListener(
+                "keydown",
+                (event) => {
+
+                    /* Escape closes search */
+                    if (
+                        event.key === "Escape" &&
+                        searchModal &&
+                        searchModal.classList.contains("is-open")
+                    ) {
+
+                        closeSearch();
+                        return;
+                    }
+
+
+                    /*
+                     * "/" opens search unless the user is already
+                     * typing somewhere.
+                     */
+                    if (
+                        event.key === "/" &&
+                        !event.ctrlKey &&
+                        !event.metaKey &&
+                        !event.altKey
+                    ) {
+
+                        const target =
+                            event.target;
+
+                        const isTyping =
+                            target &&
+                            (
+                                target.tagName === "INPUT" ||
+                                target.tagName === "TEXTAREA" ||
+                                target.isContentEditable
+                            );
+
+                        if (!isTyping) {
+
+                            event.preventDefault();
+
+                            openSearch();
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               CLICK FEEDBACK
+            ====================================================== */
+
+            document.addEventListener(
+                "click",
+                (event) => {
+
+                    const link =
+                        event.target.closest(
+                            ".cute-link-card, .cute-btn"
+                        );
+
+                    if (!link) {
+                        return;
+                    }
+
+                    /*
+                     * Small visual feedback without interfering
+                     * with normal navigation.
+                     */
+                    link.style.setProperty(
+                        "--cute-click-x",
+                        `${event.offsetX}px`
+                    );
+
+                }
+            );
+
+
+            /* =====================================================
+               MASCOT INTERACTION
+            ====================================================== */
+
+            const mascot =
+                document.querySelector(".cute-mascot");
+
+            if (mascot) {
+
+                mascot.addEventListener(
+                    "click",
+                    () => {
+
+                        showCuteToast(
+                            "You found our lost little mascot! 🐰♡",
+                            "🐰"
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               MOUSE PARALLAX
+               Very subtle and disabled for touch devices.
+            ====================================================== */
+
+            const visual =
+                document.querySelector(".cute-visual");
+
+            const canParallax =
+                window.matchMedia &&
+                window.matchMedia(
+                    "(hover: hover) and (pointer: fine)"
+                ).matches;
+
+            if (
+                visual &&
+                canParallax
+            ) {
+
+                let frame = null;
+
+                document.addEventListener(
+                    "mousemove",
+                    (event) => {
+
+                        if (frame) {
+                            return;
+                        }
+
+                        frame =
+                            window.requestAnimationFrame(
+                                () => {
+
+                                    const rect =
+                                        visual.getBoundingClientRect();
+
+                                    const x =
+                                        (
+                                            event.clientX -
+                                            (
+                                                rect.left +
+                                                rect.width / 2
+                                            )
+                                        ) / rect.width;
+
+                                    const y =
+                                        (
+                                            event.clientY -
+                                            (
+                                                rect.top +
+                                                rect.height / 2
+                                            )
+                                        ) / rect.height;
+
+                                    const orbit =
+                                        visual.querySelector(
+                                            ".cute-orbit"
+                                        );
+
+                                    const mascotElement =
+                                        visual.querySelector(
+                                            ".cute-mascot"
+                                        );
+
+                                    if (orbit) {
+
+                                        orbit.style.transform =
+                                            `translate(${x * 8}px, ${y * 8}px)`;
+
+                                    }
+
+                                    if (mascotElement) {
+
+                                        mascotElement.style.setProperty(
+                                            "--mouse-x",
+                                            `${x}`
+                                        );
+
+                                        mascotElement.style.setProperty(
+                                            "--mouse-y",
+                                            `${y}`
+                                        );
+
+                                    }
+
+                                    frame = null;
+
+                                }
+                            );
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               KEEP GOOGLE TRANSLATE COMPATIBLE
+            ====================================================== */
+
+            function ensureTranslationCompatibility() {
+
+                /*
+                 * Do NOT create another language dictionary here.
+                 *
+                 * Veltrix's central TranslationManager in
+                 * ../js/script.js owns the 21-language system.
+                 *
+                 * This page simply exposes its visible text to
+                 * Google Translate and leaves language state to the
+                 * global engine.
+                 */
+
+                document.documentElement.dataset.veltrixPage =
+                    "404";
+
+            }
+
+
+            /* =====================================================
+               INITIALIZATION
+            ====================================================== */
+
+            function initializeCute404() {
+
+                updateCurrentUrl();
+
+                updateYear();
+
+                ensureTranslationCompatibility();
+
+                filterSearchResults("");
+
+                /*
+                 * If Veltrix global API exists, make sure the current
+                 * language state is retained when this page loads.
+                 */
+                try {
+
+                    if (
+                        window.Veltrix &&
+                        window.Veltrix.language
+                    ) {
+
+                        const language =
+                            window.Veltrix.language.get();
+
+                        if (language) {
+
+                            document.documentElement
+                                .setAttribute(
+                                    "data-veltrix-language",
+                                    language
+                                );
+
+                        }
+
+                    }
+
+                } catch (error) {
+                    /* Never block the 404 page */
+                }
+
+            }
+
+
+            /* =====================================================
+               DOM READY
+            ====================================================== */
+
+            if (
+                document.readyState ===
+                "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    initializeCute404,
+                    { once: true }
+                );
+
+            } else {
+
+                initializeCute404();
+
+            }
+
+
+            /* =====================================================
+               RESIZE CLEANUP
+            ====================================================== */
+
+            window.addEventListener(
+                "resize",
+                () => {
+
+                    /*
+                     * Close search when moving into a very small
+                     * layout if necessary.
+                     */
+                    if (
+                        window.innerWidth < 320 &&
+                        searchModal &&
+                        searchModal.classList.contains("is-open")
+                    ) {
+                        closeSearch();
+                    }
+
+                },
+                { passive: true }
+            );
+
+
+            /* =====================================================
+               ONLINE / OFFLINE FEEDBACK
+            ====================================================== */
+
+            window.addEventListener(
+                "offline",
+                () => {
+
+                    showCuteToast(
+                        "You're offline, but the page is still here ♡",
+                        "☁️"
+                    );
+
+                }
+            );
+
+
+            window.addEventListener(
+                "online",
+                () => {
+
+                    showCuteToast(
+                        "You're back online! ✨",
+                        "🌸"
+                    );
+
+                }
+            );
+
+
+            /* =====================================================
+               PUBLIC 404 PAGE API
+               Useful for future customization.
+            ====================================================== */
+
+            window.Veltrix404 = {
+
+                version: "1.0.0",
+
+                openSearch,
+
+                closeSearch,
+
+                goBack,
+
+                copyCurrentUrl,
+
+                showToast: showCuteToast,
+
+                getCurrentUrl() {
+                    return window.location.href;
+                },
+
+                refreshUrl() {
+                    updateCurrentUrl();
+                }
+
+            };
+
+        })();
+    </script>
+
+</body>
+</html>
