@@ -1,0 +1,4234 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0f172a">
+    <meta name="color-scheme" content="dark light">
+
+    <meta
+        name="description"
+        content="Veltrix Blank Workspace — a clean and flexible starter page for building custom business dashboards."
+    >
+
+    <title>Blank Workspace — Veltrix</title>
+
+    <!-- =========================================================
+         VELTRIX — BLANK WORKSPACE
+         Starter Page / Buyer-Friendly Canvas
+         ========================================================= -->
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Optional chart library used by the central Veltrix engine -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+
+    <style>
+        /* =========================================================
+           BLANK PAGE — LOCAL COMPONENT LAYER
+           ========================================================= */
+
+        .blank-page {
+            min-height: 100%;
+        }
+
+        .blank-hero {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .14));
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 85% 15%, rgba(20, 184, 166, .14), transparent 28%),
+                radial-gradient(circle at 10% 90%, rgba(34, 197, 94, .09), transparent 30%),
+                var(--card-bg, rgba(15, 23, 42, .72));
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .14),
+                inset 0 1px 0 rgba(255, 255, 255, .025);
+        }
+
+        .blank-hero::before {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            right: -90px;
+            top: -150px;
+            border-radius: 50%;
+            background: rgba(20, 184, 166, .08);
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .blank-hero-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 24px;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .blank-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            padding: 6px 11px;
+            border: 1px solid rgba(20, 184, 166, .18);
+            border-radius: 999px;
+            background: rgba(20, 184, 166, .07);
+            color: #5eead4;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .blank-eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 14px currentColor;
+        }
+
+        .blank-title {
+            margin: 0;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.08;
+            font-weight: 850;
+            letter-spacing: -.035em;
+        }
+
+        .blank-description {
+            max-width: 760px;
+            margin: 12px 0 0;
+            color: var(--text-muted, #94a3b8);
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .blank-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .blank-btn {
+            appearance: none;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .15));
+            border-radius: 12px;
+            padding: 11px 15px;
+            background: var(--card-bg, rgba(15, 23, 42, .72));
+            color: var(--text-primary, #f8fafc);
+            cursor: pointer;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 750;
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .blank-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(20, 184, 166, .4);
+            background: rgba(20, 184, 166, .08);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .13);
+        }
+
+        .blank-btn:active {
+            transform: translateY(0) scale(.98);
+        }
+
+        .blank-btn-primary {
+            border-color: rgba(20, 184, 166, .35);
+            background: linear-gradient(
+                135deg,
+                rgba(20, 184, 166, .95),
+                rgba(34, 197, 94, .88)
+            );
+            color: #021312;
+            box-shadow: 0 10px 26px rgba(20, 184, 166, .18);
+        }
+
+        .blank-btn-primary:hover {
+            background: linear-gradient(
+                135deg,
+                rgba(45, 212, 191, 1),
+                rgba(74, 222, 128, 1)
+            );
+            color: #021312;
+        }
+
+        .blank-btn-danger {
+            color: #fda4af;
+        }
+
+        .blank-btn-danger:hover {
+            border-color: rgba(244, 63, 94, .35);
+            background: rgba(244, 63, 94, .08);
+        }
+
+        .blank-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 330px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .blank-main-column {
+            min-width: 0;
+        }
+
+        .blank-side-column {
+            min-width: 0;
+        }
+
+        .blank-card {
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .14));
+            border-radius: 20px;
+            background: var(--card-bg, rgba(15, 23, 42, .68));
+            box-shadow: 0 15px 45px rgba(0, 0, 0, .08);
+            overflow: hidden;
+        }
+
+        .blank-card + .blank-card {
+            margin-top: 20px;
+        }
+
+        .blank-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color, rgba(148, 163, 184, .1));
+        }
+
+        .blank-card-heading {
+            min-width: 0;
+        }
+
+        .blank-card-title {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .blank-card-subtitle {
+            margin: 4px 0 0;
+            color: var(--text-muted, #94a3b8);
+            font-size: 12px;
+        }
+
+        .blank-card-body {
+            padding: 20px;
+        }
+
+        .blank-canvas {
+            position: relative;
+            min-height: 720px;
+            padding: 22px;
+            border: 1px dashed rgba(148, 163, 184, .22);
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    rgba(148, 163, 184, .035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(148, 163, 184, .035) 1px,
+                    transparent 1px
+                ),
+                rgba(2, 6, 23, .12);
+            background-size: 28px 28px;
+            transition: background .25s ease, border-color .25s ease;
+        }
+
+        [data-theme="light"] .blank-canvas,
+        body.light-theme .blank-canvas {
+            background:
+                linear-gradient(
+                    rgba(15, 23, 42, .045) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(15, 23, 42, .045) 1px,
+                    transparent 1px
+                ),
+                rgba(248, 250, 252, .65);
+            background-size: 28px 28px;
+        }
+
+        .blank-canvas.no-grid {
+            background-image: none;
+        }
+
+        .canvas-empty {
+            min-height: 670px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .canvas-empty-inner {
+            max-width: 520px;
+            padding: 30px;
+        }
+
+        .canvas-empty-icon {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(20, 184, 166, .18);
+            border-radius: 22px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(20, 184, 166, .12),
+                    rgba(34, 197, 94, .05)
+                );
+            color: #5eead4;
+            box-shadow: 0 18px 45px rgba(20, 184, 166, .08);
+        }
+
+        .canvas-empty-icon svg {
+            width: 34px;
+            height: 34px;
+        }
+
+        .canvas-empty-title {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 850;
+            letter-spacing: -.02em;
+        }
+
+        .canvas-empty-text {
+            margin: 10px auto 22px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .canvas-empty-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 9px;
+        }
+
+        .canvas-blocks {
+            display: grid;
+            gap: 16px;
+        }
+
+        .canvas-block {
+            position: relative;
+            padding: 20px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .13));
+            border-radius: 16px;
+            background: var(--card-bg, rgba(15, 23, 42, .72));
+            box-shadow: 0 12px 35px rgba(0, 0, 0, .06);
+            animation: blankBlockIn .28s ease both;
+        }
+
+        @keyframes blankBlockIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(.99);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .canvas-block:hover {
+            border-color: rgba(20, 184, 166, .25);
+        }
+
+        .canvas-block-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .canvas-block-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .canvas-block-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .canvas-mini-btn {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .13));
+            border-radius: 9px;
+            background: transparent;
+            color: var(--text-muted, #94a3b8);
+            cursor: pointer;
+            transition: all .18s ease;
+        }
+
+        .canvas-mini-btn:hover {
+            color: #5eead4;
+            border-color: rgba(20, 184, 166, .3);
+            background: rgba(20, 184, 166, .07);
+        }
+
+        .canvas-heading {
+            margin: 0;
+            font-size: 26px;
+            line-height: 1.2;
+            font-weight: 850;
+            letter-spacing: -.03em;
+        }
+
+        .canvas-paragraph {
+            margin: 0;
+            color: var(--text-muted, #94a3b8);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .canvas-stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .canvas-stat {
+            padding: 16px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .12));
+            border-radius: 14px;
+            background: rgba(148, 163, 184, .035);
+        }
+
+        .canvas-stat-label {
+            color: var(--text-muted, #94a3b8);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .canvas-stat-value {
+            margin-top: 7px;
+            font-size: 23px;
+            font-weight: 850;
+            letter-spacing: -.03em;
+        }
+
+        .canvas-stat-change {
+            margin-top: 5px;
+            color: #5eead4;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .canvas-callout {
+            display: flex;
+            gap: 14px;
+            padding: 17px;
+            border: 1px solid rgba(20, 184, 166, .18);
+            border-radius: 14px;
+            background: rgba(20, 184, 166, .055);
+        }
+
+        .canvas-callout-icon {
+            width: 36px;
+            height: 36px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: rgba(20, 184, 166, .11);
+            color: #5eead4;
+        }
+
+        .canvas-callout strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .canvas-callout span {
+            color: var(--text-muted, #94a3b8);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .builder-list {
+            display: grid;
+            gap: 9px;
+        }
+
+        .builder-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .12));
+            border-radius: 13px;
+            background: transparent;
+            color: var(--text-primary, #f8fafc);
+            cursor: pointer;
+            text-align: left;
+            font: inherit;
+            transition: all .18s ease;
+        }
+
+        .builder-btn:hover {
+            transform: translateX(3px);
+            border-color: rgba(20, 184, 166, .28);
+            background: rgba(20, 184, 166, .055);
+        }
+
+        .builder-icon {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(148, 163, 184, .07);
+            color: #94a3b8;
+        }
+
+        .builder-btn:hover .builder-icon {
+            color: #5eead4;
+            background: rgba(20, 184, 166, .09);
+        }
+
+        .builder-copy {
+            min-width: 0;
+        }
+
+        .builder-title {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .builder-description {
+            display: block;
+            margin-top: 3px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 10px;
+            line-height: 1.45;
+        }
+
+        .settings-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border-color, rgba(148, 163, 184, .09));
+        }
+
+        .setting-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .setting-copy {
+            min-width: 0;
+        }
+
+        .setting-title {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .setting-description {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .switch {
+            position: relative;
+            width: 42px;
+            height: 24px;
+            flex: 0 0 auto;
+        }
+
+        .switch input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .switch-track {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, .2);
+            cursor: pointer;
+            transition: background .2s ease;
+        }
+
+        .switch-track::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            top: 3px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, .25);
+            transition: transform .2s ease;
+        }
+
+        .switch input:checked + .switch-track {
+            background: rgba(20, 184, 166, .75);
+        }
+
+        .switch input:checked + .switch-track::after {
+            transform: translateX(18px);
+        }
+
+        .status-card {
+            padding: 17px;
+            border-radius: 16px;
+            border: 1px solid rgba(34, 197, 94, .16);
+            background: rgba(34, 197, 94, .045);
+        }
+
+        .status-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 16px rgba(74, 222, 128, .75);
+        }
+
+        .status-title {
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .status-text {
+            margin: 8px 0 0;
+            color: var(--text-muted, #94a3b8);
+            font-size: 11px;
+            line-height: 1.65;
+        }
+
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .metadata-item {
+            padding: 12px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .1));
+            border-radius: 12px;
+            background: rgba(148, 163, 184, .025);
+        }
+
+        .metadata-label {
+            display: block;
+            color: var(--text-muted, #94a3b8);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .metadata-value {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            font-weight: 800;
+            word-break: break-word;
+        }
+
+        .guide-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .guide-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .guide-number {
+            width: 21px;
+            height: 21px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 7px;
+            background: rgba(20, 184, 166, .08);
+            color: #5eead4;
+            font-size: 9px;
+            font-weight: 850;
+        }
+
+        .blank-footer-note {
+            margin-top: 20px;
+            padding: 15px 18px;
+            border: 1px solid var(--border-color, rgba(148, 163, 184, .1));
+            border-radius: 15px;
+            color: var(--text-muted, #94a3b8);
+            font-size: 11px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .blank-footer-note strong {
+            color: var(--text-primary, #f8fafc);
+        }
+
+        .blank-toast {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 9999;
+            width: min(360px, calc(100vw - 32px));
+            padding: 14px 16px;
+            border: 1px solid rgba(20, 184, 166, .22);
+            border-radius: 14px;
+            background: rgba(15, 23, 42, .94);
+            color: #f8fafc;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+            backdrop-filter: blur(18px);
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .25s ease;
+        }
+
+        .blank-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .blank-toast-title {
+            font-size: 12px;
+            font-weight: 850;
+        }
+
+        .blank-toast-message {
+            margin-top: 4px;
+            color: #cbd5e1;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 1180px) {
+            .blank-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-side-column {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 20px;
+            }
+
+            .blank-side-column .blank-card + .blank-card {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .blank-hero-inner {
+                grid-template-columns: 1fr;
+                padding: 22px;
+            }
+
+            .blank-hero-actions {
+                justify-content: flex-start;
+            }
+
+            .blank-card-body {
+                padding: 14px;
+            }
+
+            .blank-canvas {
+                padding: 13px;
+                min-height: 600px;
+            }
+
+            .canvas-empty {
+                min-height: 550px;
+            }
+
+            .canvas-empty-inner {
+                padding: 20px 10px;
+            }
+
+            .canvas-stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-side-column {
+                grid-template-columns: 1fr;
+            }
+
+            .metadata-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-title {
+                font-size: 29px;
+            }
+
+            .blank-description {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blank-hero-inner {
+                padding: 18px;
+            }
+
+            .blank-hero-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .blank-btn {
+                width: 100%;
+            }
+
+            .canvas-empty-actions {
+                display: grid;
+                width: 100%;
+            }
+
+            .canvas-empty-actions .blank-btn {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .canvas-block,
+            .blank-btn,
+            .builder-btn,
+            .canvas-mini-btn {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="veltrix-page blank-workspace-page"
+    data-page="blank"
+    data-title="Blank Workspace"
+>
+
+    <!-- =========================================================
+         PAGE LOADER
+         ========================================================= -->
+
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+        <div class="loader-content">
+            <div class="loader-logo">V</div>
+            <div class="loader-spinner"></div>
+            <span data-translate="true">Preparing workspace...</span>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         BACKGROUND EFFECTS
+         ========================================================= -->
+
+    <div class="app-background" aria-hidden="true">
+        <div class="background-grid"></div>
+        <div class="background-orb background-orb-one"></div>
+        <div class="background-orb background-orb-two"></div>
+    </div>
+
+
+    <!-- =========================================================
+         MOBILE OVERLAY
+         ========================================================= -->
+
+    <div
+        id="mobileOverlay"
+        class="mobile-overlay"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- =========================================================
+         APP SHELL
+         ========================================================= -->
+
+    <div class="app-shell">
+
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+            aria-label="Main navigation"
+        >
+
+            <div class="sidebar-top">
+
+                <!-- Brand -->
+                <a
+                    href="../index.html"
+                    class="brand"
+                    aria-label="Veltrix Dashboard"
+                >
+                    <span class="brand-mark">
+                        <span>V</span>
+                    </span>
+
+                    <span class="brand-copy">
+                        <strong>Veltrix</strong>
+                        <small data-translate="true">Business Platform</small>
+                    </span>
+                </a>
+
+
+                <!-- Workspace selector -->
+                <div class="workspace-selector">
+
+                    <button
+                        type="button"
+                        class="workspace-trigger"
+                        data-workspace-trigger
+                        aria-expanded="false"
+                        aria-haspopup="menu"
+                    >
+
+                        <span class="workspace-avatar">
+                            V
+                        </span>
+
+                        <span class="workspace-info">
+                            <strong data-workspace-name>Veltrix HQ</strong>
+                            <small data-translate="true">Main workspace</small>
+                        </span>
+
+                        <span class="workspace-chevron">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="m7 10 5 5 5-5"
+                                    stroke="currentColor"
+                                    stroke-width="1.8"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="workspace-menu dropdown-menu"
+                        data-workspace-menu
+                        role="menu"
+                    >
+
+                        <button
+                            type="button"
+                            class="workspace-option"
+                            data-workspace="Veltrix HQ"
+                            role="menuitem"
+                        >
+                            <span class="workspace-option-icon">V</span>
+                            <span>
+                                <strong>Veltrix HQ</strong>
+                                <small data-translate="true">Main workspace</small>
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="workspace-option"
+                            data-workspace="Marketing"
+                            role="menuitem"
+                        >
+                            <span class="workspace-option-icon">M</span>
+                            <span>
+                                <strong data-translate="true">Marketing</strong>
+                                <small data-translate="true">Campaign workspace</small>
+                            </span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="workspace-option"
+                            data-workspace="Operations"
+                            role="menuitem"
+                        >
+                            <span class="workspace-option-icon">O</span>
+                            <span>
+                                <strong data-translate="true">Operations</strong>
+                                <small data-translate="true">Operations workspace</small>
+                            </span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav">
+
+                <div class="nav-section">
+
+                    <span
+                        class="nav-section-title"
+                        data-translate="true"
+                    >
+                        Overview
+                    </span>
+
+
+                    <a
+                        href="../index.html"
+                        class="nav-item"
+                        data-nav="dashboard"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="4" y="4" width="6" height="6" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+                                <rect x="14" y="4" width="6" height="6" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+                                <rect x="4" y="14" width="6" height="6" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+                                <rect x="14" y="14" width="6" height="6" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Dashboard</span>
+                    </a>
+
+
+                    <a
+                        href="analytics.html"
+                        class="nav-item"
+                        data-nav="analytics"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 19V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                <path d="M12 19V5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                <path d="M19 19v-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Analytics</span>
+                    </a>
+
+                </div>
+
+
+                <div class="nav-section">
+
+                    <span
+                        class="nav-section-title"
+                        data-translate="true"
+                    >
+                        Management
+                    </span>
+
+
+                    <a
+                        href="orders.html"
+                        class="nav-item"
+                        data-nav="orders"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M6 7h12l1 13H5L6 7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="M9 7a3 3 0 0 1 6 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Orders</span>
+                    </a>
+
+
+                    <a
+                        href="customers.html"
+                        class="nav-item"
+                        data-nav="customers"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                <circle cx="10" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M16 5.2a3.5 3.5 0 0 1 0 6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                <path d="M17 15.3a3.5 3.5 0 0 1 3 3.2V20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Customers</span>
+                    </a>
+
+
+                    <a
+                        href="products.html"
+                        class="nav-item"
+                        data-nav="products"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="m4.5 7.5 7.5 4 7.5-4M12 12v9" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Products</span>
+                    </a>
+
+
+                    <a
+                        href="invoices.html"
+                        class="nav-item"
+                        data-nav="invoices"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M7 3h10v18l-2.5-1.6L12 21l-2.5-1.6L7 21V3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="M9.5 8h5M9.5 12h5M9.5 16h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Invoices</span>
+                    </a>
+
+                </div>
+
+
+                <div class="nav-section">
+
+                    <span
+                        class="nav-section-title"
+                        data-translate="true"
+                    >
+                        Workspace
+                    </span>
+
+
+                    <a
+                        href="messages.html"
+                        class="nav-item"
+                        data-nav="messages"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 5h14v11H9l-4 4V5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="M8 9h8M8 12h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Messages</span>
+                        <span class="nav-badge">4</span>
+                    </a>
+
+
+                    <a
+                        href="notifications.html"
+                        class="nav-item"
+                        data-nav="notifications"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M18 9a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="M10 21h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Notifications</span>
+                        <span class="nav-badge nav-badge-danger">3</span>
+                    </a>
+
+
+                    <a
+                        href="calculator.html"
+                        class="nav-item"
+                        data-nav="calculator"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Calculator</span>
+                    </a>
+
+
+                    <a
+                        href="ai-workspace.html"
+                        class="nav-item"
+                        data-nav="ai-workspace"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                                <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.7"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">AI Workspace</span>
+                    </a>
+
+
+                    <a
+                        href="blank.html"
+                        class="nav-item active"
+                        data-nav="blank"
+                        aria-current="page"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Blank Page</span>
+                    </a>
+
+                </div>
+
+
+                <div class="nav-section">
+
+                    <span
+                        class="nav-section-title"
+                        data-translate="true"
+                    >
+                        Account
+                    </span>
+
+
+                    <a
+                        href="profile.html"
+                        class="nav-item"
+                        data-nav="profile"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M5 20a7 7 0 0 1 14 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Profile</span>
+                    </a>
+
+
+                    <a
+                        href="settings.html"
+                        class="nav-item"
+                        data-nav="settings"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="m19 13.5 1.2 1-.9 1.6-1.5-.5a7.5 7.5 0 0 1-1.7 1l-.2 1.6h-1.9l-.5-1.5a7.4 7.4 0 0 1-2-.1l-.9 1.3-1.7-.8.4-1.6a7.4 7.4 0 0 1-1.4-1.4l-1.6.4-.8-1.7 1.3-.9a7.5 7.5 0 0 1-.1-2l-1.5-.6V8l1.5-.5a7.5 7.5 0 0 1 1-1.8L7.8 4.2l1.6-.9 1 1.2a7.4 7.4 0 0 1 2-.3l.6-1.5h1.8l.4 1.5a7.5 7.5 0 0 1 1.9.9l1.3-.8 1.2 1.4-1 1.3a7.3 7.3 0 0 1 .7 1.9l1.5.3v1.9l-1.5.5a7.5 7.5 0 0 1-.3 1.9Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Settings</span>
+                    </a>
+
+
+                    <a
+                        href="upgrade.html"
+                        class="nav-item nav-upgrade-item"
+                        data-nav="upgrade"
+                    >
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 3 14 9l6 .5-4.6 3.9 1.5 5.9L12 16l-4.9 3.3 1.5-5.9L4 9.5 10 9l2-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <span class="nav-label" data-translate="true">Upgrade</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <!-- Sidebar bottom -->
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-help-card">
+
+                    <div class="help-card-icon">
+                        ?
+                    </div>
+
+                    <div class="help-card-copy">
+                        <strong data-translate="true">Need help?</strong>
+                        <span data-translate="true">Explore the Veltrix guide.</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="help-card-button"
+                        data-action="help"
+                        aria-label="Open help"
+                    >
+                        →
+                    </button>
+
+                </div>
+
+
+                <div class="sidebar-user">
+
+                    <div class="sidebar-user-avatar">
+                        A
+                    </div>
+
+                    <div class="sidebar-user-copy">
+                        <strong>Arwa</strong>
+                        <span>admin@veltrix.local</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="sidebar-user-menu"
+                        data-profile-menu-trigger
+                        aria-label="Open account menu"
+                    >
+                        ⋮
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN APP
+             ===================================================== -->
+
+        <div class="app-main">
+
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        id="mobileMenuButton"
+                        class="topbar-icon-button mobile-only"
+                        aria-label="Open navigation"
+                        aria-controls="sidebar"
+                        aria-expanded="false"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="sidebarCollapseButton"
+                        class="topbar-icon-button desktop-only"
+                        aria-label="Collapse sidebar"
+                        aria-expanded="true"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M9 5 16 12 9 19" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+
+                    <div class="breadcrumb">
+
+                        <a
+                            href="../index.html"
+                            data-translate="true"
+                        >
+                            Home
+                        </a>
+
+                        <span>/</span>
+
+                        <span
+                            class="breadcrumb-current"
+                            data-translate="true"
+                        >
+                            Blank Workspace
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+
+                    <!-- Search -->
+                    <button
+                        type="button"
+                        class="topbar-search-trigger"
+                        data-search-trigger
+                        aria-label="Search"
+                    >
+
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/>
+                            <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                        </svg>
+
+                        <span data-translate="true">Search</span>
+
+                        <kbd>⌘ K</kbd>
+
+                    </button>
+
+
+                    <!-- Quick create -->
+                    <button
+                        type="button"
+                        class="topbar-create-button"
+                        data-quick-create-trigger
+                    >
+                        <span>+</span>
+                        <span data-translate="true">Create</span>
+                    </button>
+
+
+                    <!-- Language -->
+                    <div class="topbar-dropdown language-dropdown">
+
+                        <button
+                            type="button"
+                            class="topbar-icon-button"
+                            data-language-trigger
+                            aria-expanded="false"
+                            aria-haspopup="menu"
+                            aria-label="Language"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M3.8 12h16.4M12 3.5c2.1 2.3 3.2 5.1 3.2 8.5S14.1 18.2 12 20.5C9.9 18.2 8.8 15.4 8.8 12S9.9 5.8 12 3.5Z" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button>
+
+
+                        <div
+                            class="dropdown-menu language-menu"
+                            data-language-menu
+                            role="menu"
+                        >
+                            <!-- Filled automatically by script.js -->
+                        </div>
+
+                    </div>
+
+
+                    <!-- Notifications -->
+                    <div class="topbar-dropdown">
+
+                        <button
+                            type="button"
+                            class="topbar-icon-button notification-button"
+                            data-notification-trigger
+                            aria-expanded="false"
+                            aria-haspopup="menu"
+                            aria-label="Notifications"
+                        >
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M18 9a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                                <path d="M10 21h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+
+                            <span class="notification-dot"></span>
+
+                        </button>
+
+
+                        <div
+                            class="dropdown-menu notification-menu"
+                            data-notification-menu
+                        >
+
+                            <div class="dropdown-menu-header">
+                                <div>
+                                    <strong data-translate="true">Notifications</strong>
+                                    <small data-translate="true">Latest activity</small>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    data-action="mark-notifications-read"
+                                >
+                                    <span data-translate="true">Mark all read</span>
+                                </button>
+                            </div>
+
+
+                            <div class="notification-list">
+
+                                <button
+                                    type="button"
+                                    class="notification-item"
+                                    data-action="open-notifications"
+                                >
+                                    <span class="notification-item-icon success">✓</span>
+
+                                    <span>
+                                        <strong data-translate="true">Workspace saved</strong>
+                                        <small data-translate="true">Your latest changes are available.</small>
+                                    </span>
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="notification-item"
+                                    data-action="open-notifications"
+                                >
+                                    <span class="notification-item-icon info">i</span>
+
+                                    <span>
+                                        <strong data-translate="true">New template update</strong>
+                                        <small data-translate="true">A new Veltrix component is available.</small>
+                                    </span>
+                                </button>
+
+                            </div>
+
+
+                            <a
+                                href="notifications.html"
+                                class="dropdown-menu-footer"
+                                data-translate="true"
+                            >
+                                View all notifications
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Theme -->
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        data-theme-toggle
+                        aria-label="Toggle theme"
+                    >
+                        <svg
+                            class="theme-icon-sun"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.7"/>
+                            <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                        </svg>
+
+                        <svg
+                            class="theme-icon-moon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+
+                    <!-- Profile -->
+                    <div class="topbar-profile">
+
+                        <button
+                            type="button"
+                            class="topbar-profile-button"
+                            data-profile-menu-trigger
+                            aria-expanded="false"
+                        >
+
+                            <span class="topbar-profile-avatar">
+                                A
+                            </span>
+
+                            <span class="topbar-profile-copy">
+                                <strong>Arwa</strong>
+                                <small data-translate="true">Administrator</small>
+                            </span>
+
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+
+                        </button>
+
+
+                        <div
+                            class="dropdown-menu profile-menu"
+                            data-profile-menu
+                        >
+
+                            <div class="profile-menu-head">
+
+                                <span class="profile-menu-avatar">
+                                    A
+                                </span>
+
+                                <div>
+                                    <strong>Arwa</strong>
+                                    <small>admin@veltrix.local</small>
+                                </div>
+
+                            </div>
+
+
+                            <a
+                                href="profile.html"
+                                data-translate="true"
+                            >
+                                Profile
+                            </a>
+
+                            <a
+                                href="settings.html"
+                                data-translate="true"
+                            >
+                                Settings
+                            </a>
+
+                            <button
+                                type="button"
+                                data-action="logout"
+                                data-translate="true"
+                            >
+                                Sign out
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 PAGE CONTENT
+                 ================================================= -->
+
+            <main class="page-content blank-page">
+
+
+                <!-- HERO -->
+                <section class="blank-hero">
+
+                    <div class="blank-hero-inner">
+
+                        <div>
+
+                            <span class="blank-eyebrow">
+                                <span class="blank-eyebrow-dot"></span>
+                                <span data-translate="true">Starter Workspace</span>
+                            </span>
+
+                            <h1
+                                class="blank-title"
+                                data-translate="true"
+                            >
+                                Start building something beautiful.
+                            </h1>
+
+                            <p
+                                class="blank-description"
+                                data-translate="true"
+                            >
+                                A clean, flexible starting point for your next Veltrix page.
+                                Add the blocks you need, customize the canvas, and turn this
+                                workspace into a dashboard, report, project page, CRM view,
+                                or anything your business requires.
+                            </p>
+
+                        </div>
+
+
+                        <div class="blank-hero-actions">
+
+                            <button
+                                type="button"
+                                class="blank-btn blank-btn-primary"
+                                data-builder-action="add-heading"
+                            >
+                                <span>＋</span>
+                                <span data-translate="true">Add block</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="blank-btn"
+                                data-builder-action="save"
+                            >
+                                <span>↥</span>
+                                <span data-translate="true">Save layout</span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="blank-btn"
+                                data-builder-action="export"
+                            >
+                                <span>↓</span>
+                                <span data-translate="true">Export</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MAIN LAYOUT -->
+                <div class="blank-layout">
+
+
+                    <!-- =================================================
+                         LEFT / CANVAS
+                         ================================================= -->
+
+                    <section class="blank-main-column">
+
+                        <div class="blank-card">
+
+                            <div class="blank-card-header">
+
+                                <div class="blank-card-heading">
+
+                                    <h2
+                                        class="blank-card-title"
+                                        data-translate="true"
+                                    >
+                                        Page Canvas
+                                    </h2>
+
+                                    <p
+                                        class="blank-card-subtitle"
+                                        data-translate="true"
+                                    >
+                                        Build your custom page from reusable content blocks.
+                                    </p>
+
+                                </div>
+
+
+                                <div class="card-header-actions">
+
+                                    <button
+                                        type="button"
+                                        class="blank-btn"
+                                        data-builder-action="clear"
+                                    >
+                                        <span data-translate="true">Clear</span>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="blank-card-body">
+
+                                <div
+                                    id="blankCanvas"
+                                    class="blank-canvas"
+                                    data-grid="true"
+                                >
+
+                                    <!-- Empty state -->
+                                    <div
+                                        id="canvasEmpty"
+                                        class="canvas-empty"
+                                    >
+
+                                        <div class="canvas-empty-inner">
+
+                                            <div class="canvas-empty-icon">
+
+                                                <svg viewBox="0 0 24 24" fill="none">
+                                                    <path
+                                                        d="M12 4v16M4 12h16"
+                                                        stroke="currentColor"
+                                                        stroke-width="1.7"
+                                                        stroke-linecap="round"
+                                                    />
+                                                </svg>
+
+                                            </div>
+
+                                            <h3
+                                                class="canvas-empty-title"
+                                                data-translate="true"
+                                            >
+                                                Your canvas is ready.
+                                            </h3>
+
+                                            <p
+                                                class="canvas-empty-text"
+                                                data-translate="true"
+                                            >
+                                                Choose a starter block from the builder panel,
+                                                or load the example layout to see how the page
+                                                can be structured.
+                                            </p>
+
+                                            <div class="canvas-empty-actions">
+
+                                                <button
+                                                    type="button"
+                                                    class="blank-btn blank-btn-primary"
+                                                    data-builder-action="load-example"
+                                                >
+                                                    <span data-translate="true">Load example</span>
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="blank-btn"
+                                                    data-builder-action="add-paragraph"
+                                                >
+                                                    <span data-translate="true">Add text</span>
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- Dynamic blocks inserted by JS -->
+                                    <div
+                                        id="canvasBlocks"
+                                        class="canvas-blocks"
+                                        hidden
+                                    ></div>
+
+                                </div>
+
+
+                                <div class="blank-footer-note">
+
+                                    <strong data-translate="true">Veltrix Starter Canvas</strong>
+                                    <span data-translate="true">
+                                        — designed as a clean foundation for your own pages.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================================
+                         RIGHT / BUILDER
+                         ================================================= -->
+
+                    <aside class="blank-side-column">
+
+
+                        <!-- BLOCK BUILDER -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-header">
+
+                                <div class="blank-card-heading">
+
+                                    <h2
+                                        class="blank-card-title"
+                                        data-translate="true"
+                                    >
+                                        Add blocks
+                                    </h2>
+
+                                    <p
+                                        class="blank-card-subtitle"
+                                        data-translate="true"
+                                    >
+                                        Choose a component.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="blank-card-body">
+
+                                <div class="builder-list">
+
+
+                                    <button
+                                        type="button"
+                                        class="builder-btn"
+                                        data-builder-action="add-heading"
+                                    >
+
+                                        <span class="builder-icon">
+                                            H
+                                        </span>
+
+                                        <span class="builder-copy">
+                                            <span
+                                                class="builder-title"
+                                                data-translate="true"
+                                            >
+                                                Heading
+                                            </span>
+
+                                            <span
+                                                class="builder-description"
+                                                data-translate="true"
+                                            >
+                                                Add a strong page section title.
+                                            </span>
+                                        </span>
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="builder-btn"
+                                        data-builder-action="add-paragraph"
+                                    >
+
+                                        <span class="builder-icon">
+                                            ¶
+                                        </span>
+
+                                        <span class="builder-copy">
+                                            <span
+                                                class="builder-title"
+                                                data-translate="true"
+                                            >
+                                                Paragraph
+                                            </span>
+
+                                            <span
+                                                class="builder-description"
+                                                data-translate="true"
+                                            >
+                                                Add descriptive content.
+                                            </span>
+                                        </span>
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="builder-btn"
+                                        data-builder-action="add-stats"
+                                    >
+
+                                        <span class="builder-icon">
+                                            #
+                                        </span>
+
+                                        <span class="builder-copy">
+                                            <span
+                                                class="builder-title"
+                                                data-translate="true"
+                                            >
+                                                Statistics
+                                            </span>
+
+                                            <span
+                                                class="builder-description"
+                                                data-translate="true"
+                                            >
+                                                Add three business KPI cards.
+                                            </span>
+                                        </span>
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="builder-btn"
+                                        data-builder-action="add-callout"
+                                    >
+
+                                        <span class="builder-icon">
+                                            !
+                                        </span>
+
+                                        <span class="builder-copy">
+                                            <span
+                                                class="builder-title"
+                                                data-translate="true"
+                                            >
+                                                Callout
+                                            </span>
+
+                                            <span
+                                                class="builder-description"
+                                                data-translate="true"
+                                            >
+                                                Highlight an important message.
+                                            </span>
+                                        </span>
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="builder-btn"
+                                        data-builder-action="load-example"
+                                    >
+
+                                        <span class="builder-icon">
+                                            ✦
+                                        </span>
+
+                                        <span class="builder-copy">
+                                            <span
+                                                class="builder-title"
+                                                data-translate="true"
+                                            >
+                                                Example layout
+                                            </span>
+
+                                            <span
+                                                class="builder-description"
+                                                data-translate="true"
+                                            >
+                                                Preview a complete starter page.
+                                            </span>
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CANVAS SETTINGS -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-header">
+
+                                <div class="blank-card-heading">
+
+                                    <h2
+                                        class="blank-card-title"
+                                        data-translate="true"
+                                    >
+                                        Canvas settings
+                                    </h2>
+
+                                    <p
+                                        class="blank-card-subtitle"
+                                        data-translate="true"
+                                    >
+                                        Adjust your workspace.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="blank-card-body">
+
+                                <div class="settings-list">
+
+
+                                    <div class="setting-row">
+
+                                        <div class="setting-copy">
+
+                                            <span
+                                                class="setting-title"
+                                                data-translate="true"
+                                            >
+                                                Show grid
+                                            </span>
+
+                                            <span
+                                                class="setting-description"
+                                                data-translate="true"
+                                            >
+                                                Display alignment guides.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label class="switch">
+
+                                            <input
+                                                id="gridToggle"
+                                                type="checkbox"
+                                                checked
+                                            >
+
+                                            <span class="switch-track"></span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div class="setting-row">
+
+                                        <div class="setting-copy">
+
+                                            <span
+                                                class="setting-title"
+                                                data-translate="true"
+                                            >
+                                                Compact spacing
+                                            </span>
+
+                                            <span
+                                                class="setting-description"
+                                                data-translate="true"
+                                            >
+                                                Reduce spacing between blocks.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label class="switch">
+
+                                            <input
+                                                id="compactToggle"
+                                                type="checkbox"
+                                            >
+
+                                            <span class="switch-track"></span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div class="setting-row">
+
+                                        <div class="setting-copy">
+
+                                            <span
+                                                class="setting-title"
+                                                data-translate="true"
+                                            >
+                                                Auto save
+                                            </span>
+
+                                            <span
+                                                class="setting-description"
+                                                data-translate="true"
+                                            >
+                                                Save changes locally while editing.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label class="switch">
+
+                                            <input
+                                                id="autoSaveToggle"
+                                                type="checkbox"
+                                                checked
+                                            >
+
+                                            <span class="switch-track"></span>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-body">
+
+                                <div class="status-card">
+
+                                    <div class="status-top">
+
+                                        <span class="status-dot"></span>
+
+                                        <span
+                                            class="status-title"
+                                            data-translate="true"
+                                        >
+                                            Workspace ready
+                                        </span>
+
+                                    </div>
+
+                                    <p
+                                        class="status-text"
+                                        data-translate="true"
+                                    >
+                                        Everything is running locally in your browser.
+                                        Your starter layout can be saved and restored without
+                                        requiring a backend.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PAGE METADATA -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-header">
+
+                                <div class="blank-card-heading">
+
+                                    <h2
+                                        class="blank-card-title"
+                                        data-translate="true"
+                                    >
+                                        Page information
+                                    </h2>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="blank-card-body">
+
+                                <div class="metadata-grid">
+
+                                    <div class="metadata-item">
+
+                                        <span
+                                            class="metadata-label"
+                                            data-translate="true"
+                                        >
+                                            Template
+                                        </span>
+
+                                        <span class="metadata-value">
+                                            Veltrix
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="metadata-item">
+
+                                        <span
+                                            class="metadata-label"
+                                            data-translate="true"
+                                        >
+                                            Page
+                                        </span>
+
+                                        <span class="metadata-value">
+                                            blank.html
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="metadata-item">
+
+                                        <span
+                                            class="metadata-label"
+                                            data-translate="true"
+                                        >
+                                            Blocks
+                                        </span>
+
+                                        <span
+                                            id="blockCount"
+                                            class="metadata-value"
+                                        >
+                                            0
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="metadata-item">
+
+                                        <span
+                                            class="metadata-label"
+                                            data-translate="true"
+                                        >
+                                            Status
+                                        </span>
+
+                                        <span
+                                            id="saveStatus"
+                                            class="metadata-value"
+                                            data-translate="true"
+                                        >
+                                            Ready
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUYER GUIDE -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-header">
+
+                                <div class="blank-card-heading">
+
+                                    <h2
+                                        class="blank-card-title"
+                                        data-translate="true"
+                                    >
+                                        Starter guide
+                                    </h2>
+
+                                    <p
+                                        class="blank-card-subtitle"
+                                        data-translate="true"
+                                    >
+                                        A simple workflow.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="blank-card-body">
+
+                                <ol class="guide-list">
+
+                                    <li class="guide-item">
+
+                                        <span class="guide-number">1</span>
+
+                                        <span data-translate="true">
+                                            Add the blocks your page needs.
+                                        </span>
+
+                                    </li>
+
+
+                                    <li class="guide-item">
+
+                                        <span class="guide-number">2</span>
+
+                                        <span data-translate="true">
+                                            Use the global Veltrix styles for a consistent look.
+                                        </span>
+
+                                    </li>
+
+
+                                    <li class="guide-item">
+
+                                        <span class="guide-number">3</span>
+
+                                        <span data-translate="true">
+                                            Save the layout when you are finished.
+                                        </span>
+
+                                    </li>
+
+
+                                    <li class="guide-item">
+
+                                        <span class="guide-number">4</span>
+
+                                        <span data-translate="true">
+                                            Replace the demo content with your own data.
+                                        </span>
+
+                                    </li>
+
+                                </ol>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RESET -->
+                        <div class="blank-card">
+
+                            <div class="blank-card-body">
+
+                                <button
+                                    type="button"
+                                    class="blank-btn blank-btn-danger"
+                                    style="width:100%;"
+                                    data-builder-action="reset"
+                                >
+                                    <span>↺</span>
+                                    <span data-translate="true">Reset starter workspace</span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </main>
+
+
+            <!-- =================================================
+                 FOOTER
+                 ================================================= -->
+
+            <footer class="app-footer">
+
+                <div>
+
+                    <span>
+                        © <span data-current-year></span> Veltrix.
+                    </span>
+
+                    <span data-translate="true">
+                        All rights reserved.
+                    </span>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a
+                        href="404.html"
+                        data-translate="true"
+                    >
+                        Help
+                    </a>
+
+                    <a
+                        href="settings.html"
+                        data-translate="true"
+                    >
+                        Settings
+                    </a>
+
+                    <a
+                        href="upgrade.html"
+                        data-translate="true"
+                    >
+                        Upgrade
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         GLOBAL SEARCH MODAL
+         ========================================================= -->
+
+    <div
+        id="searchModal"
+        class="modal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="searchModalTitle"
+    >
+
+        <div class="modal-backdrop" data-modal-close></div>
+
+        <div class="modal-dialog modal-search">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2
+                        id="searchModalTitle"
+                        data-translate="true"
+                    >
+                        Search Veltrix
+                    </h2>
+
+                    <p data-translate="true">
+                        Find pages, customers, orders, and tools.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="search-input-wrap">
+
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/>
+                        <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    </svg>
+
+                    <input
+                        id="globalSearchInput"
+                        type="search"
+                        placeholder="Search..."
+                        data-translate-placeholder="true"
+                        autocomplete="off"
+                    >
+
+                    <kbd>ESC</kbd>
+
+                </div>
+
+
+                <div
+                    id="searchResults"
+                    class="search-results"
+                >
+
+                    <div class="search-empty">
+
+                        <span class="search-empty-icon">⌕</span>
+
+                        <strong data-translate="true">
+                            Start typing to search
+                        </strong>
+
+                        <small data-translate="true">
+                            Search across your Veltrix workspace.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         QUICK CREATE MODAL
+         ========================================================= -->
+
+    <div
+        id="quickCreateModal"
+        class="modal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="modal-backdrop" data-modal-close></div>
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2 data-translate="true">
+                        Quick Create
+                    </h2>
+
+                    <p data-translate="true">
+                        Start something new.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div class="quick-create-grid">
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-quick-create="order"
+                    >
+                        <span>🛒</span>
+                        <strong data-translate="true">Order</strong>
+                        <small data-translate="true">Create a new order</small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-quick-create="customer"
+                    >
+                        <span>👤</span>
+                        <strong data-translate="true">Customer</strong>
+                        <small data-translate="true">Add a customer</small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-quick-create="product"
+                    >
+                        <span>📦</span>
+                        <strong data-translate="true">Product</strong>
+                        <small data-translate="true">Add a product</small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-quick-create="invoice"
+                    >
+                        <span>🧾</span>
+                        <strong data-translate="true">Invoice</strong>
+                        <small data-translate="true">Create an invoice</small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         CUSTOM BLANK PAGE TOAST
+         ========================================================= -->
+
+    <div
+        id="blankToast"
+        class="blank-toast"
+        role="status"
+        aria-live="polite"
+    >
+
+        <div
+            id="blankToastTitle"
+            class="blank-toast-title"
+        >
+            Veltrix
+        </div>
+
+        <div
+            id="blankToastMessage"
+            class="blank-toast-message"
+        >
+            Done.
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SCREEN READER ANNOUNCER
+         ========================================================= -->
+
+    <div
+        id="srAnnouncer"
+        class="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+    <!-- =========================================================
+         BACK TO TOP
+         ========================================================= -->
+
+    <button
+        type="button"
+        id="backToTop"
+        class="back-to-top"
+        aria-label="Back to top"
+    >
+        ↑
+    </button>
+
+
+    <!-- =========================================================
+         BLANK PAGE ENGINE
+         ========================================================= -->
+
+    <script>
+
+        (() => {
+
+            "use strict";
+
+
+            /* =====================================================
+               CONFIG
+               ===================================================== */
+
+            const BLANK_CONFIG = {
+                storageKey: "veltrix_blank_workspace_v1",
+                autosaveKey: "veltrix_blank_autosave_v1",
+                toastDuration: 2600
+            };
+
+
+            /* =====================================================
+               DOM
+               ===================================================== */
+
+            const canvas = document.getElementById("blankCanvas");
+            const canvasEmpty = document.getElementById("canvasEmpty");
+            const canvasBlocks = document.getElementById("canvasBlocks");
+            const blockCount = document.getElementById("blockCount");
+            const saveStatus = document.getElementById("saveStatus");
+
+            const gridToggle = document.getElementById("gridToggle");
+            const compactToggle = document.getElementById("compactToggle");
+            const autoSaveToggle = document.getElementById("autoSaveToggle");
+
+            const blankToast = document.getElementById("blankToast");
+            const blankToastTitle = document.getElementById("blankToastTitle");
+            const blankToastMessage = document.getElementById("blankToastMessage");
+
+
+            /* =====================================================
+               STATE
+               ===================================================== */
+
+            const state = {
+                blocks: [],
+                grid: true,
+                compact: false,
+                autoSave: true,
+                nextId: 1
+            };
+
+
+            /* =====================================================
+               HELPERS
+               ===================================================== */
+
+            const escapeHTML = (value) => {
+
+                return String(value)
+                    .replaceAll("&", "&amp;")
+                    .replaceAll("<", "&lt;")
+                    .replaceAll(">", "&gt;")
+                    .replaceAll('"', "&quot;")
+                    .replaceAll("'", "&#039;");
+
+            };
+
+
+            const uid = () => {
+
+                const id = state.nextId;
+
+                state.nextId += 1;
+
+                return id;
+
+            };
+
+
+            const translateHint = (text) => {
+
+                /*
+                 * The central Google Translate engine handles the
+                 * visible page text. Dynamic blocks are also marked
+                 * with data-translate so the global observer can
+                 * process them.
+                 */
+
+                return escapeHTML(text);
+
+            };
+
+
+            const showBlankToast = (
+                message,
+                title = "Veltrix"
+            ) => {
+
+                blankToastTitle.textContent = title;
+                blankToastMessage.textContent = message;
+
+                blankToast.classList.add("show");
+
+                clearTimeout(showBlankToast.timer);
+
+                showBlankToast.timer = setTimeout(() => {
+
+                    blankToast.classList.remove("show");
+
+                }, BLANK_CONFIG.toastDuration);
+
+            };
+
+
+            const setSaveStatus = (text) => {
+
+                saveStatus.textContent = text;
+
+            };
+
+
+            /* =====================================================
+               BLOCK FACTORIES
+               ===================================================== */
+
+            const createHeadingBlock = () => {
+
+                return {
+                    id: uid(),
+                    type: "heading",
+                    title: "Page heading",
+                    text: "Create a clear section for your business content."
+                };
+
+            };
+
+
+            const createParagraphBlock = () => {
+
+                return {
+                    id: uid(),
+                    type: "paragraph",
+                    title: "Description",
+                    text:
+                        "Use this space to explain a process, introduce a report, " +
+                        "describe a project, or present any information your users need."
+                };
+
+            };
+
+
+            const createStatsBlock = () => {
+
+                return {
+                    id: uid(),
+                    type: "stats",
+                    stats: [
+                        {
+                            label: "Revenue",
+                            value: "$48,250",
+                            change: "+12.8%"
+                        },
+                        {
+                            label: "Customers",
+                            value: "8,420",
+                            change: "+8.4%"
+                        },
+                        {
+                            label: "Conversion",
+                            value: "6.82%",
+                            change: "+2.1%"
+                        }
+                    ]
+                };
+
+            };
+
+
+            const createCalloutBlock = () => {
+
+                return {
+                    id: uid(),
+                    type: "callout",
+                    title: "Workspace note",
+                    text:
+                        "This reusable callout can be used for important updates, " +
+                        "warnings, announcements, or helpful information."
+                };
+
+            };
+
+
+            /* =====================================================
+               BLOCK RENDERING
+               ===================================================== */
+
+            const blockToolbar = (block) => {
+
+                return `
+                    <div class="canvas-block-toolbar">
+
+                        <span class="canvas-block-type">
+                            <span>•</span>
+                            <span data-translate="true">
+                                ${translateHint(block.type)}
+                            </span>
+                        </span>
+
+                        <div class="canvas-block-actions">
+
+                            <button
+                                type="button"
+                                class="canvas-mini-btn"
+                                data-block-action="duplicate"
+                                data-block-id="${block.id}"
+                                aria-label="Duplicate block"
+                                title="Duplicate"
+                            >
+                                ⧉
+                            </button>
+
+                            <button
+                                type="button"
+                                class="canvas-mini-btn"
+                                data-block-action="delete"
+                                data-block-id="${block.id}"
+                                aria-label="Delete block"
+                                title="Delete"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                    </div>
+                `;
+
+            };
+
+
+            const renderBlock = (block) => {
+
+                if (block.type === "heading") {
+
+                    return `
+                        <article
+                            class="canvas-block"
+                            data-block-id="${block.id}"
+                        >
+
+                            ${blockToolbar(block)}
+
+                            <h3
+                                class="canvas-heading"
+                                data-translate="true"
+                            >
+                                ${translateHint(block.title)}
+                            </h3>
+
+                            <p
+                                class="canvas-paragraph"
+                                style="margin-top:10px;"
+                                data-translate="true"
+                            >
+                                ${translateHint(block.text)}
+                            </p>
+
+                        </article>
+                    `;
+
+                }
+
+
+                if (block.type === "paragraph") {
+
+                    return `
+                        <article
+                            class="canvas-block"
+                            data-block-id="${block.id}"
+                        >
+
+                            ${blockToolbar(block)}
+
+                            <p
+                                class="canvas-paragraph"
+                                data-translate="true"
+                            >
+                                ${translateHint(block.text)}
+                            </p>
+
+                        </article>
+                    `;
+
+                }
+
+
+                if (block.type === "stats") {
+
+                    return `
+                        <article
+                            class="canvas-block"
+                            data-block-id="${block.id}"
+                        >
+
+                            ${blockToolbar(block)}
+
+                            <div class="canvas-stat-grid">
+
+                                ${block.stats.map(stat => `
+                                    <div class="canvas-stat">
+
+                                        <div
+                                            class="canvas-stat-label"
+                                            data-translate="true"
+                                        >
+                                            ${translateHint(stat.label)}
+                                        </div>
+
+                                        <div class="canvas-stat-value">
+                                            ${translateHint(stat.value)}
+                                        </div>
+
+                                        <div class="canvas-stat-change">
+                                            ${translateHint(stat.change)}
+                                        </div>
+
+                                    </div>
+                                `).join("")}
+
+                            </div>
+
+                        </article>
+                    `;
+
+                }
+
+
+                if (block.type === "callout") {
+
+                    return `
+                        <article
+                            class="canvas-block"
+                            data-block-id="${block.id}"
+                        >
+
+                            ${blockToolbar(block)}
+
+                            <div class="canvas-callout">
+
+                                <div class="canvas-callout-icon">
+                                    !
+                                </div>
+
+                                <div>
+
+                                    <strong data-translate="true">
+                                        ${translateHint(block.title)}
+                                    </strong>
+
+                                    <span data-translate="true">
+                                        ${translateHint(block.text)}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+                    `;
+
+                }
+
+
+                return "";
+
+            };
+
+
+            const render = () => {
+
+                canvasBlocks.innerHTML = state.blocks
+                    .map(renderBlock)
+                    .join("");
+
+
+                const hasBlocks = state.blocks.length > 0;
+
+                canvasEmpty.hidden = hasBlocks;
+                canvasBlocks.hidden = !hasBlocks;
+
+                blockCount.textContent = String(state.blocks.length);
+
+                canvas.classList.toggle(
+                    "no-grid",
+                    !state.grid
+                );
+
+                canvasBlocks.classList.toggle(
+                    "compact",
+                    state.compact
+                );
+
+
+                if (state.compact) {
+
+                    canvasBlocks.style.gap = "9px";
+
+                } else {
+
+                    canvasBlocks.style.gap = "16px";
+
+                }
+
+
+                /*
+                 * Let the global translation observer process
+                 * dynamically generated content.
+                 */
+
+                if (
+                    window.Veltrix &&
+                    window.Veltrix.translation &&
+                    typeof window.Veltrix.translation.refresh === "function"
+                ) {
+
+                    try {
+
+                        window.Veltrix.translation.refresh();
+
+                    } catch (error) {
+
+                        console.debug(
+                            "Veltrix translation refresh skipped.",
+                            error
+                        );
+
+                    }
+
+                }
+
+            };
+
+
+            /* =====================================================
+               ADD BLOCK
+               ===================================================== */
+
+            const addBlock = (block) => {
+
+                state.blocks.push(block);
+
+                render();
+
+                if (state.autoSave) {
+
+                    saveLayout(true);
+
+                }
+
+                setSaveStatus("Unsaved");
+
+                showBlankToast(
+                    `${block.type} block added.`,
+                    "Block added"
+                );
+
+            };
+
+
+            /* =====================================================
+               EXAMPLE LAYOUT
+               ===================================================== */
+
+            const exampleLayout = () => {
+
+                state.blocks = [
+                    createHeadingBlock(),
+                    createParagraphBlock(),
+                    createStatsBlock(),
+                    createCalloutBlock()
+                ];
+
+                render();
+
+                if (state.autoSave) {
+
+                    saveLayout(true);
+
+                }
+
+                setSaveStatus("Example loaded");
+
+                showBlankToast(
+                    "Example layout loaded successfully.",
+                    "Workspace"
+                );
+
+            };
+
+
+            /* =====================================================
+               DELETE BLOCK
+               ===================================================== */
+
+            const deleteBlock = (id) => {
+
+                const numericId = Number(id);
+
+                state.blocks = state.blocks.filter(
+                    block => block.id !== numericId
+                );
+
+                render();
+
+                if (state.autoSave) {
+
+                    saveLayout(true);
+
+                }
+
+                setSaveStatus("Unsaved");
+
+                showBlankToast(
+                    "The block was removed.",
+                    "Block removed"
+                );
+
+            };
+
+
+            /* =====================================================
+               DUPLICATE BLOCK
+               ===================================================== */
+
+            const duplicateBlock = (id) => {
+
+                const numericId = Number(id);
+
+                const original = state.blocks.find(
+                    block => block.id === numericId
+                );
+
+                if (!original) {
+
+                    return;
+
+                }
+
+
+                const duplicate = JSON.parse(
+                    JSON.stringify(original)
+                );
+
+                duplicate.id = uid();
+
+                const index = state.blocks.findIndex(
+                    block => block.id === numericId
+                );
+
+                state.blocks.splice(
+                    index + 1,
+                    0,
+                    duplicate
+                );
+
+                render();
+
+                if (state.autoSave) {
+
+                    saveLayout(true);
+
+                }
+
+                setSaveStatus("Unsaved");
+
+                showBlankToast(
+                    "The block was duplicated.",
+                    "Block duplicated"
+                );
+
+            };
+
+
+            /* =====================================================
+               CLEAR
+               ===================================================== */
+
+            const clearCanvas = () => {
+
+                if (!state.blocks.length) {
+
+                    showBlankToast(
+                        "The canvas is already empty.",
+                        "Nothing to clear"
+                    );
+
+                    return;
+
+                }
+
+
+                state.blocks = [];
+
+                render();
+
+                localStorage.removeItem(
+                    BLANK_CONFIG.storageKey
+                );
+
+                localStorage.removeItem(
+                    BLANK_CONFIG.autosaveKey
+                );
+
+                setSaveStatus("Empty");
+
+                showBlankToast(
+                    "The canvas has been cleared.",
+                    "Workspace cleared"
+                );
+
+            };
+
+
+            /* =====================================================
+               RESET
+               ===================================================== */
+
+            const resetWorkspace = () => {
+
+                state.blocks = [];
+                state.grid = true;
+                state.compact = false;
+                state.autoSave = true;
+                state.nextId = 1;
+
+                gridToggle.checked = true;
+                compactToggle.checked = false;
+                autoSaveToggle.checked = true;
+
+                localStorage.removeItem(
+                    BLANK_CONFIG.storageKey
+                );
+
+                localStorage.removeItem(
+                    BLANK_CONFIG.autosaveKey
+                );
+
+                render();
+
+                setSaveStatus("Ready");
+
+                showBlankToast(
+                    "Starter workspace restored.",
+                    "Workspace reset"
+                );
+
+            };
+
+
+            /* =====================================================
+               SERIALIZATION
+               ===================================================== */
+
+            const serialize = () => {
+
+                return {
+                    version: 1,
+                    savedAt: new Date().toISOString(),
+                    blocks: state.blocks,
+                    settings: {
+                        grid: state.grid,
+                        compact: state.compact,
+                        autoSave: state.autoSave
+                    }
+                };
+
+            };
+
+
+            /* =====================================================
+               SAVE
+               ===================================================== */
+
+            const saveLayout = (silent = false) => {
+
+                const data = serialize();
+
+                localStorage.setItem(
+                    BLANK_CONFIG.storageKey,
+                    JSON.stringify(data)
+                );
+
+                localStorage.setItem(
+                    BLANK_CONFIG.autosaveKey,
+                    JSON.stringify(data)
+                );
+
+                setSaveStatus("Saved");
+
+                if (!silent) {
+
+                    showBlankToast(
+                        "Your layout was saved in this browser.",
+                        "Layout saved"
+                    );
+
+                }
+
+            };
+
+
+            /* =====================================================
+               LOAD
+               ===================================================== */
+
+            const loadLayout = () => {
+
+                const raw =
+                    localStorage.getItem(
+                        BLANK_CONFIG.storageKey
+                    ) ||
+                    localStorage.getItem(
+                        BLANK_CONFIG.autosaveKey
+                    );
+
+
+                if (!raw) {
+
+                    showBlankToast(
+                        "No saved layout was found.",
+                        "Nothing to load"
+                    );
+
+                    return;
+
+                }
+
+
+                try {
+
+                    const data = JSON.parse(raw);
+
+                    state.blocks =
+                        Array.isArray(data.blocks)
+                            ? data.blocks
+                            : [];
+
+
+                    if (data.settings) {
+
+                        state.grid =
+                            data.settings.grid !== false;
+
+                        state.compact =
+                            data.settings.compact === true;
+
+                        state.autoSave =
+                            data.settings.autoSave !== false;
+
+                    }
+
+
+                    state.nextId =
+                        state.blocks.reduce(
+                            (max, block) =>
+                                Math.max(
+                                    max,
+                                    Number(block.id) || 0
+                                ),
+                            0
+                        ) + 1;
+
+
+                    gridToggle.checked = state.grid;
+                    compactToggle.checked = state.compact;
+                    autoSaveToggle.checked = state.autoSave;
+
+
+                    render();
+
+                    setSaveStatus("Loaded");
+
+                    showBlankToast(
+                        "Your saved layout has been restored.",
+                        "Layout loaded"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "Veltrix blank layout could not be loaded:",
+                        error
+                    );
+
+                    showBlankToast(
+                        "The saved layout could not be read.",
+                        "Load failed"
+                    );
+
+                }
+
+            };
+
+
+            /* =====================================================
+               EXPORT JSON
+               ===================================================== */
+
+            const exportLayout = () => {
+
+                const data = serialize();
+
+                const blob = new Blob(
+                    [
+                        JSON.stringify(
+                            data,
+                            null,
+                            2
+                        )
+                    ],
+                    {
+                        type: "application/json"
+                    }
+                );
+
+
+                const url =
+                    URL.createObjectURL(blob);
+
+
+                const anchor =
+                    document.createElement("a");
+
+
+                anchor.href = url;
+
+                anchor.download =
+                    "veltrix-blank-layout.json";
+
+
+                document.body.appendChild(anchor);
+
+                anchor.click();
+
+                anchor.remove();
+
+                URL.revokeObjectURL(url);
+
+
+                showBlankToast(
+                    "Your layout JSON was exported.",
+                    "Export complete"
+                );
+
+            };
+
+
+            /* =====================================================
+               ACTION ROUTER
+               ===================================================== */
+
+            const handleBuilderAction = (action) => {
+
+                switch (action) {
+
+                    case "add-heading":
+
+                        addBlock(
+                            createHeadingBlock()
+                        );
+
+                        break;
+
+
+                    case "add-paragraph":
+
+                        addBlock(
+                            createParagraphBlock()
+                        );
+
+                        break;
+
+
+                    case "add-stats":
+
+                        addBlock(
+                            createStatsBlock()
+                        );
+
+                        break;
+
+
+                    case "add-callout":
+
+                        addBlock(
+                            createCalloutBlock()
+                        );
+
+                        break;
+
+
+                    case "load-example":
+
+                        exampleLayout();
+
+                        break;
+
+
+                    case "clear":
+
+                        clearCanvas();
+
+                        break;
+
+
+                    case "save":
+
+                        saveLayout();
+
+                        break;
+
+
+                    case "load":
+
+                        loadLayout();
+
+                        break;
+
+
+                    case "export":
+
+                        exportLayout();
+
+                        break;
+
+
+                    case "reset":
+
+                        resetWorkspace();
+
+                        break;
+
+
+                    default:
+
+                        break;
+
+                }
+
+            };
+
+
+            /* =====================================================
+               BUILDER CLICK EVENTS
+               ===================================================== */
+
+            document.addEventListener(
+                "click",
+                event => {
+
+                    const actionElement =
+                        event.target.closest(
+                            "[data-builder-action]"
+                        );
+
+
+                    if (actionElement) {
+
+                        handleBuilderAction(
+                            actionElement.dataset.builderAction
+                        );
+
+                        return;
+
+                    }
+
+
+                    const blockActionElement =
+                        event.target.closest(
+                            "[data-block-action]"
+                        );
+
+
+                    if (blockActionElement) {
+
+                        const action =
+                            blockActionElement.dataset.blockAction;
+
+                        const id =
+                            blockActionElement.dataset.blockId;
+
+
+                        if (action === "delete") {
+
+                            deleteBlock(id);
+
+                        }
+
+
+                        if (action === "duplicate") {
+
+                            duplicateBlock(id);
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               GRID
+               ===================================================== */
+
+            gridToggle.addEventListener(
+                "change",
+                () => {
+
+                    state.grid =
+                        gridToggle.checked;
+
+                    render();
+
+                    if (state.autoSave) {
+
+                        saveLayout(true);
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               COMPACT
+               ===================================================== */
+
+            compactToggle.addEventListener(
+                "change",
+                () => {
+
+                    state.compact =
+                        compactToggle.checked;
+
+                    render();
+
+                    if (state.autoSave) {
+
+                        saveLayout(true);
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               AUTO SAVE
+               ===================================================== */
+
+            autoSaveToggle.addEventListener(
+                "change",
+                () => {
+
+                    state.autoSave =
+                        autoSaveToggle.checked;
+
+
+                    if (state.autoSave) {
+
+                        saveLayout(true);
+
+                        showBlankToast(
+                            "Auto save is enabled.",
+                            "Auto save"
+                        );
+
+                    } else {
+
+                        showBlankToast(
+                            "Auto save is disabled.",
+                            "Auto save"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               KEYBOARD SHORTCUTS
+               ===================================================== */
+
+            document.addEventListener(
+                "keydown",
+                event => {
+
+                    const modifier =
+                        event.ctrlKey ||
+                        event.metaKey;
+
+
+                    if (
+                        modifier &&
+                        event.key.toLowerCase() === "s"
+                    ) {
+
+                        event.preventDefault();
+
+                        saveLayout();
+
+                    }
+
+
+                    if (
+                        modifier &&
+                        event.key.toLowerCase() === "e"
+                    ) {
+
+                        event.preventDefault();
+
+                        exportLayout();
+
+                    }
+
+
+                    if (
+                        event.key === "Escape"
+                    ) {
+
+                        blankToast.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               AUTO SAVE TIMER
+               ===================================================== */
+
+            let autoSaveTimer = null;
+
+
+            const scheduleAutoSave = () => {
+
+                if (!state.autoSave) {
+
+                    return;
+
+                }
+
+
+                clearTimeout(
+                    autoSaveTimer
+                );
+
+
+                autoSaveTimer =
+                    setTimeout(
+                        () => {
+
+                            saveLayout(true);
+
+                        },
+                        900
+                    );
+
+            };
+
+
+            window.addEventListener(
+                "beforeunload",
+                () => {
+
+                    if (state.autoSave) {
+
+                        saveLayout(true);
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               PROFILE / HELP FALLBACK ACTIONS
+               ===================================================== */
+
+            document.addEventListener(
+                "click",
+                event => {
+
+                    const actionElement =
+                        event.target.closest(
+                            "[data-action]"
+                        );
+
+
+                    if (!actionElement) {
+
+                        return;
+
+                    }
+
+
+                    const action =
+                        actionElement.dataset.action;
+
+
+                    if (action === "help") {
+
+                        showBlankToast(
+                            "Open the Veltrix documentation or explore the pages in the sidebar.",
+                            "Need help?"
+                        );
+
+                    }
+
+
+                    if (
+                        action ===
+                        "mark-notifications-read"
+                    ) {
+
+                        document
+                            .querySelectorAll(
+                                ".notification-dot"
+                            )
+                            .forEach(dot => {
+
+                                dot.style.display =
+                                    "none";
+
+                            });
+
+
+                        showBlankToast(
+                            "Notifications marked as read.",
+                            "Notifications"
+                        );
+
+                    }
+
+
+                    if (
+                        action ===
+                        "open-notifications"
+                    ) {
+
+                        window.location.href =
+                            "notifications.html";
+
+                    }
+
+                }
+            );
+
+
+            /* =====================================================
+               CURRENT YEAR
+               ===================================================== */
+
+            document
+                .querySelectorAll(
+                    "[data-current-year]"
+                )
+                .forEach(
+                    element => {
+
+                        element.textContent =
+                            new Date().getFullYear();
+
+                    }
+                );
+
+
+            /* =====================================================
+               INITIALIZE
+               ===================================================== */
+
+            const init = () => {
+
+                /*
+                 * Try loading the previous local workspace.
+                 * If nothing exists, keep the clean empty canvas.
+                 */
+
+                const saved =
+                    localStorage.getItem(
+                        BLANK_CONFIG.storageKey
+                    );
+
+
+                if (saved) {
+
+                    try {
+
+                        const data =
+                            JSON.parse(saved);
+
+
+                        if (
+                            data &&
+                            Array.isArray(data.blocks)
+                        ) {
+
+                            state.blocks =
+                                data.blocks;
+
+
+                            state.nextId =
+                                state.blocks.reduce(
+                                    (max, block) =>
+                                        Math.max(
+                                            max,
+                                            Number(block.id) || 0
+                                        ),
+                                    0
+                                ) + 1;
+
+
+                            if (data.settings) {
+
+                                state.grid =
+                                    data.settings.grid !== false;
+
+                                state.compact =
+                                    data.settings.compact === true;
+
+                                state.autoSave =
+                                    data.settings.autoSave !== false;
+
+                            }
+
+                        }
+
+                    } catch (error) {
+
+                        console.debug(
+                            "No valid blank workspace saved.",
+                            error
+                        );
+
+                    }
+
+                }
+
+
+                gridToggle.checked =
+                    state.grid;
+
+                compactToggle.checked =
+                    state.compact;
+
+                autoSaveToggle.checked =
+                    state.autoSave;
+
+
+                render();
+
+                setSaveStatus(
+                    state.blocks.length
+                        ? "Loaded"
+                        : "Ready"
+                );
+
+            };
+
+
+            /* =====================================================
+               PUBLIC API
+               ===================================================== */
+
+            window.VeltrixBlank = {
+
+                version: "1.0.0",
+
+                state,
+
+                addHeading: () =>
+                    addBlock(
+                        createHeadingBlock()
+                    ),
+
+                addParagraph: () =>
+                    addBlock(
+                        createParagraphBlock()
+                    ),
+
+                addStats: () =>
+                    addBlock(
+                        createStatsBlock()
+                    ),
+
+                addCallout: () =>
+                    addBlock(
+                        createCalloutBlock()
+                    ),
+
+                loadExample:
+                    exampleLayout,
+
+                clear:
+                    clearCanvas,
+
+                reset:
+                    resetWorkspace,
+
+                save:
+                    saveLayout,
+
+                load:
+                    loadLayout,
+
+                export:
+                    exportLayout
+
+            };
+
+
+            /*
+             * Wait until the central Veltrix engine is available.
+             * The page itself remains functional even if the main
+             * engine is unavailable.
+             */
+
+            if (
+                document.readyState ===
+                "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    init,
+                    {
+                        once: true
+                    }
+                );
+
+            } else {
+
+                init();
+
+            }
+
+
+        })();
+
+    </script>
+
+
+    <!-- =========================================================
+         VELTRIX GLOBAL ENGINE
+         ========================================================= -->
+
+    <script src="../js/script.js" defer></script>
+
+</body>
+</html>
