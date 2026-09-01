@@ -1,1 +1,6206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
 
+  <meta
+    name="description"
+    content="Veltrix Customer 360 — Complete customer intelligence and relationship management workspace."
+  >
+
+  <meta name="theme-color" content="#07111f">
+
+  <title>Customers — Veltrix</title>
+
+  <!-- =========================================================
+       VELTRIX — CUSTOMERS / CUSTOMER 360
+       ========================================================= -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* =========================================================
+       CUSTOMERS PAGE — LOCAL COMPONENT STYLES
+       ========================================================= */
+
+    :root {
+      --customer-accent: #22d3ee;
+      --customer-accent-2: #8b5cf6;
+      --customer-success: #22c55e;
+      --customer-warning: #f59e0b;
+      --customer-danger: #ef4444;
+      --customer-info: #3b82f6;
+      --customer-card: rgba(15, 23, 42, 0.78);
+      --customer-border: rgba(148, 163, 184, 0.13);
+      --customer-muted: #94a3b8;
+      --customer-text: #e2e8f0;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .customers-page {
+      position: relative;
+      min-height: 100%;
+      padding-bottom: 50px;
+    }
+
+    .customers-shell {
+      max-width: 1700px;
+      margin: 0 auto;
+    }
+
+    /* =========================================================
+       CUSTOMER HERO
+       ========================================================= */
+
+    .customer-hero {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+      padding: 30px;
+      border: 1px solid var(--customer-border);
+      border-radius: 28px;
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(34, 211, 238, 0.14),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 0%,
+          rgba(139, 92, 246, 0.16),
+          transparent 32%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(15, 23, 42, 0.96),
+          rgba(8, 15, 30, 0.91)
+        );
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .customer-hero::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -170px;
+      top: -240px;
+      border-radius: 50%;
+      background: rgba(34, 211, 238, 0.08);
+      filter: blur(30px);
+      pointer-events: none;
+    }
+
+    .customer-hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.7fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .customer-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 13px;
+      padding: 7px 12px;
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.07);
+      color: var(--customer-accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .customer-eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .customer-hero h1 {
+      margin: 0 0 12px;
+      color: #f8fafc;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: clamp(30px, 4vw, 50px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .customer-hero h1 span {
+      color: var(--customer-accent);
+    }
+
+    .customer-hero-description {
+      max-width: 720px;
+      margin: 0;
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .customer-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 23px;
+    }
+
+    .customer-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 42px;
+      padding: 0 15px;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.72);
+      color: #dbeafe;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .customer-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34, 211, 238, 0.35);
+      background: rgba(30, 41, 59, 0.9);
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        0 0 25px rgba(34, 211, 238, 0.08);
+    }
+
+    .customer-btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      color: white;
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+    }
+
+    .customer-btn.primary:hover {
+      box-shadow:
+        0 14px 35px rgba(6, 182, 212, 0.3),
+        0 0 30px rgba(34, 211, 238, 0.15);
+    }
+
+    .customer-btn.danger {
+      color: #fecaca;
+      border-color: rgba(239, 68, 68, 0.18);
+    }
+
+    .customer-btn.success {
+      color: #bbf7d0;
+      border-color: rgba(34, 197, 94, 0.18);
+    }
+
+    .customer-btn svg {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 auto;
+    }
+
+    .hero-mini-card {
+      padding: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 22px;
+      background: rgba(2, 8, 23, 0.48);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero-mini-label {
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-mini-value {
+      margin-top: 8px;
+      color: white;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .hero-mini-growth {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 7px;
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero-mini-bar {
+      height: 7px;
+      margin-top: 20px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.1);
+    }
+
+    .hero-mini-bar span {
+      display: block;
+      width: 78%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        #06b6d4,
+        #8b5cf6
+      );
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.3);
+    }
+
+    /* =========================================================
+       CUSTOMER METRICS
+       ========================================================= */
+
+    .customer-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .customer-metric {
+      position: relative;
+      overflow: hidden;
+      min-height: 142px;
+      padding: 20px;
+      border: 1px solid var(--customer-border);
+      border-radius: 20px;
+      background: var(--customer-card);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .customer-metric:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, 0.2);
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.18),
+        0 0 30px rgba(34, 211, 238, 0.05);
+    }
+
+    .customer-metric::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -60px;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: rgba(34, 211, 238, 0.05);
+      filter: blur(4px);
+    }
+
+    .metric-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .metric-icon {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(34, 211, 238, 0.1);
+      color: var(--customer-accent);
+    }
+
+    .metric-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .metric-change {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.08);
+      color: #4ade80;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .metric-change.down {
+      background: rgba(239, 68, 68, 0.08);
+      color: #f87171;
+    }
+
+    .metric-label {
+      margin-top: 18px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .metric-value {
+      margin-top: 4px;
+      color: #f8fafc;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       CUSTOMER INTELLIGENCE GRID
+       ========================================================= */
+
+    .customer-intelligence {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.75fr);
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .customer-panel {
+      min-width: 0;
+      border: 1px solid var(--customer-border);
+      border-radius: 22px;
+      background: var(--customer-card);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 20px 21px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.09);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-title-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(139, 92, 246, 0.1);
+      color: #a78bfa;
+    }
+
+    .panel-title-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .panel-heading {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .panel-subheading {
+      margin: 3px 0 0;
+      color: #64748b;
+      font-size: 10px;
+    }
+
+    .panel-action {
+      border: 0;
+      background: transparent;
+      color: #67e8f9;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .panel-action:hover {
+      text-decoration: underline;
+    }
+
+    .segment-list {
+      padding: 18px 21px 22px;
+    }
+
+    .segment-row {
+      display: grid;
+      grid-template-columns: 135px minmax(100px, 1fr) 75px 55px;
+      align-items: center;
+      gap: 12px;
+      min-height: 52px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    }
+
+    .segment-row:last-child {
+      border-bottom: 0;
+    }
+
+    .segment-name {
+      color: #dbeafe;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .segment-count {
+      color: #94a3b8;
+      font-size: 10px;
+      text-align: right;
+    }
+
+    .segment-percent {
+      color: #e2e8f0;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .segment-bar {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    .segment-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        #06b6d4,
+        #8b5cf6
+      );
+    }
+
+    /* =========================================================
+       CUSTOMER SCORE
+       ========================================================= */
+
+    .score-content {
+      padding: 21px;
+    }
+
+    .score-center {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .score-circle {
+      position: relative;
+      display: grid;
+      width: 112px;
+      height: 112px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle,
+          rgba(2, 8, 23, 0.95) 58%,
+          transparent 60%
+        ),
+        conic-gradient(
+          #22d3ee 0 78%,
+          rgba(148, 163, 184, 0.08) 78% 100%
+        );
+      box-shadow:
+        0 0 35px rgba(34, 211, 238, 0.12);
+    }
+
+    .score-circle::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .score-number {
+      position: relative;
+      z-index: 1;
+      color: #f8fafc;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .score-number small {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .score-details h3 {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .score-details p {
+      margin: 7px 0 0;
+      color: #64748b;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .score-list {
+      margin-top: 21px;
+    }
+
+    .score-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+    }
+
+    .score-item:last-child {
+      border-bottom: 0;
+    }
+
+    .score-item span:first-child {
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    .score-item strong {
+      color: #e2e8f0;
+      font-size: 11px;
+    }
+
+    /* =========================================================
+       CUSTOMER WORKSPACE
+       ========================================================= */
+
+    .customer-workspace {
+      overflow: hidden;
+      border: 1px solid var(--customer-border);
+      border-radius: 24px;
+      background: var(--customer-card);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .workspace-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 17px 20px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      flex-wrap: wrap;
+    }
+
+    .workspace-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .workspace-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .customer-search {
+      position: relative;
+      width: min(340px, 100%);
+    }
+
+    .customer-search input {
+      width: 100%;
+      min-height: 40px;
+      padding: 0 13px 0 38px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 11px;
+      outline: none;
+      background: rgba(2, 8, 23, 0.5);
+      color: #e2e8f0;
+      font: inherit;
+      font-size: 11px;
+      transition: 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .customer-search input:focus {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.06);
+    }
+
+    .customer-search svg {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      width: 15px;
+      height: 15px;
+      color: #64748b;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .filter-select {
+      min-height: 40px;
+      padding: 0 32px 0 11px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 11px;
+      outline: none;
+      background: rgba(2, 8, 23, 0.5);
+      color: #cbd5e1;
+      font: inherit;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .filter-select option {
+      background: #0f172a;
+      color: white;
+    }
+
+    .toolbar-icon-btn {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 11px;
+      background: rgba(2, 8, 23, 0.5);
+      color: #94a3b8;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .toolbar-icon-btn:hover {
+      border-color: rgba(34, 211, 238, 0.3);
+      color: #67e8f9;
+      transform: translateY(-1px);
+    }
+
+    .toolbar-icon-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* =========================================================
+       FILTER CHIPS
+       ========================================================= */
+
+    .customer-filter-strip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.07);
+      scrollbar-width: none;
+    }
+
+    .customer-filter-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .customer-filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex: 0 0 auto;
+      min-height: 31px;
+      padding: 0 11px;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.5);
+      color: #94a3b8;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .customer-filter-chip:hover,
+    .customer-filter-chip.active {
+      border-color: rgba(34, 211, 238, 0.3);
+      background: rgba(34, 211, 238, 0.08);
+      color: #67e8f9;
+    }
+
+    .customer-filter-chip strong {
+      padding: 2px 5px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.08);
+      color: inherit;
+      font-size: 9px;
+    }
+
+    /* =========================================================
+       CUSTOMER TABLE
+       ========================================================= */
+
+    .customer-table-wrap {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .customer-table {
+      width: 100%;
+      min-width: 1050px;
+      border-collapse: collapse;
+    }
+
+    .customer-table th {
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+      color: #475569;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-align: left;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .customer-table td {
+      padding: 15px 18px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.055);
+      color: #cbd5e1;
+      font-size: 11px;
+      vertical-align: middle;
+    }
+
+    .customer-table tbody tr {
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+
+    .customer-table tbody tr:hover {
+      background: rgba(34, 211, 238, 0.025);
+    }
+
+    .customer-table tbody tr.selected {
+      background: rgba(34, 211, 238, 0.055);
+    }
+
+    .customer-checkbox {
+      width: 15px;
+      height: 15px;
+      accent-color: #06b6d4;
+      cursor: pointer;
+    }
+
+    .customer-person {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 200px;
+    }
+
+    .customer-avatar {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 12px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.18),
+          rgba(139, 92, 246, 0.22)
+        );
+      color: #cffafe;
+      font-size: 11px;
+      font-weight: 800;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .customer-person-name {
+      color: #f1f5f9;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .customer-person-email {
+      max-width: 200px;
+      margin-top: 3px;
+      overflow: hidden;
+      color: #64748b;
+      font-size: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .customer-location {
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    .customer-spend {
+      color: #e2e8f0;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .customer-orders {
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    .customer-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .customer-status::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+    }
+
+    .customer-status.active {
+      background: rgba(34, 197, 94, 0.08);
+      color: #4ade80;
+    }
+
+    .customer-status.vip {
+      background: rgba(139, 92, 246, 0.09);
+      color: #a78bfa;
+    }
+
+    .customer-status.inactive {
+      background: rgba(148, 163, 184, 0.08);
+      color: #94a3b8;
+    }
+
+    .customer-status.risk {
+      background: rgba(245, 158, 11, 0.08);
+      color: #fbbf24;
+    }
+
+    .customer-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+
+    .table-action {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .table-action:hover {
+      border-color: rgba(34, 211, 238, 0.15);
+      background: rgba(34, 211, 238, 0.07);
+      color: #67e8f9;
+    }
+
+    .table-action.danger:hover {
+      border-color: rgba(239, 68, 68, 0.15);
+      background: rgba(239, 68, 68, 0.07);
+      color: #f87171;
+    }
+
+    .table-action svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* =========================================================
+       TABLE FOOTER
+       ========================================================= */
+
+    .customer-table-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 15px 20px;
+      flex-wrap: wrap;
+    }
+
+    .results-count {
+      color: #64748b;
+      font-size: 10px;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .page-btn {
+      display: grid;
+      min-width: 31px;
+      height: 31px;
+      padding: 0 8px;
+      place-items: center;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 8px;
+      background: rgba(2, 8, 23, 0.45);
+      color: #94a3b8;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .page-btn:hover,
+    .page-btn.active {
+      border-color: rgba(34, 211, 238, 0.25);
+      background: rgba(34, 211, 238, 0.08);
+      color: #67e8f9;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    /* =========================================================
+       LOWER INTELLIGENCE CARDS
+       ========================================================= */
+
+    .customer-lower-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .retention-card,
+    .activity-card,
+    .locations-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--customer-border);
+      border-radius: 22px;
+      background: var(--customer-card);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.11);
+    }
+
+    .lower-body {
+      padding: 20px;
+    }
+
+    .retention-score {
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      margin-bottom: 17px;
+    }
+
+    .retention-score strong {
+      color: #f8fafc;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 38px;
+      line-height: 1;
+    }
+
+    .retention-score span {
+      padding-bottom: 4px;
+      color: #4ade80;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .retention-line {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    .retention-line span {
+      display: block;
+      width: 84%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        #22c55e,
+        #06b6d4
+      );
+    }
+
+    .retention-note {
+      margin: 14px 0 0;
+      color: #64748b;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .activity-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .activity-dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 4px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+    }
+
+    .activity-item strong {
+      display: block;
+      color: #cbd5e1;
+      font-size: 10px;
+    }
+
+    .activity-item span {
+      display: block;
+      margin-top: 3px;
+      color: #64748b;
+      font-size: 9px;
+    }
+
+    .location-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .location-item {
+      display: grid;
+      grid-template-columns: 75px minmax(0, 1fr) 45px;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .location-name {
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .location-bar {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.08);
+    }
+
+    .location-bar span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(
+        90deg,
+        #8b5cf6,
+        #06b6d4
+      );
+    }
+
+    .location-percent {
+      color: #cbd5e1;
+      font-size: 9px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    /* =========================================================
+       DRAWER
+       ========================================================= */
+
+    .customer-drawer-overlay {
+      position: fixed;
+      z-index: 9997;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.65);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.25s ease;
+    }
+
+    .customer-drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .customer-drawer {
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      right: 0;
+      width: min(500px, 100%);
+      height: 100vh;
+      overflow-y: auto;
+      border-left: 1px solid rgba(148, 163, 184, 0.13);
+      background:
+        radial-gradient(
+          circle at 90% 0%,
+          rgba(34, 211, 238, 0.07),
+          transparent 30%
+        ),
+        #07111f;
+      box-shadow: -30px 0 80px rgba(0, 0, 0, 0.35);
+      transform: translateX(105%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .customer-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      background: rgba(7, 17, 31, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .drawer-title {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .drawer-close {
+      display: grid;
+      width: 35px;
+      height: 35px;
+      place-items: center;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 9px;
+      background: rgba(15, 23, 42, 0.7);
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .drawer-close:hover {
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .drawer-body {
+      padding: 22px;
+    }
+
+    .drawer-profile {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 21px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .drawer-avatar {
+      display: grid;
+      width: 62px;
+      height: 62px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 18px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(34, 211, 238, 0.2),
+          rgba(139, 92, 246, 0.25)
+        );
+      color: #cffafe;
+      font-size: 16px;
+      font-weight: 800;
+      border: 1px solid rgba(34, 211, 238, 0.14);
+      box-shadow: 0 0 30px rgba(34, 211, 238, 0.08);
+    }
+
+    .drawer-name {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .drawer-email {
+      margin-top: 5px;
+      color: #64748b;
+      font-size: 10px;
+    }
+
+    .drawer-tag {
+      display: inline-flex;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(139, 92, 246, 0.09);
+      color: #a78bfa;
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .drawer-section {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .drawer-section:last-child {
+      border-bottom: 0;
+    }
+
+    .drawer-section-title {
+      margin: 0 0 12px;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .drawer-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .drawer-stat {
+      padding: 13px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.5);
+    }
+
+    .drawer-stat span {
+      display: block;
+      color: #64748b;
+      font-size: 8px;
+    }
+
+    .drawer-stat strong {
+      display: block;
+      margin-top: 4px;
+      color: #e2e8f0;
+      font-family: "Space Grotesk", Inter, sans-serif;
+      font-size: 15px;
+    }
+
+    .drawer-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .drawer-info {
+      padding: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.08);
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .drawer-info-label {
+      color: #475569;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .drawer-info-value {
+      margin-top: 5px;
+      color: #cbd5e1;
+      font-size: 10px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .drawer-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .drawer-timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 13px minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .timeline-item:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 13px;
+      bottom: -14px;
+      width: 1px;
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 11px;
+      height: 11px;
+      margin-top: 2px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
+    }
+
+    .timeline-item strong {
+      display: block;
+      color: #cbd5e1;
+      font-size: 10px;
+    }
+
+    .timeline-item span {
+      display: block;
+      margin-top: 3px;
+      color: #475569;
+      font-size: 8px;
+    }
+
+    /* =========================================================
+       CUSTOMER FORM MODAL
+       ========================================================= */
+
+    .customer-modal {
+      position: fixed;
+      z-index: 10000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(7px);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s ease;
+    }
+
+    .customer-modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .customer-modal-box {
+      width: min(650px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      border: 1px solid rgba(148, 163, 184, 0.13);
+      border-radius: 22px;
+      background:
+        radial-gradient(
+          circle at 100% 0%,
+          rgba(34, 211, 238, 0.08),
+          transparent 30%
+        ),
+        #0a1424;
+      box-shadow: 0 35px 100px rgba(0, 0, 0, 0.45);
+      transform: translateY(12px) scale(0.98);
+      transition: 0.25s ease;
+    }
+
+    .customer-modal.open .customer-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .customer-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.09);
+    }
+
+    .customer-modal-header h2 {
+      margin: 0;
+      color: #f8fafc;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .modal-close-btn {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 9px;
+      background: rgba(15, 23, 42, 0.65);
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .customer-form {
+      padding: 22px;
+    }
+
+    .customer-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .customer-form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .customer-form-field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .customer-form-field input,
+    .customer-form-field select,
+    .customer-form-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 10px;
+      outline: none;
+      background: rgba(2, 8, 23, 0.55);
+      color: #e2e8f0;
+      font: inherit;
+      font-size: 11px;
+    }
+
+    .customer-form-field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .customer-form-field input:focus,
+    .customer-form-field select:focus,
+    .customer-form-field textarea:focus {
+      border-color: rgba(34, 211, 238, 0.35);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.05);
+    }
+
+    .customer-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    /* =========================================================
+       EMPTY STATE
+       ========================================================= */
+
+    .customers-empty {
+      display: none;
+      padding: 55px 20px;
+      text-align: center;
+    }
+
+    .customers-empty.show {
+      display: block;
+    }
+
+    .customers-empty-icon {
+      display: grid;
+      width: 55px;
+      height: 55px;
+      margin: 0 auto 14px;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(34, 211, 238, 0.07);
+      color: #67e8f9;
+    }
+
+    .customers-empty-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .customers-empty h3 {
+      margin: 0;
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .customers-empty p {
+      margin: 7px auto 0;
+      max-width: 350px;
+      color: #64748b;
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       LIGHT THEME
+       ========================================================= */
+
+    body[data-theme="light"] .customer-hero,
+    body[data-theme="light"] .customer-panel,
+    body[data-theme="light"] .customer-workspace,
+    body[data-theme="light"] .customer-metric,
+    body[data-theme="light"] .retention-card,
+    body[data-theme="light"] .activity-card,
+    body[data-theme="light"] .locations-card {
+      background:
+        radial-gradient(
+          circle at 100% 0%,
+          rgba(34, 211, 238, 0.06),
+          transparent 30%
+        ),
+        #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 15px 40px rgba(15, 23, 42, 0.06);
+    }
+
+    body[data-theme="light"] .customer-hero h1,
+    body[data-theme="light"] .panel-heading,
+    body[data-theme="light"] .metric-value,
+    body[data-theme="light"] .customer-table td,
+    body[data-theme="light"] .customer-person-name,
+    body[data-theme="light"] .drawer-name {
+      color: #0f172a;
+    }
+
+    body[data-theme="light"] .customer-hero-description,
+    body[data-theme="light"] .metric-label,
+    body[data-theme="light"] .panel-subheading,
+    body[data-theme="light"] .segment-name,
+    body[data-theme="light"] .customer-location {
+      color: #64748b;
+    }
+
+    body[data-theme="light"] .customer-search input,
+    body[data-theme="light"] .filter-select,
+    body[data-theme="light"] .toolbar-icon-btn,
+    body[data-theme="light"] .customer-filter-chip,
+    body[data-theme="light"] .page-btn {
+      background: #f8fafc;
+      color: #334155;
+      border-color: rgba(15, 23, 42, 0.09);
+    }
+
+    body[data-theme="light"] .customer-table tbody tr:hover {
+      background: rgba(6, 182, 212, 0.035);
+    }
+
+    /* =========================================================
+       PRINT
+       ========================================================= */
+
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+
+      #customer-print-area,
+      #customer-print-area * {
+        visibility: visible !important;
+      }
+
+      #customer-print-area {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        background: white !important;
+        color: black !important;
+        padding: 30px !important;
+      }
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1200px) {
+      .customer-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .customer-intelligence {
+        grid-template-columns: 1fr;
+      }
+
+      .customer-lower-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .customer-lower-grid > :last-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .customer-hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-mini-card {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .customer-hero {
+        padding: 22px;
+        border-radius: 20px;
+      }
+
+      .customer-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .customer-metric {
+        min-height: 125px;
+        padding: 15px;
+      }
+
+      .metric-value {
+        font-size: 22px;
+      }
+
+      .metric-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .customer-lower-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .customer-lower-grid > :last-child {
+        grid-column: auto;
+      }
+
+      .segment-row {
+        grid-template-columns: 105px minmax(80px, 1fr) 45px;
+      }
+
+      .segment-count {
+        display: none;
+      }
+
+      .customer-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .customer-form-field.full {
+        grid-column: auto;
+      }
+
+      .drawer-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .drawer-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-toolbar {
+        align-items: stretch;
+      }
+
+      .workspace-toolbar-left,
+      .workspace-toolbar-right {
+        width: 100%;
+      }
+
+      .customer-search {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .customer-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .customer-hero-actions {
+        flex-direction: column;
+      }
+
+      .customer-btn {
+        width: 100%;
+      }
+
+      .hero-mini-value {
+        font-size: 29px;
+      }
+
+      .score-center {
+        align-items: flex-start;
+      }
+
+      .score-circle {
+        width: 92px;
+        height: 92px;
+      }
+
+      .score-number {
+        font-size: 23px;
+      }
+
+      .customer-table-footer {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .pagination {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body
+  id="veltrix-app"
+  class="app-body"
+  data-page="customers"
+  data-theme="dark"
+>
+
+  <!-- =========================================================
+       PAGE LOADER
+       ========================================================= -->
+
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-orbit">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="loader-brand">VELTRIX</div>
+  </div>
+
+  <!-- =========================================================
+       BACKGROUND
+       ========================================================= -->
+
+  <div class="app-background" aria-hidden="true">
+    <div class="background-grid"></div>
+    <div class="background-glow background-glow-one"></div>
+    <div class="background-glow background-glow-two"></div>
+    <div class="background-particles">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MOBILE OVERLAY
+       ========================================================= -->
+
+  <div
+    id="mobile-overlay"
+    class="mobile-overlay"
+    data-mobile-overlay
+    aria-hidden="true"
+  ></div>
+
+  <!-- =========================================================
+       TOAST
+       ========================================================= -->
+
+  <div
+    id="toast-container"
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <!-- =========================================================
+       APP
+       ========================================================= -->
+
+  <div class="app-layout">
+
+    <!-- =======================================================
+         SIDEBAR
+         ======================================================= -->
+
+    <aside
+      id="app-sidebar"
+      class="app-sidebar"
+      data-sidebar
+      aria-label="Main navigation"
+    >
+
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-link" aria-label="Veltrix Dashboard">
+          <span class="brand-mark">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+
+          <span class="brand-copy">
+            <strong>VELTRIX</strong>
+            <small>Business OS</small>
+          </span>
+        </a>
+
+        <button
+          type="button"
+          class="sidebar-collapse-btn"
+          data-sidebar-collapse
+          aria-label="Collapse sidebar"
+          title="Collapse sidebar"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Workspace -->
+      <div class="sidebar-workspace">
+        <button
+          type="button"
+          class="workspace-selector"
+          data-workspace-selector
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="workspace-avatar">V</span>
+
+          <span class="workspace-info">
+            <strong data-workspace-name>Veltrix HQ</strong>
+            <small data-workspace-plan>Business Plan</small>
+          </span>
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+
+        <div class="workspace-dropdown" data-workspace-dropdown>
+          <button type="button" data-workspace="Veltrix HQ">
+            <span class="workspace-avatar small">V</span>
+            <span>
+              <strong>Veltrix HQ</strong>
+              <small>Main workspace</small>
+            </span>
+          </button>
+
+          <button type="button" data-workspace="Creative Studio">
+            <span class="workspace-avatar small purple">C</span>
+            <span>
+              <strong>Creative Studio</strong>
+              <small>Marketing workspace</small>
+            </span>
+          </button>
+
+          <button type="button" data-workspace="Store Operations">
+            <span class="workspace-avatar small green">S</span>
+            <span>
+              <strong>Store Operations</strong>
+              <small>Commerce workspace</small>
+            </span>
+          </button>
+
+          <div class="workspace-divider"></div>
+
+          <button type="button" data-action="create-workspace">
+            <span class="workspace-create-icon">+</span>
+            <span>
+              <strong>Create workspace</strong>
+              <small>Start another environment</small>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="sidebar-navigation">
+
+        <div class="nav-section">
+          <span class="nav-section-title">Overview</span>
+
+          <a href="../index.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+              </svg>
+            </span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+
+          <a href="analytics.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 19V5"/>
+                <path d="M4 19h16"/>
+                <path d="M7 15l3-4 3 2 5-7"/>
+              </svg>
+            </span>
+            <span class="nav-label">Analytics</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-section-title">Management</span>
+
+          <a href="orders.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 3h12l2 4v13H4V7l2-4z"/>
+                <path d="M4 7h16"/>
+                <path d="M9 11h6"/>
+              </svg>
+            </span>
+            <span class="nav-label">Orders</span>
+            <span class="nav-badge">18</span>
+          </a>
+
+          <a href="customers.html" class="nav-item active">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </span>
+            <span class="nav-label">Customers</span>
+          </a>
+
+          <a href="products.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 8.5L12 13 3 8.5"/>
+                <path d="M3 8.5l9-5 9 5v7l-9 5-9-5z"/>
+                <path d="M12 13v7.5"/>
+              </svg>
+            </span>
+            <span class="nav-label">Products</span>
+          </a>
+
+          <a href="invoices.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M6 2h12v20l-3-2-3 2-3-2-3 2V2z"/>
+                <path d="M9 7h6"/>
+                <path d="M9 11h6"/>
+                <path d="M9 15h4"/>
+              </svg>
+            </span>
+            <span class="nav-label">Invoices</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-section-title">Communication</span>
+
+          <a href="messages.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-.9L3 21l1.8-4.1A8.2 8.2 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/>
+              </svg>
+            </span>
+            <span class="nav-label">Messages</span>
+            <span class="nav-badge">5</span>
+          </a>
+
+          <a href="notifications.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                <path d="M10 21h4"/>
+              </svg>
+            </span>
+            <span class="nav-label">Notifications</span>
+            <span class="nav-badge warning">7</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-section-title">Tools</span>
+
+          <a href="calculator.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="5" y="2" width="14" height="20" rx="2"/>
+                <path d="M8 6h8"/>
+                <path d="M8 10h2"/>
+                <path d="M14 10h2"/>
+                <path d="M8 14h2"/>
+                <path d="M14 14h2"/>
+                <path d="M8 18h2"/>
+                <path d="M14 18h2"/>
+              </svg>
+            </span>
+            <span class="nav-label">Calculator</span>
+          </a>
+
+          <a href="ai-workspace.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/>
+                <path d="M19 16l.6 2.4L22 19l-2.4.6L19 22l-.6-2.4L16 19l2.4-.6L19 16z"/>
+              </svg>
+            </span>
+            <span class="nav-label">AI Workspace</span>
+            <span class="nav-ai">AI</span>
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <span class="nav-section-title">System</span>
+
+          <a href="settings.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                <path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.06.06-1.8 1.8-.06-.06a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.1 1.66V20H9.1v-.08a1.8 1.8 0 0 0-1.1-1.66 1.8 1.8 0 0 0-1.98.36l-.06.06-1.8-1.8.06-.06A1.8 1.8 0 0 0 4.58 15a1.8 1.8 0 0 0-1.66-1.1H2.8v-2.55h.12A1.8 1.8 0 0 0 4.58 10a1.8 1.8 0 0 0-.36-1.98l-.06-.06 1.8-1.8.06.06A1.8 1.8 0 0 0 8 6.58a1.8 1.8 0 0 0 1.1-1.66V4.8h2.55v.12A1.8 1.8 0 0 0 12.75 6.6a1.8 1.8 0 0 0 1.98-.36l.06-.06 1.8 1.8-.06.06A1.8 1.8 0 0 0 16.9 10a1.8 1.8 0 0 0 1.66 1.1h.12v2.55h-.12A1.8 1.8 0 0 0 19.4 15z"/>
+              </svg>
+            </span>
+            <span class="nav-label">Settings</span>
+          </a>
+
+          <a href="profile.html" class="nav-item">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21a8 8 0 0 1 16 0"/>
+              </svg>
+            </span>
+            <span class="nav-label">Profile</span>
+          </a>
+        </div>
+
+      </nav>
+
+      <!-- Upgrade -->
+      <div class="sidebar-upgrade-card">
+        <div class="upgrade-orb">
+          <span>✦</span>
+        </div>
+
+        <strong>Unlock Veltrix Pro</strong>
+
+        <p>
+          Advanced automation, AI insights and unlimited workspaces.
+        </p>
+
+        <a href="upgrade.html" class="upgrade-link">
+          Upgrade now
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14"/>
+            <path d="M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- User -->
+      <div class="sidebar-user">
+        <button
+          type="button"
+          class="sidebar-user-button"
+          data-user-menu-toggle
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="sidebar-user-avatar">A</span>
+
+          <span class="sidebar-user-info">
+            <strong>Alex Morgan</strong>
+            <small>Administrator</small>
+          </span>
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+
+        <div class="user-dropdown" data-user-dropdown>
+          <a href="profile.html">
+            <span>Profile</span>
+          </a>
+
+          <a href="settings.html">
+            <span>Settings</span>
+          </a>
+
+          <button type="button" data-action="lock-screen">
+            <span>Lock workspace</span>
+          </button>
+
+          <div class="workspace-divider"></div>
+
+          <button type="button" data-action="logout" class="danger">
+            <span>Sign out</span>
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- =======================================================
+         MAIN
+         ======================================================= -->
+
+    <main class="app-main">
+
+      <!-- =====================================================
+           TOPBAR
+           ===================================================== -->
+
+      <header class="app-topbar">
+
+        <div class="topbar-left">
+
+          <button
+            type="button"
+            class="mobile-menu-btn"
+            data-mobile-menu
+            aria-label="Open navigation"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16"/>
+              <path d="M4 12h16"/>
+              <path d="M4 18h16"/>
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            class="topbar-sidebar-toggle"
+            data-sidebar-collapse
+            aria-label="Toggle sidebar"
+            title="Toggle sidebar"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 6h16"/>
+              <path d="M4 12h16"/>
+              <path d="M4 18h16"/>
+            </svg>
+          </button>
+
+          <div class="breadcrumb">
+            <a href="../index.html">Home</a>
+            <span>/</span>
+            <strong>Customers</strong>
+          </div>
+
+        </div>
+
+        <div class="topbar-right">
+
+          <!-- Search -->
+          <button
+            type="button"
+            class="topbar-search-trigger"
+            data-search-open
+            aria-label="Search"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="M20 20l-4-4"/>
+            </svg>
+
+            <span>Search</span>
+            <kbd>⌘ K</kbd>
+          </button>
+
+          <!-- Quick Create -->
+          <button
+            type="button"
+            class="topbar-create-btn"
+            data-quick-create-open
+          >
+            <span>+</span>
+            <strong>Quick Create</strong>
+          </button>
+
+          <!-- Language -->
+          <div class="topbar-control dropdown-container">
+
+            <button
+              type="button"
+              class="topbar-icon-button language-button"
+              data-language-toggle
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="Language"
+            >
+              <span class="language-globe">◎</span>
+              <span data-current-language-label>EN</span>
+            </button>
+
+            <div
+              class="language-dropdown dropdown-panel"
+              data-language-menu
+            >
+
+              <button type="button" data-language="en">
+                <span>English</span>
+                <small>EN</small>
+              </button>
+
+              <button type="button" data-language="fr">
+                <span>Français</span>
+                <small>FR</small>
+              </button>
+
+              <button type="button" data-language="es">
+                <span>Español</span>
+                <small>ES</small>
+              </button>
+
+              <button type="button" data-language="it">
+                <span>Italiano</span>
+                <small>IT</small>
+              </button>
+
+              <button type="button" data-language="de">
+                <span>Deutsch</span>
+                <small>DE</small>
+              </button>
+
+              <button type="button" data-language="pt">
+                <span>Português</span>
+                <small>PT</small>
+              </button>
+
+              <button type="button" data-language="nl">
+                <span>Nederlands</span>
+                <small>NL</small>
+              </button>
+
+              <button type="button" data-language="ru">
+                <span>Русский</span>
+                <small>RU</small>
+              </button>
+
+              <button type="button" data-language="tr">
+                <span>Türkçe</span>
+                <small>TR</small>
+              </button>
+
+              <button type="button" data-language="ar">
+                <span>العربية</span>
+                <small>AR</small>
+              </button>
+
+              <button type="button" data-language="zh">
+                <span>中文</span>
+                <small>ZH</small>
+              </button>
+
+              <button type="button" data-language="ja">
+                <span>日本語</span>
+                <small>JA</small>
+              </button>
+
+              <button type="button" data-language="ko">
+                <span>한국어</span>
+                <small>KO</small>
+              </button>
+
+              <button type="button" data-language="hi">
+                <span>हिन्दी</span>
+                <small>HI</small>
+              </button>
+
+              <button type="button" data-language="id">
+                <span>Bahasa Indonesia</span>
+                <small>ID</small>
+              </button>
+
+              <button type="button" data-language="vi">
+                <span>Tiếng Việt</span>
+                <small>VI</small>
+              </button>
+
+              <button type="button" data-language="pl">
+                <span>Polski</span>
+                <small>PL</small>
+              </button>
+
+              <button type="button" data-language="sv">
+                <span>Svenska</span>
+                <small>SV</small>
+              </button>
+
+              <button type="button" data-language="el">
+                <span>Ελληνικά</span>
+                <small>EL</small>
+              </button>
+
+              <button type="button" data-language="cs">
+                <span>Čeština</span>
+                <small>CS</small>
+              </button>
+
+              <button type="button" data-language="da">
+                <span>Dansk</span>
+                <small>DA</small>
+              </button>
+
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="topbar-control dropdown-container">
+
+            <button
+              type="button"
+              class="topbar-icon-button notification-button"
+              data-notification-toggle
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="Notifications"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                <path d="M10 21h4"/>
+              </svg>
+
+              <span class="notification-dot"></span>
+            </button>
+
+            <div
+              class="notification-dropdown dropdown-panel"
+              data-notification-dropdown
+            >
+              <div class="notification-header">
+                <div>
+                  <strong>Notifications</strong>
+                  <small>Recent workspace activity</small>
+                </div>
+
+                <button type="button" data-action="mark-all-read">
+                  Mark all read
+                </button>
+              </div>
+
+              <div class="notification-list">
+
+                <button type="button" class="notification-item unread">
+                  <span class="notification-icon cyan">!</span>
+                  <span>
+                    <strong>New high-value customer</strong>
+                    <small>Jordan Lee placed a $2,480 order.</small>
+                  </span>
+                </button>
+
+                <button type="button" class="notification-item unread">
+                  <span class="notification-icon purple">✦</span>
+                  <span>
+                    <strong>Customer segment updated</strong>
+                    <small>VIP segment grew by 8.4% this month.</small>
+                  </span>
+                </button>
+
+                <button type="button" class="notification-item">
+                  <span class="notification-icon green">✓</span>
+                  <span>
+                    <strong>Import completed</strong>
+                    <small>126 customer records were processed.</small>
+                  </span>
+                </button>
+
+              </div>
+
+              <a href="notifications.html" class="notification-footer">
+                View all notifications
+              </a>
+            </div>
+          </div>
+
+          <!-- Theme -->
+          <button
+            type="button"
+            class="topbar-icon-button"
+            data-theme-toggle
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          >
+            <svg
+              class="theme-icon theme-icon-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2"/>
+              <path d="M12 20v2"/>
+              <path d="M4.93 4.93l1.41 1.41"/>
+              <path d="M17.66 17.66l1.41 1.41"/>
+              <path d="M2 12h2"/>
+              <path d="M20 12h2"/>
+              <path d="M4.93 19.07l1.41-1.41"/>
+              <path d="M17.66 6.34l1.41-1.41"/>
+            </svg>
+
+            <svg
+              class="theme-icon theme-icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/>
+            </svg>
+          </button>
+
+        </div>
+      </header>
+
+      <!-- =====================================================
+           PAGE CONTENT
+           ===================================================== -->
+
+      <div class="app-content customers-page">
+        <div class="customers-shell">
+
+          <!-- =================================================
+               HERO
+               ================================================= -->
+
+          <section class="customer-hero">
+
+            <div class="customer-hero-grid">
+
+              <div>
+                <div class="customer-eyebrow">
+                  <span class="customer-eyebrow-dot"></span>
+                  Customer Intelligence
+                </div>
+
+                <h1>
+                  Know your
+                  <span>customers.</span>
+                </h1>
+
+                <p class="customer-hero-description">
+                  Customer 360 brings profiles, purchasing behavior,
+                  engagement, loyalty, segments and lifetime value
+                  into one intelligent workspace.
+                </p>
+
+                <div class="customer-hero-actions">
+
+                  <button
+                    type="button"
+                    class="customer-btn primary"
+                    id="create-customer-btn"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 5v14"/>
+                      <path d="M5 12h14"/>
+                    </svg>
+                    Add Customer
+                  </button>
+
+                  <button
+                    type="button"
+                    class="customer-btn"
+                    id="import-customers-btn"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 3v12"/>
+                      <path d="M7 10l5 5 5-5"/>
+                      <path d="M5 21h14"/>
+                    </svg>
+                    Import
+                  </button>
+
+                  <button
+                    type="button"
+                    class="customer-btn"
+                    id="export-customers-btn"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 21V9"/>
+                      <path d="M7 14l5-5 5 5"/>
+                      <path d="M5 3h14"/>
+                    </svg>
+                    Export
+                  </button>
+
+                </div>
+              </div>
+
+              <div class="hero-mini-card">
+
+                <div class="hero-mini-label">
+                  Customer Lifetime Value
+                </div>
+
+                <div class="hero-mini-value" id="hero-clv">
+                  $428.60
+                </div>
+
+                <div class="hero-mini-growth">
+                  <span>↗</span>
+                  <span>+12.8%</span>
+                  <span>vs last month</span>
+                </div>
+
+                <div class="hero-mini-bar">
+                  <span></span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- =================================================
+               METRICS
+               ================================================= -->
+
+          <section class="customer-metrics">
+
+            <article class="customer-metric">
+
+              <div class="metric-top">
+
+                <div class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+
+                <span class="metric-change">
+                  +8.4%
+                </span>
+
+              </div>
+
+              <div class="metric-label">Total Customers</div>
+              <div class="metric-value" data-count="12486">12,486</div>
+
+            </article>
+
+            <article class="customer-metric">
+
+              <div class="metric-top">
+
+                <div class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+
+                <span class="metric-change">
+                  +14.2%
+                </span>
+
+              </div>
+
+              <div class="metric-label">Active Customers</div>
+              <div class="metric-value" data-count="8914">8,914</div>
+
+            </article>
+
+            <article class="customer-metric">
+
+              <div class="metric-top">
+
+                <div class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M12 2l2.8 6.2L21 11l-6.2 2.8L12 20l-2.8-6.2L3 11l6.2-2.8L12 2z"/>
+                  </svg>
+                </div>
+
+                <span class="metric-change">
+                  +6.7%
+                </span>
+
+              </div>
+
+              <div class="metric-label">VIP Customers</div>
+              <div class="metric-value" data-count="1268">1,268</div>
+
+            </article>
+
+            <article class="customer-metric">
+
+              <div class="metric-top">
+
+                <div class="metric-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M3 3v18h18"/>
+                    <path d="M7 16l4-5 3 3 5-7"/>
+                  </svg>
+                </div>
+
+                <span class="metric-change">
+                  +3.9%
+                </span>
+
+              </div>
+
+              <div class="metric-label">Avg. Customer Value</div>
+              <div class="metric-value">$428.60</div>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               INTELLIGENCE
+               ================================================= -->
+
+          <section class="customer-intelligence">
+
+            <!-- Segments -->
+            <article class="customer-panel">
+
+              <div class="panel-header">
+
+                <div class="panel-title">
+
+                  <span class="panel-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 19V5"/>
+                      <path d="M4 19h16"/>
+                      <path d="M7 15l3-4 3 2 5-7"/>
+                    </svg>
+                  </span>
+
+                  <div>
+                    <h2 class="panel-heading">Customer Segments</h2>
+                    <p class="panel-subheading">
+                      Understand who drives your business
+                    </p>
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="panel-action"
+                  id="manage-segments-btn"
+                >
+                  Manage
+                </button>
+
+              </div>
+
+              <div class="segment-list">
+
+                <div class="segment-row">
+                  <div class="segment-name">VIP / High Value</div>
+                  <div class="segment-bar"><span style="width:78%"></span></div>
+                  <div class="segment-count">1,268</div>
+                  <div class="segment-percent">10.2%</div>
+                </div>
+
+                <div class="segment-row">
+                  <div class="segment-name">Loyal</div>
+                  <div class="segment-bar"><span style="width:64%"></span></div>
+                  <div class="segment-count">2,984</div>
+                  <div class="segment-percent">23.9%</div>
+                </div>
+
+                <div class="segment-row">
+                  <div class="segment-name">Returning</div>
+                  <div class="segment-bar"><span style="width:53%"></span></div>
+                  <div class="segment-count">3,117</div>
+                  <div class="segment-percent">25.0%</div>
+                </div>
+
+                <div class="segment-row">
+                  <div class="segment-name">New</div>
+                  <div class="segment-bar"><span style="width:41%"></span></div>
+                  <div class="segment-count">2,452</div>
+                  <div class="segment-percent">19.6%</div>
+                </div>
+
+                <div class="segment-row">
+                  <div class="segment-name">At Risk</div>
+                  <div class="segment-bar"><span style="width:28%"></span></div>
+                  <div class="segment-count">1,154</div>
+                  <div class="segment-percent">9.2%</div>
+                </div>
+
+                <div class="segment-row">
+                  <div class="segment-name">Inactive</div>
+                  <div class="segment-bar"><span style="width:18%"></span></div>
+                  <div class="segment-count">1,511</div>
+                  <div class="segment-percent">12.1%</div>
+                </div>
+
+              </div>
+
+            </article>
+
+            <!-- Health -->
+            <article class="customer-panel">
+
+              <div class="panel-header">
+
+                <div class="panel-title">
+
+                  <span class="panel-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                  </span>
+
+                  <div>
+                    <h2 class="panel-heading">Customer Health</h2>
+                    <p class="panel-subheading">
+                      Relationship quality score
+                    </p>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="score-content">
+
+                <div class="score-center">
+
+                  <div class="score-circle">
+                    <div class="score-number">
+                      78<small>/100</small>
+                    </div>
+                  </div>
+
+                  <div class="score-details">
+                    <h3>Healthy ecosystem</h3>
+                    <p>
+                      Customer engagement is above your
+                      workspace benchmark.
+                    </p>
+                  </div>
+
+                </div>
+
+                <div class="score-list">
+
+                  <div class="score-item">
+                    <span>Repeat purchase</span>
+                    <strong>82%</strong>
+                  </div>
+
+                  <div class="score-item">
+                    <span>Engagement</span>
+                    <strong>76%</strong>
+                  </div>
+
+                  <div class="score-item">
+                    <span>Retention</span>
+                    <strong>84%</strong>
+                  </div>
+
+                  <div class="score-item">
+                    <span>Support satisfaction</span>
+                    <strong>91%</strong>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </section>
+
+          <!-- =================================================
+               CUSTOMER WORKSPACE
+               ================================================= -->
+
+          <section class="customer-workspace">
+
+            <div class="workspace-toolbar">
+
+              <div class="workspace-toolbar-left">
+
+                <div class="customer-search">
+
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M20 20l-4-4"/>
+                  </svg>
+
+                  <input
+                    type="search"
+                    id="customer-search"
+                    placeholder="Search customers, email, location..."
+                    autocomplete="off"
+                  >
+
+                </div>
+
+                <select
+                  id="customer-status-filter"
+                  class="filter-select"
+                  aria-label="Customer status"
+                >
+                  <option value="all">All status</option>
+                  <option value="active">Active</option>
+                  <option value="vip">VIP</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="risk">At Risk</option>
+                </select>
+
+                <select
+                  id="customer-value-filter"
+                  class="filter-select"
+                  aria-label="Customer value"
+                >
+                  <option value="all">All value</option>
+                  <option value="high">$1,000+</option>
+                  <option value="medium">$500–$999</option>
+                  <option value="standard">Under $500</option>
+                </select>
+
+              </div>
+
+              <div class="workspace-toolbar-right">
+
+                <button
+                  type="button"
+                  class="toolbar-icon-btn"
+                  id="refresh-customers-btn"
+                  title="Refresh customer data"
+                  aria-label="Refresh customer data"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M20 11a8 8 0 0 0-14.9-4"/>
+                    <path d="M4 5v5h5"/>
+                    <path d="M4 13a8 8 0 0 0 14.9 4"/>
+                    <path d="M20 19v-5h-5"/>
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="toolbar-icon-btn"
+                  id="table-columns-btn"
+                  title="Manage columns"
+                  aria-label="Manage columns"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 5h16"/>
+                    <path d="M4 12h16"/>
+                    <path d="M4 19h16"/>
+                    <circle cx="8" cy="5" r="1.5"/>
+                    <circle cx="15" cy="12" r="1.5"/>
+                    <circle cx="10" cy="19" r="1.5"/>
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="toolbar-icon-btn"
+                  id="more-customers-btn"
+                  title="More customer actions"
+                  aria-label="More customer actions"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="5" cy="12" r="1.5"/>
+                    <circle cx="12" cy="12" r="1.5"/>
+                    <circle cx="19" cy="12" r="1.5"/>
+                  </svg>
+                </button>
+
+              </div>
+
+            </div>
+
+            <!-- Filter chips -->
+            <div class="customer-filter-strip">
+
+              <button
+                type="button"
+                class="customer-filter-chip active"
+                data-segment-filter="all"
+              >
+                All Customers
+                <strong id="chip-all-count">12,486</strong>
+              </button>
+
+              <button
+                type="button"
+                class="customer-filter-chip"
+                data-segment-filter="vip"
+              >
+                VIP
+                <strong>1,268</strong>
+              </button>
+
+              <button
+                type="button"
+                class="customer-filter-chip"
+                data-segment-filter="loyal"
+              >
+                Loyal
+                <strong>2,984</strong>
+              </button>
+
+              <button
+                type="button"
+                class="customer-filter-chip"
+                data-segment-filter="new"
+              >
+                New
+                <strong>2,452</strong>
+              </button>
+
+              <button
+                type="button"
+                class="customer-filter-chip"
+                data-segment-filter="risk"
+              >
+                At Risk
+                <strong>1,154</strong>
+              </button>
+
+              <button
+                type="button"
+                class="customer-filter-chip"
+                data-segment-filter="inactive"
+              >
+                Inactive
+                <strong>1,511</strong>
+              </button>
+
+            </div>
+
+            <!-- Table -->
+            <div class="customer-table-wrap">
+
+              <table class="customer-table">
+
+                <thead>
+                  <tr>
+
+                    <th style="width:35px">
+                      <input
+                        type="checkbox"
+                        id="select-all-customers"
+                        class="customer-checkbox"
+                        aria-label="Select all customers"
+                      >
+                    </th>
+
+                    <th>Customer</th>
+                    <th>Location</th>
+                    <th>Orders</th>
+                    <th>Lifetime Value</th>
+                    <th>Last Activity</th>
+                    <th>Status</th>
+                    <th style="text-align:right">Actions</th>
+
+                  </tr>
+                </thead>
+
+                <tbody id="customers-table-body">
+                  <!-- Rendered by page JavaScript -->
+                </tbody>
+
+              </table>
+
+              <div
+                id="customers-empty"
+                class="customers-empty"
+              >
+
+                <div class="customers-empty-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M20 20l-4-4"/>
+                  </svg>
+                </div>
+
+                <h3>No customers found</h3>
+
+                <p>
+                  Try another search term or change your filters
+                  to find the customer you're looking for.
+                </p>
+
+                <button
+                  type="button"
+                  class="customer-btn"
+                  id="clear-customer-filters-btn"
+                  style="margin-top:16px"
+                >
+                  Clear Filters
+                </button>
+
+              </div>
+
+            </div>
+
+            <div class="customer-table-footer">
+
+              <div
+                class="results-count"
+                id="customer-results-count"
+              >
+                Showing 1–8 of 12,486 customers
+              </div>
+
+              <div class="pagination">
+
+                <button
+                  type="button"
+                  class="page-btn"
+                  id="customer-prev-page"
+                  disabled
+                  aria-label="Previous page"
+                >
+                  ‹
+                </button>
+
+                <button
+                  type="button"
+                  class="page-btn active"
+                  data-page-number="1"
+                >
+                  1
+                </button>
+
+                <button
+                  type="button"
+                  class="page-btn"
+                  data-page-number="2"
+                >
+                  2
+                </button>
+
+                <button
+                  type="button"
+                  class="page-btn"
+                  data-page-number="3"
+                >
+                  3
+                </button>
+
+                <span
+                  style="color:#475569;font-size:10px;padding:0 3px"
+                >
+                  …
+                </span>
+
+                <button
+                  type="button"
+                  class="page-btn"
+                  data-page-number="12"
+                >
+                  12
+                </button>
+
+                <button
+                  type="button"
+                  class="page-btn"
+                  id="customer-next-page"
+                  aria-label="Next page"
+                >
+                  ›
+                </button>
+
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- =================================================
+               LOWER CARDS
+               ================================================= -->
+
+          <section class="customer-lower-grid">
+
+            <!-- Retention -->
+            <article class="retention-card">
+
+              <div class="panel-header">
+
+                <div class="panel-title">
+
+                  <span class="panel-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M12 3v18"/>
+                      <path d="M17 8a5 5 0 0 0-10 0c0 5 10 3 10 8a5 5 0 0 1-10 0"/>
+                    </svg>
+                  </span>
+
+                  <div>
+                    <h2 class="panel-heading">Retention</h2>
+                    <p class="panel-subheading">Customer loyalty health</p>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="lower-body">
+
+                <div class="retention-score">
+                  <strong>84%</strong>
+                  <span>+5.6%</span>
+                </div>
+
+                <div class="retention-line">
+                  <span></span>
+                </div>
+
+                <p class="retention-note">
+                  Your customer retention rate is outperforming
+                  the workspace target of 78%.
+                </p>
+
+                <button
+                  type="button"
+                  class="customer-btn"
+                  id="retention-details-btn"
+                  style="margin-top:17px;width:100%"
+                >
+                  View retention report
+                </button>
+
+              </div>
+
+            </article>
+
+            <!-- Activity -->
+            <article class="activity-card">
+
+              <div class="panel-header">
+
+                <div class="panel-title">
+
+                  <span class="panel-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 12h4l2-7 4 14 2-7h4"/>
+                    </svg>
+                  </span>
+
+                  <div>
+                    <h2 class="panel-heading">Recent Activity</h2>
+                    <p class="panel-subheading">Live customer events</p>
+                  </div>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="panel-action"
+                  id="activity-refresh-btn"
+                >
+                  Refresh
+                </button>
+
+              </div>
+
+              <div class="lower-body">
+
+                <div class="activity-list">
+
+                  <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div>
+                      <strong>New VIP customer created</strong>
+                      <span>Jordan Lee · 2 minutes ago</span>
+                    </div>
+                  </div>
+
+                  <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div>
+                      <strong>Customer upgraded to Loyal</strong>
+                      <span>Emma Stone · 8 minutes ago</span>
+                    </div>
+                  </div>
+
+                  <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div>
+                      <strong>Profile information updated</strong>
+                      <span>Daniel Kim · 16 minutes ago</span>
+                    </div>
+                  </div>
+
+                  <div class="activity-item">
+                    <span class="activity-dot"></span>
+                    <div>
+                      <strong>Customer returned after 42 days</strong>
+                      <span>Olivia Martin · 28 minutes ago</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </article>
+
+            <!-- Locations -->
+            <article class="locations-card">
+
+              <div class="panel-header">
+
+                <div class="panel-title">
+
+                  <span class="panel-title-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/>
+                      <circle cx="12" cy="10" r="2.5"/>
+                    </svg>
+                  </span>
+
+                  <div>
+                    <h2 class="panel-heading">Top Locations</h2>
+                    <p class="panel-subheading">Customer distribution</p>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="lower-body">
+
+                <div class="location-list">
+
+                  <div class="location-item">
+                    <span class="location-name">New York</span>
+                    <div class="location-bar">
+                      <span style="width:88%"></span>
+                    </div>
+                    <span class="location-percent">18%</span>
+                  </div>
+
+                  <div class="location-item">
+                    <span class="location-name">London</span>
+                    <div class="location-bar">
+                      <span style="width:73%"></span>
+                    </div>
+                    <span class="location-percent">15%</span>
+                  </div>
+
+                  <div class="location-item">
+                    <span class="location-name">Toronto</span>
+                    <div class="location-bar">
+                      <span style="width:59%"></span>
+                    </div>
+                    <span class="location-percent">12%</span>
+                  </div>
+
+                  <div class="location-item">
+                    <span class="location-name">Berlin</span>
+                    <div class="location-bar">
+                      <span style="width:48%"></span>
+                    </div>
+                    <span class="location-percent">10%</span>
+                  </div>
+
+                  <div class="location-item">
+                    <span class="location-name">Dubai</span>
+                    <div class="location-bar">
+                      <span style="width:42%"></span>
+                    </div>
+                    <span class="location-percent">8%</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          </section>
+
+        </div>
+      </div>
+
+      <!-- =====================================================
+           FOOTER
+           ===================================================== -->
+
+      <footer class="app-footer">
+        <div>
+          © 2026 Veltrix. All rights reserved.
+        </div>
+
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Documentation</a>
+        </div>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================================
+       CUSTOMER DRAWER
+       ========================================================= -->
+
+  <div
+    id="customer-drawer-overlay"
+    class="customer-drawer-overlay"
+  ></div>
+
+  <aside
+    id="customer-drawer"
+    class="customer-drawer"
+    aria-hidden="true"
+    aria-label="Customer details"
+  >
+
+    <div class="drawer-header">
+
+      <h2 class="drawer-title">
+        Customer 360
+      </h2>
+
+      <button
+        type="button"
+        class="drawer-close"
+        id="customer-drawer-close"
+        aria-label="Close customer details"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18"/>
+          <path d="M6 6l12 12"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="drawer-body">
+
+      <div class="drawer-profile">
+
+        <div
+          class="drawer-avatar"
+          id="drawer-avatar"
+        >
+          AM
+        </div>
+
+        <div>
+          <h3
+            class="drawer-name"
+            id="drawer-name"
+          >
+            Alex Morgan
+          </h3>
+
+          <div
+            class="drawer-email"
+            id="drawer-email"
+          >
+            alex@example.com
+          </div>
+
+          <span
+            class="drawer-tag"
+            id="drawer-tag"
+          >
+            VIP Customer
+          </span>
+        </div>
+
+      </div>
+
+      <div class="drawer-section">
+
+        <h4 class="drawer-section-title">
+          Customer Overview
+        </h4>
+
+        <div class="drawer-stat-grid">
+
+          <div class="drawer-stat">
+            <span>Orders</span>
+            <strong id="drawer-orders">24</strong>
+          </div>
+
+          <div class="drawer-stat">
+            <span>Lifetime Value</span>
+            <strong id="drawer-value">$4,820</strong>
+          </div>
+
+          <div class="drawer-stat">
+            <span>Score</span>
+            <strong id="drawer-score">94</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="drawer-section">
+
+        <h4 class="drawer-section-title">
+          Contact Information
+        </h4>
+
+        <div class="drawer-info-grid">
+
+          <div class="drawer-info">
+            <div class="drawer-info-label">Email</div>
+            <div
+              class="drawer-info-value"
+              id="drawer-info-email"
+            >
+              alex@example.com
+            </div>
+          </div>
+
+          <div class="drawer-info">
+            <div class="drawer-info-label">Phone</div>
+            <div
+              class="drawer-info-value"
+              id="drawer-phone"
+            >
+              +1 555 018 2847
+            </div>
+          </div>
+
+          <div class="drawer-info">
+            <div class="drawer-info-label">Location</div>
+            <div
+              class="drawer-info-value"
+              id="drawer-location"
+            >
+              New York, USA
+            </div>
+          </div>
+
+          <div class="drawer-info">
+            <div class="drawer-info-label">Joined</div>
+            <div
+              class="drawer-info-value"
+              id="drawer-joined"
+            >
+              Jan 14, 2025
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="drawer-section">
+
+        <h4 class="drawer-section-title">
+          Quick Actions
+        </h4>
+
+        <div class="drawer-actions">
+
+          <button
+            type="button"
+            class="customer-btn primary"
+            id="drawer-message-btn"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-.9L3 21l1.8-4.1A8.2 8.2 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/>
+            </svg>
+            Message
+          </button>
+
+          <button
+            type="button"
+            class="customer-btn"
+            id="drawer-email-btn"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 7l9 6 9-6"/>
+            </svg>
+            Email
+          </button>
+
+          <button
+            type="button"
+            class="customer-btn"
+            id="drawer-edit-btn"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/>
+            </svg>
+            Edit Profile
+          </button>
+
+          <button
+            type="button"
+            class="customer-btn danger"
+            id="drawer-archive-btn"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 7h16"/>
+              <path d="M6 7l1 13h10l1-13"/>
+              <path d="M9 7V4h6v3"/>
+            </svg>
+            Archive
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="drawer-section">
+
+        <h4 class="drawer-section-title">
+          Customer Timeline
+        </h4>
+
+        <div
+          class="drawer-timeline"
+          id="drawer-timeline"
+        >
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Placed order #VX-10482</strong>
+              <span>Today · 14:32</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Opened product recommendation</strong>
+              <span>Yesterday · 18:09</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Customer profile updated</strong>
+              <span>Aug 27 · 10:42</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Joined Veltrix workspace</strong>
+              <span>Jan 14, 2025</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- =========================================================
+       CREATE CUSTOMER MODAL
+       ========================================================= -->
+
+  <div
+    id="customer-create-modal"
+    class="customer-modal"
+    aria-hidden="true"
+  >
+
+    <div class="customer-modal-box">
+
+      <div class="customer-modal-header">
+
+        <h2>
+          Create Customer
+        </h2>
+
+        <button
+          type="button"
+          class="modal-close-btn"
+          id="customer-modal-close"
+          aria-label="Close"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18"/>
+            <path d="M6 6l12 12"/>
+          </svg>
+        </button>
+
+      </div>
+
+      <form
+        id="customer-create-form"
+        class="customer-form"
+      >
+
+        <div class="customer-form-grid">
+
+          <div class="customer-form-field">
+            <label for="new-customer-first-name">
+              First Name
+            </label>
+
+            <input
+              id="new-customer-first-name"
+              name="firstName"
+              type="text"
+              placeholder="e.g. Emma"
+              required
+            >
+          </div>
+
+          <div class="customer-form-field">
+            <label for="new-customer-last-name">
+              Last Name
+            </label>
+
+            <input
+              id="new-customer-last-name"
+              name="lastName"
+              type="text"
+              placeholder="e.g. Stone"
+              required
+            >
+          </div>
+
+          <div class="customer-form-field">
+            <label for="new-customer-email">
+              Email
+            </label>
+
+            <input
+              id="new-customer-email"
+              name="email"
+              type="email"
+              placeholder="customer@example.com"
+              required
+            >
+          </div>
+
+          <div class="customer-form-field">
+            <label for="new-customer-phone">
+              Phone
+            </label>
+
+            <input
+              id="new-customer-phone"
+              name="phone"
+              type="tel"
+              placeholder="+1 555 000 0000"
+            >
+          </div>
+
+          <div class="customer-form-field">
+            <label for="new-customer-location">
+              Location
+            </label>
+
+            <input
+              id="new-customer-location"
+              name="location"
+              type="text"
+              placeholder="City, Country"
+            >
+          </div>
+
+          <div class="customer-form-field">
+            <label for="new-customer-status">
+              Status
+            </label>
+
+            <select
+              id="new-customer-status"
+              name="status"
+            >
+              <option value="active">Active</option>
+              <option value="vip">VIP</option>
+              <option value="risk">At Risk</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="customer-form-field full">
+            <label for="new-customer-note">
+              Internal Note
+            </label>
+
+            <textarea
+              id="new-customer-note"
+              name="note"
+              placeholder="Optional note about this customer..."
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div class="customer-form-actions">
+
+          <button
+            type="button"
+            class="customer-btn"
+            id="customer-form-cancel"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="customer-btn primary"
+          >
+            Create Customer
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       IMPORT INPUT
+       ========================================================= -->
+
+  <input
+    type="file"
+    id="customer-import-input"
+    accept=".csv,.json"
+    hidden
+  >
+
+  <!-- =========================================================
+       GOOGLE TRANSLATE HOLDER
+       ========================================================= -->
+
+  <div
+    id="google_translate_element"
+    aria-hidden="true"
+    style="
+      position:fixed;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      opacity:0;
+      pointer-events:none;
+      left:-9999px;
+      top:-9999px;
+    "
+  ></div>
+
+  <!-- =========================================================
+       SEARCH MODAL
+       ========================================================= -->
+
+  <div
+    id="global-search-modal"
+    class="global-modal"
+    data-search-modal
+    aria-hidden="true"
+  >
+
+    <div class="global-search-box">
+
+      <div class="global-search-input-wrap">
+
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M20 20l-4-4"/>
+        </svg>
+
+        <input
+          type="search"
+          data-global-search-input
+          placeholder="Search Veltrix..."
+          autocomplete="off"
+        >
+
+        <kbd>ESC</kbd>
+
+      </div>
+
+      <div
+        class="global-search-results"
+        data-global-search-results
+      ></div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       QUICK CREATE MODAL
+       ========================================================= -->
+
+  <div
+    id="quick-create-modal"
+    class="global-modal"
+    data-quick-create-modal
+    aria-hidden="true"
+  >
+
+    <div class="quick-create-box">
+
+      <div class="quick-create-header">
+        <div>
+          <span class="modal-eyebrow">Workspace</span>
+          <h2>Quick Create</h2>
+          <p>Create something without leaving your current page.</p>
+        </div>
+
+        <button
+          type="button"
+          class="modal-close-btn"
+          data-modal-close
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="quick-create-grid">
+
+        <button type="button" data-quick-create="customer">
+          <strong>Customer</strong>
+          <small>Add a new customer</small>
+        </button>
+
+        <button type="button" data-quick-create="order">
+          <strong>Order</strong>
+          <small>Create a new order</small>
+        </button>
+
+        <button type="button" data-quick-create="invoice">
+          <strong>Invoice</strong>
+          <small>Generate an invoice</small>
+        </button>
+
+        <button type="button" data-quick-create="message">
+          <strong>Message</strong>
+          <small>Start a conversation</small>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       UPGRADE MODAL
+       ========================================================= -->
+
+  <div
+    id="upgrade-modal"
+    class="global-modal"
+    data-upgrade-modal
+    aria-hidden="true"
+  >
+
+    <div class="upgrade-modal-box">
+
+      <button
+        type="button"
+        class="modal-close-btn"
+        data-modal-close
+      >
+        ×
+      </button>
+
+      <div class="upgrade-modal-icon">✦</div>
+
+      <span class="modal-eyebrow">
+        Veltrix Pro
+      </span>
+
+      <h2>
+        Unlock advanced customer intelligence.
+      </h2>
+
+      <p>
+        Segment automation, AI scoring, predictive retention,
+        unlimited customer profiles and more.
+      </p>
+
+      <a
+        href="upgrade.html"
+        class="customer-btn primary"
+      >
+        View Pro Plans
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       CONFIRMATION MODAL
+       ========================================================= -->
+
+  <div
+    id="confirmation-modal"
+    class="global-modal"
+    data-confirmation-modal
+    aria-hidden="true"
+  >
+
+    <div class="confirmation-box">
+
+      <div class="confirmation-icon">!</div>
+
+      <h2 data-confirmation-title>
+        Are you sure?
+      </h2>
+
+      <p data-confirmation-message>
+        This action cannot be undone.
+      </p>
+
+      <div class="confirmation-actions">
+
+        <button
+          type="button"
+          class="customer-btn"
+          data-confirmation-cancel
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="customer-btn danger"
+          data-confirmation-confirm
+        >
+          Confirm
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       OFFLINE INDICATOR
+       ========================================================= -->
+
+  <div
+    id="offline-indicator"
+    class="offline-indicator"
+    aria-live="polite"
+  >
+    You are currently offline.
+  </div>
+
+  <!-- =========================================================
+       SCREEN READER
+       ========================================================= -->
+
+  <div
+    id="screen-reader-announcer"
+    class="sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+  ></div>
+
+  <!-- =========================================================
+       BACK TO TOP
+       ========================================================= -->
+
+  <button
+    type="button"
+    id="back-to-top"
+    class="back-to-top"
+    aria-label="Back to top"
+    title="Back to top"
+  >
+    ↑
+  </button>
+
+  <!-- =========================================================
+       PRINT AREA
+       ========================================================= -->
+
+  <div id="customer-print-area"></div>
+
+  <!-- =========================================================
+       CORE SCRIPTS
+       ========================================================= -->
+
+  <script src="../js/script.js" defer></script>
+
+  <!-- =========================================================
+       CUSTOMERS PAGE LOGIC
+       ========================================================= -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      "use strict";
+
+      /* =======================================================
+         CUSTOMER DATA
+         ======================================================= */
+
+      const customers = [
+        {
+          id: "CUS-1001",
+          firstName: "Alex",
+          lastName: "Morgan",
+          email: "alex.morgan@example.com",
+          phone: "+1 555 018 2847",
+          location: "New York, USA",
+          orders: 24,
+          value: 4820,
+          lastActivity: "2 min ago",
+          status: "vip",
+          segment: "vip",
+          score: 94,
+          joined: "Jan 14, 2025",
+          note: "High-value customer with frequent purchases."
+        },
+        {
+          id: "CUS-1002",
+          firstName: "Emma",
+          lastName: "Stone",
+          email: "emma.stone@example.com",
+          phone: "+44 20 7946 0281",
+          location: "London, UK",
+          orders: 18,
+          value: 2940,
+          lastActivity: "8 min ago",
+          status: "active",
+          segment: "loyal",
+          score: 89,
+          joined: "Mar 03, 2025",
+          note: "Consistent returning customer."
+        },
+        {
+          id: "CUS-1003",
+          firstName: "Daniel",
+          lastName: "Kim",
+          email: "daniel.kim@example.com",
+          phone: "+82 2 555 9210",
+          location: "Seoul, South Korea",
+          orders: 11,
+          value: 1760,
+          lastActivity: "16 min ago",
+          status: "active",
+          segment: "returning",
+          score: 81,
+          joined: "May 18, 2025",
+          note: "Engages strongly with new product launches."
+        },
+        {
+          id: "CUS-1004",
+          firstName: "Olivia",
+          lastName: "Martin",
+          email: "olivia.martin@example.com",
+          phone: "+33 1 555 0384",
+          location: "Paris, France",
+          orders: 9,
+          value: 1210,
+          lastActivity: "28 min ago",
+          status: "active",
+          segment: "returning",
+          score: 77,
+          joined: "Jul 22, 2025",
+          note: "Returned after a long inactivity period."
+        },
+        {
+          id: "CUS-1005",
+          firstName: "Jordan",
+          lastName: "Lee",
+          email: "jordan.lee@example.com",
+          phone: "+1 416 555 0219",
+          location: "Toronto, Canada",
+          orders: 31,
+          value: 6840,
+          lastActivity: "34 min ago",
+          status: "vip",
+          segment: "vip",
+          score: 97,
+          joined: "Nov 11, 2024",
+          note: "Top customer by lifetime value."
+        },
+        {
+          id: "CUS-1006",
+          firstName: "Sophia",
+          lastName: "Brown",
+          email: "sophia.brown@example.com",
+          phone: "+49 30 555 1902",
+          location: "Berlin, Germany",
+          orders: 4,
+          value: 420,
+          lastActivity: "1 hr ago",
+          status: "active",
+          segment: "new",
+          score: 68,
+          joined: "Aug 12, 2026",
+          note: "Recently acquired customer."
+        },
+        {
+          id: "CUS-1007",
+          firstName: "Noah",
+          lastName: "Wilson",
+          email: "noah.wilson@example.com",
+          phone: "+61 2 555 4821",
+          location: "Sydney, Australia",
+          orders: 7,
+          value: 730,
+          lastActivity: "2 hrs ago",
+          status: "risk",
+          segment: "risk",
+          score: 53,
+          joined: "Feb 09, 2025",
+          note: "Engagement dropped significantly."
+        },
+        {
+          id: "CUS-1008",
+          firstName: "Mia",
+          lastName: "Garcia",
+          email: "mia.garcia@example.com",
+          phone: "+34 91 555 1908",
+          location: "Madrid, Spain",
+          orders: 13,
+          value: 2150,
+          lastActivity: "3 hrs ago",
+          status: "active",
+          segment: "loyal",
+          score: 86,
+          joined: "Apr 21, 2025",
+          note: "Strong repeat-purchase behavior."
+        },
+        {
+          id: "CUS-1009",
+          firstName: "Lucas",
+          lastName: "Anderson",
+          email: "lucas.anderson@example.com",
+          phone: "+1 305 555 2190",
+          location: "Miami, USA",
+          orders: 5,
+          value: 510,
+          lastActivity: "5 hrs ago",
+          status: "inactive",
+          segment: "inactive",
+          score: 42,
+          joined: "Dec 07, 2024",
+          note: "No recent purchases."
+        },
+        {
+          id: "CUS-1010",
+          firstName: "Ava",
+          lastName: "Taylor",
+          email: "ava.taylor@example.com",
+          phone: "+971 4 555 2910",
+          location: "Dubai, UAE",
+          orders: 16,
+          value: 3290,
+          lastActivity: "6 hrs ago",
+          status: "vip",
+          segment: "vip",
+          score: 92,
+          joined: "Oct 12, 2025",
+          note: "High engagement with premium products."
+        },
+        {
+          id: "CUS-1011",
+          firstName: "Ethan",
+          lastName: "Thomas",
+          email: "ethan.thomas@example.com",
+          phone: "+31 20 555 1042",
+          location: "Amsterdam, Netherlands",
+          orders: 8,
+          value: 980,
+          lastActivity: "8 hrs ago",
+          status: "active",
+          segment: "returning",
+          score: 73,
+          joined: "Jun 13, 2026",
+          note: "Regular monthly purchaser."
+        },
+        {
+          id: "CUS-1012",
+          firstName: "Isabella",
+          lastName: "Rossi",
+          email: "isabella.rossi@example.com",
+          phone: "+39 06 555 7301",
+          location: "Rome, Italy",
+          orders: 3,
+          value: 295,
+          lastActivity: "1 day ago",
+          status: "inactive",
+          segment: "inactive",
+          score: 39,
+          joined: "Jan 28, 2025",
+          note: "Needs re-engagement campaign."
+        }
+      ];
+
+      let filteredCustomers = [...customers];
+      let currentPage = 1;
+      let pageSize = 8;
+      let currentSegment = "all";
+      let selectedCustomer = null;
+
+      const $ = (selector, parent = document) =>
+        parent.querySelector(selector);
+
+      const $$ = (selector, parent = document) =>
+        Array.from(parent.querySelectorAll(selector));
+
+      /* =======================================================
+         UTILITIES
+         ======================================================= */
+
+      function initials(customer) {
+        return (
+          customer.firstName.charAt(0) +
+          customer.lastName.charAt(0)
+        ).toUpperCase();
+      }
+
+      function formatCurrency(value) {
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0
+        }).format(value);
+      }
+
+      function escapeHTML(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function toast(message, type = "success") {
+
+        if (
+          window.Veltrix &&
+          window.Veltrix.toast &&
+          typeof window.Veltrix.toast.show === "function"
+        ) {
+          window.Veltrix.toast.show(message, type);
+          return;
+        }
+
+        const container = $("#toast-container");
+
+        if (!container) {
+          alert(message);
+          return;
+        }
+
+        const item = document.createElement("div");
+
+        item.className = "toast toast-" + type;
+
+        item.innerHTML = `
+          <div class="toast-content">
+            <strong>${escapeHTML(message)}</strong>
+          </div>
+        `;
+
+        container.appendChild(item);
+
+        setTimeout(() => {
+          item.classList.add("show");
+        }, 20);
+
+        setTimeout(() => {
+          item.classList.remove("show");
+
+          setTimeout(() => {
+            item.remove();
+          }, 250);
+        }, 2800);
+      }
+
+      function statusLabel(status) {
+
+        const labels = {
+          active: "Active",
+          vip: "VIP",
+          inactive: "Inactive",
+          risk: "At Risk"
+        };
+
+        return labels[status] || status;
+      }
+
+      /* =======================================================
+         RENDER TABLE
+         ======================================================= */
+
+      function renderCustomers() {
+
+        const body = $("#customers-table-body");
+        const empty = $("#customers-empty");
+
+        if (!body) return;
+
+        const start = (currentPage - 1) * pageSize;
+        const pageCustomers = filteredCustomers.slice(
+          start,
+          start + pageSize
+        );
+
+        body.innerHTML = "";
+
+        if (!pageCustomers.length) {
+
+          empty.classList.add("show");
+
+          $(".customer-table").style.display = "none";
+
+          updateResultsCount();
+
+          return;
+        }
+
+        empty.classList.remove("show");
+
+        $(".customer-table").style.display = "table";
+
+        pageCustomers.forEach(customer => {
+
+          const row = document.createElement("tr");
+
+          row.dataset.customerId = customer.id;
+
+          row.innerHTML = `
+            <td>
+              <input
+                type="checkbox"
+                class="customer-checkbox customer-row-checkbox"
+                data-customer-id="${escapeHTML(customer.id)}"
+                aria-label="Select ${escapeHTML(customer.firstName)} ${escapeHTML(customer.lastName)}"
+              >
+            </td>
+
+            <td>
+              <div class="customer-person">
+
+                <div class="customer-avatar">
+                  ${escapeHTML(initials(customer))}
+                </div>
+
+                <div>
+                  <div class="customer-person-name">
+                    ${escapeHTML(customer.firstName)}
+                    ${escapeHTML(customer.lastName)}
+                  </div>
+
+                  <div class="customer-person-email">
+                    ${escapeHTML(customer.email)}
+                  </div>
+                </div>
+
+              </div>
+            </td>
+
+            <td>
+              <div class="customer-location">
+                ${escapeHTML(customer.location)}
+              </div>
+            </td>
+
+            <td>
+              <div class="customer-orders">
+                ${customer.orders} orders
+              </div>
+            </td>
+
+            <td>
+              <div class="customer-spend">
+                ${formatCurrency(customer.value)}
+              </div>
+            </td>
+
+            <td>
+              <div class="customer-orders">
+                ${escapeHTML(customer.lastActivity)}
+              </div>
+            </td>
+
+            <td>
+              <span class="customer-status ${escapeHTML(customer.status)}">
+                ${escapeHTML(statusLabel(customer.status))}
+              </span>
+            </td>
+
+            <td>
+              <div class="customer-actions">
+
+                <button
+                  type="button"
+                  class="table-action"
+                  data-customer-action="view"
+                  data-customer-id="${escapeHTML(customer.id)}"
+                  title="View customer"
+                  aria-label="View customer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="table-action"
+                  data-customer-action="message"
+                  data-customer-id="${escapeHTML(customer.id)}"
+                  title="Message customer"
+                  aria-label="Message customer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 9.6 9.6 0 0 1-4-.9L3 21l1.8-4.1A8.2 8.2 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.5 8.5 0 0 1 9 8.5z"/>
+                  </svg>
+                </button>
+
+                <button
+                  type="button"
+                  class="table-action danger"
+                  data-customer-action="archive"
+                  data-customer-id="${escapeHTML(customer.id)}"
+                  title="Archive customer"
+                  aria-label="Archive customer"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M4 7h16"/>
+                    <path d="M6 7l1 13h10l1-13"/>
+                    <path d="M9 7V4h6v3"/>
+                  </svg>
+                </button>
+
+              </div>
+            </td>
+          `;
+
+          body.appendChild(row);
+
+        });
+
+        updateResultsCount();
+        updatePagination();
+      }
+
+      function updateResultsCount() {
+
+        const element = $("#customer-results-count");
+
+        if (!element) return;
+
+        if (!filteredCustomers.length) {
+          element.textContent = "No customers found";
+          return;
+        }
+
+        const start =
+          (currentPage - 1) * pageSize + 1;
+
+        const end = Math.min(
+          currentPage * pageSize,
+          filteredCustomers.length
+        );
+
+        element.textContent =
+          `Showing ${start}–${end} of ${filteredCustomers.length} matching customers`;
+      }
+
+      function updatePagination() {
+
+        const totalPages =
+          Math.max(
+            1,
+            Math.ceil(filteredCustomers.length / pageSize)
+          );
+
+        const previous = $("#customer-prev-page");
+        const next = $("#customer-next-page");
+
+        if (previous) {
+          previous.disabled = currentPage <= 1;
+        }
+
+        if (next) {
+          next.disabled = currentPage >= totalPages;
+        }
+
+        $$("[data-page-number]").forEach(button => {
+
+          const page = Number(
+            button.dataset.pageNumber
+          );
+
+          button.classList.toggle(
+            "active",
+            page === currentPage
+          );
+
+          button.disabled = page > totalPages;
+        });
+      }
+
+      /* =======================================================
+         FILTERING
+         ======================================================= */
+
+      function applyFilters() {
+
+        const search =
+          ($("#customer-search")?.value || "")
+            .trim()
+            .toLowerCase();
+
+        const status =
+          $("#customer-status-filter")?.value || "all";
+
+        const value =
+          $("#customer-value-filter")?.value || "all";
+
+        filteredCustomers = customers.filter(customer => {
+
+          const fullName =
+            `${customer.firstName} ${customer.lastName}`
+              .toLowerCase();
+
+          const matchesSearch =
+            !search ||
+            fullName.includes(search) ||
+            customer.email.toLowerCase().includes(search) ||
+            customer.location.toLowerCase().includes(search) ||
+            customer.id.toLowerCase().includes(search);
+
+          const matchesStatus =
+            status === "all" ||
+            customer.status === status;
+
+          const matchesValue =
+            value === "all" ||
+            (
+              value === "high" &&
+              customer.value >= 1000
+            ) ||
+            (
+              value === "medium" &&
+              customer.value >= 500 &&
+              customer.value < 1000
+            ) ||
+            (
+              value === "standard" &&
+              customer.value < 500
+            );
+
+          const matchesSegment =
+            currentSegment === "all" ||
+            customer.segment === currentSegment;
+
+          return (
+            matchesSearch &&
+            matchesStatus &&
+            matchesValue &&
+            matchesSegment
+          );
+        });
+
+        currentPage = 1;
+
+        renderCustomers();
+      }
+
+      /* =======================================================
+         SEARCH
+         ======================================================= */
+
+      const searchInput = $("#customer-search");
+
+      if (searchInput) {
+
+        let searchTimer;
+
+        searchInput.addEventListener("input", () => {
+
+          clearTimeout(searchTimer);
+
+          searchTimer = setTimeout(() => {
+            applyFilters();
+          }, 120);
+
+        });
+
+      }
+
+      $("#customer-status-filter")?.addEventListener(
+        "change",
+        applyFilters
+      );
+
+      $("#customer-value-filter")?.addEventListener(
+        "change",
+        applyFilters
+      );
+
+      /* =======================================================
+         SEGMENT CHIPS
+         ======================================================= */
+
+      $$("[data-segment-filter]").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          currentSegment =
+            button.dataset.segmentFilter || "all";
+
+          $$("[data-segment-filter]").forEach(item => {
+            item.classList.toggle(
+              "active",
+              item === button
+            );
+          });
+
+          applyFilters();
+
+          toast(
+            currentSegment === "all"
+              ? "Showing all customers."
+              : `Showing ${statusLabel(currentSegment)} segment.`,
+            "success"
+          );
+
+        });
+
+      });
+
+      /* =======================================================
+         TABLE ACTIONS
+         ======================================================= */
+
+      $("#customers-table-body")?.addEventListener(
+        "click",
+        event => {
+
+          const action =
+            event.target.closest(
+              "[data-customer-action]"
+            );
+
+          const row =
+            event.target.closest("tr");
+
+          if (
+            event.target.closest(
+              ".customer-row-checkbox"
+            )
+          ) {
+            return;
+          }
+
+          if (action) {
+
+            const customer =
+              customers.find(
+                item =>
+                  item.id === action.dataset.customerId
+              );
+
+            if (!customer) return;
+
+            const type =
+              action.dataset.customerAction;
+
+            if (type === "view") {
+              openCustomerDrawer(customer);
+            }
+
+            if (type === "message") {
+              openCustomerMessage(customer);
+            }
+
+            if (type === "archive") {
+              archiveCustomer(customer);
+            }
+
+            return;
+          }
+
+          if (row) {
+
+            const customer =
+              customers.find(
+                item =>
+                  item.id === row.dataset.customerId
+              );
+
+            if (customer) {
+              openCustomerDrawer(customer);
+            }
+          }
+
+        }
+      );
+
+      /* =======================================================
+         CUSTOMER DRAWER
+         ======================================================= */
+
+      const drawer = $("#customer-drawer");
+      const drawerOverlay = $("#customer-drawer-overlay");
+
+      function openCustomerDrawer(customer) {
+
+        selectedCustomer = customer;
+
+        $("#drawer-avatar").textContent =
+          initials(customer);
+
+        $("#drawer-name").textContent =
+          `${customer.firstName} ${customer.lastName}`;
+
+        $("#drawer-email").textContent =
+          customer.email;
+
+        $("#drawer-tag").textContent =
+          statusLabel(customer.status);
+
+        $("#drawer-orders").textContent =
+          customer.orders;
+
+        $("#drawer-value").textContent =
+          formatCurrency(customer.value);
+
+        $("#drawer-score").textContent =
+          customer.score;
+
+        $("#drawer-info-email").textContent =
+          customer.email;
+
+        $("#drawer-phone").textContent =
+          customer.phone || "Not provided";
+
+        $("#drawer-location").textContent =
+          customer.location;
+
+        $("#drawer-joined").textContent =
+          customer.joined;
+
+        const timeline = $("#drawer-timeline");
+
+        timeline.innerHTML = `
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Customer profile opened</strong>
+              <span>Just now</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>${escapeHTML(customer.orders)} orders completed</strong>
+              <span>Lifetime activity</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Last activity: ${escapeHTML(customer.lastActivity)}</strong>
+              <span>Customer engagement</span>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <div>
+              <strong>Joined Veltrix</strong>
+              <span>${escapeHTML(customer.joined)}</span>
+            </div>
+          </div>
+        `;
+
+        drawer.classList.add("open");
+        drawerOverlay.classList.add("open");
+        drawer.setAttribute("aria-hidden", "false");
+
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeCustomerDrawer() {
+
+        drawer.classList.remove("open");
+        drawerOverlay.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+
+        document.body.style.overflow = "";
+
+        selectedCustomer = null;
+      }
+
+      $("#customer-drawer-close")?.addEventListener(
+        "click",
+        closeCustomerDrawer
+      );
+
+      drawerOverlay?.addEventListener(
+        "click",
+        closeCustomerDrawer
+      );
+
+      /* =======================================================
+         MESSAGE
+         ======================================================= */
+
+      function openCustomerMessage(customer) {
+
+        toast(
+          `Opening conversation with ${customer.firstName} ${customer.lastName}...`,
+          "success"
+        );
+
+        setTimeout(() => {
+
+          window.location.href =
+            `messages.html?customer=${encodeURIComponent(customer.id)}`;
+
+        }, 450);
+      }
+
+      $("#drawer-message-btn")?.addEventListener(
+        "click",
+        () => {
+
+          if (!selectedCustomer) return;
+
+          openCustomerMessage(selectedCustomer);
+        }
+      );
+
+      $("#drawer-email-btn")?.addEventListener(
+        "click",
+        () => {
+
+          if (!selectedCustomer) return;
+
+          const subject =
+            `Hello ${selectedCustomer.firstName}`;
+
+          window.location.href =
+            `mailto:${selectedCustomer.email}?subject=${encodeURIComponent(subject)}`;
+
+        }
+      );
+
+      /* =======================================================
+         ARCHIVE
+         ======================================================= */
+
+      function archiveCustomer(customer) {
+
+        const proceed =
+          confirm(
+            `Archive ${customer.firstName} ${customer.lastName}?`
+          );
+
+        if (!proceed) return;
+
+        customer.status = "inactive";
+        customer.segment = "inactive";
+
+        closeCustomerDrawer();
+        applyFilters();
+
+        toast(
+          `${customer.firstName} ${customer.lastName} has been archived.`,
+          "success"
+        );
+      }
+
+      $("#drawer-archive-btn")?.addEventListener(
+        "click",
+        () => {
+
+          if (!selectedCustomer) return;
+
+          archiveCustomer(selectedCustomer);
+        }
+      );
+
+      /* =======================================================
+         EDIT CUSTOMER
+         ======================================================= */
+
+      $("#drawer-edit-btn")?.addEventListener(
+        "click",
+        () => {
+
+          if (!selectedCustomer) return;
+
+          openCreateModal(selectedCustomer);
+        }
+      );
+
+      /* =======================================================
+         CREATE / EDIT MODAL
+         ======================================================= */
+
+      const customerModal =
+        $("#customer-create-modal");
+
+      let editingCustomer = null;
+
+      function openCreateModal(customer = null) {
+
+        editingCustomer = customer;
+
+        customerModal.classList.add("open");
+        customerModal.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+        if (customer) {
+
+          $("#new-customer-first-name").value =
+            customer.firstName;
+
+          $("#new-customer-last-name").value =
+            customer.lastName;
+
+          $("#new-customer-email").value =
+            customer.email;
+
+          $("#new-customer-phone").value =
+            customer.phone || "";
+
+          $("#new-customer-location").value =
+            customer.location;
+
+          $("#new-customer-status").value =
+            customer.status;
+
+          $("#new-customer-note").value =
+            customer.note || "";
+
+          $(".customer-modal-header h2").textContent =
+            "Edit Customer";
+
+          $(".customer-form button[type='submit']").textContent =
+            "Save Changes";
+
+        } else {
+
+          $("#customer-create-form").reset();
+
+          $(".customer-modal-header h2").textContent =
+            "Create Customer";
+
+          $(".customer-form button[type='submit']").textContent =
+            "Create Customer";
+        }
+
+        document.body.style.overflow = "hidden";
+
+        setTimeout(() => {
+          $("#new-customer-first-name")?.focus();
+        }, 100);
+
+      }
+
+      function closeCreateModal() {
+
+        customerModal.classList.remove("open");
+        customerModal.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        editingCustomer = null;
+
+        document.body.style.overflow = "";
+      }
+
+      $("#create-customer-btn")?.addEventListener(
+        "click",
+        () => openCreateModal()
+      );
+
+      $("#customer-modal-close")?.addEventListener(
+        "click",
+        closeCreateModal
+      );
+
+      $("#customer-form-cancel")?.addEventListener(
+        "click",
+        closeCreateModal
+      );
+
+      customerModal?.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target === customerModal
+          ) {
+            closeCreateModal();
+          }
+
+        }
+      );
+
+      $("#customer-create-form")?.addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+          const form =
+            new FormData(event.currentTarget);
+
+          const firstName =
+            String(form.get("firstName") || "").trim();
+
+          const lastName =
+            String(form.get("lastName") || "").trim();
+
+          const email =
+            String(form.get("email") || "").trim();
+
+          if (!firstName || !lastName || !email) {
+
+            toast(
+              "Please complete the required customer fields.",
+              "error"
+            );
+
+            return;
+          }
+
+          if (editingCustomer) {
+
+            editingCustomer.firstName =
+              firstName;
+
+            editingCustomer.lastName =
+              lastName;
+
+            editingCustomer.email =
+              email;
+
+            editingCustomer.phone =
+              String(form.get("phone") || "");
+
+            editingCustomer.location =
+              String(form.get("location") || "Unknown");
+
+            editingCustomer.status =
+              String(form.get("status") || "active");
+
+            editingCustomer.segment =
+              editingCustomer.status === "vip"
+                ? "vip"
+                : editingCustomer.status === "risk"
+                  ? "risk"
+                  : editingCustomer.status === "inactive"
+                    ? "inactive"
+                    : "returning";
+
+            editingCustomer.note =
+              String(form.get("note") || "");
+
+            toast(
+              `${firstName} ${lastName}'s profile was updated.`,
+              "success"
+            );
+
+          } else {
+
+            const newCustomer = {
+              id:
+                "CUS-" +
+                Math.floor(
+                  1000 +
+                  Math.random() * 8999
+                ),
+
+              firstName,
+              lastName,
+              email,
+
+              phone:
+                String(form.get("phone") || ""),
+
+              location:
+                String(form.get("location") || "Unknown"),
+
+              orders: 0,
+
+              value: 0,
+
+              lastActivity: "Just now",
+
+              status:
+                String(form.get("status") || "active"),
+
+              segment:
+                String(form.get("status") || "active") === "vip"
+                  ? "vip"
+                  : String(form.get("status") || "active") === "risk"
+                    ? "risk"
+                    : "new",
+
+              score: 50,
+
+              joined:
+                new Intl.DateTimeFormat(
+                  "en-US",
+                  {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric"
+                  }
+                ).format(new Date()),
+
+              note:
+                String(form.get("note") || "")
+            };
+
+            customers.unshift(newCustomer);
+
+            toast(
+              `${firstName} ${lastName} was added successfully.`,
+              "success"
+            );
+          }
+
+          closeCreateModal();
+
+          applyFilters();
+        }
+      );
+
+      /* =======================================================
+         IMPORT
+         ======================================================= */
+
+      $("#import-customers-btn")?.addEventListener(
+        "click",
+        () => {
+          $("#customer-import-input")?.click();
+        }
+      );
+
+      $("#customer-import-input")?.addEventListener(
+        "change",
+        event => {
+
+          const file =
+            event.target.files?.[0];
+
+          if (!file) return;
+
+          const reader =
+            new FileReader();
+
+          reader.onload = () => {
+
+            const content =
+              String(reader.result || "");
+
+            let imported = 0;
+
+            if (
+              file.name
+                .toLowerCase()
+                .endsWith(".json")
+            ) {
+
+              try {
+
+                const data =
+                  JSON.parse(content);
+
+                const rows =
+                  Array.isArray(data)
+                    ? data
+                    : [];
+
+                rows.forEach(row => {
+
+                  if (!row.email) return;
+
+                  const name =
+                    String(
+                      row.name ||
+                      row.fullName ||
+                      "Imported Customer"
+                    ).trim();
+
+                  const parts =
+                    name.split(/\s+/);
+
+                  customers.unshift({
+                    id:
+                      "CUS-" +
+                      Math.floor(
+                        1000 +
+                        Math.random() * 8999
+                      ),
+
+                    firstName:
+                      parts.shift() || "Imported",
+
+                    lastName:
+                      parts.join(" ") || "Customer",
+
+                    email:
+                      String(row.email),
+
+                    phone:
+                      String(row.phone || ""),
+
+                    location:
+                      String(row.location || "Imported"),
+
+                    orders:
+                      Number(row.orders || 0),
+
+                    value:
+                      Number(row.value || 0),
+
+                    lastActivity:
+                      "Imported just now",
+
+                    status:
+                      "active",
+
+                    segment:
+                      "new",
+
+                    score:
+                      50,
+
+                    joined:
+                      "Today",
+
+                    note:
+                      "Imported customer."
+                  });
+
+                  imported++;
+                });
+
+              } catch (error) {
+
+                toast(
+                  "The JSON file could not be read.",
+                  "error"
+                );
+
+                return;
+              }
+
+            } else {
+
+              const lines =
+                content
+                  .split(/\r?\n/)
+                  .filter(Boolean);
+
+              const start =
+                lines[0]?.toLowerCase().includes("email")
+                  ? 1
+                  : 0;
+
+              for (
+                let index = start;
+                index < lines.length;
+                index++
+              ) {
+
+                const columns =
+                  lines[index]
+                    .split(",")
+                    .map(value =>
+                      value
+                        .trim()
+                        .replace(/^"|"$/g, "")
+                    );
+
+                const [
+                  firstName,
+                  lastName,
+                  email,
+                  location
+                ] = columns;
+
+                if (!email) continue;
+
+                customers.unshift({
+                  id:
+                    "CUS-" +
+                    Math.floor(
+                      1000 +
+                      Math.random() * 8999
+                    ),
+
+                  firstName:
+                    firstName || "Imported",
+
+                  lastName:
+                    lastName || "Customer",
+
+                  email,
+
+                  phone: "",
+
+                  location:
+                    location || "Imported",
+
+                  orders: 0,
+
+                  value: 0,
+
+                  lastActivity:
+                    "Imported just now",
+
+                  status: "active",
+
+                  segment: "new",
+
+                  score: 50,
+
+                  joined: "Today",
+
+                  note: "Imported customer."
+                });
+
+                imported++;
+              }
+            }
+
+            applyFilters();
+
+            toast(
+              imported
+                ? `${imported} customer${imported > 1 ? "s" : ""} imported successfully.`
+                : "No valid customer records were found.",
+              imported ? "success" : "error"
+            );
+          };
+
+          reader.readAsText(file);
+
+          event.target.value = "";
+        }
+      );
+
+      /* =======================================================
+         EXPORT
+         ======================================================= */
+
+      function exportCustomers() {
+
+        if (!filteredCustomers.length) {
+
+          toast(
+            "There are no customers to export.",
+            "error"
+          );
+
+          return;
+        }
+
+        const header = [
+          "ID",
+          "First Name",
+          "Last Name",
+          "Email",
+          "Phone",
+          "Location",
+          "Orders",
+          "Lifetime Value",
+          "Status",
+          "Segment",
+          "Score",
+          "Joined"
+        ];
+
+        const rows =
+          filteredCustomers.map(customer => [
+            customer.id,
+            customer.firstName,
+            customer.lastName,
+            customer.email,
+            customer.phone,
+            customer.location,
+            customer.orders,
+            customer.value,
+            customer.status,
+            customer.segment,
+            customer.score,
+            customer.joined
+          ]);
+
+        const csv = [
+          header,
+          ...rows
+        ]
+          .map(row =>
+            row
+              .map(value =>
+                `"${String(value).replaceAll('"', '""')}"`
+              )
+              .join(",")
+          )
+          .join("\n");
+
+        const blob =
+          new Blob(
+            [csv],
+            {
+              type: "text/csv;charset=utf-8;"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(blob);
+
+        const anchor =
+          document.createElement("a");
+
+        anchor.href = url;
+        anchor.download =
+          `veltrix-customers-${Date.now()}.csv`;
+
+        document.body.appendChild(anchor);
+
+        anchor.click();
+
+        anchor.remove();
+
+        URL.revokeObjectURL(url);
+
+        toast(
+          `${filteredCustomers.length} customers exported.`,
+          "success"
+        );
+      }
+
+      $("#export-customers-btn")?.addEventListener(
+        "click",
+        exportCustomers
+      );
+
+      /* =======================================================
+         REFRESH
+         ======================================================= */
+
+      $("#refresh-customers-btn")?.addEventListener(
+        "click",
+        () => {
+
+          const button =
+            $("#refresh-customers-btn");
+
+          button.style.transform =
+            "rotate(360deg)";
+
+          setTimeout(() => {
+            button.style.transform = "";
+          }, 500);
+
+          customers.forEach(customer => {
+
+            if (
+              customer.lastActivity !==
+              "Just now"
+            ) {
+              customer.lastActivity =
+                "Updated moments ago";
+            }
+
+          });
+
+          renderCustomers();
+
+          toast(
+            "Customer data refreshed.",
+            "success"
+          );
+        }
+      );
+
+      $("#activity-refresh-btn")?.addEventListener(
+        "click",
+        () => {
+
+          toast(
+            "Customer activity feed refreshed.",
+            "success"
+          );
+        }
+      );
+
+      /* =======================================================
+         CLEAR FILTERS
+         ======================================================= */
+
+      function clearFilters() {
+
+        if ($("#customer-search")) {
+          $("#customer-search").value = "";
+        }
+
+        if ($("#customer-status-filter")) {
+          $("#customer-status-filter").value = "all";
+        }
+
+        if ($("#customer-value-filter")) {
+          $("#customer-value-filter").value = "all";
+        }
+
+        currentSegment = "all";
+
+        $$("[data-segment-filter]").forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.segmentFilter === "all"
+          );
+        });
+
+        applyFilters();
+
+        toast(
+          "All customer filters cleared.",
+          "success"
+        );
+      }
+
+      $("#clear-customer-filters-btn")?.addEventListener(
+        "click",
+        clearFilters
+      );
+
+      /* =======================================================
+         SELECT ALL
+         ======================================================= */
+
+      $("#select-all-customers")?.addEventListener(
+        "change",
+        event => {
+
+          const checked =
+            event.target.checked;
+
+          $$(".customer-row-checkbox").forEach(
+            checkbox => {
+              checkbox.checked = checked;
+            }
+          );
+
+          toast(
+            checked
+              ? "Visible customers selected."
+              : "Customer selection cleared.",
+            "success"
+          );
+        }
+      );
+
+      /* =======================================================
+         TABLE COLUMNS
+         ======================================================= */
+
+      $("#table-columns-btn")?.addEventListener(
+        "click",
+        () => {
+
+          toast(
+            "Column manager opened. In the full version, choose which customer fields are visible.",
+            "success"
+          );
+        }
+      );
+
+      /* =======================================================
+         MORE ACTIONS
+         ======================================================= */
+
+      $("#more-customers-btn")?.addEventListener(
+        "click",
+        () => {
+
+          const choice =
+            prompt(
+              "Customer actions:\n\n1 — Export CSV\n2 — Print customer list\n3 — Clear filters\n\nEnter 1, 2 or 3:"
+            );
+
+          if (choice === "1") {
+            exportCustomers();
+          }
+
+          if (choice === "2") {
+            printCustomers();
+          }
+
+          if (choice === "3") {
+            clearFilters();
+          }
+
+        }
+      );
+
+      /* =======================================================
+         PRINT
+         ======================================================= */
+
+      function printCustomers() {
+
+        const area =
+          $("#customer-print-area");
+
+        area.innerHTML = `
+          <div style="font-family:Arial,sans-serif;padding:30px;color:#111">
+
+            <h1 style="margin:0 0 5px">
+              Veltrix — Customer Directory
+            </h1>
+
+            <p style="margin:0 0 25px;color:#666">
+              Generated ${new Date().toLocaleString()}
+            </p>
+
+            <table
+              style="
+                width:100%;
+                border-collapse:collapse;
+                font-size:12px
+              "
+            >
+
+              <thead>
+                <tr>
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Customer
+                  </th>
+
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Email
+                  </th>
+
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Location
+                  </th>
+
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Orders
+                  </th>
+
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Value
+                  </th>
+
+                  <th style="border:1px solid #ddd;padding:8px;text-align:left">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                ${filteredCustomers
+                  .map(customer => `
+                    <tr>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${escapeHTML(customer.firstName)}
+                        ${escapeHTML(customer.lastName)}
+                      </td>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${escapeHTML(customer.email)}
+                      </td>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${escapeHTML(customer.location)}
+                      </td>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${customer.orders}
+                      </td>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${formatCurrency(customer.value)}
+                      </td>
+
+                      <td style="border:1px solid #ddd;padding:8px">
+                        ${escapeHTML(statusLabel(customer.status))}
+                      </td>
+
+                    </tr>
+                  `)
+                  .join("")}
+
+              </tbody>
+
+            </table>
+
+          </div>
+        `;
+
+        window.print();
+
+        setTimeout(() => {
+          area.innerHTML = "";
+        }, 1000);
+      }
+
+      /* =======================================================
+         PAGINATION
+         ======================================================= */
+
+      $("#customer-prev-page")?.addEventListener(
+        "click",
+        () => {
+
+          if (currentPage <= 1) return;
+
+          currentPage--;
+
+          renderCustomers();
+        }
+      );
+
+      $("#customer-next-page")?.addEventListener(
+        "click",
+        () => {
+
+          const totalPages =
+            Math.ceil(
+              filteredCustomers.length / pageSize
+            );
+
+          if (currentPage >= totalPages) return;
+
+          currentPage++;
+
+          renderCustomers();
+        }
+      );
+
+      $$("[data-page-number]").forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const page =
+              Number(button.dataset.pageNumber);
+
+            const totalPages =
+              Math.ceil(
+                filteredCustomers.length /
+                pageSize
+              );
+
+            if (
+              page < 1 ||
+              page > totalPages
+            ) {
+              return;
+            }
+
+            currentPage = page;
+
+            renderCustomers();
+          }
+        );
+
+      });
+
+      /* =======================================================
+         SEGMENT MANAGEMENT
+         ======================================================= */
+
+      $("#manage-segments-btn")?.addEventListener(
+        "click",
+        () => {
+
+          toast(
+            "Segment management is ready for custom rules and automated customer groups.",
+            "success"
+          );
+        }
+      );
+
+      /* =======================================================
+         RETENTION REPORT
+         ======================================================= */
+
+      $("#retention-details-btn")?.addEventListener(
+        "click",
+        () => {
+
+          toast(
+            "Retention report generated from the current customer dataset.",
+            "success"
+          );
+
+          setTimeout(() => {
+
+            window.location.href =
+              "analytics.html?report=retention";
+
+          }, 600);
+        }
+      );
+
+      /* =======================================================
+         QUICK CREATE
+         ======================================================= */
+
+      $$("[data-quick-create='customer']").forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              document
+                .querySelector("[data-quick-create-modal]")
+                ?.classList.remove("open");
+
+              openCreateModal();
+            }
+          );
+
+        }
+      );
+
+      /* =======================================================
+         GLOBAL QUICK CREATE CUSTOMER SUPPORT
+         ======================================================= */
+
+      document.addEventListener(
+        "click",
+        event => {
+
+          const quick =
+            event.target.closest(
+              "[data-quick-create]"
+            );
+
+          if (!quick) return;
+
+          const type =
+            quick.dataset.quickCreate;
+
+          if (type === "customer") {
+
+            document
+              .querySelector("[data-quick-create-modal]")
+              ?.classList.remove("open");
+
+            openCreateModal();
+          }
+
+          if (type === "order") {
+
+            toast(
+              "Opening order creation workspace...",
+              "success"
+            );
+
+            setTimeout(() => {
+              window.location.href =
+                "orders.html?action=create";
+            }, 400);
+          }
+
+          if (type === "invoice") {
+
+            toast(
+              "Opening invoice workspace...",
+              "success"
+            );
+
+            setTimeout(() => {
+              window.location.href =
+                "invoices.html?action=create";
+            }, 400);
+          }
+
+          if (type === "message") {
+
+            toast(
+              "Opening messages...",
+              "success"
+            );
+
+            setTimeout(() => {
+              window.location.href =
+                "messages.html?action=new";
+            }, 400);
+          }
+
+        }
+      );
+
+      /* =======================================================
+         KEYBOARD SHORTCUTS
+         ======================================================= */
+
+      document.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Escape"
+          ) {
+
+            closeCustomerDrawer();
+            closeCreateModal();
+
+          }
+
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "n"
+          ) {
+
+            event.preventDefault();
+
+            openCreateModal();
+          }
+
+          if (
+            event.key === "/" &&
+            document.activeElement?.tagName !== "INPUT" &&
+            document.activeElement?.tagName !== "TEXTAREA"
+          ) {
+
+            event.preventDefault();
+
+            searchInput?.focus();
+          }
+
+        }
+      );
+
+      /* =======================================================
+         PROFILE LINK
+         ======================================================= */
+
+      /* =======================================================
+         INITIAL RENDER
+         ======================================================= */
+
+      renderCustomers();
+
+      /* =======================================================
+         COUNT ANIMATION
+         ======================================================= */
+
+      function animateNumber(element) {
+
+        const target =
+          Number(
+            element.dataset.count || 0
+          );
+
+        if (!target) return;
+
+        const duration = 900;
+
+        const startTime =
+          performance.now();
+
+        function update(now) {
+
+          const progress =
+            Math.min(
+              (now - startTime) /
+              duration,
+              1
+            );
+
+          const eased =
+            1 -
+            Math.pow(
+              1 - progress,
+              3
+            );
+
+          element.textContent =
+            Math.round(
+              target * eased
+            ).toLocaleString();
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          }
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      $$("[data-count]").forEach(
+        animateNumber
+      );
+
+      /* =======================================================
+         HERO CLV MICRO ANIMATION
+         ======================================================= */
+
+      const heroCLV =
+        $("#hero-clv");
+
+      if (heroCLV) {
+
+        let base = 410;
+
+        setInterval(() => {
+
+          base +=
+            Math.random() * 2 - 0.4;
+
+          heroCLV.textContent =
+            "$" +
+            base
+              .toFixed(2)
+              .replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                ","
+              );
+
+        }, 6000);
+      }
+
+      /* =======================================================
+         ONLINE / OFFLINE CUSTOMER FEEDBACK
+         ======================================================= */
+
+      window.addEventListener(
+        "online",
+        () => {
+          toast(
+            "Connection restored. Customer workspace is live.",
+            "success"
+          );
+        }
+      );
+
+      window.addEventListener(
+        "offline",
+        () => {
+          toast(
+            "You're offline. Changes are currently local.",
+            "error"
+          );
+        }
+      );
+
+    });
+  </script>
+
+</body>
+</html>
