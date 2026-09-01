@@ -1,0 +1,4431 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+    <meta
+        name="description"
+        content="Veltrix Upgrade — Flexible plans for growing teams and modern businesses."
+    >
+    <meta name="theme-color" content="#0b1220">
+
+    <title>Veltrix — Upgrade</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* =========================================================
+           VELTRIX UPGRADE PAGE
+           Page-specific premium styling
+           ========================================================= */
+
+        :root {
+            --upgrade-accent: #6d5dfc;
+            --upgrade-accent-2: #20d7a1;
+            --upgrade-warning: #ffb547;
+            --upgrade-danger: #ff647c;
+            --upgrade-border: rgba(255,255,255,.09);
+            --upgrade-soft: rgba(255,255,255,.035);
+            --upgrade-card: rgba(14, 21, 37, .72);
+            --upgrade-text: #f5f7fb;
+            --upgrade-muted: #9aa7bc;
+        }
+
+        .upgrade-page {
+            width: 100%;
+            min-height: 100%;
+            padding-bottom: 60px;
+        }
+
+        .upgrade-page *,
+        .upgrade-page *::before,
+        .upgrade-page *::after {
+            box-sizing: border-box;
+        }
+
+        .upgrade-hero {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
+            padding: 42px;
+            border: 1px solid var(--upgrade-border);
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 8% 10%, rgba(109,93,252,.20), transparent 28%),
+                radial-gradient(circle at 92% 18%, rgba(32,215,161,.13), transparent 26%),
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.018)
+                );
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.16),
+                inset 0 1px 0 rgba(255,255,255,.04);
+        }
+
+        .upgrade-hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -100px;
+            bottom: -130px;
+            border-radius: 50%;
+            background: rgba(109,93,252,.12);
+            filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .upgrade-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .upgrade-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding: 7px 12px;
+            border: 1px solid rgba(109,93,252,.25);
+            border-radius: 999px;
+            background: rgba(109,93,252,.09);
+            color: #bdb5ff;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .upgrade-eyebrow span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--upgrade-accent-2);
+            box-shadow: 0 0 14px var(--upgrade-accent-2);
+        }
+
+        .upgrade-hero h1 {
+            margin: 0 0 12px;
+            font-size: clamp(32px, 4vw, 58px);
+            line-height: 1.03;
+            letter-spacing: -.045em;
+        }
+
+        .upgrade-hero h1 strong {
+            background: linear-gradient(
+                110deg,
+                #ffffff 15%,
+                #a9a1ff 48%,
+                #5cecc3 90%
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .upgrade-hero p {
+            max-width: 720px;
+            margin: 0;
+            color: var(--upgrade-muted);
+            font-size: 16px;
+            line-height: 1.75;
+        }
+
+        .upgrade-hero-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-trust {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-trust-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--upgrade-muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .upgrade-trust-item i {
+            color: var(--upgrade-accent-2);
+            font-style: normal;
+        }
+
+        .billing-area {
+            display: flex;
+            justify-content: center;
+            margin: 24px 0 34px;
+        }
+
+        .billing-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px;
+            border: 1px solid var(--upgrade-border);
+            border-radius: 999px;
+            background: rgba(255,255,255,.035);
+            box-shadow: 0 14px 40px rgba(0,0,0,.12);
+        }
+
+        .billing-btn {
+            position: relative;
+            min-width: 125px;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 999px;
+            background: transparent;
+            color: var(--upgrade-muted);
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                color .25s ease,
+                transform .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .billing-btn:hover {
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .billing-btn.active {
+            background: linear-gradient(
+                135deg,
+                var(--upgrade-accent),
+                #8579ff
+            );
+            color: #fff;
+            box-shadow:
+                0 8px 25px rgba(109,93,252,.32),
+                inset 0 1px 0 rgba(255,255,255,.15);
+        }
+
+        .save-badge {
+            display: inline-flex;
+            margin-left: 5px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: rgba(32,215,161,.13);
+            color: #66e9c7;
+            font-size: 9px;
+            vertical-align: middle;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .plan-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 26px;
+            overflow: hidden;
+            border: 1px solid var(--upgrade-border);
+            border-radius: 24px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.018)
+                );
+            box-shadow:
+                0 22px 60px rgba(0,0,0,.13),
+                inset 0 1px 0 rgba(255,255,255,.025);
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .plan-card::after {
+            content: "";
+            position: absolute;
+            inset: -80px;
+            background: radial-gradient(
+                circle,
+                rgba(109,93,252,.12),
+                transparent 52%
+            );
+            opacity: 0;
+            transition: opacity .3s ease;
+            pointer-events: none;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(109,93,252,.35);
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.22),
+                0 0 35px rgba(109,93,252,.08);
+        }
+
+        .plan-card:hover::after {
+            opacity: 1;
+        }
+
+        .plan-card.featured {
+            border-color: rgba(109,93,252,.60);
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(109,93,252,.17),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(109,93,252,.10),
+                    rgba(255,255,255,.025)
+                );
+            box-shadow:
+                0 30px 90px rgba(0,0,0,.22),
+                0 0 40px rgba(109,93,252,.10);
+        }
+
+        .plan-card.featured::before {
+            content: "MOST POPULAR";
+            position: absolute;
+            top: 16px;
+            right: -36px;
+            width: 145px;
+            padding: 6px 0;
+            transform: rotate(45deg);
+            background: linear-gradient(90deg, #6d5dfc, #897dff);
+            color: #fff;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 900;
+            letter-spacing: .09em;
+            box-shadow: 0 8px 22px rgba(109,93,252,.25);
+        }
+
+        .plan-top {
+            position: relative;
+            z-index: 2;
+        }
+
+        .plan-icon {
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 14px;
+            background: rgba(255,255,255,.045);
+            font-size: 20px;
+        }
+
+        .plan-card.free .plan-icon {
+            box-shadow: 0 0 24px rgba(154,167,188,.08);
+        }
+
+        .plan-card.pro .plan-icon {
+            background: rgba(109,93,252,.13);
+            border-color: rgba(109,93,252,.22);
+            box-shadow: 0 0 28px rgba(109,93,252,.13);
+        }
+
+        .plan-card.business .plan-icon {
+            background: rgba(32,215,161,.10);
+            border-color: rgba(32,215,161,.22);
+            box-shadow: 0 0 28px rgba(32,215,161,.10);
+        }
+
+        .plan-card.enterprise .plan-icon {
+            background: rgba(255,181,71,.09);
+            border-color: rgba(255,181,71,.18);
+            box-shadow: 0 0 28px rgba(255,181,71,.08);
+        }
+
+        .plan-name {
+            margin: 0 0 7px;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -.02em;
+        }
+
+        .plan-description {
+            min-height: 42px;
+            margin: 0 0 20px;
+            color: var(--upgrade-muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .plan-price {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            min-height: 55px;
+            margin-bottom: 4px;
+        }
+
+        .plan-price-value {
+            font-size: 42px;
+            line-height: .95;
+            font-weight: 900;
+            letter-spacing: -.055em;
+        }
+
+        .plan-price-period {
+            padding-bottom: 4px;
+            color: var(--upgrade-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .plan-annual-note {
+            min-height: 17px;
+            margin-bottom: 20px;
+            color: #61e6c2;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .plan-button {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            min-height: 46px;
+            margin-bottom: 23px;
+            padding: 12px 18px;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 13px;
+            background: rgba(255,255,255,.045);
+            color: #fff;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+        .plan-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.075);
+            border-color: rgba(255,255,255,.18);
+            box-shadow: 0 12px 28px rgba(0,0,0,.14);
+        }
+
+        .plan-button.primary {
+            border-color: transparent;
+            background: linear-gradient(
+                135deg,
+                #6d5dfc,
+                #887cff
+            );
+            box-shadow:
+                0 10px 28px rgba(109,93,252,.24),
+                inset 0 1px 0 rgba(255,255,255,.16);
+        }
+
+        .plan-button.primary:hover {
+            box-shadow:
+                0 15px 38px rgba(109,93,252,.36),
+                0 0 22px rgba(109,93,252,.18);
+        }
+
+        .plan-button.green {
+            border-color: transparent;
+            background: linear-gradient(
+                135deg,
+                #18b88a,
+                #27d7a6
+            );
+            box-shadow:
+                0 10px 28px rgba(32,215,161,.20);
+        }
+
+        .plan-button.gold {
+            border-color: rgba(255,181,71,.20);
+            background: rgba(255,181,71,.08);
+            color: #ffd38d;
+        }
+
+        .plan-features {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            color: #b8c2d2;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .plan-features li .check {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 18px;
+            height: 18px;
+            margin-top: -1px;
+            border-radius: 50%;
+            background: rgba(32,215,161,.11);
+            color: #5de2c0;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .plan-features li.disabled {
+            opacity: .45;
+        }
+
+        .plan-features li.disabled .check {
+            background: rgba(255,255,255,.05);
+            color: #8b95a7;
+        }
+
+        .current-plan-label {
+            position: relative;
+            z-index: 4;
+            display: none;
+            margin: -7px 0 18px;
+            padding: 7px 10px;
+            border-radius: 9px;
+            background: rgba(32,215,161,.09);
+            color: #61e6c2;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .plan-card.current .current-plan-label {
+            display: block;
+        }
+
+        .comparison-section {
+            margin-top: 56px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 5px;
+            font-size: 25px;
+            letter-spacing: -.025em;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--upgrade-muted);
+            font-size: 13px;
+        }
+
+        .compare-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--upgrade-border);
+            border-radius: 20px;
+            background: rgba(255,255,255,.018);
+            box-shadow: 0 22px 55px rgba(0,0,0,.10);
+        }
+
+        .compare-table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 15px 17px;
+            border-bottom: 1px solid rgba(255,255,255,.055);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .compare-table th:first-child,
+        .compare-table td:first-child {
+            width: 34%;
+            text-align: left;
+        }
+
+        .compare-table thead th {
+            padding-top: 19px;
+            padding-bottom: 19px;
+            background: rgba(255,255,255,.025);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .compare-table tbody td {
+            color: #aeb8c9;
+        }
+
+        .compare-table tbody tr:hover td {
+            background: rgba(255,255,255,.018);
+        }
+
+        .compare-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .compare-check {
+            color: #5ce3bf;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .compare-cross {
+            color: #687386;
+            font-size: 15px;
+        }
+
+        .compare-highlight {
+            background: rgba(109,93,252,.045);
+        }
+
+        .faq-section {
+            margin-top: 56px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .faq-item {
+            overflow: hidden;
+            border: 1px solid var(--upgrade-border);
+            border-radius: 16px;
+            background: rgba(255,255,255,.018);
+            transition:
+                border-color .25s ease,
+                background .25s ease;
+        }
+
+        .faq-item.open {
+            border-color: rgba(109,93,252,.28);
+            background: rgba(109,93,252,.035);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            width: 100%;
+            padding: 18px;
+            border: 0;
+            background: transparent;
+            color: #edf1f8;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .faq-question .faq-icon {
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.055);
+            color: #aeb8c9;
+            transition: transform .25s ease;
+        }
+
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+            background: rgba(109,93,252,.14);
+            color: #bdb5ff;
+        }
+
+        .faq-answer {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows .3s ease;
+        }
+
+        .faq-answer-inner {
+            overflow: hidden;
+            padding: 0 18px;
+            color: var(--upgrade-muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer {
+            grid-template-rows: 1fr;
+        }
+
+        .faq-item.open .faq-answer-inner {
+            padding-bottom: 18px;
+        }
+
+        .upgrade-cta {
+            position: relative;
+            overflow: hidden;
+            margin-top: 56px;
+            padding: 34px;
+            border: 1px solid rgba(109,93,252,.22);
+            border-radius: 24px;
+            background:
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(32,215,161,.11),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(109,93,252,.16),
+                    transparent 32%
+                ),
+                rgba(255,255,255,.025);
+        }
+
+        .upgrade-cta-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-cta h2 {
+            margin: 0 0 7px;
+            font-size: 24px;
+            letter-spacing: -.025em;
+        }
+
+        .upgrade-cta p {
+            margin: 0;
+            max-width: 650px;
+            color: var(--upgrade-muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .upgrade-cta-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .upgrade-secondary-btn,
+        .upgrade-primary-btn {
+            min-height: 44px;
+            padding: 11px 17px;
+            border-radius: 12px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+        .upgrade-secondary-btn {
+            border: 1px solid rgba(255,255,255,.10);
+            background: rgba(255,255,255,.045);
+            color: #fff;
+        }
+
+        .upgrade-primary-btn {
+            border: 0;
+            background: linear-gradient(135deg, #6d5dfc, #887cff);
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(109,93,252,.22);
+        }
+
+        .upgrade-secondary-btn:hover,
+        .upgrade-primary-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .upgrade-primary-btn:hover {
+            box-shadow: 0 15px 34px rgba(109,93,252,.33);
+        }
+
+        /* Modal */
+
+        .upgrade-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(2,6,16,.72);
+            backdrop-filter: blur(13px);
+            -webkit-backdrop-filter: blur(13px);
+        }
+
+        .upgrade-modal.active {
+            display: flex;
+            animation: upgradeModalFade .22s ease;
+        }
+
+        @keyframes upgradeModalFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .upgrade-modal-box {
+            width: min(540px, 100%);
+            max-height: min(760px, 92vh);
+            overflow: auto;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 24px;
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(109,93,252,.13),
+                    transparent 35%
+                ),
+                #101827;
+            box-shadow:
+                0 40px 120px rgba(0,0,0,.40),
+                0 0 45px rgba(109,93,252,.08);
+            animation: upgradeModalUp .28s ease;
+        }
+
+        @keyframes upgradeModalUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .upgrade-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 24px 24px 10px;
+        }
+
+        .upgrade-modal-title {
+            margin: 0 0 6px;
+            font-size: 21px;
+            letter-spacing: -.025em;
+        }
+
+        .upgrade-modal-subtitle {
+            margin: 0;
+            color: var(--upgrade-muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .upgrade-modal-close {
+            display: grid;
+            place-items: center;
+            width: 35px;
+            height: 35px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 10px;
+            background: rgba(255,255,255,.035);
+            color: #aeb8c9;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .upgrade-modal-close:hover {
+            background: rgba(255,255,255,.075);
+            color: #fff;
+            transform: rotate(5deg);
+        }
+
+        .upgrade-modal-body {
+            padding: 18px 24px 24px;
+        }
+
+        .selected-plan-preview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding: 16px;
+            border: 1px solid rgba(109,93,252,.20);
+            border-radius: 15px;
+            background: rgba(109,93,252,.06);
+        }
+
+        .selected-plan-info strong {
+            display: block;
+            margin-bottom: 4px;
+            color: #fff;
+            font-size: 15px;
+        }
+
+        .selected-plan-info span {
+            color: var(--upgrade-muted);
+            font-size: 11px;
+        }
+
+        .selected-plan-price {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .demo-notice {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 13px;
+            border: 1px solid rgba(255,181,71,.15);
+            border-radius: 13px;
+            background: rgba(255,181,71,.055);
+            color: #d8c6a3;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .demo-notice strong {
+            color: #ffd38d;
+        }
+
+        .modal-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px;
+            margin-bottom: 22px;
+        }
+
+        .modal-feature {
+            padding: 10px;
+            border-radius: 11px;
+            background: rgba(255,255,255,.035);
+            color: #adb8c9;
+            font-size: 11px;
+        }
+
+        .modal-feature::before {
+            content: "✓";
+            margin-right: 6px;
+            color: #5ce3bf;
+            font-weight: 900;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 9px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+        }
+
+        .restore-area {
+            margin-top: 13px;
+            text-align: center;
+        }
+
+        .restore-btn {
+            border: 0;
+            background: transparent;
+            color: #8d99ad;
+            font: inherit;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .restore-btn:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        /* Success */
+
+        .success-panel {
+            display: none;
+            padding: 32px 24px;
+            text-align: center;
+        }
+
+        .success-panel.active {
+            display: block;
+        }
+
+        .success-icon {
+            display: grid;
+            place-items: center;
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 17px;
+            border-radius: 50%;
+            background: rgba(32,215,161,.10);
+            border: 1px solid rgba(32,215,161,.22);
+            color: #5ce3bf;
+            font-size: 28px;
+            box-shadow: 0 0 40px rgba(32,215,161,.13);
+            animation: successPop .45s ease;
+        }
+
+        @keyframes successPop {
+            0% {
+                transform: scale(.65);
+                opacity: 0;
+            }
+            70% {
+                transform: scale(1.08);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-panel h3 {
+            margin: 0 0 8px;
+            font-size: 23px;
+        }
+
+        .success-panel p {
+            max-width: 390px;
+            margin: 0 auto 20px;
+            color: var(--upgrade-muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* Light mode adaptation */
+
+        body.light .plan-card,
+        body[data-theme="light"] .plan-card {
+            background: rgba(255,255,255,.78);
+            border-color: rgba(15,23,42,.09);
+            box-shadow: 0 18px 50px rgba(15,23,42,.08);
+        }
+
+        body.light .upgrade-hero,
+        body[data-theme="light"] .upgrade-hero {
+            background:
+                radial-gradient(circle at 8% 10%, rgba(109,93,252,.11), transparent 28%),
+                radial-gradient(circle at 92% 18%, rgba(32,215,161,.10), transparent 26%),
+                rgba(255,255,255,.80);
+            border-color: rgba(15,23,42,.09);
+        }
+
+        body.light .plan-name,
+        body.light .plan-price-value,
+        body.light .upgrade-hero h1,
+        body[data-theme="light"] .plan-name,
+        body[data-theme="light"] .plan-price-value,
+        body[data-theme="light"] .upgrade-hero h1 {
+            color: #111827;
+        }
+
+        body.light .plan-features li,
+        body[data-theme="light"] .plan-features li {
+            color: #596579;
+        }
+
+        body.light .upgrade-modal-box,
+        body[data-theme="light"] .upgrade-modal-box {
+            background: #f8fafc;
+            border-color: rgba(15,23,42,.10);
+        }
+
+        body.light .upgrade-modal-title,
+        body.light .selected-plan-info strong,
+        body.light .selected-plan-price,
+        body[data-theme="light"] .upgrade-modal-title,
+        body[data-theme="light"] .selected-plan-info strong,
+        body[data-theme="light"] .selected-plan-price {
+            color: #111827;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 1250px) {
+            .plans-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .upgrade-hero {
+                padding: 30px;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .upgrade-page {
+                padding-bottom: 35px;
+            }
+
+            .upgrade-hero {
+                padding: 24px;
+                border-radius: 20px;
+            }
+
+            .upgrade-hero h1 {
+                font-size: 35px;
+            }
+
+            .upgrade-hero p {
+                font-size: 13px;
+            }
+
+            .upgrade-hero-bottom {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .billing-area {
+                width: 100%;
+            }
+
+            .billing-toggle {
+                width: 100%;
+            }
+
+            .billing-btn {
+                flex: 1;
+                min-width: 0;
+                padding-inline: 8px;
+            }
+
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card {
+                padding: 23px;
+            }
+
+            .compare-wrap {
+                border-radius: 15px;
+            }
+
+            .section-heading h2 {
+                font-size: 21px;
+            }
+
+            .upgrade-cta {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            .upgrade-cta-content {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .upgrade-cta-actions {
+                width: 100%;
+            }
+
+            .upgrade-cta-actions button {
+                flex: 1;
+            }
+
+            .modal-features {
+                grid-template-columns: 1fr;
+            }
+
+            .upgrade-modal {
+                padding: 12px;
+            }
+
+            .upgrade-modal-header,
+            .upgrade-modal-body {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .plan-card,
+            .billing-btn,
+            .plan-button,
+            .faq-icon,
+            .upgrade-primary-btn,
+            .upgrade-secondary-btn {
+                transition: none !important;
+            }
+
+            .upgrade-modal.active,
+            .upgrade-modal-box,
+            .success-icon {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body data-page="upgrade">
+
+    <!-- =========================================================
+         GLOBAL LOADER
+         ========================================================= -->
+    <div id="app-loader" class="app-loader" aria-hidden="true">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- =========================================================
+         BACKGROUND
+         ========================================================= -->
+    <div class="app-background" aria-hidden="true">
+        <div class="background-grid"></div>
+        <div class="background-glow background-glow-one"></div>
+        <div class="background-glow background-glow-two"></div>
+    </div>
+
+    <!-- =========================================================
+         MOBILE OVERLAY
+         ========================================================= -->
+    <div
+        id="mobile-overlay"
+        class="mobile-overlay"
+        aria-hidden="true"
+    ></div>
+
+    <!-- =========================================================
+         APP
+         ========================================================= -->
+    <div class="app-shell">
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+        <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-brand">
+                <a href="../index.html" class="brand-link" aria-label="Veltrix">
+                    <span class="brand-mark">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+
+                    <span class="brand-copy">
+                        <strong>Veltrix</strong>
+                        <small>Business Platform</small>
+                    </span>
+                </a>
+
+                <button
+                    type="button"
+                    class="sidebar-collapse-btn"
+                    data-sidebar-collapse
+                    aria-label="Collapse sidebar"
+                    title="Collapse sidebar"
+                >
+                    <span>‹</span>
+                </button>
+            </div>
+
+            <!-- Workspace -->
+            <div class="workspace-selector-wrap">
+
+                <button
+                    type="button"
+                    class="workspace-selector"
+                    data-dropdown-toggle="workspace-dropdown"
+                    aria-expanded="false"
+                >
+                    <span class="workspace-avatar">V</span>
+
+                    <span class="workspace-info">
+                        <strong>Veltrix HQ</strong>
+                        <small>Business Workspace</small>
+                    </span>
+
+                    <span class="workspace-chevron">⌄</span>
+                </button>
+
+                <div
+                    id="workspace-dropdown"
+                    class="dropdown-menu workspace-dropdown"
+                >
+                    <button
+                        type="button"
+                        class="dropdown-item"
+                        data-workspace="Veltrix HQ"
+                    >
+                        <span class="workspace-mini">V</span>
+                        <span>
+                            <strong>Veltrix HQ</strong>
+                            <small>Business Workspace</small>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="dropdown-item"
+                        data-workspace="Creative Studio"
+                    >
+                        <span class="workspace-mini">C</span>
+                        <span>
+                            <strong>Creative Studio</strong>
+                            <small>Design Workspace</small>
+                        </span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="dropdown-item"
+                        data-workspace="Personal"
+                    >
+                        <span class="workspace-mini">P</span>
+                        <span>
+                            <strong>Personal</strong>
+                            <small>Private Workspace</small>
+                        </span>
+                    </button>
+
+                    <div class="dropdown-divider"></div>
+
+                    <button
+                        type="button"
+                        class="dropdown-item"
+                        data-action="create-workspace"
+                    >
+                        <span class="workspace-mini">+</span>
+                        <span>
+                            <strong>Create workspace</strong>
+                            <small>Start another workspace</small>
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav" aria-label="Main navigation">
+
+                <div class="nav-section-title">
+                    <span>Overview</span>
+                </div>
+
+                <a
+                    href="../index.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="dashboard"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+
+                <a
+                    href="analytics.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="analytics"
+                >
+                    <span class="nav-icon">◩</span>
+                    <span class="nav-label">Analytics</span>
+                </a>
+
+                <div class="nav-section-title">
+                    <span>Management</span>
+                </div>
+
+                <a
+                    href="orders.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="orders"
+                >
+                    <span class="nav-icon">▤</span>
+                    <span class="nav-label">Orders</span>
+                    <span class="nav-badge">12</span>
+                </a>
+
+                <a
+                    href="customers.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="customers"
+                >
+                    <span class="nav-icon">♙</span>
+                    <span class="nav-label">Customers</span>
+                </a>
+
+                <a
+                    href="products.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="products"
+                >
+                    <span class="nav-icon">▦</span>
+                    <span class="nav-label">Products</span>
+                </a>
+
+                <a
+                    href="invoices.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="invoices"
+                >
+                    <span class="nav-icon">▥</span>
+                    <span class="nav-label">Invoices</span>
+                </a>
+
+                <div class="nav-section-title">
+                    <span>Communication</span>
+                </div>
+
+                <a
+                    href="messages.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="messages"
+                >
+                    <span class="nav-icon">◌</span>
+                    <span class="nav-label">Messages</span>
+                    <span class="nav-badge">4</span>
+                </a>
+
+                <a
+                    href="notifications.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="notifications"
+                >
+                    <span class="nav-icon">♢</span>
+                    <span class="nav-label">Notifications</span>
+                    <span class="nav-badge">8</span>
+                </a>
+
+                <div class="nav-section-title">
+                    <span>Tools</span>
+                </div>
+
+                <a
+                    href="calculator.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="calculator"
+                >
+                    <span class="nav-icon">▣</span>
+                    <span class="nav-label">Calculator</span>
+                </a>
+
+                <a
+                    href="ai-workspace.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="ai-workspace"
+                >
+                    <span class="nav-icon">✦</span>
+                    <span class="nav-label">AI Workspace</span>
+                    <span class="nav-live">AI</span>
+                </a>
+
+                <div class="nav-section-title">
+                    <span>Account</span>
+                </div>
+
+                <a
+                    href="settings.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="settings"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+
+                <a
+                    href="profile.html"
+                    class="nav-item"
+                    data-nav-link
+                    data-page="profile"
+                >
+                    <span class="nav-icon">◉</span>
+                    <span class="nav-label">Profile</span>
+                </a>
+
+                <a
+                    href="upgrade.html"
+                    class="nav-item active"
+                    data-nav-link
+                    data-page="upgrade"
+                    aria-current="page"
+                >
+                    <span class="nav-icon">✦</span>
+                    <span class="nav-label">Upgrade</span>
+                </a>
+
+            </nav>
+
+            <!-- Sidebar promo -->
+            <div class="sidebar-promo">
+
+                <div class="promo-icon">✦</div>
+
+                <strong>Unlock Veltrix Pro</strong>
+
+                <p>
+                    Get advanced analytics, AI tools and unlimited workflows.
+                </p>
+
+                <button
+                    type="button"
+                    class="promo-button"
+                    data-scroll-to="plans"
+                >
+                    View plans
+                </button>
+
+            </div>
+
+            <!-- User -->
+            <div class="sidebar-user">
+
+                <a href="profile.html" class="sidebar-user-link">
+
+                    <span class="user-avatar">
+                        A
+                    </span>
+
+                    <span class="user-info">
+                        <strong>Arwa</strong>
+                        <small>Administrator</small>
+                    </span>
+
+                    <span class="user-more">•••</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- =====================================================
+             MAIN
+             ===================================================== -->
+        <main class="main-content">
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        id="mobile-menu-toggle"
+                        class="mobile-menu-btn"
+                        aria-label="Open menu"
+                        aria-expanded="false"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="topbar-sidebar-btn"
+                        data-sidebar-collapse
+                        aria-label="Toggle sidebar"
+                    >
+                        ☰
+                    </button>
+
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a>
+                        <span>/</span>
+                        <strong>Upgrade</strong>
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <!-- Search -->
+                    <button
+                        type="button"
+                        class="topbar-icon-btn"
+                        data-action="open-search"
+                        aria-label="Search"
+                        title="Search"
+                    >
+                        ⌕
+                    </button>
+
+                    <!-- Quick Create -->
+                    <button
+                        type="button"
+                        class="quick-create-btn"
+                        data-action="quick-create"
+                    >
+                        <span>+</span>
+                        <span class="quick-create-label">Create</span>
+                    </button>
+
+                    <!-- Language -->
+                    <div class="topbar-dropdown">
+
+                        <button
+                            type="button"
+                            class="topbar-language"
+                            data-dropdown-toggle="language-dropdown"
+                            aria-expanded="false"
+                            aria-label="Language"
+                        >
+                            <span class="language-globe">◎</span>
+                            <span data-current-language>EN</span>
+                            <span>⌄</span>
+                        </button>
+
+                        <div
+                            id="language-dropdown"
+                            class="dropdown-menu language-dropdown"
+                            data-language-menu
+                        >
+                            <!-- Populated automatically by script.js -->
+                        </div>
+
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="topbar-dropdown">
+
+                        <button
+                            type="button"
+                            class="topbar-icon-btn notification-trigger"
+                            data-dropdown-toggle="notification-dropdown"
+                            aria-expanded="false"
+                            aria-label="Notifications"
+                            title="Notifications"
+                        >
+                            ♢
+                            <span class="notification-dot"></span>
+                        </button>
+
+                        <div
+                            id="notification-dropdown"
+                            class="dropdown-menu notification-dropdown"
+                        >
+
+                            <div class="notification-header">
+                                <strong>Notifications</strong>
+
+                                <button
+                                    type="button"
+                                    data-action="mark-notifications-read"
+                                >
+                                    Mark all read
+                                </button>
+                            </div>
+
+                            <div class="notification-list">
+
+                                <button
+                                    type="button"
+                                    class="notification-item unread"
+                                    data-action="open-notification"
+                                >
+                                    <span class="notification-symbol success">✓</span>
+
+                                    <span>
+                                        <strong>Payment received</strong>
+                                        <small>Invoice #VX-2048 was paid.</small>
+                                        <time>8 min ago</time>
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="notification-item unread"
+                                    data-action="open-notification"
+                                >
+                                    <span class="notification-symbol purple">✦</span>
+
+                                    <span>
+                                        <strong>AI report ready</strong>
+                                        <small>Your weekly insight is ready.</small>
+                                        <time>24 min ago</time>
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="notification-item"
+                                    data-action="open-notification"
+                                >
+                                    <span class="notification-symbol orange">!</span>
+
+                                    <span>
+                                        <strong>Storage usage</strong>
+                                        <small>You are using 72% of storage.</small>
+                                        <time>2 hours ago</time>
+                                    </span>
+                                </button>
+
+                            </div>
+
+                            <a
+                                href="notifications.html"
+                                class="notification-footer"
+                            >
+                                View all notifications →
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Theme -->
+                    <button
+                        type="button"
+                        class="topbar-icon-btn"
+                        data-theme-toggle
+                        aria-label="Toggle theme"
+                        title="Toggle theme"
+                    >
+                        ◐
+                    </button>
+
+                    <!-- Profile -->
+                    <a
+                        href="profile.html"
+                        class="topbar-profile"
+                        aria-label="Open profile"
+                    >
+                        <span class="topbar-avatar">A</span>
+
+                        <span class="topbar-profile-copy">
+                            <strong>Arwa</strong>
+                            <small>Admin</small>
+                        </span>
+                    </a>
+
+                </div>
+
+            </header>
+
+            <!-- =================================================
+                 CONTENT
+                 ================================================= -->
+            <div class="page-content">
+
+                <div class="upgrade-page">
+
+                    <!-- =========================================
+                         HERO
+                         ========================================= -->
+                    <section class="upgrade-hero">
+
+                        <div class="upgrade-hero-content">
+
+                            <div class="upgrade-eyebrow">
+                                <span></span>
+                                Veltrix plans
+                            </div>
+
+                            <h1>
+                                Choose the plan that
+                                <strong>fits your growth.</strong>
+                            </h1>
+
+                            <p>
+                                Start small, scale without limits, and unlock
+                                powerful analytics, automation and AI features
+                                whenever your business is ready.
+                            </p>
+
+                            <div class="upgrade-hero-bottom">
+
+                                <div class="upgrade-trust">
+
+                                    <span class="upgrade-trust-item">
+                                        <i>✓</i>
+                                        No setup fees
+                                    </span>
+
+                                    <span class="upgrade-trust-item">
+                                        <i>✓</i>
+                                        Cancel anytime
+                                    </span>
+
+                                    <span class="upgrade-trust-item">
+                                        <i>✓</i>
+                                        Secure workspace
+                                    </span>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="upgrade-secondary-btn"
+                                    data-action="compare-plans"
+                                >
+                                    Compare features
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =========================================
+                         BILLING
+                         ========================================= -->
+                    <section
+                        class="billing-area"
+                        aria-label="Billing frequency"
+                    >
+
+                        <div class="billing-toggle">
+
+                            <button
+                                type="button"
+                                class="billing-btn active"
+                                data-billing="monthly"
+                                aria-pressed="true"
+                            >
+                                Monthly
+                            </button>
+
+                            <button
+                                type="button"
+                                class="billing-btn"
+                                data-billing="yearly"
+                                aria-pressed="false"
+                            >
+                                Yearly
+                                <span class="save-badge">SAVE 20%</span>
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =========================================
+                         PLANS
+                         ========================================= -->
+                    <section
+                        id="plans"
+                        class="plans-grid"
+                        aria-label="Veltrix plans"
+                    >
+
+                        <!-- FREE -->
+                        <article
+                            class="plan-card free current"
+                            data-plan-card="free"
+                            data-plan-name="Free"
+                        >
+
+                            <div class="plan-top">
+
+                                <div class="plan-icon">◇</div>
+
+                                <h2 class="plan-name">Free</h2>
+
+                                <p class="plan-description">
+                                    A simple starting point for personal
+                                    projects and small experiments.
+                                </p>
+
+                                <div class="plan-price">
+                                    <span
+                                        class="plan-price-value"
+                                        data-monthly="0"
+                                        data-yearly="0"
+                                    >
+                                        $0
+                                    </span>
+
+                                    <span class="plan-price-period">
+                                        / month
+                                    </span>
+                                </div>
+
+                                <div class="plan-annual-note">
+                                    Free forever
+                                </div>
+
+                                <div class="current-plan-label">
+                                    Current plan
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="plan-button"
+                                    data-plan="Free"
+                                    data-price-monthly="0"
+                                    data-price-yearly="0"
+                                >
+                                    Current plan
+                                </button>
+
+                            </div>
+
+                            <ul class="plan-features">
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    1 workspace
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Up to 3 team members
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Basic dashboard
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    100 monthly records
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Basic notifications
+                                </li>
+
+                                <li class="disabled">
+                                    <span class="check">×</span>
+                                    Advanced analytics
+                                </li>
+
+                                <li class="disabled">
+                                    <span class="check">×</span>
+                                    AI Workspace
+                                </li>
+
+                            </ul>
+
+                        </article>
+
+                        <!-- PRO -->
+                        <article
+                            class="plan-card pro featured"
+                            data-plan-card="pro"
+                            data-plan-name="Pro"
+                        >
+
+                            <div class="plan-top">
+
+                                <div class="plan-icon">✦</div>
+
+                                <h2 class="plan-name">Pro</h2>
+
+                                <p class="plan-description">
+                                    For creators, freelancers and growing
+                                    businesses that need more power.
+                                </p>
+
+                                <div class="plan-price">
+
+                                    <span
+                                        class="plan-price-value"
+                                        data-monthly="19"
+                                        data-yearly="15"
+                                    >
+                                        $19
+                                    </span>
+
+                                    <span class="plan-price-period">
+                                        / month
+                                    </span>
+
+                                </div>
+
+                                <div class="plan-annual-note">
+                                    Save 20% with yearly billing
+                                </div>
+
+                                <div class="current-plan-label">
+                                    Current plan
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="plan-button primary"
+                                    data-plan="Pro"
+                                    data-price-monthly="19"
+                                    data-price-yearly="15"
+                                >
+                                    Upgrade to Pro
+                                </button>
+
+                            </div>
+
+                            <ul class="plan-features">
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    5 workspaces
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Up to 15 team members
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Advanced analytics
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Unlimited records
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Automated workflows
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    AI Workspace
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Priority support
+                                </li>
+
+                            </ul>
+
+                        </article>
+
+                        <!-- BUSINESS -->
+                        <article
+                            class="plan-card business"
+                            data-plan-card="business"
+                            data-plan-name="Business"
+                        >
+
+                            <div class="plan-top">
+
+                                <div class="plan-icon">◆</div>
+
+                                <h2 class="plan-name">Business</h2>
+
+                                <p class="plan-description">
+                                    Advanced controls and collaboration for
+                                    established teams.
+                                </p>
+
+                                <div class="plan-price">
+
+                                    <span
+                                        class="plan-price-value"
+                                        data-monthly="49"
+                                        data-yearly="39"
+                                    >
+                                        $49
+                                    </span>
+
+                                    <span class="plan-price-period">
+                                        / month
+                                    </span>
+
+                                </div>
+
+                                <div class="plan-annual-note">
+                                    Save 20% with yearly billing
+                                </div>
+
+                                <div class="current-plan-label">
+                                    Current plan
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="plan-button green"
+                                    data-plan="Business"
+                                    data-price-monthly="49"
+                                    data-price-yearly="39"
+                                >
+                                    Upgrade to Business
+                                </button>
+
+                            </div>
+
+                            <ul class="plan-features">
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Unlimited workspaces
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Up to 50 team members
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Everything in Pro
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Advanced automation
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Custom roles & permissions
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Detailed reports
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Priority support
+                                </li>
+
+                            </ul>
+
+                        </article>
+
+                        <!-- ENTERPRISE -->
+                        <article
+                            class="plan-card enterprise"
+                            data-plan-card="enterprise"
+                            data-plan-name="Enterprise"
+                        >
+
+                            <div class="plan-top">
+
+                                <div class="plan-icon">♛</div>
+
+                                <h2 class="plan-name">Enterprise</h2>
+
+                                <p class="plan-description">
+                                    Maximum control, security and dedicated
+                                    support for larger organizations.
+                                </p>
+
+                                <div class="plan-price">
+
+                                    <span
+                                        class="plan-price-value"
+                                        data-monthly="99"
+                                        data-yearly="79"
+                                    >
+                                        $99
+                                    </span>
+
+                                    <span class="plan-price-period">
+                                        / month
+                                    </span>
+
+                                </div>
+
+                                <div class="plan-annual-note">
+                                    Save 20% with yearly billing
+                                </div>
+
+                                <div class="current-plan-label">
+                                    Current plan
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="plan-button gold"
+                                    data-plan="Enterprise"
+                                    data-price-monthly="99"
+                                    data-price-yearly="79"
+                                >
+                                    Contact sales
+                                </button>
+
+                            </div>
+
+                            <ul class="plan-features">
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Unlimited everything
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Unlimited team members
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Advanced security
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    SSO & audit logs
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Custom onboarding
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Dedicated support
+                                </li>
+
+                                <li>
+                                    <span class="check">✓</span>
+                                    Custom integrations
+                                </li>
+
+                            </ul>
+
+                        </article>
+
+                    </section>
+
+                    <!-- =========================================
+                         COMPARISON
+                         ========================================= -->
+                    <section
+                        id="comparison"
+                        class="comparison-section"
+                    >
+
+                        <div class="section-heading">
+
+                            <div>
+                                <h2>Compare plans</h2>
+
+                                <p>
+                                    See exactly what you unlock at each level.
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="upgrade-secondary-btn"
+                                data-action="show-all-features"
+                            >
+                                View all features
+                            </button>
+
+                        </div>
+
+                        <div class="compare-wrap">
+
+                            <table class="compare-table">
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Free</th>
+                                        <th class="compare-highlight">Pro</th>
+                                        <th>Business</th>
+                                        <th>Enterprise</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>Workspaces</td>
+                                        <td>1</td>
+                                        <td class="compare-highlight">5</td>
+                                        <td>Unlimited</td>
+                                        <td>Unlimited</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Team members</td>
+                                        <td>3</td>
+                                        <td class="compare-highlight">15</td>
+                                        <td>50</td>
+                                        <td>Unlimited</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Advanced analytics</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-highlight"><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>AI Workspace</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-highlight"><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Automations</td>
+                                        <td>Basic</td>
+                                        <td class="compare-highlight">Advanced</td>
+                                        <td>Advanced+</td>
+                                        <td>Custom</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Custom permissions</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-highlight"><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>SSO</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-cross">×</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Audit logs</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-cross">×</td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Priority support</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-highlight"><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Dedicated support</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-cross">×</td>
+                                        <td class="compare-cross">×</td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Custom integrations</td>
+                                        <td><span class="compare-cross">×</span></td>
+                                        <td class="compare-cross">×</td>
+                                        <td><span class="compare-check">✓</span></td>
+                                        <td><span class="compare-check">✓</span></td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =========================================
+                         FAQ
+                         ========================================= -->
+                    <section class="faq-section">
+
+                        <div class="section-heading">
+
+                            <div>
+                                <h2>Frequently asked questions</h2>
+
+                                <p>
+                                    Everything you need to know before upgrading.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="faq-grid">
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        Can I change my plan later?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Yes. You can switch between plans at
+                                        any time. In a production application,
+                                        billing changes would be handled by
+                                        your payment provider and backend.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        Is the Free plan really free?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Yes. The template treats the Free plan
+                                        as a permanent entry-level plan with
+                                        limited workspaces and features.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        What does yearly billing include?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Yearly billing displays the discounted
+                                        monthly equivalent. The production
+                                        implementation can connect this state
+                                        to Stripe, Paddle or another billing
+                                        provider.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        Does upgrading affect my data?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        No. A real backend should keep your
+                                        workspace data independent from your
+                                        subscription tier. This front-end
+                                        template only stores demo plan state
+                                        locally.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        Is payment connected already?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        This template contains the complete
+                                        front-end upgrade experience, but it
+                                        does not process real payments. Connect
+                                        your preferred payment provider and
+                                        backend before selling subscriptions.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                            <article class="faq-item">
+
+                                <button
+                                    type="button"
+                                    class="faq-question"
+                                    aria-expanded="false"
+                                >
+                                    <span>
+                                        Can I restore a previous purchase?
+                                    </span>
+
+                                    <span class="faq-icon">+</span>
+                                </button>
+
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        The demo includes a local restore
+                                        action. A production version should
+                                        verify subscriptions against the
+                                        payment provider instead of relying
+                                        on browser storage.
+                                    </div>
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =========================================
+                         CTA
+                         ========================================= -->
+                    <section class="upgrade-cta">
+
+                        <div class="upgrade-cta-content">
+
+                            <div>
+
+                                <h2>
+                                    Ready to build with Veltrix?
+                                </h2>
+
+                                <p>
+                                    Pick the plan that matches your workflow
+                                    and keep everything organized in one
+                                    powerful business workspace.
+                                </p>
+
+                            </div>
+
+                            <div class="upgrade-cta-actions">
+
+                                <button
+                                    type="button"
+                                    class="upgrade-secondary-btn"
+                                    data-action="contact-sales"
+                                >
+                                    Contact sales
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="upgrade-primary-btn"
+                                    data-action="choose-pro"
+                                >
+                                    Start with Pro
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- =========================================================
+         GOOGLE TRANSLATE
+         ========================================================= -->
+    <div
+        id="google_translate_element"
+        style="
+            position:fixed;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+            opacity:0;
+            pointer-events:none;
+            left:-9999px;
+            top:-9999px;
+        "
+        aria-hidden="true"
+    ></div>
+
+    <!-- =========================================================
+         TOAST
+         ========================================================= -->
+    <div
+        id="toast-container"
+        class="toast-container"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+    <!-- =========================================================
+         SEARCH MODAL
+         ========================================================= -->
+    <div
+        id="search-modal"
+        class="modal"
+        aria-hidden="true"
+    >
+        <div class="modal-backdrop" data-modal-close></div>
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+                <div>
+                    <h3>Search Veltrix</h3>
+                    <p>Find pages, actions and workspace data.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="search-input-wrap">
+                    <span>⌕</span>
+
+                    <input
+                        id="global-search-input"
+                        type="search"
+                        placeholder="Search anything..."
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div
+                    id="global-search-results"
+                    class="search-results"
+                ></div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         QUICK CREATE MODAL
+         ========================================================= -->
+    <div
+        id="quick-create-modal"
+        class="modal"
+        aria-hidden="true"
+    >
+        <div class="modal-backdrop" data-modal-close></div>
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3>Quick Create</h3>
+                    <p>Create something new without leaving your workspace.</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="quick-create-grid">
+
+                    <button
+                        type="button"
+                        data-action="create-order"
+                    >
+                        <span>▤</span>
+                        <strong>Order</strong>
+                        <small>Create a new order</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-action="create-customer"
+                    >
+                        <span>♙</span>
+                        <strong>Customer</strong>
+                        <small>Add a customer</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-action="create-product"
+                    >
+                        <span>▦</span>
+                        <strong>Product</strong>
+                        <small>Add a product</small>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-action="create-invoice"
+                    >
+                        <span>▥</span>
+                        <strong>Invoice</strong>
+                        <small>Create an invoice</small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         UPGRADE MODAL
+         ========================================================= -->
+    <div
+        id="upgrade-plan-modal"
+        class="upgrade-modal"
+        aria-hidden="true"
+    >
+
+        <div class="upgrade-modal-box">
+
+            <!-- Standard confirmation -->
+            <div id="upgrade-confirmation-view">
+
+                <div class="upgrade-modal-header">
+
+                    <div>
+                        <h3
+                            class="upgrade-modal-title"
+                            id="upgrade-modal-title"
+                        >
+                            Upgrade your workspace
+                        </h3>
+
+                        <p class="upgrade-modal-subtitle">
+                            Review your selected plan before continuing.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="upgrade-modal-close"
+                        data-upgrade-close
+                        aria-label="Close"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+                <div class="upgrade-modal-body">
+
+                    <div class="selected-plan-preview">
+
+                        <div class="selected-plan-info">
+
+                            <strong id="selected-plan-name">
+                                Pro
+                            </strong>
+
+                            <span id="selected-plan-billing">
+                                Monthly billing
+                            </span>
+
+                        </div>
+
+                        <div
+                            class="selected-plan-price"
+                            id="selected-plan-price"
+                        >
+                            $19
+                        </div>
+
+                    </div>
+
+                    <div class="demo-notice">
+                        <span>⚠</span>
+
+                        <span>
+                            <strong>Template demo:</strong>
+                            this button demonstrates the upgrade flow and
+                            stores the selected plan locally. Connect your
+                            payment provider and backend before accepting real
+                            payments.
+                        </span>
+                    </div>
+
+                    <div
+                        class="modal-features"
+                        id="modal-plan-features"
+                    ></div>
+
+                    <div class="modal-actions">
+
+                        <button
+                            type="button"
+                            class="upgrade-secondary-btn"
+                            data-upgrade-close
+                        >
+                            Cancel
+                        </button>
+
+                        <button
+                            type="button"
+                            class="upgrade-primary-btn"
+                            id="confirm-upgrade-btn"
+                        >
+                            Continue
+                        </button>
+
+                    </div>
+
+                    <div class="restore-area">
+
+                        <button
+                            type="button"
+                            class="restore-btn"
+                            id="restore-purchase-btn"
+                        >
+                            Restore previous demo plan
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Success -->
+            <div
+                id="upgrade-success-view"
+                class="success-panel"
+            >
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h3 id="success-plan-title">
+                    Plan selected
+                </h3>
+
+                <p id="success-plan-message">
+                    Your demo plan has been saved locally.
+                </p>
+
+                <button
+                    type="button"
+                    class="upgrade-primary-btn"
+                    id="success-close-btn"
+                >
+                    Done
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         CONFIRMATION MODAL
+         ========================================================= -->
+    <div
+        id="simple-confirm-modal"
+        class="modal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-backdrop" data-modal-close></div>
+
+        <div class="modal-dialog">
+
+            <div class="modal-header">
+
+                <div>
+                    <h3 id="simple-confirm-title">
+                        Confirm action
+                    </h3>
+
+                    <p id="simple-confirm-message">
+                        Are you sure?
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-modal-close
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="simple-confirm-action"
+                >
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         SCRIPT
+         ========================================================= -->
+    <script src="../js/script.js" defer></script>
+
+    <!-- =========================================================
+         PAGE ENGINE
+         ========================================================= -->
+    <script>
+        (() => {
+            "use strict";
+
+            /* =====================================================
+               VELTRIX UPGRADE ENGINE
+               ===================================================== */
+
+            const UpgradePage = {
+
+                state: {
+                    billing: "monthly",
+                    selectedPlan: "Pro",
+                    selectedPrice: 19,
+                    currentPlan: "Free",
+                    lastAction: null,
+                    initialized: false
+                },
+
+                storageKeys: {
+                    billing: "veltrix_upgrade_billing",
+                    currentPlan: "veltrix_current_plan",
+                    lastPlan: "veltrix_last_selected_plan"
+                },
+
+                plans: {
+                    Free: {
+                        monthly: 0,
+                        yearly: 0,
+                        description: "Free forever",
+                        features: [
+                            "1 workspace",
+                            "3 team members",
+                            "Basic dashboard",
+                            "100 monthly records"
+                        ]
+                    },
+
+                    Pro: {
+                        monthly: 19,
+                        yearly: 15,
+                        description: "Advanced tools for growing businesses",
+                        features: [
+                            "5 workspaces",
+                            "15 team members",
+                            "Advanced analytics",
+                            "Unlimited records",
+                            "Automated workflows",
+                            "AI Workspace",
+                            "Priority support"
+                        ]
+                    },
+
+                    Business: {
+                        monthly: 49,
+                        yearly: 39,
+                        description: "Advanced collaboration and control",
+                        features: [
+                            "Unlimited workspaces",
+                            "50 team members",
+                            "Advanced automation",
+                            "Custom roles & permissions",
+                            "Detailed reports",
+                            "Priority support"
+                        ]
+                    },
+
+                    Enterprise: {
+                        monthly: 99,
+                        yearly: 79,
+                        description: "Maximum control and dedicated support",
+                        features: [
+                            "Unlimited everything",
+                            "Unlimited team members",
+                            "Advanced security",
+                            "SSO & audit logs",
+                            "Custom onboarding",
+                            "Dedicated support",
+                            "Custom integrations"
+                        ]
+                    }
+                },
+
+                init() {
+
+                    if (this.state.initialized) {
+                        return;
+                    }
+
+                    this.state.initialized = true;
+
+                    this.restoreState();
+
+                    this.bindBilling();
+
+                    this.bindPlanButtons();
+
+                    this.bindFAQ();
+
+                    this.bindComparison();
+
+                    this.bindCTA();
+
+                    this.bindModal();
+
+                    this.bindRestore();
+
+                    this.bindScrollActions();
+
+                    this.bindKeyboard();
+
+                    this.updatePrices();
+
+                    this.updateCurrentPlan();
+
+                    this.exposeAPI();
+
+                    this.safeToast(
+                        "Upgrade page ready",
+                        "success"
+                    );
+                },
+
+                /* =================================================
+                   STORAGE
+                   ================================================= */
+
+                restoreState() {
+
+                    try {
+
+                        const savedBilling =
+                            localStorage.getItem(
+                                this.storageKeys.billing
+                            );
+
+                        const savedPlan =
+                            localStorage.getItem(
+                                this.storageKeys.currentPlan
+                            );
+
+                        if (
+                            savedBilling === "monthly" ||
+                            savedBilling === "yearly"
+                        ) {
+                            this.state.billing = savedBilling;
+                        }
+
+                        if (
+                            savedPlan &&
+                            this.plans[savedPlan]
+                        ) {
+                            this.state.currentPlan = savedPlan;
+                        }
+
+                    } catch (error) {
+
+                        console.warn(
+                            "Veltrix upgrade storage unavailable.",
+                            error
+                        );
+
+                    }
+
+                },
+
+                saveState() {
+
+                    try {
+
+                        localStorage.setItem(
+                            this.storageKeys.billing,
+                            this.state.billing
+                        );
+
+                        localStorage.setItem(
+                            this.storageKeys.currentPlan,
+                            this.state.currentPlan
+                        );
+
+                    } catch (error) {
+
+                        console.warn(
+                            "Veltrix upgrade storage unavailable.",
+                            error
+                        );
+
+                    }
+
+                },
+
+                /* =================================================
+                   BILLING
+                   ================================================= */
+
+                bindBilling() {
+
+                    document
+                        .querySelectorAll("[data-billing]")
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "click",
+                                () => {
+
+                                    const billing =
+                                        button.dataset.billing;
+
+                                    if (
+                                        billing !== "monthly" &&
+                                        billing !== "yearly"
+                                    ) {
+                                        return;
+                                    }
+
+                                    this.setBilling(billing);
+
+                                }
+                            );
+
+                        });
+
+                },
+
+                setBilling(billing) {
+
+                    this.state.billing = billing;
+
+                    this.saveState();
+
+                    document
+                        .querySelectorAll("[data-billing]")
+                        .forEach(button => {
+
+                            const active =
+                                button.dataset.billing === billing;
+
+                            button.classList.toggle(
+                                "active",
+                                active
+                            );
+
+                            button.setAttribute(
+                                "aria-pressed",
+                                String(active)
+                            );
+
+                        });
+
+                    this.updatePrices();
+
+                    if (this.state.selectedPlan) {
+
+                        this.refreshSelectedPrice();
+
+                    }
+
+                    this.safeToast(
+                        billing === "yearly"
+                            ? "Yearly billing selected — 20% saved."
+                            : "Monthly billing selected.",
+                        "success"
+                    );
+
+                },
+
+                updatePrices() {
+
+                    document
+                        .querySelectorAll(
+                            ".plan-price-value[data-monthly]"
+                        )
+                        .forEach(priceElement => {
+
+                            const monthly =
+                                Number(
+                                    priceElement.dataset.monthly
+                                );
+
+                            const yearly =
+                                Number(
+                                    priceElement.dataset.yearly
+                                );
+
+                            const value =
+                                this.state.billing === "yearly"
+                                    ? yearly
+                                    : monthly;
+
+                            priceElement.textContent =
+                                `$${value}`;
+
+                        });
+
+                    document
+                        .querySelectorAll(
+                            ".plan-price-period"
+                        )
+                        .forEach(element => {
+
+                            element.textContent =
+                                "/ month";
+
+                        });
+
+                },
+
+                refreshSelectedPrice() {
+
+                    const plan =
+                        this.plans[this.state.selectedPlan];
+
+                    if (!plan) {
+                        return;
+                    }
+
+                    this.state.selectedPrice =
+                        this.state.billing === "yearly"
+                            ? plan.yearly
+                            : plan.monthly;
+
+                    const price =
+                        document.getElementById(
+                            "selected-plan-price"
+                        );
+
+                    if (price) {
+
+                        price.textContent =
+                            `$${this.state.selectedPrice}`;
+
+                    }
+
+                    const billing =
+                        document.getElementById(
+                            "selected-plan-billing"
+                        );
+
+                    if (billing) {
+
+                        billing.textContent =
+                            this.state.billing === "yearly"
+                                ? "Yearly billing · 20% discount"
+                                : "Monthly billing";
+
+                    }
+
+                },
+
+                /* =================================================
+                   CURRENT PLAN
+                   ================================================= */
+
+                updateCurrentPlan() {
+
+                    document
+                        .querySelectorAll(
+                            "[data-plan-card]"
+                        )
+                        .forEach(card => {
+
+                            const plan =
+                                card.dataset.planName;
+
+                            const isCurrent =
+                                plan === this.state.currentPlan;
+
+                            card.classList.toggle(
+                                "current",
+                                isCurrent
+                            );
+
+                            const button =
+                                card.querySelector(
+                                    "[data-plan]"
+                                );
+
+                            if (!button) {
+                                return;
+                            }
+
+                            if (isCurrent) {
+
+                                button.textContent =
+                                    "Current plan";
+
+                                button.disabled = true;
+
+                                button.style.opacity = ".72";
+                                button.style.cursor = "default";
+
+                            } else {
+
+                                button.disabled = false;
+
+                                button.style.opacity = "";
+                                button.style.cursor = "";
+
+                                if (plan === "Enterprise") {
+
+                                    button.textContent =
+                                        "Contact sales";
+
+                                } else {
+
+                                    button.textContent =
+                                        `Upgrade to ${plan}`;
+
+                                }
+
+                            }
+
+                        });
+
+                },
+
+                /* =================================================
+                   PLAN BUTTONS
+                   ================================================= */
+
+                bindPlanButtons() {
+
+                    document
+                        .querySelectorAll("[data-plan]")
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "click",
+                                event => {
+
+                                    event.preventDefault();
+
+                                    if (button.disabled) {
+                                        return;
+                                    }
+
+                                    const plan =
+                                        button.dataset.plan;
+
+                                    this.selectPlan(plan);
+
+                                }
+                            );
+
+                        });
+
+                },
+
+                selectPlan(planName) {
+
+                    if (!this.plans[planName]) {
+                        return;
+                    }
+
+                    if (
+                        planName ===
+                        this.state.currentPlan
+                    ) {
+
+                        this.safeToast(
+                            `${planName} is already your current plan.`,
+                            "info"
+                        );
+
+                        return;
+                    }
+
+                    this.state.selectedPlan =
+                        planName;
+
+                    this.state.selectedPrice =
+                        this.getSelectedPrice();
+
+                    try {
+
+                        localStorage.setItem(
+                            this.storageKeys.lastPlan,
+                            planName
+                        );
+
+                    } catch (error) {
+                        /* Ignore */
+                    }
+
+                    if (planName === "Enterprise") {
+
+                        this.openEnterpriseFlow();
+
+                        return;
+                    }
+
+                    this.openUpgradeModal();
+
+                },
+
+                getSelectedPrice() {
+
+                    const plan =
+                        this.plans[
+                            this.state.selectedPlan
+                        ];
+
+                    if (!plan) {
+                        return 0;
+                    }
+
+                    return this.state.billing === "yearly"
+                        ? plan.yearly
+                        : plan.monthly;
+
+                },
+
+                /* =================================================
+                   UPGRADE MODAL
+                   ================================================= */
+
+                openUpgradeModal() {
+
+                    const modal =
+                        document.getElementById(
+                            "upgrade-plan-modal"
+                        );
+
+                    if (!modal) {
+                        return;
+                    }
+
+                    const confirmation =
+                        document.getElementById(
+                            "upgrade-confirmation-view"
+                        );
+
+                    const success =
+                        document.getElementById(
+                            "upgrade-success-view"
+                        );
+
+                    confirmation.style.display =
+                        "block";
+
+                    success.classList.remove("active");
+
+                    this.refreshModal();
+
+                    modal.classList.add("active");
+
+                    modal.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+                    document.body.classList.add(
+                        "modal-open"
+                    );
+
+                },
+
+                closeUpgradeModal() {
+
+                    const modal =
+                        document.getElementById(
+                            "upgrade-plan-modal"
+                        );
+
+                    if (!modal) {
+                        return;
+                    }
+
+                    modal.classList.remove("active");
+
+                    modal.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                    document.body.classList.remove(
+                        "modal-open"
+                    );
+
+                },
+
+                refreshModal() {
+
+                    this.refreshSelectedPrice();
+
+                    const name =
+                        document.getElementById(
+                            "selected-plan-name"
+                        );
+
+                    if (name) {
+
+                        name.textContent =
+                            this.state.selectedPlan;
+
+                    }
+
+                    const title =
+                        document.getElementById(
+                            "upgrade-modal-title"
+                        );
+
+                    if (title) {
+
+                        title.textContent =
+                            `Upgrade to ${this.state.selectedPlan}`;
+
+                    }
+
+                    const features =
+                        document.getElementById(
+                            "modal-plan-features"
+                        );
+
+                    if (!features) {
+                        return;
+                    }
+
+                    const plan =
+                        this.plans[
+                            this.state.selectedPlan
+                        ];
+
+                    if (!plan) {
+                        features.innerHTML = "";
+                        return;
+                    }
+
+                    features.innerHTML =
+                        plan.features
+                            .slice(0, 6)
+                            .map(feature => {
+
+                                return `
+                                    <div class="modal-feature">
+                                        ${this.escapeHTML(feature)}
+                                    </div>
+                                `;
+
+                            })
+                            .join("");
+
+                },
+
+                bindModal() {
+
+                    document
+                        .querySelectorAll(
+                            "[data-upgrade-close]"
+                        )
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "click",
+                                () => {
+                                    this.closeUpgradeModal();
+                                }
+                            );
+
+                        });
+
+                    const modal =
+                        document.getElementById(
+                            "upgrade-plan-modal"
+                        );
+
+                    if (modal) {
+
+                        modal.addEventListener(
+                            "click",
+                            event => {
+
+                                if (
+                                    event.target === modal
+                                ) {
+                                    this.closeUpgradeModal();
+                                }
+
+                            }
+                        );
+
+                    }
+
+                    const confirm =
+                        document.getElementById(
+                            "confirm-upgrade-btn"
+                        );
+
+                    if (confirm) {
+
+                        confirm.addEventListener(
+                            "click",
+                            () => {
+                                this.confirmUpgrade();
+                            }
+                        );
+
+                    }
+
+                    const successClose =
+                        document.getElementById(
+                            "success-close-btn"
+                        );
+
+                    if (successClose) {
+
+                        successClose.addEventListener(
+                            "click",
+                            () => {
+                                this.closeUpgradeModal();
+                            }
+                        );
+
+                    }
+
+                },
+
+                confirmUpgrade() {
+
+                    const selected =
+                        this.state.selectedPlan;
+
+                    if (!selected) {
+                        return;
+                    }
+
+                    /*
+                     * IMPORTANT:
+                     * This is intentionally a demo flow.
+                     * No payment information is collected.
+                     */
+
+                    this.state.currentPlan =
+                        selected;
+
+                    this.saveState();
+
+                    this.updateCurrentPlan();
+
+                    const confirmation =
+                        document.getElementById(
+                            "upgrade-confirmation-view"
+                        );
+
+                    const success =
+                        document.getElementById(
+                            "upgrade-success-view"
+                        );
+
+                    if (confirmation) {
+                        confirmation.style.display =
+                            "none";
+                    }
+
+                    if (success) {
+
+                        success.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                    const successTitle =
+                        document.getElementById(
+                            "success-plan-title"
+                        );
+
+                    if (successTitle) {
+
+                        successTitle.textContent =
+                            `${selected} selected`;
+
+                    }
+
+                    const successMessage =
+                        document.getElementById(
+                            "success-plan-message"
+                        );
+
+                    if (successMessage) {
+
+                        successMessage.textContent =
+                            `Your ${selected} plan has been saved locally in this demo. In a real product, connect the checkout flow to your payment provider and backend.`;
+
+                    }
+
+                    this.safeToast(
+                        `${selected} plan selected successfully.`,
+                        "success"
+                    );
+
+                },
+
+                /* =================================================
+                   ENTERPRISE
+                   ================================================= */
+
+                openEnterpriseFlow() {
+
+                    const subject =
+                        encodeURIComponent(
+                            "Veltrix Enterprise inquiry"
+                        );
+
+                    const body =
+                        encodeURIComponent(
+                            "Hello Veltrix team,\n\nI would like to learn more about the Enterprise plan."
+                        );
+
+                    const mailto =
+                        `mailto:?subject=${subject}&body=${body}`;
+
+                    /*
+                     * mailto is intentionally used without
+                     * inventing a fake company email address.
+                     */
+
+                    window.location.href = mailto;
+
+                    this.safeToast(
+                        "Opening your email client...",
+                        "info"
+                    );
+
+                },
+
+                /* =================================================
+                   RESTORE
+                   ================================================= */
+
+                bindRestore() {
+
+                    const restore =
+                        document.getElementById(
+                            "restore-purchase-btn"
+                        );
+
+                    if (!restore) {
+                        return;
+                    }
+
+                    restore.addEventListener(
+                        "click",
+                        () => {
+
+                            let saved = null;
+
+                            try {
+
+                                saved =
+                                    localStorage.getItem(
+                                        this.storageKeys.currentPlan
+                                    );
+
+                            } catch (error) {
+                                saved = null;
+                            }
+
+                            if (
+                                saved &&
+                                this.plans[saved]
+                            ) {
+
+                                this.state.currentPlan =
+                                    saved;
+
+                                this.updateCurrentPlan();
+
+                                this.safeToast(
+                                    `Restored ${saved} demo plan.`,
+                                    "success"
+                                );
+
+                                return;
+                            }
+
+                            this.safeToast(
+                                "No previous demo plan was found.",
+                                "info"
+                            );
+
+                        }
+                    );
+
+                },
+
+                /* =================================================
+                   FAQ
+                   ================================================= */
+
+                bindFAQ() {
+
+                    document
+                        .querySelectorAll(
+                            ".faq-question"
+                        )
+                        .forEach(question => {
+
+                            question.addEventListener(
+                                "click",
+                                () => {
+
+                                    const item =
+                                        question.closest(
+                                            ".faq-item"
+                                        );
+
+                                    if (!item) {
+                                        return;
+                                    }
+
+                                    const isOpen =
+                                        item.classList.contains(
+                                            "open"
+                                        );
+
+                                    document
+                                        .querySelectorAll(
+                                            ".faq-item"
+                                        )
+                                        .forEach(
+                                            other => {
+
+                                                other.classList.remove(
+                                                    "open"
+                                                );
+
+                                                const otherQuestion =
+                                                    other.querySelector(
+                                                        ".faq-question"
+                                                    );
+
+                                                if (
+                                                    otherQuestion
+                                                ) {
+
+                                                    otherQuestion.setAttribute(
+                                                        "aria-expanded",
+                                                        "false"
+                                                    );
+
+                                                }
+
+                                            }
+                                        );
+
+                                    if (!isOpen) {
+
+                                        item.classList.add(
+                                            "open"
+                                        );
+
+                                        question.setAttribute(
+                                            "aria-expanded",
+                                            "true"
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        });
+
+                },
+
+                /* =================================================
+                   COMPARISON
+                   ================================================= */
+
+                bindComparison() {
+
+                    const compare =
+                        document.querySelector(
+                            '[data-action="compare-plans"]'
+                        );
+
+                    if (compare) {
+
+                        compare.addEventListener(
+                            "click",
+                            () => {
+
+                                this.scrollTo(
+                                    "comparison"
+                                );
+
+                            }
+                        );
+
+                    }
+
+                    const allFeatures =
+                        document.querySelector(
+                            '[data-action="show-all-features"]'
+                        );
+
+                    if (allFeatures) {
+
+                        allFeatures.addEventListener(
+                            "click",
+                            () => {
+
+                                this.scrollTo(
+                                    "comparison"
+                                );
+
+                                this.safeToast(
+                                    "Full feature comparison shown below.",
+                                    "info"
+                                );
+
+                            }
+                        );
+
+                    }
+
+                },
+
+                /* =================================================
+                   CTA
+                   ================================================= */
+
+                bindCTA() {
+
+                    const choosePro =
+                        document.querySelector(
+                            '[data-action="choose-pro"]'
+                        );
+
+                    if (choosePro) {
+
+                        choosePro.addEventListener(
+                            "click",
+                            () => {
+
+                                this.selectPlan("Pro");
+
+                            }
+                        );
+
+                    }
+
+                    const contact =
+                        document.querySelector(
+                            '[data-action="contact-sales"]'
+                        );
+
+                    if (contact) {
+
+                        contact.addEventListener(
+                            "click",
+                            () => {
+
+                                this.openEnterpriseFlow();
+
+                            }
+                        );
+
+                    }
+
+                },
+
+                /* =================================================
+                   SCROLL
+                   ================================================= */
+
+                bindScrollActions() {
+
+                    document
+                        .querySelectorAll(
+                            "[data-scroll-to]"
+                        )
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "click",
+                                () => {
+
+                                    const target =
+                                        button.dataset.scrollTo;
+
+                                    this.scrollTo(target);
+
+                                }
+                            );
+
+                        });
+
+                },
+
+                scrollTo(id) {
+
+                    const target =
+                        document.getElementById(id);
+
+                    if (!target) {
+                        return;
+                    }
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                },
+
+                /* =================================================
+                   KEYBOARD
+                   ================================================= */
+
+                bindKeyboard() {
+
+                    document.addEventListener(
+                        "keydown",
+                        event => {
+
+                            if (
+                                event.key === "Escape"
+                            ) {
+
+                                this.closeUpgradeModal();
+
+                            }
+
+                        }
+                    );
+
+                },
+
+                /* =================================================
+                   TOAST
+                   ================================================= */
+
+                safeToast(message, type = "info") {
+
+                    try {
+
+                        if (
+                            window.Veltrix &&
+                            window.Veltrix.toast &&
+                            typeof
+                                window.Veltrix.toast.show ===
+                                "function"
+                        ) {
+
+                            window.Veltrix.toast.show(
+                                message,
+                                type
+                            );
+
+                            return;
+
+                        }
+
+                    } catch (error) {
+                        /* Fallback below */
+                    }
+
+                    this.fallbackToast(
+                        message,
+                        type
+                    );
+
+                },
+
+                fallbackToast(message, type) {
+
+                    const container =
+                        document.getElementById(
+                            "toast-container"
+                        );
+
+                    if (!container) {
+                        return;
+                    }
+
+                    const toast =
+                        document.createElement(
+                            "div"
+                        );
+
+                    toast.className =
+                        `toast toast-${type}`;
+
+                    toast.textContent =
+                        message;
+
+                    container.appendChild(toast);
+
+                    requestAnimationFrame(() => {
+
+                        toast.classList.add(
+                            "show"
+                        );
+
+                    });
+
+                    window.setTimeout(() => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                        window.setTimeout(
+                            () => toast.remove(),
+                            300
+                        );
+
+                    }, 2800);
+
+                },
+
+                /* =================================================
+                   HELPERS
+                   ================================================= */
+
+                escapeHTML(value) {
+
+                    return String(value)
+                        .replace(
+                            /&/g,
+                            "&amp;"
+                        )
+                        .replace(
+                            /</g,
+                            "&lt;"
+                        )
+                        .replace(
+                            />/g,
+                            "&gt;"
+                        )
+                        .replace(
+                            /"/g,
+                            "&quot;"
+                        )
+                        .replace(
+                            /'/g,
+                            "&#039;"
+                        );
+
+                },
+
+                /* =================================================
+                   PUBLIC API
+                   ================================================= */
+
+                exposeAPI() {
+
+                    window.VeltrixUpgrade = {
+
+                        state: this.state,
+
+                        plans: this.plans,
+
+                        setBilling:
+                            billing => this.setBilling(
+                                billing
+                            ),
+
+                        selectPlan:
+                            plan => this.selectPlan(
+                                plan
+                            ),
+
+                        open:
+                            () => this.openUpgradeModal(),
+
+                        close:
+                            () => this.closeUpgradeModal(),
+
+                        getCurrentPlan:
+                            () => this.state.currentPlan
+
+                    };
+
+                }
+
+            };
+
+            /* =====================================================
+               DOM READY
+               ===================================================== */
+
+            const bootUpgradePage = () => {
+
+                try {
+
+                    UpgradePage.init();
+
+                } catch (error) {
+
+                    console.error(
+                        "Veltrix Upgrade initialization error:",
+                        error
+                    );
+
+                }
+
+            };
+
+            if (
+                document.readyState ===
+                "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    bootUpgradePage,
+                    {
+                        once: true
+                    }
+                );
+
+            } else {
+
+                bootUpgradePage();
+
+            }
+
+            /* =====================================================
+               GOOGLE TRANSLATE / LANGUAGE SYNC
+               ===================================================== */
+
+            let languageSyncTimer = null;
+
+            const syncLanguage = () => {
+
+                if (
+                    !window.Veltrix ||
+                    !window.Veltrix.language
+                ) {
+                    return;
+                }
+
+                try {
+
+                    const current =
+                        window.Veltrix.language.getCurrent
+                            ? window.Veltrix.language.getCurrent()
+                            : null;
+
+                    if (current) {
+
+                        document.documentElement
+                            .setAttribute(
+                                "lang",
+                                current
+                            );
+
+                    }
+
+                } catch (error) {
+                    /* Translation engine may not be ready yet. */
+                }
+
+            };
+
+            const scheduleLanguageSync = () => {
+
+                clearTimeout(
+                    languageSyncTimer
+                );
+
+                languageSyncTimer =
+                    setTimeout(
+                        syncLanguage,
+                        500
+                    );
+
+            };
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                scheduleLanguageSync,
+                {
+                    once: true
+                }
+            );
+
+            window.addEventListener(
+                "veltrix:languagechange",
+                scheduleLanguageSync
+            );
+
+            /* =====================================================
+               PRICE ACCESSIBILITY
+               ===================================================== */
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            "[data-billing]"
+                        )
+                        .forEach(button => {
+
+                            button.addEventListener(
+                                "keydown",
+                                event => {
+
+                                    if (
+                                        event.key ===
+                                        "Enter"
+                                    ) {
+
+                                        event.preventDefault();
+
+                                        button.click();
+
+                                    }
+
+                                }
+                            );
+
+                        });
+
+                },
+                {
+                    once: true
+                }
+            );
+
+        })();
+    </script>
+
+</body>
+</html>
