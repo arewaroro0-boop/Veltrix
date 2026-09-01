@@ -1,0 +1,4107 @@
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <!-- =========================================================
+         VELTRIX
+         BUSINESS MANAGEMENT / SAAS PLATFORM
+         INDEX.HTML
+         VERSION 1.0
+    ========================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Veltrix is a modern all-in-one business management platform for orders, customers, products, analytics, invoices, messages and productivity."
+    >
+
+    <meta
+        name="keywords"
+        content="Veltrix, business management, SaaS, dashboard, analytics, orders, customers, products, invoices, CRM, business OS"
+    >
+
+    <meta
+        name="author"
+        content="Veltrix"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b1020"
+    >
+
+    <meta
+        name="color-scheme"
+        content="dark light"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <title>Veltrix — Business OS</title>
+
+
+    <!-- =========================================================
+         FONTS
+    ========================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================================
+         ICONS
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =========================================================
+         MAIN CSS
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+
+    <!-- =========================================================
+         EARLY THEME
+         Prevents theme flash.
+    ========================================================== -->
+
+    <script>
+
+        (function () {
+
+            try {
+
+                const savedTheme =
+                    localStorage.getItem("veltrix-theme");
+
+                const theme =
+                    savedTheme === "light" ||
+                    savedTheme === "dark"
+                        ? savedTheme
+                        : "dark";
+
+                document.documentElement.dataset.theme = theme;
+
+            } catch (error) {
+
+                document.documentElement.dataset.theme = "dark";
+
+            }
+
+        })();
+
+    </script>
+
+</head>
+
+
+<body
+    id="veltrix-app"
+    class="app-body"
+    data-page="dashboard"
+    data-theme="dark"
+>
+
+
+<!-- =============================================================
+     GLOBAL PAGE LOADER
+============================================================== -->
+
+<div
+    id="pageLoader"
+    class="page-loader"
+    aria-hidden="true"
+>
+
+    <div class="loader-orbit">
+
+        <span class="loader-ring loader-ring-one"></span>
+
+        <span class="loader-ring loader-ring-two"></span>
+
+        <span class="loader-ring loader-ring-three"></span>
+
+        <span class="loader-core">
+            V
+        </span>
+
+    </div>
+
+
+    <div class="loader-brand">
+
+        <strong>
+            Veltrix
+        </strong>
+
+        <span data-i18n="loading">
+            Loading your workspace...
+        </span>
+
+    </div>
+
+
+    <div class="loader-progress">
+
+        <span></span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     BACKGROUND EFFECTS
+============================================================== -->
+
+<div
+    class="background-effects"
+    aria-hidden="true"
+>
+
+    <div class="background-grid"></div>
+
+    <div class="background-noise"></div>
+
+    <div class="glow-orb glow-orb-one"></div>
+
+    <div class="glow-orb glow-orb-two"></div>
+
+    <div class="glow-orb glow-orb-three"></div>
+
+    <div class="glow-orb glow-orb-four"></div>
+
+</div>
+
+
+
+<!-- =============================================================
+     MOBILE OVERLAY
+============================================================== -->
+
+<div
+    id="mobileOverlay"
+    class="mobile-overlay"
+    aria-hidden="true"
+></div>
+
+
+
+<!-- =============================================================
+     TOAST CONTAINER
+============================================================== -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+></div>
+
+
+
+<!-- =============================================================
+     APP WRAPPER
+============================================================== -->
+
+<div
+    id="appWrapper"
+    class="app-wrapper"
+>
+
+
+<!-- =============================================================
+     SIDEBAR
+============================================================== -->
+
+<aside
+    id="sidebar"
+    class="sidebar"
+    aria-label="Main navigation"
+>
+
+
+    <!-- SIDEBAR HEADER -->
+
+    <div class="sidebar-header">
+
+        <a
+            href="index.html"
+            class="brand"
+            data-route="dashboard"
+            aria-label="Veltrix Home"
+        >
+
+            <span class="brand-symbol">
+
+                <span class="brand-symbol-glow"></span>
+
+                <strong>V</strong>
+
+            </span>
+
+
+            <span class="brand-information">
+
+                <strong class="brand-name">
+                    Veltrix
+                </strong>
+
+                <span
+                    class="brand-tagline"
+                    data-i18n="business_os"
+                >
+                    Business OS
+                </span>
+
+            </span>
+
+        </a>
+
+
+        <button
+            type="button"
+            id="sidebarCloseButton"
+            class="icon-button sidebar-close-button"
+            aria-label="Close navigation"
+            title="Close navigation"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         WORKSPACE SELECTOR
+    ========================================================== -->
+
+    <div class="workspace-selector-wrapper">
+
+        <button
+            type="button"
+            id="workspaceSelector"
+            class="workspace-selector"
+            aria-haspopup="true"
+            aria-expanded="false"
+        >
+
+            <span class="workspace-avatar">
+                V
+            </span>
+
+
+            <span class="workspace-details">
+
+                <span
+                    class="workspace-label"
+                    data-i18n="workspace"
+                >
+                    Workspace
+                </span>
+
+                <strong
+                    class="workspace-name"
+                    data-i18n="my_business"
+                >
+                    My Business
+                </strong>
+
+            </span>
+
+
+            <i
+                class="fa-solid fa-chevron-down workspace-chevron"
+            ></i>
+
+        </button>
+
+
+        <div
+            id="workspaceMenu"
+            class="dropdown-menu workspace-menu"
+            aria-hidden="true"
+        >
+
+            <button
+                type="button"
+                class="dropdown-item active"
+                data-workspace="business"
+            >
+
+                <i class="fa-solid fa-building"></i>
+
+                <span data-i18n="my_business">
+                    My Business
+                </span>
+
+                <i class="fa-solid fa-check dropdown-check"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="dropdown-item"
+                data-workspace="personal"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                <span data-i18n="personal">
+                    Personal
+                </span>
+
+            </button>
+
+
+            <div class="dropdown-divider"></div>
+
+
+            <button
+                type="button"
+                class="dropdown-item"
+                data-action="create-workspace"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                <span data-i18n="create_workspace">
+                    Create workspace
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         SIDEBAR NAVIGATION
+    ========================================================== -->
+
+    <nav
+        class="sidebar-navigation"
+        aria-label="Primary navigation"
+    >
+
+
+        <!-- OVERVIEW -->
+
+        <div class="navigation-section">
+
+            <span
+                class="navigation-heading"
+                data-i18n="overview"
+            >
+                Overview
+            </span>
+
+
+            <a
+                href="index.html"
+                class="navigation-link active"
+                data-route="dashboard"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-grid-2"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="dashboard"
+                >
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="analytics.html"
+                class="navigation-link"
+                data-route="analytics"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="analytics"
+                >
+                    Analytics
+                </span>
+
+            </a>
+
+
+            <a
+                href="reports.html"
+                class="navigation-link"
+                data-route="reports"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-chart-column"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="reports"
+                >
+                    Reports
+                </span>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="navigation-section">
+
+            <span
+                class="navigation-heading"
+                data-i18n="management"
+            >
+                Management
+            </span>
+
+
+            <a
+                href="orders.html"
+                class="navigation-link"
+                data-route="orders"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="orders"
+                >
+                    Orders
+                </span>
+
+                <span
+                    class="navigation-badge"
+                    id="ordersBadge"
+                >
+                    12
+                </span>
+
+            </a>
+
+
+            <a
+                href="customers.html"
+                class="navigation-link"
+                data-route="customers"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="customers"
+                >
+                    Customers
+                </span>
+
+            </a>
+
+
+            <a
+                href="products.html"
+                class="navigation-link"
+                data-route="products"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-box-open"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="products"
+                >
+                    Products
+                </span>
+
+            </a>
+
+
+            <a
+                href="invoices.html"
+                class="navigation-link"
+                data-route="invoices"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="invoices"
+                >
+                    Invoices
+                </span>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- COMMUNICATION -->
+
+        <div class="navigation-section">
+
+            <span
+                class="navigation-heading"
+                data-i18n="communication"
+            >
+                Communication
+            </span>
+
+
+            <a
+                href="messages.html"
+                class="navigation-link"
+                data-route="messages"
+            >
+
+                <span class="navigation-icon">
+
+                    <i class="fa-solid fa-message"></i>
+
+                </span>
+
+
+                <span
+                    class="navigation-text"
+                    data-i18n="messages"
+                >
+                    Messages
+                </span>
+
+
+                <span
+                    class="navigation-badge navigation-badge-danger"
+                    id="messagesBadge"
+                >
+                    4
+                </span>
+
+            </a>
+
+
+            <a
+                href="notifications.html"
+                class="navigation-link"
+                data-route="notifications"
+            >
+
+                <span class="navigation-icon">
+
+                    <i class="fa-solid fa-bell"></i>
+
+                </span>
+
+
+                <span
+                    class="navigation-text"
+                    data-i18n="notifications"
+                >
+                    Notifications
+                </span>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- TOOLS -->
+
+        <div class="navigation-section">
+
+            <span
+                class="navigation-heading"
+                data-i18n="tools"
+            >
+                Tools
+            </span>
+
+
+            <a
+                href="calculator.html"
+                class="navigation-link"
+                data-route="calculator"
+            >
+
+                <span class="navigation-icon">
+                    <i class="fa-solid fa-calculator"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="calculator"
+                >
+                    Calculator
+                </span>
+
+            </a>
+
+
+            <a
+                href="ai.html"
+                class="navigation-link"
+                data-route="ai"
+            >
+
+                <span class="navigation-icon ai-navigation-icon">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </span>
+
+                <span
+                    class="navigation-text"
+                    data-i18n="ai_workspace"
+                >
+                    AI Workspace
+                </span>
+
+                <span class="ai-label">
+                    AI
+                </span>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================================
+         SIDEBAR BOTTOM
+    ========================================================== -->
+
+    <div class="sidebar-bottom">
+
+
+        <a
+            href="settings.html"
+            class="navigation-link"
+            data-route="settings"
+        >
+
+            <span class="navigation-icon">
+                <i class="fa-solid fa-gear"></i>
+            </span>
+
+            <span
+                class="navigation-text"
+                data-i18n="settings"
+            >
+                Settings
+            </span>
+
+        </a>
+
+
+
+        <!-- UPGRADE CARD -->
+
+        <div class="upgrade-card">
+
+            <div class="upgrade-glow"></div>
+
+
+            <div class="upgrade-icon">
+
+                <i class="fa-solid fa-bolt"></i>
+
+            </div>
+
+
+            <strong data-i18n="unlock_more">
+                Unlock more
+            </strong>
+
+
+            <p data-i18n="upgrade_description">
+                Get advanced analytics, AI tools and unlimited projects.
+            </p>
+
+
+            <button
+                type="button"
+                class="upgrade-button"
+                data-action="open-upgrade"
+            >
+
+                <span data-i18n="upgrade_now">
+                    Upgrade now
+                </span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- USER -->
+
+        <button
+            type="button"
+            id="sidebarUserButton"
+            class="sidebar-user"
+            aria-haspopup="true"
+            aria-expanded="false"
+        >
+
+            <span
+                class="user-avatar"
+                data-user-initial
+            >
+                A
+            </span>
+
+
+            <span class="sidebar-user-info">
+
+                <strong
+                    class="sidebar-user-name"
+                    data-user-name
+                >
+                    Alex Morgan
+                </strong>
+
+
+                <span
+                    class="sidebar-user-email"
+                    data-user-email
+                >
+                    alex@example.com
+                </span>
+
+            </span>
+
+
+            <i
+                class="fa-solid fa-ellipsis sidebar-user-menu-icon"
+            ></i>
+
+        </button>
+
+
+
+        <div
+            id="sidebarUserMenu"
+            class="dropdown-menu sidebar-user-menu"
+            aria-hidden="true"
+        >
+
+            <a
+                href="profile.html"
+                class="dropdown-item"
+                data-route="profile"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                <span data-i18n="profile">
+                    Profile
+                </span>
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="dropdown-item"
+                data-route="settings"
+            >
+
+                <i class="fa-solid fa-gear"></i>
+
+                <span data-i18n="settings">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <div class="dropdown-divider"></div>
+
+
+            <button
+                type="button"
+                class="dropdown-item danger-item"
+                data-action="logout"
+            >
+
+                <i class="fa-solid fa-right-from-bracket"></i>
+
+                <span data-i18n="logout">
+                    Log out
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =============================================================
+     MAIN CONTENT
+============================================================== -->
+
+<main
+    id="mainContent"
+    class="main-content"
+>
+
+
+<!-- =============================================================
+     TOPBAR
+============================================================== -->
+
+<header
+    id="topbar"
+    class="topbar"
+>
+
+
+    <div class="topbar-left">
+
+
+        <button
+            type="button"
+            id="mobileMenuButton"
+            class="icon-button mobile-menu-button"
+            aria-label="Open navigation"
+            title="Open navigation"
+        >
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+
+        <button
+            type="button"
+            id="sidebarCollapseButton"
+            class="icon-button desktop-sidebar-toggle"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+        >
+
+            <i class="fa-solid fa-bars-staggered"></i>
+
+        </button>
+
+
+        <div class="breadcrumb">
+
+            <span
+                class="breadcrumb-muted"
+                data-i18n="workspace"
+            >
+                Workspace
+            </span>
+
+            <i class="fa-solid fa-chevron-right"></i>
+
+            <strong data-i18n="dashboard">
+                Dashboard
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="topbar-right">
+
+
+        <!-- SEARCH -->
+
+        <button
+            type="button"
+            id="globalSearchButton"
+            class="topbar-action search-trigger"
+            aria-label="Search"
+            data-action="open-search"
+        >
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <span data-i18n="search">
+                Search
+            </span>
+
+            <kbd>
+                Ctrl K
+            </kbd>
+
+        </button>
+
+
+
+        <!-- QUICK CREATE -->
+
+        <button
+            type="button"
+            id="quickCreateButton"
+            class="topbar-action quick-create-button"
+            aria-label="Quick create"
+            data-action="quick-create"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+
+            <span data-i18n="create">
+                Create
+            </span>
+
+        </button>
+
+
+
+        <!-- LANGUAGE -->
+
+        <div class="topbar-dropdown language-wrapper">
+
+            <button
+                type="button"
+                id="languageButton"
+                class="topbar-icon-button language-button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                title="Language"
+            >
+
+                <i class="fa-solid fa-globe"></i>
+
+                <span
+                    id="currentLanguageCode"
+                    class="current-language-code"
+                >
+                    EN
+                </span>
+
+                <i class="fa-solid fa-chevron-down"></i>
+
+            </button>
+
+
+            <div
+                id="languageMenu"
+                class="dropdown-menu language-menu"
+                aria-hidden="true"
+            >
+
+                <div class="language-menu-header">
+
+                    <strong data-i18n="choose_language">
+                        Choose language
+                    </strong>
+
+                    <span data-i18n="available_languages">
+                        21 languages available
+                    </span>
+
+                </div>
+
+
+                <div class="language-search">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="search"
+                        id="languageSearch"
+                        placeholder="Search language..."
+                        data-i18n-placeholder="search_language"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div
+                    id="languageList"
+                    class="language-list"
+                >
+
+
+                    <!-- 01 ENGLISH -->
+
+                    <button
+                        type="button"
+                        class="language-option active"
+                        data-language="en"
+                        data-language-name="English"
+                    >
+
+                        <span class="language-flag">🇬🇧</span>
+
+                        <span class="language-name">
+                            English
+                        </span>
+
+                        <span class="language-code">
+                            EN
+                        </span>
+
+                    </button>
+
+
+                    <!-- 02 FRENCH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="fr"
+                        data-language-name="French"
+                    >
+
+                        <span class="language-flag">🇫🇷</span>
+
+                        <span class="language-name">
+                            Français
+                        </span>
+
+                        <span class="language-code">
+                            FR
+                        </span>
+
+                    </button>
+
+
+                    <!-- 03 SPANISH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="es"
+                        data-language-name="Spanish"
+                    >
+
+                        <span class="language-flag">🇪🇸</span>
+
+                        <span class="language-name">
+                            Español
+                        </span>
+
+                        <span class="language-code">
+                            ES
+                        </span>
+
+                    </button>
+
+
+                    <!-- 04 ITALIAN -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="it"
+                        data-language-name="Italian"
+                    >
+
+                        <span class="language-flag">🇮🇹</span>
+
+                        <span class="language-name">
+                            Italiano
+                        </span>
+
+                        <span class="language-code">
+                            IT
+                        </span>
+
+                    </button>
+
+
+                    <!-- 05 GERMAN -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="de"
+                        data-language-name="German"
+                    >
+
+                        <span class="language-flag">🇩🇪</span>
+
+                        <span class="language-name">
+                            Deutsch
+                        </span>
+
+                        <span class="language-code">
+                            DE
+                        </span>
+
+                    </button>
+
+
+                    <!-- 06 PORTUGUESE -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="pt"
+                        data-language-name="Portuguese"
+                    >
+
+                        <span class="language-flag">🇵🇹</span>
+
+                        <span class="language-name">
+                            Português
+                        </span>
+
+                        <span class="language-code">
+                            PT
+                        </span>
+
+                    </button>
+
+
+                    <!-- 07 DUTCH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="nl"
+                        data-language-name="Dutch"
+                    >
+
+                        <span class="language-flag">🇳🇱</span>
+
+                        <span class="language-name">
+                            Nederlands
+                        </span>
+
+                        <span class="language-code">
+                            NL
+                        </span>
+
+                    </button>
+
+
+                    <!-- 08 RUSSIAN -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="ru"
+                        data-language-name="Russian"
+                    >
+
+                        <span class="language-flag">🇷🇺</span>
+
+                        <span class="language-name">
+                            Русский
+                        </span>
+
+                        <span class="language-code">
+                            RU
+                        </span>
+
+                    </button>
+
+
+                    <!-- 09 TURKISH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="tr"
+                        data-language-name="Turkish"
+                    >
+
+                        <span class="language-flag">🇹🇷</span>
+
+                        <span class="language-name">
+                            Türkçe
+                        </span>
+
+                        <span class="language-code">
+                            TR
+                        </span>
+
+                    </button>
+
+
+                    <!-- 10 ARABIC -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="ar"
+                        data-language-name="Arabic"
+                    >
+
+                        <span class="language-flag">🇸🇦</span>
+
+                        <span class="language-name">
+                            العربية
+                        </span>
+
+                        <span class="language-code">
+                            AR
+                        </span>
+
+                    </button>
+
+
+                    <!-- 11 CHINESE -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="zh"
+                        data-language-name="Chinese"
+                    >
+
+                        <span class="language-flag">🇨🇳</span>
+
+                        <span class="language-name">
+                            中文
+                        </span>
+
+                        <span class="language-code">
+                            ZH
+                        </span>
+
+                    </button>
+
+
+                    <!-- 12 JAPANESE -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="ja"
+                        data-language-name="Japanese"
+                    >
+
+                        <span class="language-flag">🇯🇵</span>
+
+                        <span class="language-name">
+                            日本語
+                        </span>
+
+                        <span class="language-code">
+                            JA
+                        </span>
+
+                    </button>
+
+
+                    <!-- 13 KOREAN -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="ko"
+                        data-language-name="Korean"
+                    >
+
+                        <span class="language-flag">🇰🇷</span>
+
+                        <span class="language-name">
+                            한국어
+                        </span>
+
+                        <span class="language-code">
+                            KO
+                        </span>
+
+                    </button>
+
+
+                    <!-- 14 HINDI -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="hi"
+                        data-language-name="Hindi"
+                    >
+
+                        <span class="language-flag">🇮🇳</span>
+
+                        <span class="language-name">
+                            हिन्दी
+                        </span>
+
+                        <span class="language-code">
+                            HI
+                        </span>
+
+                    </button>
+
+
+                    <!-- 15 INDONESIAN -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="id"
+                        data-language-name="Indonesian"
+                    >
+
+                        <span class="language-flag">🇮🇩</span>
+
+                        <span class="language-name">
+                            Bahasa Indonesia
+                        </span>
+
+                        <span class="language-code">
+                            ID
+                        </span>
+
+                    </button>
+
+
+                    <!-- 16 VIETNAMESE -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="vi"
+                        data-language-name="Vietnamese"
+                    >
+
+                        <span class="language-flag">🇻🇳</span>
+
+                        <span class="language-name">
+                            Tiếng Việt
+                        </span>
+
+                        <span class="language-code">
+                            VI
+                        </span>
+
+                    </button>
+
+
+                    <!-- 17 POLISH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="pl"
+                        data-language-name="Polish"
+                    >
+
+                        <span class="language-flag">🇵🇱</span>
+
+                        <span class="language-name">
+                            Polski
+                        </span>
+
+                        <span class="language-code">
+                            PL
+                        </span>
+
+                    </button>
+
+
+                    <!-- 18 SWEDISH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="sv"
+                        data-language-name="Swedish"
+                    >
+
+                        <span class="language-flag">🇸🇪</span>
+
+                        <span class="language-name">
+                            Svenska
+                        </span>
+
+                        <span class="language-code">
+                            SV
+                        </span>
+
+                    </button>
+
+
+                    <!-- 19 GREEK -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="el"
+                        data-language-name="Greek"
+                    >
+
+                        <span class="language-flag">🇬🇷</span>
+
+                        <span class="language-name">
+                            Ελληνικά
+                        </span>
+
+                        <span class="language-code">
+                            EL
+                        </span>
+
+                    </button>
+
+
+                    <!-- 20 CZECH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="cs"
+                        data-language-name="Czech"
+                    >
+
+                        <span class="language-flag">🇨🇿</span>
+
+                        <span class="language-name">
+                            Čeština
+                        </span>
+
+                        <span class="language-code">
+                            CS
+                        </span>
+
+                    </button>
+
+
+                    <!-- 21 DANISH -->
+
+                    <button
+                        type="button"
+                        class="language-option"
+                        data-language="da"
+                        data-language-name="Danish"
+                    >
+
+                        <span class="language-flag">🇩🇰</span>
+
+                        <span class="language-name">
+                            Dansk
+                        </span>
+
+                        <span class="language-code">
+                            DA
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div class="topbar-dropdown notification-wrapper">
+
+            <button
+                type="button"
+                id="notificationButton"
+                class="topbar-icon-button notification-button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-label="Notifications"
+                title="Notifications"
+            >
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span
+                    id="notificationBadge"
+                    class="notification-dot"
+                >
+                    3
+                </span>
+
+            </button>
+
+
+            <div
+                id="notificationMenu"
+                class="dropdown-menu notification-menu"
+                aria-hidden="true"
+            >
+
+                <div class="notification-header">
+
+                    <div>
+
+                        <strong data-i18n="notifications">
+                            Notifications
+                        </strong>
+
+                        <span data-i18n="recent_activity">
+                            Recent activity
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        data-action="mark-notifications-read"
+                        data-i18n="mark_all_read"
+                    >
+                        Mark all read
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="notificationItems"
+                    class="notification-items"
+                >
+
+                    <article class="notification-item unread">
+
+                        <span class="notification-item-icon success">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+
+                        <div class="notification-item-content">
+
+                            <strong data-i18n="order_completed">
+                                Order completed
+                            </strong>
+
+                            <p>
+                                #VX-1048
+                                <span data-i18n="was_completed">
+                                    was completed successfully.
+                                </span>
+                            </p>
+
+                            <time>
+                                5 min ago
+                            </time>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="notification-item unread">
+
+                        <span class="notification-item-icon warning">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </span>
+
+                        <div class="notification-item-content">
+
+                            <strong data-i18n="low_stock">
+                                Low stock alert
+                            </strong>
+
+                            <p data-i18n="low_stock_message">
+                                3 products are running low.
+                            </p>
+
+                            <time>
+                                32 min ago
+                            </time>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="notification-item unread">
+
+                        <span class="notification-item-icon info">
+                            <i class="fa-solid fa-message"></i>
+                        </span>
+
+                        <div class="notification-item-content">
+
+                            <strong data-i18n="new_message">
+                                New message
+                            </strong>
+
+                            <p data-i18n="new_message_message">
+                                Sarah sent you a new message.
+                            </p>
+
+                            <time>
+                                1 hour ago
+                            </time>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <a
+                    href="notifications.html"
+                    class="notification-footer"
+                    data-route="notifications"
+                    data-i18n="view_all_notifications"
+                >
+                    View all notifications
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- THEME -->
+
+        <button
+            type="button"
+            id="themeToggleButton"
+            class="topbar-icon-button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
+            data-action="toggle-theme"
+        >
+
+            <i class="fa-solid fa-moon theme-icon-dark"></i>
+
+            <i class="fa-solid fa-sun theme-icon-light"></i>
+
+        </button>
+
+
+    </div>
+
+</header>
+
+
+
+<!-- =============================================================
+     PAGE CONTENT
+============================================================== -->
+
+<div
+    id="pageContent"
+    class="page-content"
+>
+
+
+    <!-- =========================================================
+         PAGE HERO
+    ========================================================== -->
+
+    <section class="page-hero">
+
+        <div class="page-hero-content">
+
+            <div class="eyebrow">
+
+                <span class="eyebrow-dot"></span>
+
+                <span data-i18n="overview">
+                    Overview
+                </span>
+
+            </div>
+
+
+            <h1>
+
+                <span data-i18n="good_morning">
+                    Good morning
+                </span>,
+
+                <span
+                    class="gradient-text"
+                    data-user-first-name
+                >
+                    Alex
+                </span>
+
+                <span class="hero-wave">
+                    👋
+                </span>
+
+            </h1>
+
+
+            <p
+                class="page-hero-description"
+                data-i18n="dashboard_description"
+            >
+                Here is what is happening with your business today.
+            </p>
+
+        </div>
+
+
+        <div class="page-hero-actions">
+
+            <button
+                type="button"
+                class="secondary-button"
+                data-action="export-dashboard"
+            >
+
+                <i class="fa-solid fa-download"></i>
+
+                <span data-i18n="export">
+                    Export
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="primary-button"
+                data-action="quick-create"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+
+                <span data-i18n="new_entry">
+                    New entry
+                </span>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         KPI GRID
+    ========================================================== -->
+
+    <section
+        class="stats-grid"
+        aria-label="Business statistics"
+    >
+
+
+        <!-- REVENUE -->
+
+        <article
+            class="stat-card glow-card"
+            data-stat="revenue"
+        >
+
+            <div class="stat-card-top">
+
+                <div class="stat-icon revenue-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="stat-menu-button"
+                    aria-label="Revenue options"
+                    data-action="stat-menu"
+                >
+                    <i class="fa-solid fa-ellipsis"></i>
+                </button>
+
+            </div>
+
+
+            <div class="stat-card-body">
+
+                <span
+                    class="stat-label"
+                    data-i18n="total_revenue"
+                >
+                    Total revenue
+                </span>
+
+
+                <strong
+                    class="stat-value"
+                    data-stat-value="revenue"
+                >
+                    $48,294.00
+                </strong>
+
+
+                <div class="stat-change positive">
+
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+
+                    <strong>
+                        +18.6%
+                    </strong>
+
+                    <span data-i18n="vs_last_month">
+                        vs last month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="mini-chart">
+
+                <div class="chart-bars">
+
+                    <span style="height:35%"></span>
+                    <span style="height:48%"></span>
+                    <span style="height:42%"></span>
+                    <span style="height:61%"></span>
+                    <span style="height:55%"></span>
+                    <span style="height:72%"></span>
+                    <span style="height:67%"></span>
+                    <span style="height:84%"></span>
+                    <span style="height:76%"></span>
+                    <span style="height:93%"></span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- ORDERS -->
+
+        <article
+            class="stat-card glow-card"
+            data-stat="orders"
+        >
+
+            <div class="stat-card-top">
+
+                <div class="stat-icon orders-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="stat-menu-button"
+                    aria-label="Orders options"
+                    data-action="stat-menu"
+                >
+                    <i class="fa-solid fa-ellipsis"></i>
+                </button>
+
+            </div>
+
+
+            <div class="stat-card-body">
+
+                <span
+                    class="stat-label"
+                    data-i18n="total_orders"
+                >
+                    Total orders
+                </span>
+
+
+                <strong
+                    class="stat-value"
+                    data-stat-value="orders"
+                >
+                    1,284
+                </strong>
+
+
+                <div class="stat-change positive">
+
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+
+                    <strong>
+                        +12.4%
+                    </strong>
+
+                    <span data-i18n="vs_last_month">
+                        vs last month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-line">
+
+                <span style="width:76%"></span>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- CUSTOMERS -->
+
+        <article
+            class="stat-card glow-card"
+            data-stat="customers"
+        >
+
+            <div class="stat-card-top">
+
+                <div class="stat-icon customers-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="stat-menu-button"
+                    aria-label="Customers options"
+                    data-action="stat-menu"
+                >
+                    <i class="fa-solid fa-ellipsis"></i>
+                </button>
+
+            </div>
+
+
+            <div class="stat-card-body">
+
+                <span
+                    class="stat-label"
+                    data-i18n="total_customers"
+                >
+                    Total customers
+                </span>
+
+
+                <strong
+                    class="stat-value"
+                    data-stat-value="customers"
+                >
+                    8,492
+                </strong>
+
+
+                <div class="stat-change positive">
+
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+
+                    <strong>
+                        +9.8%
+                    </strong>
+
+                    <span data-i18n="vs_last_month">
+                        vs last month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="avatar-stack">
+
+                <span>AM</span>
+                <span>JD</span>
+                <span>SK</span>
+                <span>RM</span>
+                <span class="avatar-more">
+                    +2k
+                </span>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- CONVERSION -->
+
+        <article
+            class="stat-card glow-card"
+            data-stat="conversion"
+        >
+
+            <div class="stat-card-top">
+
+                <div class="stat-icon conversion-icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="stat-menu-button"
+                    aria-label="Conversion options"
+                    data-action="stat-menu"
+                >
+                    <i class="fa-solid fa-ellipsis"></i>
+                </button>
+
+            </div>
+
+
+            <div class="stat-card-body">
+
+                <span
+                    class="stat-label"
+                    data-i18n="conversion_rate"
+                >
+                    Conversion rate
+                </span>
+
+
+                <strong
+                    class="stat-value"
+                    data-stat-value="conversion"
+                >
+                    24.8%
+                </strong>
+
+
+                <div class="stat-change positive">
+
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+
+                    <strong>
+                        +4.2%
+                    </strong>
+
+                    <span data-i18n="vs_last_month">
+                        vs last month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="circular-progress">
+
+                <svg viewBox="0 0 100 100">
+
+                    <circle
+                        class="progress-background"
+                        cx="50"
+                        cy="50"
+                        r="42"
+                    ></circle>
+
+                    <circle
+                        class="progress-value"
+                        cx="50"
+                        cy="50"
+                        r="42"
+                        stroke-dasharray="110 264"
+                    ></circle>
+
+                </svg>
+
+                <span>
+                    24.8%
+                </span>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         MAIN DASHBOARD GRID
+    ========================================================== -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- =====================================================
+             REVENUE CHART
+        ====================================================== -->
+
+        <article class="dashboard-card revenue-chart-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <span data-i18n="performance">
+                            Performance
+                        </span>
+                    </span>
+
+
+                    <h2 data-i18n="revenue_overview">
+                        Revenue overview
+                    </h2>
+
+
+                    <p data-i18n="revenue_overview_description">
+                        Track your revenue performance over time.
+                    </p>
+
+                </div>
+
+
+                <div class="card-actions">
+
+                    <button
+                        type="button"
+                        class="period-button active"
+                        data-period="12m"
+                    >
+                        12M
+                    </button>
+
+                    <button
+                        type="button"
+                        class="period-button"
+                        data-period="6m"
+                    >
+                        6M
+                    </button>
+
+                    <button
+                        type="button"
+                        class="period-button"
+                        data-period="30d"
+                    >
+                        30D
+                    </button>
+
+                    <button
+                        type="button"
+                        class="card-icon-button"
+                        data-action="chart-options"
+                        aria-label="Chart options"
+                    >
+
+                        <i class="fa-solid fa-ellipsis"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="revenue-summary">
+
+                <strong>
+                    $48,294
+                </strong>
+
+                <span class="summary-positive">
+                    +18.6%
+                </span>
+
+            </div>
+
+
+            <div
+                class="large-chart"
+                id="revenueChart"
+                aria-label="Revenue chart"
+            >
+
+                <div class="chart-y-axis">
+
+                    <span>$60k</span>
+                    <span>$45k</span>
+                    <span>$30k</span>
+                    <span>$15k</span>
+                    <span>$0</span>
+
+                </div>
+
+
+                <div class="chart-area">
+
+                    <div class="chart-grid-lines">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                    </div>
+
+
+                    <svg
+                        class="revenue-svg"
+                        viewBox="0 0 1000 300"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                    >
+
+                        <defs>
+
+                            <linearGradient
+                                id="revenueGradient"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+
+                                <stop
+                                    offset="0%"
+                                    stop-opacity=".35"
+                                />
+
+                                <stop
+                                    offset="100%"
+                                    stop-opacity="0"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+
+                        <path
+                            class="chart-fill"
+                            d="M0,250 C80,220 110,235 170,190 C230,145 250,175 320,150 C390,125 420,160 480,115 C540,70 580,125 640,95 C700,65 720,85 780,55 C840,25 890,70 940,35 C970,20 985,30 1000,15 L1000,300 L0,300 Z"
+                        ></path>
+
+
+                        <path
+                            class="chart-line"
+                            d="M0,250 C80,220 110,235 170,190 C230,145 250,175 320,150 C390,125 420,160 480,115 C540,70 580,125 640,95 C700,65 720,85 780,55 C840,25 890,70 940,35 C970,20 985,30 1000,15"
+                        ></path>
+
+
+                        <circle
+                            cx="780"
+                            cy="55"
+                            r="6"
+                            class="chart-point"
+                        ></circle>
+
+                    </svg>
+
+
+                    <div class="chart-tooltip">
+
+                        <span data-i18n="revenue">
+                            Revenue
+                        </span>
+
+                        <strong>
+                            $42,860
+                        </strong>
+
+                        <small>
+                            Aug 2026
+                        </small>
+
+                    </div>
+
+
+                    <div class="chart-x-axis">
+
+                        <span>Jan</span>
+                        <span>Feb</span>
+                        <span>Mar</span>
+                        <span>Apr</span>
+                        <span>May</span>
+                        <span>Jun</span>
+                        <span>Jul</span>
+                        <span>Aug</span>
+                        <span>Sep</span>
+                        <span>Oct</span>
+                        <span>Nov</span>
+                        <span>Dec</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <article class="dashboard-card quick-actions-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                        <span data-i18n="shortcuts">
+                            Shortcuts
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="quick_actions">
+                        Quick actions
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-actions-grid">
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="create-order"
+                >
+
+                    <span class="quick-action-icon">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </span>
+
+                    <span data-i18n="new_order">
+                        New order
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="create-customer"
+                >
+
+                    <span class="quick-action-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </span>
+
+                    <span data-i18n="add_customer">
+                        Add customer
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="create-product"
+                >
+
+                    <span class="quick-action-icon">
+                        <i class="fa-solid fa-box"></i>
+                    </span>
+
+                    <span data-i18n="add_product">
+                        Add product
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="create-invoice"
+                >
+
+                    <span class="quick-action-icon">
+                        <i class="fa-solid fa-file-invoice"></i>
+                    </span>
+
+                    <span data-i18n="new_invoice">
+                        New invoice
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="open-calculator"
+                >
+
+                    <span class="quick-action-icon">
+                        <i class="fa-solid fa-calculator"></i>
+                    </span>
+
+                    <span data-i18n="calculator">
+                        Calculator
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="quick-action"
+                    data-action="open-ai"
+                >
+
+                    <span class="quick-action-icon ai-action">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </span>
+
+                    <span data-i18n="ask_ai">
+                        Ask AI
+                    </span>
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                </button>
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         SECOND DASHBOARD ROW
+    ========================================================== -->
+
+    <section class="dashboard-grid dashboard-grid-secondary">
+
+
+        <!-- =====================================================
+             RECENT ORDERS
+        ====================================================== -->
+
+        <article class="dashboard-card recent-orders-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-bag-shopping"></i>
+
+                        <span data-i18n="sales">
+                            Sales
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="recent_orders">
+                        Recent orders
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="orders.html"
+                    class="card-link"
+                    data-route="orders"
+                    data-i18n="view_all"
+                >
+                    View all
+                </a>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th data-i18n="order">
+                                Order
+                            </th>
+
+                            <th data-i18n="customer">
+                                Customer
+                            </th>
+
+                            <th data-i18n="date">
+                                Date
+                            </th>
+
+                            <th data-i18n="amount">
+                                Amount
+                            </th>
+
+                            <th data-i18n="status">
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>#VX-1048</strong>
+                            </td>
+
+
+                            <td>
+
+                                <div class="customer-cell">
+
+                                    <span class="table-avatar">
+                                        SM
+                                    </span>
+
+                                    <span>
+                                        Sarah Mitchell
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Aug 31, 2026
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    $842.00
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-success">
+
+                                    <span></span>
+
+                                    <span data-i18n="completed">
+                                        Completed
+                                    </span>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>#VX-1047</strong>
+                            </td>
+
+
+                            <td>
+
+                                <div class="customer-cell">
+
+                                    <span class="table-avatar">
+                                        JD
+                                    </span>
+
+                                    <span>
+                                        James Davis
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Aug 31, 2026
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    $1,240.00
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-pending">
+
+                                    <span></span>
+
+                                    <span data-i18n="pending">
+                                        Pending
+                                    </span>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>#VX-1046</strong>
+                            </td>
+
+
+                            <td>
+
+                                <div class="customer-cell">
+
+                                    <span class="table-avatar">
+                                        LK
+                                    </span>
+
+                                    <span>
+                                        Laura Kim
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Aug 30, 2026
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    $468.50
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-success">
+
+                                    <span></span>
+
+                                    <span data-i18n="completed">
+                                        Completed
+                                    </span>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>#VX-1045</strong>
+                            </td>
+
+
+                            <td>
+
+                                <div class="customer-cell">
+
+                                    <span class="table-avatar">
+                                        RM
+                                    </span>
+
+                                    <span>
+                                        Ryan Miller
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Aug 30, 2026
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    $2,180.00
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-processing">
+
+                                    <span></span>
+
+                                    <span data-i18n="processing">
+                                        Processing
+                                    </span>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>#VX-1044</strong>
+                            </td>
+
+
+                            <td>
+
+                                <div class="customer-cell">
+
+                                    <span class="table-avatar">
+                                        EM
+                                    </span>
+
+                                    <span>
+                                        Emma Moore
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                Aug 29, 2026
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    $635.00
+                                </strong>
+                            </td>
+
+
+                            <td>
+
+                                <span class="status-badge status-cancelled">
+
+                                    <span></span>
+
+                                    <span data-i18n="cancelled">
+                                        Cancelled
+                                    </span>
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- =====================================================
+             TOP PRODUCTS
+        ====================================================== -->
+
+        <article class="dashboard-card products-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-box-open"></i>
+
+                        <span data-i18n="inventory">
+                            Inventory
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="top_products">
+                        Top products
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="products.html"
+                    class="card-link"
+                    data-route="products"
+                    data-i18n="view_all"
+                >
+                    View all
+                </a>
+
+            </div>
+
+
+            <div class="product-list">
+
+
+                <div class="product-item">
+
+                    <span class="product-image product-image-one">
+                        <i class="fa-solid fa-laptop"></i>
+                    </span>
+
+
+                    <div class="product-information">
+
+                        <strong>
+                            Pro Laptop X1
+                        </strong>
+
+                        <span data-i18n="electronics">
+                            Electronics
+                        </span>
+
+                    </div>
+
+
+                    <div class="product-sales">
+
+                        <strong>
+                            248
+                        </strong>
+
+                        <span data-i18n="sold">
+                            sold
+                        </span>
+
+                    </div>
+
+
+                    <strong class="product-price">
+                        $1,299
+                    </strong>
+
+                </div>
+
+
+
+                <div class="product-item">
+
+                    <span class="product-image product-image-two">
+                        <i class="fa-solid fa-headphones"></i>
+                    </span>
+
+
+                    <div class="product-information">
+
+                        <strong>
+                            AirSound Pro
+                        </strong>
+
+                        <span data-i18n="audio">
+                            Audio
+                        </span>
+
+                    </div>
+
+
+                    <div class="product-sales">
+
+                        <strong>
+                            196
+                        </strong>
+
+                        <span data-i18n="sold">
+                            sold
+                        </span>
+
+                    </div>
+
+
+                    <strong class="product-price">
+                        $249
+                    </strong>
+
+                </div>
+
+
+
+                <div class="product-item">
+
+                    <span class="product-image product-image-three">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </span>
+
+
+                    <div class="product-information">
+
+                        <strong>
+                            Nova Phone 12
+                        </strong>
+
+                        <span data-i18n="smartphones">
+                            Smartphones
+                        </span>
+
+                    </div>
+
+
+                    <div class="product-sales">
+
+                        <strong>
+                            174
+                        </strong>
+
+                        <span data-i18n="sold">
+                            sold
+                        </span>
+
+                    </div>
+
+
+                    <strong class="product-price">
+                        $899
+                    </strong>
+
+                </div>
+
+
+
+                <div class="product-item">
+
+                    <span class="product-image product-image-four">
+                        <i class="fa-solid fa-camera"></i>
+                    </span>
+
+
+                    <div class="product-information">
+
+                        <strong>
+                            Vision Camera
+                        </strong>
+
+                        <span data-i18n="cameras">
+                            Cameras
+                        </span>
+
+                    </div>
+
+
+                    <div class="product-sales">
+
+                        <strong>
+                            142
+                        </strong>
+
+                        <span data-i18n="sold">
+                            sold
+                        </span>
+
+                    </div>
+
+
+                    <strong class="product-price">
+                        $749
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         THIRD ROW
+    ========================================================== -->
+
+    <section class="dashboard-grid dashboard-grid-tertiary">
+
+
+        <!-- CUSTOMER ACTIVITY -->
+
+        <article class="dashboard-card activity-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-wave-square"></i>
+
+                        <span data-i18n="activity">
+                            Activity
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="customer_activity">
+                        Customer activity
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="card-icon-button"
+                    data-action="activity-options"
+                >
+
+                    <i class="fa-solid fa-ellipsis"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="activity-chart">
+
+                <div class="activity-bars">
+
+                    <span style="height:42%"></span>
+                    <span style="height:61%"></span>
+                    <span style="height:50%"></span>
+                    <span style="height:73%"></span>
+                    <span style="height:66%"></span>
+                    <span style="height:87%"></span>
+                    <span style="height:69%"></span>
+                    <span style="height:94%"></span>
+                    <span style="height:78%"></span>
+                    <span style="height:88%"></span>
+                    <span style="height:71%"></span>
+                    <span style="height:98%"></span>
+
+                </div>
+
+
+                <div class="activity-labels">
+
+                    <span>Jan</span>
+                    <span>Feb</span>
+                    <span>Mar</span>
+                    <span>Apr</span>
+                    <span>May</span>
+                    <span>Jun</span>
+                    <span>Jul</span>
+                    <span>Aug</span>
+                    <span>Sep</span>
+                    <span>Oct</span>
+                    <span>Nov</span>
+                    <span>Dec</span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- GOAL -->
+
+        <article class="dashboard-card goal-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-bullseye"></i>
+
+                        <span data-i18n="goal">
+                            Goal
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="monthly_target">
+                        Monthly target
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="card-icon-button"
+                    data-action="edit-goal"
+                >
+
+                    <i class="fa-solid fa-pen"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="goal-content">
+
+                <div class="goal-ring">
+
+                    <svg viewBox="0 0 120 120">
+
+                        <circle
+                            cx="60"
+                            cy="60"
+                            r="48"
+                            class="goal-background"
+                        ></circle>
+
+                        <circle
+                            cx="60"
+                            cy="60"
+                            r="48"
+                            class="goal-progress"
+                            stroke-dasharray="226 302"
+                        ></circle>
+
+                    </svg>
+
+
+                    <div class="goal-ring-text">
+
+                        <strong>
+                            75%
+                        </strong>
+
+                        <span data-i18n="completed">
+                            completed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="goal-details">
+
+                    <strong>
+                        $36,250
+                    </strong>
+
+                    <span data-i18n="of">
+                        of
+                    </span>
+
+                    <strong>
+                        $48,000
+                    </strong>
+
+
+                    <p data-i18n="goal_description">
+                        You're on track to reach your monthly target.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="small-button"
+                        data-action="edit-goal"
+                    >
+
+                        <span data-i18n="adjust_goal">
+                            Adjust goal
+                        </span>
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <!-- RECENT ACTIVITY -->
+
+        <article class="dashboard-card timeline-card">
+
+            <div class="card-header">
+
+                <div class="card-heading">
+
+                    <span class="card-kicker">
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        <span data-i18n="timeline">
+                            Timeline
+                        </span>
+
+                    </span>
+
+
+                    <h2 data-i18n="recent_activity">
+                        Recent activity
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-list">
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-icon success">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+
+                    <div class="timeline-content">
+
+                        <strong data-i18n="order_completed">
+                            Order completed
+                        </strong>
+
+                        <p>
+                            #VX-1048
+                        </p>
+
+                        <time>
+                            5 min ago
+                        </time>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-icon info">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </span>
+
+
+                    <div class="timeline-content">
+
+                        <strong data-i18n="new_customer">
+                            New customer
+                        </strong>
+
+                        <p>
+                            Olivia Wilson
+                        </p>
+
+                        <time>
+                            24 min ago
+                        </time>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-icon warning">
+                        <i class="fa-solid fa-box"></i>
+                    </span>
+
+
+                    <div class="timeline-content">
+
+                        <strong data-i18n="inventory_updated">
+                            Inventory updated
+                        </strong>
+
+                        <p data-i18n="four_products_updated">
+                            4 products updated
+                        </p>
+
+                        <time>
+                            1 hour ago
+                        </time>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </article>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         BOTTOM CTA
+    ========================================================== -->
+
+    <section class="dashboard-cta">
+
+        <div class="cta-background-glow"></div>
+
+
+        <div class="cta-icon">
+
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+        </div>
+
+
+        <div class="cta-content">
+
+            <span data-i18n="smart_business">
+                Smart business tools
+            </span>
+
+            <h2 data-i18n="ready_to_grow">
+                Ready to grow your business?
+            </h2>
+
+            <p data-i18n="cta_description">
+                Explore advanced analytics, automation and AI-powered tools built into Veltrix.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="primary-button cta-button"
+            data-action="open-ai"
+        >
+
+            <span data-i18n="explore_tools">
+                Explore tools
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =============================================================
+     FOOTER
+============================================================== -->
+
+<footer class="app-footer">
+
+    <div>
+
+        <strong>
+            Veltrix
+        </strong>
+
+        <span>
+            © <span id="currentYear">2026</span>
+        </span>
+
+    </div>
+
+
+    <div class="footer-links">
+
+        <a
+            href="help.html"
+            data-route="help"
+            data-i18n="help_center"
+        >
+            Help Center
+        </a>
+
+        <a
+            href="privacy.html"
+            data-route="privacy"
+            data-i18n="privacy"
+        >
+            Privacy
+        </a>
+
+        <a
+            href="terms.html"
+            data-route="terms"
+            data-i18n="terms"
+        >
+            Terms
+        </a>
+
+    </div>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<!-- =============================================================
+     GLOBAL SEARCH MODAL
+============================================================== -->
+
+<div
+    id="searchModal"
+    class="modal-overlay"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal search-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="searchModalTitle"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-kicker">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+
+                <h2
+                    id="searchModalTitle"
+                    data-i18n="search"
+                >
+                    Search
+                </h2>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                data-action="close-search"
+                aria-label="Close"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="global-search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                id="globalSearchInput"
+                type="search"
+                autocomplete="off"
+                placeholder="Search anything..."
+                data-i18n-placeholder="search_anything"
+            >
+
+            <kbd>ESC</kbd>
+
+        </div>
+
+
+        <div class="search-results">
+
+            <span
+                class="search-section-title"
+                data-i18n="quick_results"
+            >
+                Quick results
+            </span>
+
+
+            <button
+                type="button"
+                class="search-result"
+                data-search-route="orders"
+            >
+
+                <span>
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </span>
+
+                <div>
+
+                    <strong data-i18n="orders">
+                        Orders
+                    </strong>
+
+                    <small data-i18n="manage_orders">
+                        Manage all orders
+                    </small>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="search-result"
+                data-search-route="customers"
+            >
+
+                <span>
+                    <i class="fa-solid fa-users"></i>
+                </span>
+
+                <div>
+
+                    <strong data-i18n="customers">
+                        Customers
+                    </strong>
+
+                    <small data-i18n="manage_customers">
+                        Manage customer relationships
+                    </small>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="search-result"
+                data-search-route="products"
+            >
+
+                <span>
+                    <i class="fa-solid fa-box-open"></i>
+                </span>
+
+                <div>
+
+                    <strong data-i18n="products">
+                        Products
+                    </strong>
+
+                    <small data-i18n="manage_products">
+                        Manage your inventory
+                    </small>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     QUICK CREATE MODAL
+============================================================== -->
+
+<div
+    id="quickCreateModal"
+    class="modal-overlay"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal quick-create-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-kicker">
+                    <i class="fa-solid fa-plus"></i>
+                </span>
+
+                <h2 data-i18n="quick_create">
+                    Quick create
+                </h2>
+
+                <p data-i18n="choose_what_to_create">
+                    Choose what you want to create.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close"
+                data-action="close-quick-create"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="create-options">
+
+
+            <button
+                type="button"
+                class="create-option"
+                data-action="create-order"
+            >
+
+                <span class="create-option-icon">
+                    <i class="fa-solid fa-cart-plus"></i>
+                </span>
+
+                <span>
+
+                    <strong data-i18n="new_order">
+                        New order
+                    </strong>
+
+                    <small data-i18n="create_new_order">
+                        Create a new order
+                    </small>
+
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="create-option"
+                data-action="create-customer"
+            >
+
+                <span class="create-option-icon">
+                    <i class="fa-solid fa-user-plus"></i>
+                </span>
+
+                <span>
+
+                    <strong data-i18n="add_customer">
+                        Add customer
+                    </strong>
+
+                    <small data-i18n="create_customer_profile">
+                        Create a customer profile
+                    </small>
+
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="create-option"
+                data-action="create-product"
+            >
+
+                <span class="create-option-icon">
+                    <i class="fa-solid fa-box"></i>
+                </span>
+
+                <span>
+
+                    <strong data-i18n="add_product">
+                        Add product
+                    </strong>
+
+                    <small data-i18n="create_product">
+                        Add a product to inventory
+                    </small>
+
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="create-option"
+                data-action="create-invoice"
+            >
+
+                <span class="create-option-icon">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </span>
+
+                <span>
+
+                    <strong data-i18n="new_invoice">
+                        New invoice
+                    </strong>
+
+                    <small data-i18n="create_invoice">
+                        Generate a new invoice
+                    </small>
+
+                </span>
+
+                <i class="fa-solid fa-chevron-right"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     UPGRADE MODAL
+============================================================== -->
+
+<div
+    id="upgradeModal"
+    class="modal-overlay"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal upgrade-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <button
+            type="button"
+            class="modal-close"
+            data-action="close-upgrade"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <div class="upgrade-modal-icon">
+
+            <i class="fa-solid fa-bolt"></i>
+
+        </div>
+
+
+        <span
+            class="modal-kicker centered"
+            data-i18n="premium"
+        >
+            Premium
+        </span>
+
+
+        <h2
+            data-i18n="unlock_veltrix_pro"
+        >
+            Unlock Veltrix Pro
+        </h2>
+
+
+        <p
+            data-i18n="upgrade_modal_description"
+        >
+            Get unlimited access to advanced analytics, AI tools, automation and premium features.
+        </p>
+
+
+        <div class="pricing-highlight">
+
+            <strong>
+                $19
+            </strong>
+
+            <span data-i18n="per_month">
+                / month
+            </span>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="primary-button full-width"
+            data-action="upgrade"
+        >
+
+            <span data-i18n="upgrade_now">
+                Upgrade now
+            </span>
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     CONFIRMATION MODAL
+============================================================== -->
+
+<div
+    id="confirmModal"
+    class="modal-overlay"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal confirm-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="confirm-icon">
+
+            <i class="fa-solid fa-circle-question"></i>
+
+        </div>
+
+
+        <h2
+            id="confirmTitle"
+            data-i18n="are_you_sure"
+        >
+            Are you sure?
+        </h2>
+
+
+        <p
+            id="confirmMessage"
+            data-i18n="confirm_action"
+        >
+            This action cannot be undone.
+        </p>
+
+
+        <div class="confirm-actions">
+
+            <button
+                type="button"
+                class="secondary-button"
+                data-action="cancel-confirm"
+                data-i18n="cancel"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                type="button"
+                class="danger-button"
+                data-action="confirm-action"
+                data-i18n="confirm"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =============================================================
+     OFFLINE INDICATOR
+============================================================== -->
+
+<div
+    id="offlineIndicator"
+    class="offline-indicator"
+    aria-live="polite"
+>
+
+    <i class="fa-solid fa-wifi"></i>
+
+    <span data-i18n="offline_mode">
+        You are currently offline
+    </span>
+
+</div>
+
+
+
+<!-- =============================================================
+     SCREEN READER LIVE REGION
+============================================================== -->
+
+<div
+    id="liveRegion"
+    class="sr-only"
+    aria-live="polite"
+    aria-atomic="true"
+></div>
+
+
+
+<!-- =============================================================
+     MAIN JAVASCRIPT
+============================================================== -->
+
+<script
+    src="js/script.js"
+    defer
+></script>
+
+
+</body>
+
+</html>
+```
