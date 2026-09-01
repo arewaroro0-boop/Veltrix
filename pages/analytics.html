@@ -1,1 +1,5724 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Veltrix Analytics — Advanced business intelligence, performance tracking, revenue analytics and customer insights."
+    >
+
+    <meta
+        name="keywords"
+        content="Veltrix, analytics, business analytics, revenue, customers, orders, performance, dashboard, reports"
+    >
+
+    <meta name="author" content="Veltrix">
+
+    <meta name="theme-color" content="#0b1020">
+
+    <title>Analytics — Veltrix</title>
+
+    <!-- =========================================================
+         GOOGLE FONTS
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================================================
+         FONT AWESOME
+    ========================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- =========================================================
+         CHART.JS
+    ========================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <!-- =========================================================
+         MAIN STYLES
+    ========================================================== -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- =========================================================
+         EARLY THEME
+    ========================================================== -->
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem("veltrix-theme");
+
+                if (savedTheme === "dark" || savedTheme === "light") {
+                    document.documentElement.dataset.theme = savedTheme;
+                } else {
+                    document.documentElement.dataset.theme = "dark";
+                }
+            } catch (error) {
+                document.documentElement.dataset.theme = "dark";
+            }
+        })();
+    </script>
+</head>
+
+<body
+    id="veltrix-app"
+    class="app-body analytics-page"
+    data-page="analytics"
+    data-theme="dark"
+>
+
+    <!-- =========================================================
+         PAGE LOADER
+    ========================================================== -->
+    <div
+        class="page-loader"
+        id="pageLoader"
+        aria-hidden="true"
+    >
+        <div class="page-loader__inner">
+            <div class="loader-logo">
+                <span>V</span>
+            </div>
+
+            <div class="loader-spinner"></div>
+
+            <p>Loading Veltrix...</p>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         BACKGROUND EFFECTS
+    ========================================================== -->
+    <div class="app-background" aria-hidden="true">
+        <div class="background-grid"></div>
+        <div class="background-glow background-glow--one"></div>
+        <div class="background-glow background-glow--two"></div>
+        <div class="background-glow background-glow--three"></div>
+        <div class="background-noise"></div>
+    </div>
+
+
+    <!-- =========================================================
+         MOBILE SIDEBAR OVERLAY
+    ========================================================== -->
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        data-sidebar-overlay
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- =========================================================
+         TOAST CONTAINER
+    ========================================================== -->
+    <div
+        class="toast-container"
+        id="toastContainer"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+    <!-- =========================================================
+         APP SHELL
+    ========================================================== -->
+    <div class="app-shell">
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+        <aside
+            class="app-sidebar"
+            id="appSidebar"
+            data-sidebar
+            aria-label="Main navigation"
+        >
+
+            <!-- SIDEBAR HEADER -->
+            <div class="sidebar-header">
+
+                <a
+                    href="../index.html"
+                    class="brand"
+                    data-nav-link
+                    aria-label="Veltrix Dashboard"
+                >
+                    <span class="brand-mark">
+                        <span>V</span>
+                    </span>
+
+                    <span class="brand-content">
+                        <span class="brand-name">Veltrix</span>
+                        <span class="brand-subtitle">Business OS</span>
+                    </span>
+                </a>
+
+                <button
+                    type="button"
+                    class="sidebar-close mobile-only"
+                    data-sidebar-close
+                    aria-label="Close sidebar"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <!-- WORKSPACE -->
+            <div class="sidebar-workspace">
+
+                <button
+                    type="button"
+                    class="workspace-switcher"
+                    data-workspace-toggle
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+
+                    <span class="workspace-avatar">
+                        <i class="fa-solid fa-bolt"></i>
+                    </span>
+
+                    <span class="workspace-info">
+                        <span class="workspace-label">
+                            Workspace
+                        </span>
+
+                        <strong>
+                            Veltrix Studio
+                        </strong>
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down workspace-arrow"></i>
+
+                </button>
+
+                <div
+                    class="workspace-menu dropdown-menu"
+                    data-workspace-menu
+                >
+
+                    <button
+                        type="button"
+                        class="workspace-option is-active"
+                        data-workspace="Veltrix Studio"
+                    >
+                        <span class="workspace-option-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </span>
+
+                        <span>
+                            <strong>Veltrix Studio</strong>
+                            <small>Primary workspace</small>
+                        </span>
+
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="workspace-option"
+                        data-workspace="Growth Lab"
+                    >
+                        <span class="workspace-option-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </span>
+
+                        <span>
+                            <strong>Growth Lab</strong>
+                            <small>Marketing workspace</small>
+                        </span>
+
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="workspace-option"
+                        data-workspace="Demo Store"
+                    >
+                        <span class="workspace-option-icon">
+                            <i class="fa-solid fa-store"></i>
+                        </span>
+
+                        <span>
+                            <strong>Demo Store</strong>
+                            <small>E-commerce workspace</small>
+                        </span>
+
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+
+                    <div class="workspace-menu-divider"></div>
+
+                    <button
+                        type="button"
+                        class="workspace-option workspace-option--create"
+                        data-action="create-workspace"
+                    >
+                        <span class="workspace-option-icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </span>
+
+                        <span>
+                            <strong>Create workspace</strong>
+                            <small>Add another workspace</small>
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIDEBAR NAVIGATION -->
+            <nav class="sidebar-navigation">
+
+                <!-- OVERVIEW -->
+                <div class="sidebar-section">
+
+                    <div class="sidebar-section-title">
+                        <span>Overview</span>
+                    </div>
+
+                    <a
+                        href="../index.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="home"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-grid-2"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Dashboard
+                        </span>
+                    </a>
+
+                    <a
+                        href="analytics.html"
+                        class="sidebar-link is-active"
+                        data-nav-link
+                        data-page-link="analytics"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-chart-mixed"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Analytics
+                        </span>
+
+                        <span class="sidebar-link-badge">
+                            Live
+                        </span>
+                    </a>
+
+                    <a
+                        href="reports.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="reports"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-file-chart-column"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Reports
+                        </span>
+                    </a>
+
+                </div>
+
+
+                <!-- MANAGEMENT -->
+                <div class="sidebar-section">
+
+                    <div class="sidebar-section-title">
+                        <span>Management</span>
+                    </div>
+
+                    <a
+                        href="orders.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="orders"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Orders
+                        </span>
+
+                        <span class="sidebar-link-count">
+                            24
+                        </span>
+                    </a>
+
+                    <a
+                        href="customers.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="customers"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Customers
+                        </span>
+                    </a>
+
+                    <a
+                        href="products.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="products"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-box-open"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Products
+                        </span>
+                    </a>
+
+                    <a
+                        href="invoices.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="invoices"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Invoices
+                        </span>
+                    </a>
+
+                </div>
+
+
+                <!-- COMMUNICATION -->
+                <div class="sidebar-section">
+
+                    <div class="sidebar-section-title">
+                        <span>Communication</span>
+                    </div>
+
+                    <a
+                        href="messages.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="messages"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-messages"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Messages
+                        </span>
+
+                        <span class="sidebar-link-count">
+                            5
+                        </span>
+                    </a>
+
+                    <a
+                        href="notifications.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="notifications"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Notifications
+                        </span>
+
+                        <span class="sidebar-link-count">
+                            8
+                        </span>
+                    </a>
+
+                </div>
+
+
+                <!-- TOOLS -->
+                <div class="sidebar-section">
+
+                    <div class="sidebar-section-title">
+                        <span>Tools</span>
+                    </div>
+
+                    <a
+                        href="calculator.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="calculator"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-calculator"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            Calculator
+                        </span>
+                    </a>
+
+                    <a
+                        href="ai-workspace.html"
+                        class="sidebar-link"
+                        data-nav-link
+                        data-page-link="ai-workspace"
+                    >
+                        <span class="sidebar-link-icon">
+                            <i class="fa-solid fa-sparkles"></i>
+                        </span>
+
+                        <span class="sidebar-link-label">
+                            AI Workspace
+                        </span>
+
+                        <span class="sidebar-link-badge sidebar-link-badge--new">
+                            New
+                        </span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <!-- SIDEBAR BOTTOM -->
+            <div class="sidebar-bottom">
+
+                <a
+                    href="settings.html"
+                    class="sidebar-link"
+                    data-nav-link
+                    data-page-link="settings"
+                >
+                    <span class="sidebar-link-icon">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+
+                    <span class="sidebar-link-label">
+                        Settings
+                    </span>
+                </a>
+
+
+                <!-- UPGRADE CARD -->
+                <div class="sidebar-upgrade-card">
+
+                    <div class="upgrade-card-glow"></div>
+
+                    <div class="upgrade-card-icon">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+
+                    <div class="upgrade-card-content">
+
+                        <strong>
+                            Unlock more power
+                        </strong>
+
+                        <span>
+                            Upgrade your workspace
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="upgrade-card-button"
+                        data-modal-open="upgradeModal"
+                    >
+                        <i class="fa-solid fa-arrow-up"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- USER -->
+                <div class="sidebar-user">
+
+                    <button
+                        type="button"
+                        class="sidebar-user-button"
+                        data-user-menu-toggle
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+
+                        <span class="user-avatar">
+                            A
+                        </span>
+
+                        <span class="user-info">
+
+                            <strong>
+                                Alex Morgan
+                            </strong>
+
+                            <small>
+                                Administrator
+                            </small>
+
+                        </span>
+
+                        <i class="fa-solid fa-ellipsis"></i>
+
+                    </button>
+
+                    <div
+                        class="user-menu dropdown-menu"
+                        data-user-menu
+                    >
+
+                        <a
+                            href="profile.html"
+                            class="dropdown-item"
+                            data-nav-link
+                        >
+                            <i class="fa-regular fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+
+                        <a
+                            href="settings.html"
+                            class="dropdown-item"
+                            data-nav-link
+                        >
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <button
+                            type="button"
+                            class="dropdown-item dropdown-item--danger"
+                            data-action="logout"
+                        >
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Sign out</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN AREA
+        ====================================================== -->
+        <main class="app-main">
+
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+            <header class="app-topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button mobile-menu-button"
+                        data-sidebar-open
+                        aria-label="Open menu"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="topbar-icon-button sidebar-collapse-button"
+                        data-sidebar-collapse
+                        aria-label="Collapse sidebar"
+                    >
+                        <i class="fa-solid fa-sidebar"></i>
+                    </button>
+
+
+                    <div class="breadcrumb">
+
+                        <a
+                            href="../index.html"
+                            data-nav-link
+                        >
+                            Dashboard
+                        </a>
+
+                        <i class="fa-solid fa-chevron-right"></i>
+
+                        <span>
+                            Analytics
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <!-- GLOBAL SEARCH -->
+                    <button
+                        type="button"
+                        class="topbar-search-trigger"
+                        data-search-open
+                    >
+                        <span class="search-trigger-icon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+
+                        <span class="search-trigger-text">
+                            Search anything...
+                        </span>
+
+                        <kbd>
+                            Ctrl K
+                        </kbd>
+                    </button>
+
+
+                    <!-- QUICK CREATE -->
+                    <button
+                        type="button"
+                        class="topbar-action-button topbar-action-button--primary"
+                        data-modal-open="quickCreateModal"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Quick Create</span>
+                    </button>
+
+
+                    <!-- LANGUAGE -->
+                    <div
+                        class="topbar-dropdown language-dropdown"
+                        data-dropdown
+                    >
+
+                        <button
+                            type="button"
+                            class="topbar-icon-button"
+                            data-dropdown-toggle
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-label="Change language"
+                        >
+                            <i class="fa-solid fa-language"></i>
+                        </button>
+
+                        <div
+                            class="dropdown-menu language-menu"
+                            data-language-menu
+                        >
+
+                            <button
+                                type="button"
+                                class="language-option is-active"
+                                data-language="en"
+                            >
+                                <span>🇬🇧</span>
+                                <strong>English</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="fr"
+                            >
+                                <span>🇫🇷</span>
+                                <strong>French</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="es"
+                            >
+                                <span>🇪🇸</span>
+                                <strong>Spanish</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="it"
+                            >
+                                <span>🇮🇹</span>
+                                <strong>Italian</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="de"
+                            >
+                                <span>🇩🇪</span>
+                                <strong>German</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="pt"
+                            >
+                                <span>🇵🇹</span>
+                                <strong>Portuguese</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="nl"
+                            >
+                                <span>🇳🇱</span>
+                                <strong>Dutch</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="ru"
+                            >
+                                <span>🇷🇺</span>
+                                <strong>Russian</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="tr"
+                            >
+                                <span>🇹🇷</span>
+                                <strong>Turkish</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="ar"
+                            >
+                                <span>🇸🇦</span>
+                                <strong>Arabic</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="zh"
+                            >
+                                <span>🇨🇳</span>
+                                <strong>Chinese</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="ja"
+                            >
+                                <span>🇯🇵</span>
+                                <strong>Japanese</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="ko"
+                            >
+                                <span>🇰🇷</span>
+                                <strong>Korean</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="hi"
+                            >
+                                <span>🇮🇳</span>
+                                <strong>Hindi</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="id"
+                            >
+                                <span>🇮🇩</span>
+                                <strong>Indonesian</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="vi"
+                            >
+                                <span>🇻🇳</span>
+                                <strong>Vietnamese</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="pl"
+                            >
+                                <span>🇵🇱</span>
+                                <strong>Polish</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="sv"
+                            >
+                                <span>🇸🇪</span>
+                                <strong>Swedish</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="el"
+                            >
+                                <span>🇬🇷</span>
+                                <strong>Greek</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="cs"
+                            >
+                                <span>🇨🇿</span>
+                                <strong>Czech</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="language-option"
+                                data-language="da"
+                            >
+                                <span>🇩🇰</span>
+                                <strong>Danish</strong>
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- NOTIFICATIONS -->
+                    <div
+                        class="topbar-dropdown"
+                        data-dropdown
+                    >
+
+                        <button
+                            type="button"
+                            class="topbar-icon-button notification-button"
+                            data-dropdown-toggle
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-label="Notifications"
+                        >
+                            <i class="fa-regular fa-bell"></i>
+
+                            <span class="notification-dot">
+                                8
+                            </span>
+                        </button>
+
+                        <div
+                            class="dropdown-menu notification-menu"
+                            data-notification-menu
+                        >
+
+                            <div class="notification-header">
+
+                                <div>
+                                    <strong>Notifications</strong>
+                                    <span>8 unread</span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    data-action="mark-notifications-read"
+                                >
+                                    Mark all read
+                                </button>
+
+                            </div>
+
+                            <div class="notification-list">
+
+                                <button
+                                    type="button"
+                                    class="notification-item is-unread"
+                                    data-notification-id="1"
+                                >
+
+                                    <span class="notification-icon notification-icon--success">
+                                        <i class="fa-solid fa-check"></i>
+                                    </span>
+
+                                    <span class="notification-content">
+                                        <strong>Payment received</strong>
+                                        <small>
+                                            Order #VX-1048 was paid successfully.
+                                        </small>
+                                        <time>2 min ago</time>
+                                    </span>
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="notification-item is-unread"
+                                    data-notification-id="2"
+                                >
+
+                                    <span class="notification-icon notification-icon--purple">
+                                        <i class="fa-solid fa-chart-line"></i>
+                                    </span>
+
+                                    <span class="notification-content">
+                                        <strong>Revenue milestone</strong>
+                                        <small>
+                                            Monthly revenue crossed $50K.
+                                        </small>
+                                        <time>18 min ago</time>
+                                    </span>
+
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="notification-item is-unread"
+                                    data-notification-id="3"
+                                >
+
+                                    <span class="notification-icon notification-icon--warning">
+                                        <i class="fa-solid fa-triangle-exclamation"></i>
+                                    </span>
+
+                                    <span class="notification-content">
+                                        <strong>Inventory alert</strong>
+                                        <small>
+                                            3 products are running low.
+                                        </small>
+                                        <time>1 hour ago</time>
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                            <a
+                                href="notifications.html"
+                                class="notification-footer"
+                                data-nav-link
+                            >
+                                View all notifications
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- THEME -->
+                    <button
+                        type="button"
+                        class="topbar-icon-button"
+                        data-theme-toggle
+                        aria-label="Toggle theme"
+                    >
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 PAGE CONTENT
+            ================================================== -->
+            <div class="page-content">
+
+
+                <!-- =================================================
+                     PAGE HEADER
+                ================================================== -->
+                <section class="page-header analytics-header">
+
+                    <div class="page-header-main">
+
+                        <div class="page-header-icon page-header-icon--analytics">
+                            <i class="fa-solid fa-chart-mixed"></i>
+                        </div>
+
+                        <div>
+
+                            <div class="eyebrow">
+                                <span class="eyebrow-dot"></span>
+                                BUSINESS INTELLIGENCE
+                            </div>
+
+                            <h1>
+                                Analytics
+                            </h1>
+
+                            <p>
+                                Understand your business performance,
+                                discover trends, and make smarter decisions.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="page-header-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-button"
+                            data-action="refresh-analytics"
+                        >
+                            <i class="fa-solid fa-rotate"></i>
+                            <span>Refresh</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="primary-button"
+                            data-action="export-analytics"
+                        >
+                            <i class="fa-solid fa-download"></i>
+                            <span>Export Report</span>
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     ANALYTICS CONTROL BAR
+                ================================================== -->
+                <section class="analytics-control-bar">
+
+                    <div class="analytics-control-left">
+
+                        <div class="control-group">
+
+                            <label for="analyticsPeriod">
+                                Period
+                            </label>
+
+                            <select
+                                id="analyticsPeriod"
+                                class="custom-select"
+                                data-analytics-period
+                            >
+                                <option value="today">
+                                    Today
+                                </option>
+
+                                <option value="7days">
+                                    Last 7 days
+                                </option>
+
+                                <option value="30days" selected>
+                                    Last 30 days
+                                </option>
+
+                                <option value="90days">
+                                    Last 90 days
+                                </option>
+
+                                <option value="12months">
+                                    Last 12 months
+                                </option>
+
+                                <option value="year">
+                                    This year
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="control-group">
+
+                            <label for="analyticsCompare">
+                                Compare
+                            </label>
+
+                            <select
+                                id="analyticsCompare"
+                                class="custom-select"
+                                data-analytics-compare
+                            >
+                                <option value="previous">
+                                    Previous period
+                                </option>
+
+                                <option value="year">
+                                    Same period last year
+                                </option>
+
+                                <option value="none">
+                                    No comparison
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="analytics-control-right">
+
+                        <span class="live-status">
+                            <span class="live-status-dot"></span>
+                            Live data
+                        </span>
+
+                        <span
+                            class="last-updated"
+                            data-last-updated
+                        >
+                            Updated just now
+                        </span>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     KPI GRID
+                ================================================== -->
+                <section class="analytics-kpi-grid">
+
+
+                    <!-- REVENUE -->
+                    <article
+                        class="analytics-kpi-card"
+                        data-kpi-card
+                        data-value="58420"
+                    >
+
+                        <div class="kpi-card-top">
+
+                            <div class="kpi-card-label">
+                                Total Revenue
+                            </div>
+
+                            <button
+                                type="button"
+                                class="kpi-menu-button"
+                                data-action="kpi-menu"
+                                aria-label="Revenue options"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+                        <div class="kpi-card-value">
+                            $58,420
+                        </div>
+
+                        <div class="kpi-card-meta">
+
+                            <span class="growth-positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                18.4%
+                            </span>
+
+                            <span>
+                                vs previous period
+                            </span>
+
+                        </div>
+
+                        <div class="kpi-card-chart">
+
+                            <svg
+                                viewBox="0 0 300 80"
+                                preserveAspectRatio="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M0,65 C20,61 28,54 45,57 C62,60 67,45 84,49 C101,53 108,36 124,40 C141,44 150,27 166,32 C181,37 189,22 205,26 C220,30 235,13 249,19 C265,25 276,8 300,12"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    vector-effect="non-scaling-stroke"
+                                />
+                            </svg>
+
+                        </div>
+
+                        <div class="kpi-card-icon kpi-card-icon--revenue">
+                            <i class="fa-solid fa-dollar-sign"></i>
+                        </div>
+
+                    </article>
+
+
+                    <!-- ORDERS -->
+                    <article
+                        class="analytics-kpi-card"
+                        data-kpi-card
+                        data-value="1284"
+                    >
+
+                        <div class="kpi-card-top">
+
+                            <div class="kpi-card-label">
+                                Total Orders
+                            </div>
+
+                            <button
+                                type="button"
+                                class="kpi-menu-button"
+                                data-action="kpi-menu"
+                                aria-label="Orders options"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+                        <div class="kpi-card-value">
+                            1,284
+                        </div>
+
+                        <div class="kpi-card-meta">
+
+                            <span class="growth-positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                12.8%
+                            </span>
+
+                            <span>
+                                vs previous period
+                            </span>
+
+                        </div>
+
+                        <div class="kpi-card-chart">
+
+                            <svg
+                                viewBox="0 0 300 80"
+                                preserveAspectRatio="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M0,60 C22,67 35,43 51,49 C68,55 78,40 94,44 C110,48 122,26 139,35 C157,44 166,31 181,34 C198,37 209,15 224,23 C241,31 256,18 272,20 C284,21 292,8 300,10"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    vector-effect="non-scaling-stroke"
+                                />
+                            </svg>
+
+                        </div>
+
+                        <div class="kpi-card-icon kpi-card-icon--orders">
+                            <i class="fa-solid fa-bag-shopping"></i>
+                        </div>
+
+                    </article>
+
+
+                    <!-- CUSTOMERS -->
+                    <article
+                        class="analytics-kpi-card"
+                        data-kpi-card
+                        data-value="8462"
+                    >
+
+                        <div class="kpi-card-top">
+
+                            <div class="kpi-card-label">
+                                Active Customers
+                            </div>
+
+                            <button
+                                type="button"
+                                class="kpi-menu-button"
+                                data-action="kpi-menu"
+                                aria-label="Customers options"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+                        <div class="kpi-card-value">
+                            8,462
+                        </div>
+
+                        <div class="kpi-card-meta">
+
+                            <span class="growth-positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                9.6%
+                            </span>
+
+                            <span>
+                                vs previous period
+                            </span>
+
+                        </div>
+
+                        <div class="kpi-card-chart">
+
+                            <svg
+                                viewBox="0 0 300 80"
+                                preserveAspectRatio="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M0,70 C18,67 30,59 47,63 C64,67 75,48 91,52 C108,56 120,41 136,45 C151,49 165,32 181,36 C197,40 208,24 225,29 C242,34 257,16 273,20 C285,23 292,12 300,13"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    vector-effect="non-scaling-stroke"
+                                />
+                            </svg>
+
+                        </div>
+
+                        <div class="kpi-card-icon kpi-card-icon--customers">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                    </article>
+
+
+                    <!-- CONVERSION -->
+                    <article
+                        class="analytics-kpi-card"
+                        data-kpi-card
+                        data-value="7.84"
+                    >
+
+                        <div class="kpi-card-top">
+
+                            <div class="kpi-card-label">
+                                Conversion Rate
+                            </div>
+
+                            <button
+                                type="button"
+                                class="kpi-menu-button"
+                                data-action="kpi-menu"
+                                aria-label="Conversion options"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+                        <div class="kpi-card-value">
+                            7.84%
+                        </div>
+
+                        <div class="kpi-card-meta">
+
+                            <span class="growth-positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                2.14%
+                            </span>
+
+                            <span>
+                                vs previous period
+                            </span>
+
+                        </div>
+
+                        <div class="kpi-card-chart">
+
+                            <svg
+                                viewBox="0 0 300 80"
+                                preserveAspectRatio="none"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M0,64 C20,59 33,61 49,56 C64,51 74,54 89,45 C106,35 116,45 131,38 C148,30 160,33 175,27 C191,21 205,30 220,22 C237,15 252,19 267,12 C281,7 292,11 300,5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="3"
+                                    vector-effect="non-scaling-stroke"
+                                />
+                            </svg>
+
+                        </div>
+
+                        <div class="kpi-card-icon kpi-card-icon--conversion">
+                            <i class="fa-solid fa-percent"></i>
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     REVENUE OVERVIEW
+                ================================================== -->
+                <section class="analytics-main-grid">
+
+
+                    <article class="dashboard-card analytics-revenue-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <div class="card-title-row">
+
+                                    <h2>
+                                        Revenue Overview
+                                    </h2>
+
+                                    <span class="status-pill status-pill--success">
+                                        <span></span>
+                                        Growing
+                                    </span>
+
+                                </div>
+
+                                <p>
+                                    Revenue performance across the selected period.
+                                </p>
+
+                            </div>
+
+
+                            <div class="card-header-actions">
+
+                                <button
+                                    type="button"
+                                    class="icon-button"
+                                    data-action="download-chart"
+                                    aria-label="Download chart"
+                                >
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="icon-button"
+                                    data-action="expand-chart"
+                                    aria-label="Expand chart"
+                                >
+                                    <i class="fa-solid fa-expand"></i>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="icon-button"
+                                    data-action="card-menu"
+                                    aria-label="More options"
+                                >
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="revenue-summary">
+
+                            <div class="revenue-summary-main">
+
+                                <span>
+                                    Net Revenue
+                                </span>
+
+                                <strong>
+                                    $58,420.00
+                                </strong>
+
+                                <small class="growth-positive">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    18.4% from last period
+                                </small>
+
+                            </div>
+
+
+                            <div class="revenue-summary-items">
+
+                                <div class="summary-mini-item">
+
+                                    <span class="summary-mini-dot summary-mini-dot--revenue"></span>
+
+                                    <div>
+                                        <strong>
+                                            $68,240
+                                        </strong>
+
+                                        <small>
+                                            Gross revenue
+                                        </small>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="summary-mini-item">
+
+                                    <span class="summary-mini-dot summary-mini-dot--refund"></span>
+
+                                    <div>
+                                        <strong>
+                                            $9,820
+                                        </strong>
+
+                                        <small>
+                                            Refunds & fees
+                                        </small>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-wrapper chart-wrapper--large">
+
+                            <canvas
+                                id="revenueChart"
+                                data-chart="revenue"
+                                aria-label="Revenue chart"
+                            ></canvas>
+
+                        </div>
+
+
+                        <div class="chart-legend">
+
+                            <button
+                                type="button"
+                                class="chart-legend-item is-active"
+                                data-chart-toggle="revenue"
+                            >
+                                <span class="legend-dot"></span>
+                                Revenue
+                            </button>
+
+                            <button
+                                type="button"
+                                class="chart-legend-item is-active"
+                                data-chart-toggle="orders"
+                            >
+                                <span class="legend-dot legend-dot--secondary"></span>
+                                Orders
+                            </button>
+
+                            <span class="chart-legend-spacer"></span>
+
+                            <span>
+                                Updated today
+                            </span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PERFORMANCE SCORE -->
+                    <article class="dashboard-card performance-score-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Performance
+                                </h2>
+
+                                <p>
+                                    Overall business health
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="performance-score">
+
+                            <div class="score-ring">
+
+                                <svg
+                                    viewBox="0 0 180 180"
+                                    aria-hidden="true"
+                                >
+
+                                    <circle
+                                        cx="90"
+                                        cy="90"
+                                        r="70"
+                                        class="score-ring-bg"
+                                    ></circle>
+
+                                    <circle
+                                        cx="90"
+                                        cy="90"
+                                        r="70"
+                                        class="score-ring-progress"
+                                        stroke-dasharray="440"
+                                        stroke-dashoffset="61"
+                                    ></circle>
+
+                                </svg>
+
+                                <div class="score-ring-content">
+
+                                    <strong>
+                                        86
+                                    </strong>
+
+                                    <span>
+                                        / 100
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="score-label">
+                                Excellent
+                            </div>
+
+                            <p>
+                                Your business is performing above the average
+                                benchmark for this period.
+                            </p>
+
+                        </div>
+
+
+                        <div class="performance-metrics">
+
+                            <div class="performance-metric">
+
+                                <div class="metric-heading">
+                                    <span>Revenue</span>
+                                    <strong>92%</strong>
+                                </div>
+
+                                <div class="metric-progress">
+                                    <span
+                                        style="width: 92%;"
+                                    ></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="performance-metric">
+
+                                <div class="metric-heading">
+                                    <span>Customers</span>
+                                    <strong>84%</strong>
+                                </div>
+
+                                <div class="metric-progress">
+                                    <span
+                                        style="width: 84%;"
+                                    ></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="performance-metric">
+
+                                <div class="metric-heading">
+                                    <span>Orders</span>
+                                    <strong>88%</strong>
+                                </div>
+
+                                <div class="metric-progress">
+                                    <span
+                                        style="width: 88%;"
+                                    ></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="performance-metric">
+
+                                <div class="metric-heading">
+                                    <span>Retention</span>
+                                    <strong>79%</strong>
+                                </div>
+
+                                <div class="metric-progress">
+                                    <span
+                                        style="width: 79%;"
+                                    ></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     TRAFFIC + CHANNELS
+                ================================================== -->
+                <section class="analytics-secondary-grid">
+
+
+                    <!-- TRAFFIC -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Traffic & Sessions
+                                </h2>
+
+                                <p>
+                                    Visitors and engagement trends
+                                </p>
+
+                            </div>
+
+                            <div class="card-header-actions">
+
+                                <span class="trend-value">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                    14.7%
+                                </span>
+
+                                <button
+                                    type="button"
+                                    class="icon-button"
+                                    data-action="card-menu"
+                                >
+                                    <i class="fa-solid fa-ellipsis"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="traffic-stat-row">
+
+                            <div class="traffic-stat">
+
+                                <span>
+                                    Sessions
+                                </span>
+
+                                <strong>
+                                    182.4K
+                                </strong>
+
+                            </div>
+
+                            <div class="traffic-stat">
+
+                                <span>
+                                    Unique visitors
+                                </span>
+
+                                <strong>
+                                    94.8K
+                                </strong>
+
+                            </div>
+
+                            <div class="traffic-stat">
+
+                                <span>
+                                    Avg. session
+                                </span>
+
+                                <strong>
+                                    04:38
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-wrapper">
+
+                            <canvas
+                                id="trafficChart"
+                                data-chart="traffic"
+                                aria-label="Traffic chart"
+                            ></canvas>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- ACQUISITION -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Acquisition Channels
+                                </h2>
+
+                                <p>
+                                    Where your customers come from
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="acquisition-content">
+
+                            <div class="donut-wrapper">
+
+                                <canvas
+                                    id="acquisitionChart"
+                                    data-chart="acquisition"
+                                    aria-label="Acquisition channels chart"
+                                ></canvas>
+
+                                <div class="donut-center">
+
+                                    <strong>
+                                        100%
+                                    </strong>
+
+                                    <span>
+                                        Traffic
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="acquisition-list">
+
+                                <div class="acquisition-item">
+
+                                    <span class="acquisition-marker marker--one"></span>
+
+                                    <div class="acquisition-name">
+                                        <strong>Organic Search</strong>
+                                        <small>42,184 visitors</small>
+                                    </div>
+
+                                    <strong class="acquisition-value">
+                                        42.4%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="acquisition-item">
+
+                                    <span class="acquisition-marker marker--two"></span>
+
+                                    <div class="acquisition-name">
+                                        <strong>Direct</strong>
+                                        <small>28,740 visitors</small>
+                                    </div>
+
+                                    <strong class="acquisition-value">
+                                        28.9%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="acquisition-item">
+
+                                    <span class="acquisition-marker marker--three"></span>
+
+                                    <div class="acquisition-name">
+                                        <strong>Social Media</strong>
+                                        <small>17,842 visitors</small>
+                                    </div>
+
+                                    <strong class="acquisition-value">
+                                        17.9%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="acquisition-item">
+
+                                    <span class="acquisition-marker marker--four"></span>
+
+                                    <div class="acquisition-name">
+                                        <strong>Referral</strong>
+                                        <small>8,960 visitors</small>
+                                    </div>
+
+                                    <strong class="acquisition-value">
+                                        9.0%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="acquisition-item">
+
+                                    <span class="acquisition-marker marker--five"></span>
+
+                                    <div class="acquisition-name">
+                                        <strong>Other</strong>
+                                        <small>1,074 visitors</small>
+                                    </div>
+
+                                    <strong class="acquisition-value">
+                                        1.8%
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     CUSTOMER ANALYTICS
+                ================================================== -->
+                <section class="analytics-customer-grid">
+
+
+                    <!-- CUSTOMER GROWTH -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Customer Growth
+                                </h2>
+
+                                <p>
+                                    New vs returning customers
+                                </p>
+
+                            </div>
+
+                            <div class="segmented-control">
+
+                                <button
+                                    type="button"
+                                    class="is-active"
+                                    data-customer-view="monthly"
+                                >
+                                    Monthly
+                                </button>
+
+                                <button
+                                    type="button"
+                                    data-customer-view="weekly"
+                                >
+                                    Weekly
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="customer-growth-summary">
+
+                            <div>
+
+                                <span>
+                                    New customers
+                                </span>
+
+                                <strong>
+                                    2,846
+                                </strong>
+
+                                <small class="growth-positive">
+                                    +16.2%
+                                </small>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Returning
+                                </span>
+
+                                <strong>
+                                    5,616
+                                </strong>
+
+                                <small class="growth-positive">
+                                    +8.4%
+                                </small>
+
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Retention
+                                </span>
+
+                                <strong>
+                                    79.4%
+                                </strong>
+
+                                <small class="growth-positive">
+                                    +4.8%
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="chart-wrapper">
+
+                            <canvas
+                                id="customerGrowthChart"
+                                data-chart="customer-growth"
+                                aria-label="Customer growth chart"
+                            ></canvas>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CUSTOMER SEGMENTS -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Customer Segments
+                                </h2>
+
+                                <p>
+                                    Audience distribution
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="segment-list">
+
+                            <div class="segment-item">
+
+                                <div class="segment-icon segment-icon--vip">
+                                    <i class="fa-solid fa-crown"></i>
+                                </div>
+
+                                <div class="segment-info">
+
+                                    <div class="segment-heading">
+                                        <strong>VIP Customers</strong>
+                                        <span>12.8%</span>
+                                    </div>
+
+                                    <div class="segment-progress">
+                                        <span style="width: 82%;"></span>
+                                    </div>
+
+                                    <small>
+                                        1,082 customers
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="segment-item">
+
+                                <div class="segment-icon segment-icon--active">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+
+                                <div class="segment-info">
+
+                                    <div class="segment-heading">
+                                        <strong>Active</strong>
+                                        <span>36.4%</span>
+                                    </div>
+
+                                    <div class="segment-progress">
+                                        <span style="width: 68%;"></span>
+                                    </div>
+
+                                    <small>
+                                        3,078 customers
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="segment-item">
+
+                                <div class="segment-icon segment-icon--regular">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div class="segment-info">
+
+                                    <div class="segment-heading">
+                                        <strong>Regular</strong>
+                                        <span>39.7%</span>
+                                    </div>
+
+                                    <div class="segment-progress">
+                                        <span style="width: 54%;"></span>
+                                    </div>
+
+                                    <small>
+                                        3,358 customers
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="segment-item">
+
+                                <div class="segment-icon segment-icon--inactive">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+
+                                <div class="segment-info">
+
+                                    <div class="segment-heading">
+                                        <strong>At Risk</strong>
+                                        <span>11.1%</span>
+                                    </div>
+
+                                    <div class="segment-progress">
+                                        <span style="width: 31%;"></span>
+                                    </div>
+
+                                    <small>
+                                        944 customers
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     PRODUCT PERFORMANCE
+                ================================================== -->
+                <section class="dashboard-card product-performance-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <h2>
+                                Product Performance
+                            </h2>
+
+                            <p>
+                                Your highest-performing products during this period.
+                            </p>
+
+                        </div>
+
+                        <div class="card-header-actions">
+
+                            <button
+                                type="button"
+                                class="secondary-button secondary-button--small"
+                                data-action="view-all-products"
+                            >
+                                View all
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table class="data-table analytics-product-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Product
+                                    </th>
+
+                                    <th>
+                                        Category
+                                    </th>
+
+                                    <th>
+                                        Sales
+                                    </th>
+
+                                    <th>
+                                        Revenue
+                                    </th>
+
+                                    <th>
+                                        Conversion
+                                    </th>
+
+                                    <th>
+                                        Trend
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="table-product">
+
+                                            <span class="product-thumbnail">
+                                                <i class="fa-solid fa-cube"></i>
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Aurora Pro
+                                                </strong>
+
+                                                <small>
+                                                    SKU-AVP-001
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Software
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            428
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            $18,420
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        12.8%
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-trend table-trend--positive">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            24.6%
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status table-status--success">
+                                            Top seller
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="table-product">
+
+                                            <span class="product-thumbnail">
+                                                <i class="fa-solid fa-layer-group"></i>
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Nexus Pack
+                                                </strong>
+
+                                                <small>
+                                                    SKU-NXP-042
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Productivity
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            316
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            $12,840
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        10.4%
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-trend table-trend--positive">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            18.2%
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status table-status--success">
+                                            Growing
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="table-product">
+
+                                            <span class="product-thumbnail">
+                                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Nova AI
+                                                </strong>
+
+                                                <small>
+                                                    SKU-NVA-108
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        AI Tools
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            274
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            $10,960
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        9.8%
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-trend table-trend--positive">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            13.9%
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status table-status--info">
+                                            Popular
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="table-product">
+
+                                            <span class="product-thumbnail">
+                                                <i class="fa-solid fa-shield-halved"></i>
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Secure Plus
+                                                </strong>
+
+                                                <small>
+                                                    SKU-SCP-205
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Security
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            188
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            $8,460
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        8.1%
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-trend table-trend--neutral">
+                                            <i class="fa-solid fa-minus"></i>
+                                            0.8%
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status table-status--warning">
+                                            Stable
+                                        </span>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+
+                                        <div class="table-product">
+
+                                            <span class="product-thumbnail">
+                                                <i class="fa-solid fa-palette"></i>
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Creator Kit
+                                                </strong>
+
+                                                <small>
+                                                    SKU-CRT-331
+                                                </small>
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        Design
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            142
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        <strong>
+                                            $6,240
+                                        </strong>
+                                    </td>
+
+                                    <td>
+                                        6.7%
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-trend table-trend--negative">
+                                            <i class="fa-solid fa-arrow-down"></i>
+                                            4.2%
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status table-status--danger">
+                                            Needs attention
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     REGIONAL + DEVICE ANALYTICS
+                ================================================== -->
+                <section class="analytics-tertiary-grid">
+
+
+                    <!-- REGIONAL -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Regional Performance
+                                </h2>
+
+                                <p>
+                                    Revenue by market
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="regional-list">
+
+                            <div class="regional-item">
+
+                                <div class="regional-flag">
+                                    🇺🇸
+                                </div>
+
+                                <div class="regional-info">
+
+                                    <div class="regional-heading">
+
+                                        <strong>
+                                            United States
+                                        </strong>
+
+                                        <span>
+                                            $18,420
+                                        </span>
+
+                                    </div>
+
+                                    <div class="regional-progress">
+                                        <span style="width: 86%;"></span>
+                                    </div>
+
+                                    <small>
+                                        31.5% of total revenue
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="regional-item">
+
+                                <div class="regional-flag">
+                                    🇬🇧
+                                </div>
+
+                                <div class="regional-info">
+
+                                    <div class="regional-heading">
+
+                                        <strong>
+                                            United Kingdom
+                                        </strong>
+
+                                        <span>
+                                            $10,840
+                                        </span>
+
+                                    </div>
+
+                                    <div class="regional-progress">
+                                        <span style="width: 64%;"></span>
+                                    </div>
+
+                                    <small>
+                                        18.6% of total revenue
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="regional-item">
+
+                                <div class="regional-flag">
+                                    🇩🇪
+                                </div>
+
+                                <div class="regional-info">
+
+                                    <div class="regional-heading">
+
+                                        <strong>
+                                            Germany
+                                        </strong>
+
+                                        <span>
+                                            $7,920
+                                        </span>
+
+                                    </div>
+
+                                    <div class="regional-progress">
+                                        <span style="width: 48%;"></span>
+                                    </div>
+
+                                    <small>
+                                        13.5% of total revenue
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="regional-item">
+
+                                <div class="regional-flag">
+                                    🇫🇷
+                                </div>
+
+                                <div class="regional-info">
+
+                                    <div class="regional-heading">
+
+                                        <strong>
+                                            France
+                                        </strong>
+
+                                        <span>
+                                            $6,480
+                                        </span>
+
+                                    </div>
+
+                                    <div class="regional-progress">
+                                        <span style="width: 39%;"></span>
+                                    </div>
+
+                                    <small>
+                                        11.1% of total revenue
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="regional-item">
+
+                                <div class="regional-flag">
+                                    🌍
+                                </div>
+
+                                <div class="regional-info">
+
+                                    <div class="regional-heading">
+
+                                        <strong>
+                                            Other markets
+                                        </strong>
+
+                                        <span>
+                                            $14,760
+                                        </span>
+
+                                    </div>
+
+                                    <div class="regional-progress">
+                                        <span style="width: 71%;"></span>
+                                    </div>
+
+                                    <small>
+                                        25.3% of total revenue
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- DEVICES -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Devices
+                                </h2>
+
+                                <p>
+                                    Customer device usage
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="device-overview">
+
+                            <div class="device-main">
+
+                                <div class="device-circle">
+
+                                    <i class="fa-solid fa-desktop"></i>
+
+                                    <strong>
+                                        52%
+                                    </strong>
+
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        Desktop
+                                    </strong>
+
+                                    <span>
+                                        94.8K sessions
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="device-list">
+
+                                <div class="device-item">
+
+                                    <div class="device-item-name">
+
+                                        <span>
+                                            <i class="fa-solid fa-desktop"></i>
+                                        </span>
+
+                                        <strong>
+                                            Desktop
+                                        </strong>
+
+                                    </div>
+
+                                    <strong>
+                                        52%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="device-item">
+
+                                    <div class="device-item-name">
+
+                                        <span>
+                                            <i class="fa-solid fa-mobile-screen"></i>
+                                        </span>
+
+                                        <strong>
+                                            Mobile
+                                        </strong>
+
+                                    </div>
+
+                                    <strong>
+                                        38%
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="device-item">
+
+                                    <div class="device-item-name">
+
+                                        <span>
+                                            <i class="fa-solid fa-tablet-screen-button"></i>
+                                        </span>
+
+                                        <strong>
+                                            Tablet
+                                        </strong>
+
+                                    </div>
+
+                                    <strong>
+                                        10%
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="device-insight">
+
+                            <span class="insight-icon">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Insight
+                                </strong>
+
+                                <p>
+                                    Mobile traffic increased by 21.4%
+                                    compared with the previous period.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     GOALS
+                ================================================== -->
+                <section class="analytics-goals-grid">
+
+
+                    <!-- REVENUE GOAL -->
+                    <article class="goal-card goal-card--primary">
+
+                        <div class="goal-card-background"></div>
+
+                        <div class="goal-card-content">
+
+                            <div class="goal-card-header">
+
+                                <div>
+
+                                    <span class="goal-eyebrow">
+                                        MONTHLY TARGET
+                                    </span>
+
+                                    <h2>
+                                        Revenue Goal
+                                    </h2>
+
+                                </div>
+
+                                <span class="goal-icon">
+                                    <i class="fa-solid fa-bullseye"></i>
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-value-row">
+
+                                <strong>
+                                    $58,420
+                                </strong>
+
+                                <span>
+                                    / $75,000
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-progress">
+
+                                <span
+                                    style="width: 77.9%;"
+                                ></span>
+
+                            </div>
+
+
+                            <div class="goal-footer">
+
+                                <span>
+                                    77.9% completed
+                                </span>
+
+                                <strong>
+                                    $16,580 remaining
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- ORDERS GOAL -->
+                    <article class="goal-card">
+
+                        <div class="goal-card-content">
+
+                            <div class="goal-card-header">
+
+                                <div>
+
+                                    <span class="goal-eyebrow">
+                                        ORDER TARGET
+                                    </span>
+
+                                    <h2>
+                                        Monthly Orders
+                                    </h2>
+
+                                </div>
+
+                                <span class="goal-icon goal-icon--green">
+                                    <i class="fa-solid fa-cart-shopping"></i>
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-value-row">
+
+                                <strong>
+                                    1,284
+                                </strong>
+
+                                <span>
+                                    / 1,500
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-progress goal-progress--green">
+
+                                <span
+                                    style="width: 85.6%;"
+                                ></span>
+
+                            </div>
+
+
+                            <div class="goal-footer">
+
+                                <span>
+                                    85.6% completed
+                                </span>
+
+                                <strong>
+                                    216 remaining
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CUSTOMER GOAL -->
+                    <article class="goal-card">
+
+                        <div class="goal-card-content">
+
+                            <div class="goal-card-header">
+
+                                <div>
+
+                                    <span class="goal-eyebrow">
+                                        CUSTOMER TARGET
+                                    </span>
+
+                                    <h2>
+                                        New Customers
+                                    </h2>
+
+                                </div>
+
+                                <span class="goal-icon goal-icon--blue">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-value-row">
+
+                                <strong>
+                                    2,846
+                                </strong>
+
+                                <span>
+                                    / 3,200
+                                </span>
+
+                            </div>
+
+
+                            <div class="goal-progress goal-progress--blue">
+
+                                <span
+                                    style="width: 88.9%;"
+                                ></span>
+
+                            </div>
+
+
+                            <div class="goal-footer">
+
+                                <span>
+                                    88.9% completed
+                                </span>
+
+                                <strong>
+                                    354 remaining
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     INSIGHTS
+                ================================================== -->
+                <section class="dashboard-card analytics-insights-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <div class="card-title-row">
+
+                                <h2>
+                                    Smart Insights
+                                </h2>
+
+                                <span class="ai-badge">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                    AI powered
+                                </span>
+
+                            </div>
+
+                            <p>
+                                Automated observations based on your current data.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="ai-workspace.html"
+                            class="secondary-button secondary-button--small"
+                            data-nav-link
+                        >
+                            Open AI Workspace
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div class="insights-grid">
+
+
+                        <article class="insight-card insight-card--positive">
+
+                            <div class="insight-card-icon">
+                                <i class="fa-solid fa-arrow-trend-up"></i>
+                            </div>
+
+                            <div class="insight-card-content">
+
+                                <span>
+                                    Revenue opportunity
+                                </span>
+
+                                <h3>
+                                    Your conversion rate is accelerating
+                                </h3>
+
+                                <p>
+                                    Conversion increased by 2.14% this period.
+                                    Maintaining the current traffic level could
+                                    generate an additional $8.2K this month.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    data-action="insight-details"
+                                >
+                                    View analysis
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="insight-card insight-card--warning">
+
+                            <div class="insight-card-icon">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+
+                            <div class="insight-card-content">
+
+                                <span>
+                                    Customer retention
+                                </span>
+
+                                <h3>
+                                    944 customers may be at risk
+                                </h3>
+
+                                <p>
+                                    Customers without activity for 30+ days
+                                    represent 11.1% of your audience.
+                                    Consider launching a retention campaign.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    data-action="insight-details"
+                                >
+                                    Explore segment
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="insight-card insight-card--info">
+
+                            <div class="insight-card-icon">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+
+                            <div class="insight-card-content">
+
+                                <span>
+                                    Mobile growth
+                                </span>
+
+                                <h3>
+                                    Mobile traffic is growing faster
+                                </h3>
+
+                                <p>
+                                    Mobile sessions increased by 21.4%.
+                                    Optimizing your mobile checkout could
+                                    improve conversion further.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    data-action="insight-details"
+                                >
+                                    See recommendations
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     ACTIVITY
+                ================================================== -->
+                <section class="analytics-bottom-grid">
+
+
+                    <!-- RECENT ACTIVITY -->
+                    <article class="dashboard-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Analytics Activity
+                                </h2>
+
+                                <p>
+                                    Recent changes and generated reports
+                                </p>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="icon-button"
+                                data-action="card-menu"
+                            >
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button>
+
+                        </div>
+
+
+                        <div class="analytics-timeline">
+
+                            <div class="timeline-item">
+
+                                <span class="timeline-icon timeline-icon--blue">
+                                    <i class="fa-solid fa-file-chart-column"></i>
+                                </span>
+
+                                <div class="timeline-content">
+
+                                    <strong>
+                                        Monthly analytics report generated
+                                    </strong>
+
+                                    <p>
+                                        The September performance report is ready.
+                                    </p>
+
+                                    <time>
+                                        Today, 18:42
+                                    </time>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="timeline-action"
+                                    data-action="download-report"
+                                >
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="timeline-item">
+
+                                <span class="timeline-icon timeline-icon--green">
+                                    <i class="fa-solid fa-chart-line"></i>
+                                </span>
+
+                                <div class="timeline-content">
+
+                                    <strong>
+                                        Revenue target updated
+                                    </strong>
+
+                                    <p>
+                                        Monthly revenue target changed to $75,000.
+                                    </p>
+
+                                    <time>
+                                        Today, 15:24
+                                    </time>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="timeline-action"
+                                    data-action="view-goal"
+                                >
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="timeline-item">
+
+                                <span class="timeline-icon timeline-icon--purple">
+                                    <i class="fa-solid fa-users"></i>
+                                </span>
+
+                                <div class="timeline-content">
+
+                                    <strong>
+                                        Customer segment refreshed
+                                    </strong>
+
+                                    <p>
+                                        VIP and at-risk segments were recalculated.
+                                    </p>
+
+                                    <time>
+                                        Yesterday, 21:08
+                                    </time>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="timeline-action"
+                                    data-action="view-segment"
+                                >
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="timeline-item">
+
+                                <span class="timeline-icon timeline-icon--orange">
+                                    <i class="fa-solid fa-filter"></i>
+                                </span>
+
+                                <div class="timeline-content">
+
+                                    <strong>
+                                        Analytics filter changed
+                                    </strong>
+
+                                    <p>
+                                        Reporting period switched to the last 30 days.
+                                    </p>
+
+                                    <time>
+                                        Yesterday, 18:32
+                                    </time>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="timeline-action"
+                                    data-action="view-filter"
+                                >
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- EXPORT CENTER -->
+                    <article class="dashboard-card export-center-card">
+
+                        <div class="dashboard-card-header">
+
+                            <div>
+
+                                <h2>
+                                    Export Center
+                                </h2>
+
+                                <p>
+                                    Download your analytics data
+                                </p>
+
+                            </div>
+
+                            <span class="export-icon">
+                                <i class="fa-solid fa-cloud-arrow-down"></i>
+                            </span>
+
+                        </div>
+
+
+                        <div class="export-options">
+
+                            <button
+                                type="button"
+                                class="export-option"
+                                data-export-format="pdf"
+                            >
+
+                                <span class="export-option-icon export-option-icon--pdf">
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </span>
+
+                                <span class="export-option-content">
+
+                                    <strong>
+                                        PDF Report
+                                    </strong>
+
+                                    <small>
+                                        Presentation-ready report
+                                    </small>
+
+                                </span>
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="export-option"
+                                data-export-format="csv"
+                            >
+
+                                <span class="export-option-icon export-option-icon--csv">
+                                    <i class="fa-solid fa-file-csv"></i>
+                                </span>
+
+                                <span class="export-option-content">
+
+                                    <strong>
+                                        CSV Data
+                                    </strong>
+
+                                    <small>
+                                        Raw analytics data
+                                    </small>
+
+                                </span>
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="export-option"
+                                data-export-format="xlsx"
+                            >
+
+                                <span class="export-option-icon export-option-icon--xlsx">
+                                    <i class="fa-solid fa-file-excel"></i>
+                                </span>
+
+                                <span class="export-option-content">
+
+                                    <strong>
+                                        Excel Workbook
+                                    </strong>
+
+                                    <small>
+                                        Detailed spreadsheet
+                                    </small>
+
+                                </span>
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="export-option"
+                                data-export-format="json"
+                            >
+
+                                <span class="export-option-icon export-option-icon--json">
+                                    <i class="fa-solid fa-code"></i>
+                                </span>
+
+                                <span class="export-option-content">
+
+                                    <strong>
+                                        JSON Data
+                                    </strong>
+
+                                    <small>
+                                        Developer-friendly format
+                                    </small>
+
+                                </span>
+
+                                <i class="fa-solid fa-chevron-right"></i>
+
+                            </button>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+                <!-- =================================================
+                     FINAL CTA
+                ================================================== -->
+                <section class="analytics-cta">
+
+                    <div class="analytics-cta-glow"></div>
+
+                    <div class="analytics-cta-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div class="analytics-cta-content">
+
+                        <span>
+                            WANT MORE?
+                        </span>
+
+                        <h2>
+                            Turn your analytics into action.
+                        </h2>
+
+                        <p>
+                            Use Veltrix AI Workspace to discover opportunities,
+                            generate reports, and build smarter business strategies.
+                        </p>
+
+                    </div>
+
+                    <a
+                        href="ai-workspace.html"
+                        class="primary-button"
+                        data-nav-link
+                    >
+                        Explore AI Workspace
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </section>
+
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+                <footer class="app-footer">
+
+                    <div class="footer-left">
+
+                        <span>
+                            © 2026 Veltrix
+                        </span>
+
+                        <span class="footer-separator">
+                            •
+                        </span>
+
+                        <span>
+                            Business Management Platform
+                        </span>
+
+                    </div>
+
+
+                    <div class="footer-right">
+
+                        <a href="#" data-action="help">
+                            Help Center
+                        </a>
+
+                        <a href="#" data-action="documentation">
+                            Documentation
+                        </a>
+
+                        <a href="#" data-action="status">
+                            System Status
+                        </a>
+
+                    </div>
+
+                </footer>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         GLOBAL SEARCH MODAL
+    ========================================================== -->
+    <div
+        class="modal"
+        id="globalSearchModal"
+        data-modal
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-backdrop"
+            data-modal-close
+        ></div>
+
+        <div
+            class="modal-dialog search-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="globalSearchTitle"
+        >
+
+            <div class="search-modal">
+
+                <div class="search-modal-header">
+
+                    <div class="search-modal-input-wrapper">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="search"
+                            id="globalSearchInput"
+                            placeholder="Search pages, orders, customers, products..."
+                            autocomplete="off"
+                            data-global-search-input
+                        >
+
+                        <kbd>
+                            ESC
+                        </kbd>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="modal-close"
+                        data-modal-close
+                        aria-label="Close search"
+                    >
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="search-modal-body">
+
+                    <div
+                        class="search-results"
+                        data-search-results
+                    >
+
+                        <div class="search-empty">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <strong>
+                                Search Veltrix
+                            </strong>
+
+                            <p>
+                                Find pages, orders, customers, products and more.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="search-modal-footer">
+
+                    <span>
+                        <kbd>↑</kbd>
+                        <kbd>↓</kbd>
+                        Navigate
+                    </span>
+
+                    <span>
+                        <kbd>Enter</kbd>
+                        Open
+                    </span>
+
+                    <span>
+                        <kbd>Esc</kbd>
+                        Close
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         QUICK CREATE MODAL
+    ========================================================== -->
+    <div
+        class="modal"
+        id="quickCreateModal"
+        data-modal
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-backdrop"
+            data-modal-close
+        ></div>
+
+        <div
+            class="modal-dialog"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="modal-card">
+
+                <div class="modal-header">
+
+                    <div>
+
+                        <span class="modal-eyebrow">
+                            QUICK ACTION
+                        </span>
+
+                        <h2>
+                            What would you like to create?
+                        </h2>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="modal-close"
+                        data-modal-close
+                    >
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="quick-create-grid">
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="order"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-cart-plus"></i>
+                        </span>
+
+                        <strong>
+                            New Order
+                        </strong>
+
+                        <small>
+                            Create a customer order
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="customer"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </span>
+
+                        <strong>
+                            New Customer
+                        </strong>
+
+                        <small>
+                            Add a customer profile
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="product"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-box"></i>
+                        </span>
+
+                        <strong>
+                            New Product
+                        </strong>
+
+                        <small>
+                            Add a product to catalog
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="invoice"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </span>
+
+                        <strong>
+                            New Invoice
+                        </strong>
+
+                        <small>
+                            Generate a new invoice
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="report"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </span>
+
+                        <strong>
+                            New Report
+                        </strong>
+
+                        <small>
+                            Generate analytics report
+                        </small>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="quick-create-option"
+                        data-create="message"
+                    >
+                        <span class="quick-create-icon">
+                            <i class="fa-solid fa-message"></i>
+                        </span>
+
+                        <strong>
+                            New Message
+                        </strong>
+
+                        <small>
+                            Start a conversation
+                        </small>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         UPGRADE MODAL
+    ========================================================== -->
+    <div
+        class="modal"
+        id="upgradeModal"
+        data-modal
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-backdrop"
+            data-modal-close
+        ></div>
+
+        <div
+            class="modal-dialog upgrade-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="upgrade-modal-card">
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+
+                <div class="upgrade-modal-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+
+
+                <span class="modal-eyebrow">
+                    VELTRIX PRO
+                </span>
+
+                <h2>
+                    Unlock advanced analytics
+                </h2>
+
+                <p>
+                    Get deeper insights, unlimited reports, AI-powered analysis,
+                    advanced exports and more.
+                </p>
+
+
+                <div class="upgrade-feature-list">
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Unlimited analytics
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Advanced reports
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        AI insights
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        Priority support
+                    </div>
+
+                </div>
+
+
+                <div class="upgrade-price">
+
+                    <strong>
+                        $29
+                    </strong>
+
+                    <span>
+                        / month
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="primary-button primary-button--full"
+                    data-action="upgrade"
+                >
+                    Upgrade to Pro
+                    <i class="fa-solid fa-arrow-up-right"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="text-button"
+                    data-modal-close
+                >
+                    Maybe later
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         CONFIRMATION MODAL
+    ========================================================== -->
+    <div
+        class="modal"
+        id="confirmationModal"
+        data-modal
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-backdrop"
+            data-modal-close
+        ></div>
+
+        <div
+            class="modal-dialog modal-dialog--small"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="modal-card confirmation-card">
+
+                <div class="confirmation-icon">
+                    <i class="fa-solid fa-circle-question"></i>
+                </div>
+
+                <h2 data-confirm-title>
+                    Are you sure?
+                </h2>
+
+                <p data-confirm-message>
+                    This action cannot be undone.
+                </p>
+
+                <div class="confirmation-actions">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        data-modal-close
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="button"
+                        class="primary-button"
+                        data-confirm-action
+                    >
+                        Continue
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         GOOGLE TRANSLATE CONTAINER
+    ========================================================== -->
+    <div
+        id="google_translate_element"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- =========================================================
+         OFFLINE INDICATOR
+    ========================================================== -->
+    <div
+        class="offline-indicator"
+        id="offlineIndicator"
+        aria-live="polite"
+    >
+        <i class="fa-solid fa-wifi"></i>
+
+        <span>
+            You are currently offline
+        </span>
+    </div>
+
+
+    <!-- =========================================================
+         BACK TO TOP
+    ========================================================== -->
+    <button
+        type="button"
+        class="back-to-top"
+        data-back-to-top
+        aria-label="Back to top"
+    >
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+
+    <!-- =========================================================
+         SCREEN READER ANNOUNCER
+    ========================================================== -->
+    <div
+        class="sr-only"
+        id="screenReaderAnnouncer"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+
+    <!-- =========================================================
+         ANALYTICS PAGE SCRIPT
+         Uses the global Veltrix system from script.js
+    ========================================================== -->
+    <script>
+
+        /*
+         * =========================================================
+         * VELTRIX ANALYTICS PAGE
+         * =========================================================
+         *
+         * This page intentionally keeps page-specific behavior
+         * lightweight. The main application logic lives in:
+         *
+         *      ../js/script.js
+         *
+         * This small layer only provides Analytics-specific chart
+         * datasets and interactions.
+         * =========================================================
+         */
+
+        (function () {
+
+            "use strict";
+
+
+            /* =====================================================
+               DATA
+            ====================================================== */
+
+            const analyticsData = {
+
+                revenue: {
+                    labels: [
+                        "Sep 01",
+                        "Sep 03",
+                        "Sep 05",
+                        "Sep 07",
+                        "Sep 09",
+                        "Sep 11",
+                        "Sep 13",
+                        "Sep 15",
+                        "Sep 17",
+                        "Sep 19",
+                        "Sep 21",
+                        "Sep 23",
+                        "Sep 25",
+                        "Sep 27",
+                        "Sep 29",
+                        "Sep 30"
+                    ],
+
+                    revenue: [
+                        2180,
+                        2740,
+                        2480,
+                        3190,
+                        3620,
+                        3340,
+                        4180,
+                        4520,
+                        4310,
+                        4980,
+                        5260,
+                        4810,
+                        5640,
+                        6020,
+                        6480,
+                        6720
+                    ],
+
+                    orders: [
+                        68,
+                        76,
+                        72,
+                        88,
+                        94,
+                        90,
+                        108,
+                        116,
+                        112,
+                        124,
+                        131,
+                        126,
+                        138,
+                        145,
+                        151,
+                        158
+                    ]
+                },
+
+
+                traffic: {
+                    labels: [
+                        "Sep 01",
+                        "Sep 03",
+                        "Sep 05",
+                        "Sep 07",
+                        "Sep 09",
+                        "Sep 11",
+                        "Sep 13",
+                        "Sep 15",
+                        "Sep 17",
+                        "Sep 19",
+                        "Sep 21",
+                        "Sep 23",
+                        "Sep 25",
+                        "Sep 27",
+                        "Sep 29",
+                        "Sep 30"
+                    ],
+
+                    sessions: [
+                        7400,
+                        8120,
+                        7680,
+                        9240,
+                        10120,
+                        9840,
+                        11420,
+                        12640,
+                        11980,
+                        13740,
+                        14280,
+                        13820,
+                        15140,
+                        16280,
+                        17420,
+                        18240
+                    ],
+
+                    visitors: [
+                        3820,
+                        4180,
+                        3960,
+                        4820,
+                        5260,
+                        5100,
+                        5940,
+                        6520,
+                        6180,
+                        7060,
+                        7340,
+                        7120,
+                        7820,
+                        8360,
+                        8940,
+                        9480
+                    ]
+                },
+
+
+                acquisition: [
+                    42.4,
+                    28.9,
+                    17.9,
+                    9.0,
+                    1.8
+                ],
+
+
+                customerGrowth: {
+
+                    labels: [
+                        "Apr",
+                        "May",
+                        "Jun",
+                        "Jul",
+                        "Aug",
+                        "Sep"
+                    ],
+
+                    newCustomers: [
+                        1740,
+                        1890,
+                        2060,
+                        2180,
+                        2440,
+                        2846
+                    ],
+
+                    returningCustomers: [
+                        3940,
+                        4210,
+                        4480,
+                        4720,
+                        5180,
+                        5616
+                    ]
+
+                }
+
+            };
+
+
+            /* =====================================================
+               HELPERS
+            ====================================================== */
+
+            function getCSSVariable(name, fallback) {
+
+                try {
+
+                    const value = getComputedStyle(document.documentElement)
+                        .getPropertyValue(name)
+                        .trim();
+
+                    return value || fallback;
+
+                } catch (error) {
+
+                    return fallback;
+
+                }
+
+            }
+
+
+            function createGradient(context, chartArea) {
+
+                if (!context || !chartArea) {
+                    return "rgba(99,102,241,.15)";
+                }
+
+                const gradient = context.createLinearGradient(
+                    0,
+                    chartArea.top,
+                    0,
+                    chartArea.bottom
+                );
+
+                gradient.addColorStop(
+                    0,
+                    "rgba(99,102,241,.30)"
+                );
+
+                gradient.addColorStop(
+                    1,
+                    "rgba(99,102,241,0)"
+                );
+
+                return gradient;
+
+            }
+
+
+            function destroyExistingChart(canvas) {
+
+                if (!canvas) {
+                    return;
+                }
+
+                const existing = Chart.getChart(canvas);
+
+                if (existing) {
+                    existing.destroy();
+                }
+
+            }
+
+
+            /* =====================================================
+               REVENUE CHART
+            ====================================================== */
+
+            function initRevenueChart() {
+
+                const canvas = document.getElementById("revenueChart");
+
+                if (!canvas || typeof Chart === "undefined") {
+                    return;
+                }
+
+                destroyExistingChart(canvas);
+
+                const context = canvas.getContext("2d");
+
+                const textColor = getCSSVariable(
+                    "--text-secondary",
+                    "#94a3b8"
+                );
+
+                const gridColor = getCSSVariable(
+                    "--border-color",
+                    "rgba(148,163,184,.10)"
+                );
+
+
+                const chart = new Chart(context, {
+
+                    type: "line",
+
+                    data: {
+
+                        labels: analyticsData.revenue.labels,
+
+                        datasets: [
+
+                            {
+                                label: "Revenue",
+
+                                data: analyticsData.revenue.revenue,
+
+                                borderWidth: 3,
+
+                                pointRadius: 0,
+
+                                pointHoverRadius: 5,
+
+                                tension: 0.42,
+
+                                fill: true,
+
+                                borderColor: "#6366f1",
+
+                                backgroundColor: function (context) {
+
+                                    const chart = context.chart;
+                                    const area = chart.chartArea;
+
+                                    return createGradient(
+                                        chart.ctx,
+                                        area
+                                    );
+
+                                }
+
+                            },
+
+                            {
+                                label: "Orders",
+
+                                data: analyticsData.revenue.orders.map(
+                                    value => value * 38
+                                ),
+
+                                borderWidth: 2,
+
+                                pointRadius: 0,
+
+                                pointHoverRadius: 4,
+
+                                tension: 0.42,
+
+                                borderColor: "#22c55e",
+
+                                backgroundColor: "transparent",
+
+                                borderDash: [6, 5],
+
+                                yAxisID: "y"
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        interaction: {
+                            intersect: false,
+                            mode: "index"
+                        },
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+
+                                backgroundColor: "rgba(15,23,42,.96)",
+
+                                titleColor: "#ffffff",
+
+                                bodyColor: "#cbd5e1",
+
+                                borderColor: "rgba(148,163,184,.18)",
+
+                                borderWidth: 1,
+
+                                padding: 12,
+
+                                displayColors: true,
+
+                                callbacks: {
+
+                                    label: function (context) {
+
+                                        if (context.datasetIndex === 0) {
+
+                                            return " Revenue: $" +
+                                                context.parsed.y.toLocaleString();
+
+                                        }
+
+                                        return " Orders: " +
+                                            Math.round(
+                                                context.parsed.y / 38
+                                            );
+
+                                    }
+
+                                }
+
+                            }
+
+                        },
+
+                        scales: {
+
+                            x: {
+
+                                grid: {
+                                    display: false
+                                },
+
+                                ticks: {
+                                    color: textColor,
+                                    maxRotation: 0,
+                                    autoSkip: true,
+                                    maxTicksLimit: 8
+                                }
+
+                            },
+
+                            y: {
+
+                                beginAtZero: true,
+
+                                grid: {
+                                    color: gridColor
+                                },
+
+                                ticks: {
+
+                                    color: textColor,
+
+                                    callback: function (value) {
+
+                                        return "$" +
+                                            Number(value)
+                                                .toLocaleString();
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+                window.VeltrixAnalyticsRevenueChart = chart;
+
+            }
+
+
+            /* =====================================================
+               TRAFFIC CHART
+            ====================================================== */
+
+            function initTrafficChart() {
+
+                const canvas = document.getElementById("trafficChart");
+
+                if (!canvas || typeof Chart === "undefined") {
+                    return;
+                }
+
+                destroyExistingChart(canvas);
+
+                const context = canvas.getContext("2d");
+
+                const textColor = getCSSVariable(
+                    "--text-secondary",
+                    "#94a3b8"
+                );
+
+                const gridColor = getCSSVariable(
+                    "--border-color",
+                    "rgba(148,163,184,.10)"
+                );
+
+
+                new Chart(context, {
+
+                    type: "line",
+
+                    data: {
+
+                        labels: analyticsData.traffic.labels,
+
+                        datasets: [
+
+                            {
+                                label: "Sessions",
+
+                                data: analyticsData.traffic.sessions,
+
+                                borderColor: "#6366f1",
+
+                                backgroundColor: "rgba(99,102,241,.10)",
+
+                                borderWidth: 3,
+
+                                tension: .42,
+
+                                fill: true,
+
+                                pointRadius: 0,
+
+                                pointHoverRadius: 5
+
+                            },
+
+                            {
+                                label: "Unique visitors",
+
+                                data: analyticsData.traffic.visitors,
+
+                                borderColor: "#22c55e",
+
+                                backgroundColor: "transparent",
+
+                                borderWidth: 2,
+
+                                tension: .42,
+
+                                pointRadius: 0,
+
+                                pointHoverRadius: 5
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        interaction: {
+                            mode: "index",
+                            intersect: false
+                        },
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+
+                                backgroundColor: "rgba(15,23,42,.96)",
+
+                                padding: 12,
+
+                                callbacks: {
+
+                                    label: function (context) {
+
+                                        return " " +
+                                            context.dataset.label +
+                                            ": " +
+                                            Number(
+                                                context.parsed.y
+                                            ).toLocaleString();
+
+                                    }
+
+                                }
+
+                            }
+
+                        },
+
+                        scales: {
+
+                            x: {
+
+                                grid: {
+                                    display: false
+                                },
+
+                                ticks: {
+                                    color: textColor,
+                                    maxTicksLimit: 8
+                                }
+
+                            },
+
+                            y: {
+
+                                beginAtZero: true,
+
+                                grid: {
+                                    color: gridColor
+                                },
+
+                                ticks: {
+
+                                    color: textColor,
+
+                                    callback: function (value) {
+
+                                        if (value >= 1000) {
+                                            return (
+                                                value / 1000
+                                            ) + "K";
+                                        }
+
+                                        return value;
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+            }
+
+
+            /* =====================================================
+               ACQUISITION CHART
+            ====================================================== */
+
+            function initAcquisitionChart() {
+
+                const canvas =
+                    document.getElementById("acquisitionChart");
+
+                if (!canvas || typeof Chart === "undefined") {
+                    return;
+                }
+
+                destroyExistingChart(canvas);
+
+                const context = canvas.getContext("2d");
+
+
+                new Chart(context, {
+
+                    type: "doughnut",
+
+                    data: {
+
+                        labels: [
+                            "Organic Search",
+                            "Direct",
+                            "Social Media",
+                            "Referral",
+                            "Other"
+                        ],
+
+                        datasets: [
+
+                            {
+                                data: analyticsData.acquisition,
+
+                                backgroundColor: [
+                                    "#6366f1",
+                                    "#22c55e",
+                                    "#38bdf8",
+                                    "#f59e0b",
+                                    "#a855f7"
+                                ],
+
+                                borderWidth: 0,
+
+                                spacing: 3,
+
+                                hoverOffset: 5
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        cutout: "72%",
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+
+                                backgroundColor: "rgba(15,23,42,.96)",
+
+                                padding: 12,
+
+                                callbacks: {
+
+                                    label: function (context) {
+
+                                        return " " +
+                                            context.label +
+                                            ": " +
+                                            context.parsed +
+                                            "%";
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+            }
+
+
+            /* =====================================================
+               CUSTOMER GROWTH CHART
+            ====================================================== */
+
+            function initCustomerGrowthChart() {
+
+                const canvas =
+                    document.getElementById(
+                        "customerGrowthChart"
+                    );
+
+                if (!canvas || typeof Chart === "undefined") {
+                    return;
+                }
+
+                destroyExistingChart(canvas);
+
+                const context = canvas.getContext("2d");
+
+                const textColor = getCSSVariable(
+                    "--text-secondary",
+                    "#94a3b8"
+                );
+
+                const gridColor = getCSSVariable(
+                    "--border-color",
+                    "rgba(148,163,184,.10)"
+                );
+
+
+                new Chart(context, {
+
+                    type: "bar",
+
+                    data: {
+
+                        labels:
+                            analyticsData.customerGrowth.labels,
+
+                        datasets: [
+
+                            {
+                                label: "New customers",
+
+                                data:
+                                    analyticsData
+                                        .customerGrowth
+                                        .newCustomers,
+
+                                backgroundColor: "#6366f1",
+
+                                borderRadius: 8,
+
+                                borderSkipped: false
+
+                            },
+
+                            {
+                                label: "Returning customers",
+
+                                data:
+                                    analyticsData
+                                        .customerGrowth
+                                        .returningCustomers,
+
+                                backgroundColor: "#22c55e",
+
+                                borderRadius: 8,
+
+                                borderSkipped: false
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            },
+
+                            tooltip: {
+
+                                backgroundColor: "rgba(15,23,42,.96)",
+
+                                padding: 12,
+
+                                callbacks: {
+
+                                    label: function (context) {
+
+                                        return " " +
+                                            context.dataset.label +
+                                            ": " +
+                                            Number(
+                                                context.parsed.y
+                                            ).toLocaleString();
+
+                                    }
+
+                                }
+
+                            }
+
+                        },
+
+                        scales: {
+
+                            x: {
+
+                                stacked: false,
+
+                                grid: {
+                                    display: false
+                                },
+
+                                ticks: {
+                                    color: textColor
+                                }
+
+                            },
+
+                            y: {
+
+                                beginAtZero: true,
+
+                                grid: {
+                                    color: gridColor
+                                },
+
+                                ticks: {
+
+                                    color: textColor,
+
+                                    callback: function (value) {
+
+                                        if (value >= 1000) {
+
+                                            return (
+                                                value / 1000
+                                            ) + "K";
+
+                                        }
+
+                                        return value;
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                });
+
+            }
+
+
+            /* =====================================================
+               PERIOD FILTER
+            ====================================================== */
+
+            function initPeriodControls() {
+
+                const periodSelect =
+                    document.querySelector(
+                        "[data-analytics-period]"
+                    );
+
+                const compareSelect =
+                    document.querySelector(
+                        "[data-analytics-compare]"
+                    );
+
+
+                if (periodSelect) {
+
+                    periodSelect.addEventListener(
+                        "change",
+                        function () {
+
+                            const selected =
+                                this.options[
+                                    this.selectedIndex
+                                ].textContent.trim();
+
+                            updateAnalyticsTimestamp();
+
+                            showAnalyticsToast(
+                                "Analytics updated",
+                                "Showing data for " + selected + "."
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                if (compareSelect) {
+
+                    compareSelect.addEventListener(
+                        "change",
+                        function () {
+
+                            updateAnalyticsTimestamp();
+
+                            showAnalyticsToast(
+                                "Comparison updated",
+                                "Analytics comparison settings changed."
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+
+
+            /* =====================================================
+               CUSTOMER VIEW TOGGLE
+            ====================================================== */
+
+            function initCustomerViewToggle() {
+
+                const buttons =
+                    document.querySelectorAll(
+                        "[data-customer-view]"
+                    );
+
+                buttons.forEach(function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            buttons.forEach(function (item) {
+                                item.classList.remove("is-active");
+                            });
+
+                            this.classList.add("is-active");
+
+                            const view =
+                                this.dataset.customerView;
+
+                            showAnalyticsToast(
+                                "Customer view changed",
+                                view === "weekly"
+                                    ? "Weekly customer growth selected."
+                                    : "Monthly customer growth selected."
+                            );
+
+                        }
+                    );
+
+                });
+
+            }
+
+
+            /* =====================================================
+               EXPORT
+            ====================================================== */
+
+            function initExports() {
+
+                const buttons =
+                    document.querySelectorAll(
+                        "[data-export-format]"
+                    );
+
+                buttons.forEach(function (button) {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            const format =
+                                this.dataset.exportFormat;
+
+                            showAnalyticsToast(
+                                "Export started",
+                                "Your " +
+                                format.toUpperCase() +
+                                " analytics report is being prepared."
+                            );
+
+                        }
+                    );
+
+                });
+
+            }
+
+
+            /* =====================================================
+               REFRESH
+            ====================================================== */
+
+            function initRefresh() {
+
+                const button =
+                    document.querySelector(
+                        '[data-action="refresh-analytics"]'
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        const icon =
+                            this.querySelector("i");
+
+                        if (icon) {
+                            icon.classList.add("fa-spin");
+                        }
+
+                        setTimeout(function () {
+
+                            if (icon) {
+                                icon.classList.remove("fa-spin");
+                            }
+
+                            updateAnalyticsTimestamp();
+
+                            showAnalyticsToast(
+                                "Analytics refreshed",
+                                "All analytics data is up to date."
+                            );
+
+                        }, 850);
+
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               TIMESTAMP
+            ====================================================== */
+
+            function updateAnalyticsTimestamp() {
+
+                const element =
+                    document.querySelector(
+                        "[data-last-updated]"
+                    );
+
+                if (!element) {
+                    return;
+                }
+
+                const now = new Date();
+
+                const time =
+                    now.toLocaleTimeString(
+                        [],
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    );
+
+                element.textContent =
+                    "Updated at " + time;
+
+            }
+
+
+            /* =====================================================
+               TOAST FALLBACK
+            ====================================================== */
+
+            function showAnalyticsToast(
+                title,
+                message
+            ) {
+
+                if (
+                    window.Veltrix &&
+                    window.Veltrix.toast &&
+                    typeof window.Veltrix.toast.show === "function"
+                ) {
+
+                    window.Veltrix.toast.show(
+                        title,
+                        message,
+                        "success"
+                    );
+
+                    return;
+
+                }
+
+
+                const container =
+                    document.getElementById(
+                        "toastContainer"
+                    );
+
+                if (!container) {
+                    return;
+                }
+
+
+                const toast =
+                    document.createElement("div");
+
+                toast.className =
+                    "toast toast--success";
+
+                toast.innerHTML =
+
+                    '<span class="toast-icon">' +
+                        '<i class="fa-solid fa-check"></i>' +
+                    '</span>' +
+
+                    '<div class="toast-content">' +
+                        '<strong>' +
+                            title +
+                        '</strong>' +
+                        '<p>' +
+                            message +
+                        '</p>' +
+                    '</div>';
+
+
+                container.appendChild(toast);
+
+
+                setTimeout(function () {
+
+                    toast.classList.add("is-leaving");
+
+                    setTimeout(function () {
+
+                        toast.remove();
+
+                    }, 300);
+
+                }, 3000);
+
+            }
+
+
+            /* =====================================================
+               CHART REFRESH ON THEME CHANGE
+            ====================================================== */
+
+            function observeThemeChanges() {
+
+                const observer =
+                    new MutationObserver(
+                        function () {
+
+                            setTimeout(function () {
+
+                                initRevenueChart();
+                                initTrafficChart();
+                                initAcquisitionChart();
+                                initCustomerGrowthChart();
+
+                            }, 100);
+
+                        }
+                    );
+
+
+                observer.observe(
+                    document.documentElement,
+                    {
+                        attributes: true,
+                        attributeFilter: [
+                            "data-theme"
+                        ]
+                    }
+                );
+
+            }
+
+
+            /* =====================================================
+               INITIALIZE
+            ====================================================== */
+
+            function initializeAnalyticsPage() {
+
+                initRevenueChart();
+
+                initTrafficChart();
+
+                initAcquisitionChart();
+
+                initCustomerGrowthChart();
+
+                initPeriodControls();
+
+                initCustomerViewToggle();
+
+                initExports();
+
+                initRefresh();
+
+                updateAnalyticsTimestamp();
+
+                observeThemeChanges();
+
+            }
+
+
+            /* =====================================================
+               DOM READY
+            ====================================================== */
+
+            if (
+                document.readyState ===
+                "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    initializeAnalyticsPage
+                );
+
+            } else {
+
+                initializeAnalyticsPage();
+
+            }
+
+
+            /* =====================================================
+               PUBLIC ANALYTICS API
+            ====================================================== */
+
+            window.VeltrixAnalytics = {
+
+                data: analyticsData,
+
+                refresh: function () {
+
+                    initRevenueChart();
+
+                    initTrafficChart();
+
+                    initAcquisitionChart();
+
+                    initCustomerGrowthChart();
+
+                    updateAnalyticsTimestamp();
+
+                },
+
+                getPeriod: function () {
+
+                    const select =
+                        document.querySelector(
+                            "[data-analytics-period]"
+                        );
+
+                    return select
+                        ? select.value
+                        : "30days";
+
+                },
+
+                getComparison: function () {
+
+                    const select =
+                        document.querySelector(
+                            "[data-analytics-compare]"
+                        );
+
+                    return select
+                        ? select.value
+                        : "previous";
+
+                }
+
+            };
+
+        })();
+
+    </script>
+
+
+    <!-- =========================================================
+         MAIN VELTRIX SCRIPT
+    ========================================================== -->
+    <script src="../js/script.js" defer></script>
+
+</body>
+</html>
