@@ -1,0 +1,5663 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Search Results — Veltrix</title>
+
+    <meta
+        name="description"
+        content="Veltrix intelligent search results workspace."
+    >
+
+    <meta
+        name="theme-color"
+        content="#0f172a"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           VELTRIX SEARCH RESULTS
+           Page-specific component layer
+           ========================================================= */
+
+        :root {
+            --search-accent: #6d5dfc;
+            --search-accent-2: #00c9a7;
+            --search-blue: #3b82f6;
+            --search-warning: #f59e0b;
+            --search-danger: #ef4444;
+
+            --search-bg: #f7f8fc;
+            --search-card: rgba(255, 255, 255, 0.92);
+            --search-border: rgba(15, 23, 42, 0.08);
+            --search-text: #111827;
+            --search-muted: #64748b;
+            --search-soft: #f1f5f9;
+
+            --search-radius-xl: 26px;
+            --search-radius-lg: 20px;
+            --search-radius-md: 15px;
+            --search-radius-sm: 11px;
+
+            --search-shadow:
+                0 18px 55px rgba(15, 23, 42, 0.08);
+
+            --search-transition:
+                180ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        html[data-theme="dark"],
+        body.dark-mode {
+
+            --search-bg: #080d18;
+            --search-card: rgba(15, 23, 42, 0.88);
+            --search-border: rgba(255, 255, 255, 0.08);
+            --search-text: #f8fafc;
+            --search-muted: #94a3b8;
+            --search-soft: rgba(255, 255, 255, 0.045);
+
+            --search-shadow:
+                0 22px 65px rgba(0, 0, 0, 0.32);
+        }
+
+        /* =========================================================
+           PAGE WRAPPER
+           ========================================================= */
+
+        .search-page {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4px 50px;
+        }
+
+        .search-page *,
+        .search-page *::before,
+        .search-page *::after {
+            box-sizing: border-box;
+        }
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .search-hero {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--search-border);
+            border-radius: var(--search-radius-xl);
+            padding: 34px;
+            margin-bottom: 24px;
+            background:
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(109, 93, 252, .20),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 10% 100%,
+                    rgba(0, 201, 167, .14),
+                    transparent 30%
+                ),
+                var(--search-card);
+            box-shadow: var(--search-shadow);
+        }
+
+        .search-hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -90px;
+            top: -110px;
+            border-radius: 50%;
+            background: rgba(109, 93, 252, .09);
+            filter: blur(5px);
+            pointer-events: none;
+        }
+
+        .search-hero::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            left: -80px;
+            bottom: -90px;
+            border-radius: 50%;
+            background: rgba(0, 201, 167, .07);
+            pointer-events: none;
+        }
+
+        .search-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .search-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(109, 93, 252, .10);
+            color: var(--search-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .search-kicker-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 12px currentColor;
+        }
+
+        .search-hero h1 {
+            margin: 0;
+            color: var(--search-text);
+            font-size: clamp(27px, 4vw, 44px);
+            line-height: 1.08;
+            font-weight: 850;
+            letter-spacing: -.035em;
+        }
+
+        .search-hero p {
+            max-width: 720px;
+            margin: 12px 0 25px;
+            color: var(--search-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           MAIN SEARCH INPUT
+           ========================================================= */
+
+        .search-main-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            min-height: 66px;
+            padding: 8px;
+            border: 1px solid var(--search-border);
+            border-radius: 18px;
+            background: var(--search-card);
+            box-shadow:
+                0 14px 35px rgba(15, 23, 42, .08);
+            transition:
+                border-color var(--search-transition),
+                box-shadow var(--search-transition),
+                transform var(--search-transition);
+        }
+
+        .search-main-box:focus-within {
+            border-color: rgba(109, 93, 252, .45);
+            box-shadow:
+                0 0 0 4px rgba(109, 93, 252, .10),
+                0 18px 45px rgba(15, 23, 42, .10);
+            transform: translateY(-1px);
+        }
+
+        .search-main-icon {
+            flex: 0 0 48px;
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            color: var(--search-accent);
+            background: rgba(109, 93, 252, .09);
+            font-size: 20px;
+        }
+
+        .search-main-input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--search-text);
+            font-size: 16px;
+            font-weight: 650;
+        }
+
+        .search-main-input::placeholder {
+            color: var(--search-muted);
+            font-weight: 500;
+        }
+
+        .search-clear-btn {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--search-soft);
+            color: var(--search-muted);
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .search-clear-btn.visible {
+            display: grid;
+            place-items: center;
+        }
+
+        .search-clear-btn:hover {
+            color: var(--search-danger);
+            background: rgba(239, 68, 68, .10);
+            transform: rotate(4deg);
+        }
+
+        .search-submit-btn {
+            min-height: 50px;
+            padding: 0 21px;
+            border: 0;
+            border-radius: 13px;
+            color: #fff;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--search-accent),
+                    #877bff
+                );
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow:
+                0 10px 25px rgba(109, 93, 252, .25);
+            transition: all var(--search-transition);
+        }
+
+        .search-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 14px 30px rgba(109, 93, 252, .34);
+        }
+
+        .search-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .search-shortcut {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 10px;
+            color: var(--search-muted);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .shortcut-key {
+            display: inline-grid;
+            place-items: center;
+            min-width: 24px;
+            height: 23px;
+            padding: 0 6px;
+            border: 1px solid var(--search-border);
+            border-bottom-width: 2px;
+            border-radius: 6px;
+            background: var(--search-soft);
+            color: var(--search-muted);
+            font-size: 10px;
+        }
+
+        /* =========================================================
+           SUGGESTIONS
+           ========================================================= */
+
+        .search-suggestions {
+            display: none;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .search-suggestions.active {
+            display: flex;
+        }
+
+        .suggestion-label {
+            display: inline-flex;
+            align-items: center;
+            color: var(--search-muted);
+            font-size: 12px;
+            font-weight: 750;
+            margin-right: 3px;
+        }
+
+        .suggestion-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 11px;
+            border: 1px solid var(--search-border);
+            border-radius: 999px;
+            background: var(--search-card);
+            color: var(--search-muted);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .suggestion-chip:hover {
+            border-color: rgba(109, 93, 252, .30);
+            color: var(--search-accent);
+            transform: translateY(-1px);
+        }
+
+        /* =========================================================
+           SUMMARY STATS
+           ========================================================= */
+
+        .search-summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .search-summary-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 116px;
+            padding: 19px;
+            border: 1px solid var(--search-border);
+            border-radius: var(--search-radius-lg);
+            background: var(--search-card);
+            box-shadow: 0 12px 32px rgba(15, 23, 42, .055);
+            transition: all var(--search-transition);
+        }
+
+        .search-summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, .09);
+        }
+
+        .summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .summary-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            font-size: 18px;
+        }
+
+        .summary-icon.purple {
+            background: rgba(109, 93, 252, .11);
+            color: var(--search-accent);
+        }
+
+        .summary-icon.green {
+            background: rgba(0, 201, 167, .11);
+            color: var(--search-accent-2);
+        }
+
+        .summary-icon.blue {
+            background: rgba(59, 130, 246, .11);
+            color: var(--search-blue);
+        }
+
+        .summary-icon.orange {
+            background: rgba(245, 158, 11, .11);
+            color: var(--search-warning);
+        }
+
+        .summary-value {
+            margin-top: 13px;
+            color: var(--search-text);
+            font-size: 23px;
+            font-weight: 850;
+            letter-spacing: -.025em;
+        }
+
+        .summary-label {
+            margin-top: 2px;
+            color: var(--search-muted);
+            font-size: 12px;
+            font-weight: 650;
+        }
+
+        /* =========================================================
+           SEARCH WORKSPACE
+           ========================================================= */
+
+        .search-workspace {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 1fr)
+                320px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .search-results-panel,
+        .search-sidebar-card {
+            border: 1px solid var(--search-border);
+            border-radius: var(--search-radius-xl);
+            background: var(--search-card);
+            box-shadow: 0 15px 42px rgba(15, 23, 42, .055);
+        }
+
+        .search-results-panel {
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* =========================================================
+           TOOLBAR
+           ========================================================= */
+
+        .results-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--search-border);
+        }
+
+        .results-heading {
+            min-width: 0;
+        }
+
+        .results-heading-title {
+            margin: 0;
+            color: var(--search-text);
+            font-size: 16px;
+            font-weight: 850;
+        }
+
+        .results-heading-subtitle {
+            margin-top: 4px;
+            color: var(--search-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .results-toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-toggle-btn {
+            display: none;
+            align-items: center;
+            gap: 7px;
+            min-height: 38px;
+            padding: 0 12px;
+            border: 1px solid var(--search-border);
+            border-radius: 10px;
+            background: var(--search-soft);
+            color: var(--search-muted);
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        .sort-select-wrap {
+            position: relative;
+        }
+
+        .sort-select {
+            min-height: 40px;
+            min-width: 155px;
+            padding: 0 34px 0 12px;
+            border: 1px solid var(--search-border);
+            border-radius: 10px;
+            outline: none;
+            background: var(--search-soft);
+            color: var(--search-text);
+            font-size: 12px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           FILTER TABS
+           ========================================================= */
+
+        .search-filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            overflow-x: auto;
+            padding: 13px 22px;
+            border-bottom: 1px solid var(--search-border);
+            scrollbar-width: thin;
+        }
+
+        .search-filter {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            min-height: 35px;
+            padding: 0 11px;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--search-muted);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .search-filter:hover {
+            color: var(--search-accent);
+            background: rgba(109, 93, 252, .06);
+        }
+
+        .search-filter.active {
+            border-color: rgba(109, 93, 252, .16);
+            background: rgba(109, 93, 252, .10);
+            color: var(--search-accent);
+        }
+
+        .filter-count {
+            display: inline-grid;
+            place-items: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            border-radius: 6px;
+            background: rgba(100, 116, 139, .10);
+            color: inherit;
+            font-size: 9px;
+        }
+
+        .search-filter.active .filter-count {
+            background: rgba(109, 93, 252, .13);
+        }
+
+        /* =========================================================
+           RESULTS LIST
+           ========================================================= */
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-item {
+            position: relative;
+            display: grid;
+            grid-template-columns:
+                52px
+                minmax(0, 1fr)
+                auto;
+            gap: 15px;
+            align-items: start;
+            padding: 21px 22px;
+            border-bottom: 1px solid var(--search-border);
+            transition:
+                background var(--search-transition),
+                transform var(--search-transition);
+        }
+
+        .result-item:last-child {
+            border-bottom: 0;
+        }
+
+        .result-item:hover {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(109, 93, 252, .035),
+                    transparent
+                );
+        }
+
+        .result-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--search-soft);
+            color: var(--search-accent);
+            font-size: 19px;
+            transition: all var(--search-transition);
+        }
+
+        .result-item:hover .result-icon {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 9px 22px rgba(109, 93, 252, .12);
+        }
+
+        .result-content {
+            min-width: 0;
+        }
+
+        .result-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 6px;
+        }
+
+        .result-type {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 7px;
+            border-radius: 6px;
+            background: rgba(109, 93, 252, .09);
+            color: var(--search-accent);
+            font-size: 9px;
+            font-weight: 850;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .result-breadcrumb {
+            color: var(--search-muted);
+            font-size: 10px;
+            font-weight: 650;
+        }
+
+        .result-title {
+            margin: 0;
+            color: var(--search-text);
+            font-size: 15px;
+            font-weight: 820;
+            line-height: 1.35;
+        }
+
+        .result-title mark {
+            padding: 1px 3px;
+            border-radius: 4px;
+            background: rgba(245, 158, 11, .22);
+            color: inherit;
+        }
+
+        .result-description {
+            max-width: 720px;
+            margin: 7px 0 10px;
+            color: var(--search-muted);
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .result-description mark {
+            padding: 1px 2px;
+            border-radius: 3px;
+            background: rgba(245, 158, 11, .17);
+            color: inherit;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .result-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 7px;
+            border-radius: 6px;
+            background: var(--search-soft);
+            color: var(--search-muted);
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .result-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            align-self: center;
+        }
+
+        .result-action {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--search-border);
+            border-radius: 10px;
+            background: var(--search-card);
+            color: var(--search-muted);
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .result-action:hover {
+            border-color: rgba(109, 93, 252, .25);
+            color: var(--search-accent);
+            background: rgba(109, 93, 252, .07);
+            transform: translateY(-2px);
+        }
+
+        .result-action.favorite.active {
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, .22);
+            background: rgba(245, 158, 11, .09);
+        }
+
+        .result-open {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 37px;
+            padding: 0 12px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--search-accent);
+            color: #fff;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .result-open:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(109, 93, 252, .25);
+        }
+
+        /* =========================================================
+           LOADING
+           ========================================================= */
+
+        .results-loading {
+            display: none;
+            padding: 35px 22px;
+        }
+
+        .results-loading.active {
+            display: block;
+        }
+
+        .skeleton-row {
+            display: grid;
+            grid-template-columns: 52px 1fr;
+            gap: 15px;
+            margin-bottom: 24px;
+        }
+
+        .skeleton {
+            position: relative;
+            overflow: hidden;
+            border-radius: 9px;
+            background: var(--search-soft);
+        }
+
+        .skeleton::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translateX(-100%);
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,.16),
+                    transparent
+                );
+            animation: skeletonMove 1.2s infinite;
+        }
+
+        .skeleton-icon {
+            width: 52px;
+            height: 52px;
+        }
+
+        .skeleton-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skeleton-line {
+            height: 10px;
+        }
+
+        .skeleton-line.wide {
+            width: 68%;
+        }
+
+        .skeleton-line.medium {
+            width: 45%;
+        }
+
+        .skeleton-line.small {
+            width: 25%;
+        }
+
+        @keyframes skeletonMove {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        /* =========================================================
+           EMPTY STATES
+           ========================================================= */
+
+        .search-empty {
+            display: none;
+            padding: 70px 30px;
+            text-align: center;
+        }
+
+        .search-empty.active {
+            display: block;
+        }
+
+        .empty-visual {
+            width: 88px;
+            height: 88px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 19px;
+            border-radius: 26px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(109, 93, 252, .11),
+                    rgba(0, 201, 167, .10)
+                );
+            color: var(--search-accent);
+            font-size: 33px;
+            box-shadow:
+                0 18px 40px rgba(109, 93, 252, .10);
+        }
+
+        .search-empty h3 {
+            margin: 0;
+            color: var(--search-text);
+            font-size: 19px;
+            font-weight: 850;
+        }
+
+        .search-empty p {
+            max-width: 470px;
+            margin: 9px auto 20px;
+            color: var(--search-muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .empty-action {
+            min-height: 42px;
+            padding: 0 16px;
+            border: 0;
+            border-radius: 11px;
+            background: var(--search-accent);
+            color: #fff;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           PAGINATION
+           ========================================================= */
+
+        .results-pagination {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 22px;
+            border-top: 1px solid var(--search-border);
+        }
+
+        .results-pagination.active {
+            display: flex;
+        }
+
+        .pagination-info {
+            color: var(--search-muted);
+            font-size: 11px;
+            font-weight: 650;
+        }
+
+        .pagination-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pagination-btn {
+            min-width: 34px;
+            height: 34px;
+            padding: 0 9px;
+            border: 1px solid var(--search-border);
+            border-radius: 9px;
+            background: var(--search-card);
+            color: var(--search-muted);
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            color: var(--search-accent);
+            border-color: rgba(109, 93, 252, .25);
+        }
+
+        .pagination-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn.current {
+            color: #fff;
+            border-color: var(--search-accent);
+            background: var(--search-accent);
+        }
+
+        /* =========================================================
+           RIGHT SIDEBAR
+           ========================================================= */
+
+        .search-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .search-sidebar-card {
+            padding: 19px;
+        }
+
+        .sidebar-card-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-card-heading h3 {
+            margin: 0;
+            color: var(--search-text);
+            font-size: 13px;
+            font-weight: 850;
+        }
+
+        .sidebar-card-heading button {
+            border: 0;
+            background: transparent;
+            color: var(--search-accent);
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           RECENT SEARCHES
+           ========================================================= */
+
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            min-height: 40px;
+            padding: 7px 8px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--search-muted);
+            text-align: left;
+            cursor: pointer;
+            transition: all var(--search-transition);
+        }
+
+        .recent-item:hover {
+            background: var(--search-soft);
+            color: var(--search-text);
+        }
+
+        .recent-icon {
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 26px;
+            border-radius: 7px;
+            background: var(--search-soft);
+            font-size: 11px;
+        }
+
+        .recent-query {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .recent-empty {
+            padding: 8px 2px;
+            color: var(--search-muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           SEARCH TIPS
+           ========================================================= */
+
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .tip-number {
+            width: 24px;
+            height: 24px;
+            display: grid;
+            place-items: center;
+            flex: 0 0 24px;
+            border-radius: 7px;
+            background: rgba(109, 93, 252, .09);
+            color: var(--search-accent);
+            font-size: 10px;
+            font-weight: 850;
+        }
+
+        .tip-text {
+            color: var(--search-muted);
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+        /* =========================================================
+           QUICK SEARCH
+           ========================================================= */
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 39px;
+            padding: 0 9px;
+            border: 1px solid var(--search-border);
+            border-radius: 9px;
+            background: var(--search-soft);
+            color: var(--search-muted);
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 750;
+            transition: all var(--search-transition);
+        }
+
+        .quick-link:hover {
+            color: var(--search-accent);
+            border-color: rgba(109, 93, 252, .22);
+            transform: translateY(-1px);
+        }
+
+        .quick-link-icon {
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           RECENT ACTIVE QUERY
+           ========================================================= */
+
+        .query-chip-large {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-height: 45px;
+            padding: 0 11px;
+            border: 1px solid var(--search-border);
+            border-radius: 11px;
+            background: var(--search-soft);
+        }
+
+        .query-chip-large-icon {
+            color: var(--search-accent);
+        }
+
+        .query-chip-large-text {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--search-text);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           MOBILE FILTER DRAWER
+           ========================================================= */
+
+        .mobile-filter-panel {
+            display: none;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--search-border);
+            background: var(--search-soft);
+        }
+
+        .mobile-filter-panel.active {
+            display: block;
+        }
+
+        .mobile-filter-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        .search-local-toast {
+            position: fixed;
+            z-index: 9999;
+            right: 22px;
+            bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 340px;
+            min-height: 48px;
+            padding: 0 15px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 13px;
+            background: rgba(15, 23, 42, .94);
+            color: #fff;
+            box-shadow: 0 18px 45px rgba(0,0,0,.25);
+            transform: translateY(25px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .25s ease;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .search-local-toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* =========================================================
+           FOCUS ACCESSIBILITY
+           ========================================================= */
+
+        .search-page button:focus-visible,
+        .search-page input:focus-visible,
+        .search-page select:focus-visible,
+        .search-page a:focus-visible {
+            outline: 3px solid rgba(109, 93, 252, .25);
+            outline-offset: 2px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+           ========================================================= */
+
+        @media (max-width: 1250px) {
+
+            .search-workspace {
+                grid-template-columns: minmax(0, 1fr) 285px;
+            }
+
+            .search-summary-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 1050px) {
+
+            .search-workspace {
+                grid-template-columns: 1fr;
+            }
+
+            .search-sidebar {
+                display: grid;
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 820px) {
+
+            .search-page {
+                padding-bottom: 30px;
+            }
+
+            .search-hero {
+                padding: 23px;
+                border-radius: 21px;
+            }
+
+            .search-main-box {
+                min-height: 58px;
+            }
+
+            .search-main-icon {
+                width: 40px;
+                height: 40px;
+                flex-basis: 40px;
+            }
+
+            .search-submit-btn {
+                min-height: 42px;
+                padding: 0 14px;
+            }
+
+            .search-shortcut {
+                display: none;
+            }
+
+            .search-summary-grid {
+                gap: 10px;
+            }
+
+            .search-summary-card {
+                min-height: 105px;
+                padding: 15px;
+            }
+
+            .search-workspace {
+                gap: 14px;
+            }
+
+            .filter-toggle-btn {
+                display: inline-flex;
+            }
+
+            .search-filter-bar {
+                display: none;
+            }
+
+            .search-sidebar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 620px) {
+
+            .search-hero {
+                margin-bottom: 14px;
+                padding: 18px;
+            }
+
+            .search-hero p {
+                margin-bottom: 18px;
+                font-size: 13px;
+            }
+
+            .search-main-box {
+                gap: 7px;
+                padding: 6px;
+            }
+
+            .search-main-input {
+                font-size: 14px;
+            }
+
+            .search-submit-btn {
+                width: 42px;
+                padding: 0;
+                font-size: 0;
+            }
+
+            .search-submit-btn::before {
+                content: "⌕";
+                font-size: 19px;
+            }
+
+            .search-summary-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .summary-value {
+                font-size: 19px;
+            }
+
+            .results-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .results-toolbar-actions {
+                width: 100%;
+            }
+
+            .sort-select {
+                flex: 1;
+                width: 100%;
+                min-width: 0;
+            }
+
+            .filter-toggle-btn {
+                flex: 0 0 auto;
+            }
+
+            .result-item {
+                grid-template-columns: 43px minmax(0, 1fr);
+                gap: 11px;
+                padding: 17px 15px;
+            }
+
+            .result-icon {
+                width: 43px;
+                height: 43px;
+                border-radius: 12px;
+                font-size: 16px;
+            }
+
+            .result-actions {
+                grid-column: 2;
+                justify-self: start;
+            }
+
+            .result-open {
+                min-height: 34px;
+            }
+
+            .results-pagination {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .search-sidebar-card {
+                border-radius: 18px;
+            }
+        }
+
+        @media (max-width: 430px) {
+
+            .search-summary-grid {
+                gap: 8px;
+            }
+
+            .search-summary-card {
+                padding: 12px;
+            }
+
+            .summary-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 15px;
+            }
+
+            .summary-value {
+                margin-top: 9px;
+                font-size: 17px;
+            }
+
+            .summary-label {
+                font-size: 10px;
+            }
+
+            .result-title {
+                font-size: 13px;
+            }
+
+            .result-description {
+                font-size: 11px;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* =========================================================
+           REDUCED MOTION
+           ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .search-page *,
+            .search-page *::before,
+            .search-page *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+        }
+
+    </style>
+</head>
+
+<body
+    data-page="search-results"
+    data-translate="true"
+>
+
+    <!-- =========================================================
+         PAGE LOADER
+         ========================================================= -->
+
+    <div
+        id="pageLoader"
+        class="page-loader"
+        aria-hidden="true"
+    >
+        <div class="loader-orb"></div>
+        <div class="loader-text">
+            Veltrix
+        </div>
+    </div>
+
+    <!-- =========================================================
+         BACKGROUND EFFECT
+         ========================================================= -->
+
+    <div
+        class="app-background"
+        aria-hidden="true"
+    >
+        <div class="background-grid"></div>
+        <div class="background-glow background-glow-one"></div>
+        <div class="background-glow background-glow-two"></div>
+    </div>
+
+    <!-- =========================================================
+         MOBILE OVERLAY
+         ========================================================= -->
+
+    <div
+        id="mobileOverlay"
+        class="mobile-overlay"
+        aria-hidden="true"
+    ></div>
+
+    <!-- =========================================================
+         APP SHELL
+         ========================================================= -->
+
+    <div
+        id="app"
+        class="app-shell"
+    >
+
+        <!-- =====================================================
+             SIDEBAR
+             ===================================================== -->
+
+        <aside
+            id="sidebar"
+            class="sidebar"
+            aria-label="Main navigation"
+        >
+
+            <div class="sidebar-inner">
+
+                <!-- Brand -->
+
+                <div class="sidebar-brand">
+
+                    <a
+                        href="../index.html"
+                        class="brand-link"
+                        data-nav
+                        aria-label="Veltrix Dashboard"
+                    >
+
+                        <span class="brand-mark">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+
+                        <span class="brand-copy">
+                            <strong>Veltrix</strong>
+                            <small>Business Platform</small>
+                        </span>
+
+                    </a>
+
+                    <button
+                        type="button"
+                        class="sidebar-close mobile-only"
+                        data-sidebar-close
+                        aria-label="Close sidebar"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+                <!-- Workspace -->
+
+                <div class="workspace-selector">
+
+                    <button
+                        type="button"
+                        class="workspace-trigger"
+                        data-workspace-trigger
+                        aria-expanded="false"
+                    >
+
+                        <span class="workspace-avatar">
+                            V
+                        </span>
+
+                        <span class="workspace-info">
+                            <strong>Veltrix HQ</strong>
+                            <small>Business Workspace</small>
+                        </span>
+
+                        <span class="workspace-chevron">
+                           ⌄
+                        </span>
+
+                    </button>
+
+                    <div
+                        class="workspace-menu"
+                        data-workspace-menu
+                        hidden
+                    >
+
+                        <button
+                            type="button"
+                            data-workspace="Veltrix HQ"
+                        >
+                            <span>V</span>
+                            Veltrix HQ
+                        </button>
+
+                        <button
+                            type="button"
+                            data-workspace="Creative Lab"
+                        >
+                            <span>C</span>
+                            Creative Lab
+                        </button>
+
+                        <button
+                            type="button"
+                            data-workspace="Growth Team"
+                        >
+                            <span>G</span>
+                            Growth Team
+                        </button>
+
+                        <button
+                            type="button"
+                            data-workspace="Personal"
+                        >
+                            <span>P</span>
+                            Personal
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Navigation -->
+
+                <nav class="sidebar-navigation">
+
+                    <div class="nav-section-label">
+                        Overview
+                    </div>
+
+                    <a
+                        href="../index.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">⌂</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+
+                    <a
+                        href="analytics.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">◫</span>
+                        <span class="nav-label">Analytics</span>
+                    </a>
+
+                    <div class="nav-section-label">
+                        Management
+                    </div>
+
+                    <a
+                        href="orders.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">▤</span>
+                        <span class="nav-label">Orders</span>
+                        <span class="nav-badge">24</span>
+                    </a>
+
+                    <a
+                        href="customers.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">♙</span>
+                        <span class="nav-label">Customers</span>
+                    </a>
+
+                    <a
+                        href="products.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">◈</span>
+                        <span class="nav-label">Products</span>
+                    </a>
+
+                    <a
+                        href="invoices.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">▥</span>
+                        <span class="nav-label">Invoices</span>
+                    </a>
+
+                    <div class="nav-section-label">
+                        Communication
+                    </div>
+
+                    <a
+                        href="messages.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">◌</span>
+                        <span class="nav-label">Messages</span>
+                        <span class="nav-badge nav-badge-success">5</span>
+                    </a>
+
+                    <a
+                        href="notifications.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">♢</span>
+                        <span class="nav-label">Notifications</span>
+                    </a>
+
+                    <div class="nav-section-label">
+                        Tools
+                    </div>
+
+                    <a
+                        href="calculator.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">▦</span>
+                        <span class="nav-label">Calculator</span>
+                    </a>
+
+                    <a
+                        href="ai-workspace.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">✦</span>
+                        <span class="nav-label">AI Workspace</span>
+                        <span class="nav-beta">AI</span>
+                    </a>
+
+                    <a
+                        href="blank.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">□</span>
+                        <span class="nav-label">Starter Workspace</span>
+                    </a>
+
+                    <div class="nav-section-label">
+                        Account
+                    </div>
+
+                    <a
+                        href="settings.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">⚙</span>
+                        <span class="nav-label">Settings</span>
+                    </a>
+
+                    <a
+                        href="profile.html"
+                        class="nav-link"
+                        data-nav
+                    >
+                        <span class="nav-icon">◎</span>
+                        <span class="nav-label">Profile</span>
+                    </a>
+
+                    <a
+                        href="upgrade.html"
+                        class="nav-link nav-link-upgrade"
+                        data-nav
+                    >
+                        <span class="nav-icon">✧</span>
+                        <span class="nav-label">Upgrade</span>
+                    </a>
+
+                </nav>
+
+                <!-- Sidebar bottom -->
+
+                <div class="sidebar-bottom">
+
+                    <div class="sidebar-mini-card">
+
+                        <div class="sidebar-mini-icon">
+                            ✦
+                        </div>
+
+                        <div>
+                            <strong>Veltrix Pro</strong>
+                            <span>Unlock advanced tools</span>
+                        </div>
+
+                        <a
+                            href="upgrade.html"
+                            data-nav
+                            aria-label="Upgrade to Pro"
+                        >
+                            →
+                        </a>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="sidebar-collapse"
+                        data-sidebar-toggle
+                    >
+                        <span class="collapse-icon">‹</span>
+                        <span class="collapse-text">
+                            Collapse sidebar
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- =====================================================
+             MAIN AREA
+             ===================================================== -->
+
+        <div class="main-area">
+
+            <!-- =================================================
+                 TOPBAR
+                 ================================================= -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        type="button"
+                        class="mobile-menu-button"
+                        data-sidebar-open
+                        aria-label="Open navigation"
+                    >
+                        ☰
+                    </button>
+
+                    <button
+                        type="button"
+                        class="desktop-sidebar-button"
+                        data-sidebar-toggle
+                        aria-label="Toggle sidebar"
+                    >
+                        ☰
+                    </button>
+
+                    <div class="breadcrumb">
+
+                        <a
+                            href="../index.html"
+                            data-nav
+                        >
+                            Veltrix
+                        </a>
+
+                        <span>/</span>
+
+                        <span>
+                            Search Results
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <!-- Global Search -->
+
+                    <button
+                        type="button"
+                        class="topbar-search-trigger"
+                        data-global-search
+                    >
+                        <span>⌕</span>
+                        <span class="topbar-search-text">
+                            Search anything...
+                        </span>
+                        <kbd>Ctrl K</kbd>
+                    </button>
+
+                    <!-- Quick Create -->
+
+                    <button
+                        type="button"
+                        class="topbar-action"
+                        data-quick-create
+                        aria-label="Quick create"
+                    >
+                        +
+                    </button>
+
+                    <!-- Language -->
+
+                    <div class="topbar-dropdown">
+
+                        <button
+                            type="button"
+                            class="topbar-action language-trigger"
+                            data-language-trigger
+                            aria-expanded="false"
+                            aria-label="Language"
+                        >
+                            <span data-current-language-icon>
+                                A
+                            </span>
+                        </button>
+
+                        <div
+                            class="topbar-dropdown-menu language-menu"
+                            data-language-menu
+                            hidden
+                        >
+
+                            <!--
+                                TranslationManager populates
+                                exactly the 21 languages here.
+                            -->
+
+                        </div>
+
+                    </div>
+
+                    <!-- Notifications -->
+
+                    <a
+                        href="notifications.html"
+                        class="topbar-action notification-trigger"
+                        data-nav
+                        aria-label="Notifications"
+                    >
+                        ♢
+                        <span class="notification-dot"></span>
+                    </a>
+
+                    <!-- Theme -->
+
+                    <button
+                        type="button"
+                        class="topbar-action"
+                        data-theme-toggle
+                        aria-label="Toggle theme"
+                    >
+                        ◐
+                    </button>
+
+                    <!-- Profile -->
+
+                    <a
+                        href="profile.html"
+                        class="topbar-profile"
+                        data-nav
+                    >
+
+                        <span class="profile-avatar">
+                            A
+                        </span>
+
+                        <span class="profile-meta">
+                            <strong>Arwa</strong>
+                            <small>Administrator</small>
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </header>
+
+            <!-- =================================================
+                 PAGE CONTENT
+                 ================================================= -->
+
+            <main
+                class="page-content"
+                id="mainContent"
+            >
+
+                <div class="search-page">
+
+                    <!-- =================================================
+                         HERO
+                         ================================================= -->
+
+                    <section class="search-hero">
+
+                        <div class="search-hero-content">
+
+                            <div class="search-kicker">
+                                <span class="search-kicker-dot"></span>
+                                <span>
+                                    Intelligent Search
+                                </span>
+                            </div>
+
+                            <h1>
+                                Find anything in Veltrix
+                            </h1>
+
+                            <p>
+                                Search pages, orders, customers,
+                                products, invoices, tools and workspace
+                                resources from one powerful search center.
+                            </p>
+
+                            <form
+                                id="searchForm"
+                                class="search-main-box"
+                                autocomplete="off"
+                            >
+
+                                <span class="search-main-icon">
+                                    ⌕
+                                </span>
+
+                                <input
+                                    id="searchInput"
+                                    class="search-main-input"
+                                    type="search"
+                                    name="q"
+                                    placeholder="Search for anything..."
+                                    aria-label="Search for anything"
+                                    spellcheck="false"
+                                    autocomplete="off"
+                                >
+
+                                <button
+                                    type="button"
+                                    id="searchClear"
+                                    class="search-clear-btn"
+                                    aria-label="Clear search"
+                                    title="Clear search"
+                                >
+                                    ×
+                                </button>
+
+                                <span class="search-shortcut">
+                                    <span class="shortcut-key">/</span>
+                                    Focus
+                                </span>
+
+                                <button
+                                    type="submit"
+                                    class="search-submit-btn"
+                                >
+                                    Search
+                                </button>
+
+                            </form>
+
+                            <div
+                                id="searchSuggestions"
+                                class="search-suggestions"
+                            >
+
+                                <span class="suggestion-label">
+                                    Try:
+                                </span>
+
+                                <button
+                                    type="button"
+                                    class="suggestion-chip"
+                                    data-suggestion="analytics"
+                                >
+                                    ◫ Analytics
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="suggestion-chip"
+                                    data-suggestion="customers"
+                                >
+                                    ♙ Customers
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="suggestion-chip"
+                                    data-suggestion="invoice"
+                                >
+                                    ▥ Invoice
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="suggestion-chip"
+                                    data-suggestion="calculator"
+                                >
+                                    ▦ Calculator
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="suggestion-chip"
+                                    data-suggestion="settings"
+                                >
+                                    ⚙ Settings
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =================================================
+                         SUMMARY
+                         ================================================= -->
+
+                    <section
+                        class="search-summary-grid"
+                        aria-label="Search summary"
+                    >
+
+                        <article class="search-summary-card">
+
+                            <div class="summary-top">
+
+                                <div class="summary-icon purple">
+                                    ⌕
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="summaryResults"
+                                class="summary-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="summary-label">
+                                Results found
+                            </div>
+
+                        </article>
+
+                        <article class="search-summary-card">
+
+                            <div class="summary-top">
+
+                                <div class="summary-icon green">
+                                    ◈
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="summaryCategories"
+                                class="summary-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="summary-label">
+                                Categories
+                            </div>
+
+                        </article>
+
+                        <article class="search-summary-card">
+
+                            <div class="summary-top">
+
+                                <div class="summary-icon blue">
+                                    ⚡
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="summaryTime"
+                                class="summary-value"
+                            >
+                                0ms
+                            </div>
+
+                            <div class="summary-label">
+                                Search time
+                            </div>
+
+                        </article>
+
+                        <article class="search-summary-card">
+
+                            <div class="summary-top">
+
+                                <div class="summary-icon orange">
+                                    ★
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="summaryFavorites"
+                                class="summary-value"
+                            >
+                                0
+                            </div>
+
+                            <div class="summary-label">
+                                Favorites
+                            </div>
+
+                        </article>
+
+                    </section>
+
+                    <!-- =================================================
+                         WORKSPACE
+                         ================================================= -->
+
+                    <section class="search-workspace">
+
+                        <!-- RESULTS -->
+
+                        <div class="search-results-panel">
+
+                            <!-- Toolbar -->
+
+                            <div class="results-toolbar">
+
+                                <div class="results-heading">
+
+                                    <h2
+                                        id="resultsTitle"
+                                        class="results-heading-title"
+                                    >
+                                        All Veltrix resources
+                                    </h2>
+
+                                    <div
+                                        id="resultsSubtitle"
+                                        class="results-heading-subtitle"
+                                    >
+                                        Browse available pages and resources
+                                    </div>
+
+                                </div>
+
+                                <div class="results-toolbar-actions">
+
+                                    <button
+                                        type="button"
+                                        id="filterToggle"
+                                        class="filter-toggle-btn"
+                                        aria-expanded="false"
+                                    >
+                                        ☷ Filters
+                                    </button>
+
+                                    <select
+                                        id="sortSelect"
+                                        class="sort-select"
+                                        aria-label="Sort results"
+                                    >
+                                        <option value="relevance">
+                                            Relevance
+                                        </option>
+
+                                        <option value="name">
+                                            Name
+                                        </option>
+
+                                        <option value="type">
+                                            Type
+                                        </option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Desktop filter -->
+
+                            <div
+                                id="searchFilterBar"
+                                class="search-filter-bar"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="search-filter active"
+                                    data-filter="all"
+                                >
+                                    All
+                                    <span
+                                        class="filter-count"
+                                        data-count="all"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="page"
+                                >
+                                    Pages
+                                    <span
+                                        class="filter-count"
+                                        data-count="page"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="order"
+                                >
+                                    Orders
+                                    <span
+                                        class="filter-count"
+                                        data-count="order"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="customer"
+                                >
+                                    Customers
+                                    <span
+                                        class="filter-count"
+                                        data-count="customer"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="product"
+                                >
+                                    Products
+                                    <span
+                                        class="filter-count"
+                                        data-count="product"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="invoice"
+                                >
+                                    Invoices
+                                    <span
+                                        class="filter-count"
+                                        data-count="invoice"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="search-filter"
+                                    data-filter="tool"
+                                >
+                                    Tools
+                                    <span
+                                        class="filter-count"
+                                        data-count="tool"
+                                    >
+                                        0
+                                    </span>
+                                </button>
+
+                            </div>
+
+                            <!-- Mobile filters -->
+
+                            <div
+                                id="mobileFilterPanel"
+                                class="mobile-filter-panel"
+                            >
+
+                                <div class="mobile-filter-grid">
+
+                                    <button
+                                        type="button"
+                                        class="search-filter active"
+                                        data-filter="all"
+                                    >
+                                        All
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="page"
+                                    >
+                                        Pages
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="order"
+                                    >
+                                        Orders
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="customer"
+                                    >
+                                        Customers
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="product"
+                                    >
+                                        Products
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="invoice"
+                                    >
+                                        Invoices
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="search-filter"
+                                        data-filter="tool"
+                                    >
+                                        Tools
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Loading -->
+
+                            <div
+                                id="resultsLoading"
+                                class="results-loading"
+                                aria-hidden="true"
+                            >
+
+                                <div class="skeleton-row">
+                                    <div class="skeleton skeleton-icon"></div>
+                                    <div class="skeleton-content">
+                                        <div class="skeleton skeleton-line small"></div>
+                                        <div class="skeleton skeleton-line wide"></div>
+                                        <div class="skeleton skeleton-line medium"></div>
+                                    </div>
+                                </div>
+
+                                <div class="skeleton-row">
+                                    <div class="skeleton skeleton-icon"></div>
+                                    <div class="skeleton-content">
+                                        <div class="skeleton skeleton-line small"></div>
+                                        <div class="skeleton skeleton-line wide"></div>
+                                        <div class="skeleton skeleton-line medium"></div>
+                                    </div>
+                                </div>
+
+                                <div class="skeleton-row">
+                                    <div class="skeleton skeleton-icon"></div>
+                                    <div class="skeleton-content">
+                                        <div class="skeleton skeleton-line small"></div>
+                                        <div class="skeleton skeleton-line wide"></div>
+                                        <div class="skeleton skeleton-line medium"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Results -->
+
+                            <div
+                                id="resultsList"
+                                class="results-list"
+                            ></div>
+
+                            <!-- Empty -->
+
+                            <div
+                                id="searchEmpty"
+                                class="search-empty"
+                            >
+
+                                <div class="empty-visual">
+                                    ⌕
+                                </div>
+
+                                <h3 id="emptyTitle">
+                                    Start searching
+                                </h3>
+
+                                <p id="emptyText">
+                                    Enter a keyword above to search across
+                                    your Veltrix workspace.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    id="emptyAction"
+                                    class="empty-action"
+                                >
+                                    Explore all resources
+                                </button>
+
+                            </div>
+
+                            <!-- Pagination -->
+
+                            <div
+                                id="resultsPagination"
+                                class="results-pagination"
+                            >
+
+                                <div
+                                    id="paginationInfo"
+                                    class="pagination-info"
+                                >
+                                    Showing 0 results
+                                </div>
+
+                                <div class="pagination-actions">
+
+                                    <button
+                                        type="button"
+                                        id="previousPage"
+                                        class="pagination-btn"
+                                    >
+                                        ‹
+                                    </button>
+
+                                    <div
+                                        id="paginationNumbers"
+                                        class="pagination-actions"
+                                    ></div>
+
+                                    <button
+                                        type="button"
+                                        id="nextPage"
+                                        class="pagination-btn"
+                                    >
+                                        ›
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- =================================================
+                             SIDEBAR
+                             ================================================= -->
+
+                        <aside class="search-sidebar">
+
+                            <!-- Active Query -->
+
+                            <section class="search-sidebar-card">
+
+                                <div class="sidebar-card-heading">
+
+                                    <h3>
+                                        Current search
+                                    </h3>
+
+                                </div>
+
+                                <div
+                                    id="activeQueryBox"
+                                    class="query-chip-large"
+                                >
+
+                                    <span class="query-chip-large-icon">
+                                        ⌕
+                                    </span>
+
+                                    <span
+                                        id="activeQueryText"
+                                        class="query-chip-large-text"
+                                    >
+                                        All resources
+                                    </span>
+
+                                </div>
+
+                            </section>
+
+                            <!-- Recent -->
+
+                            <section class="search-sidebar-card">
+
+                                <div class="sidebar-card-heading">
+
+                                    <h3>
+                                        Recent searches
+                                    </h3>
+
+                                    <button
+                                        type="button"
+                                        id="clearRecent"
+                                    >
+                                        Clear
+                                    </button>
+
+                                </div>
+
+                                <div
+                                    id="recentList"
+                                    class="recent-list"
+                                >
+
+                                    <div class="recent-empty">
+                                        Your recent searches will appear here.
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+                            <!-- Quick Links -->
+
+                            <section class="search-sidebar-card">
+
+                                <div class="sidebar-card-heading">
+
+                                    <h3>
+                                        Quick access
+                                    </h3>
+
+                                </div>
+
+                                <div class="quick-links">
+
+                                    <a
+                                        href="analytics.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ◫
+                                        </span>
+                                        Analytics
+                                    </a>
+
+                                    <a
+                                        href="orders.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ▤
+                                        </span>
+                                        Orders
+                                    </a>
+
+                                    <a
+                                        href="customers.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ♙
+                                        </span>
+                                        Customers
+                                    </a>
+
+                                    <a
+                                        href="products.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ◈
+                                        </span>
+                                        Products
+                                    </a>
+
+                                    <a
+                                        href="invoices.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ▥
+                                        </span>
+                                        Invoices
+                                    </a>
+
+                                    <a
+                                        href="settings.html"
+                                        class="quick-link"
+                                        data-nav
+                                    >
+                                        <span class="quick-link-icon">
+                                            ⚙
+                                        </span>
+                                        Settings
+                                    </a>
+
+                                </div>
+
+                            </section>
+
+                            <!-- Tips -->
+
+                            <section class="search-sidebar-card">
+
+                                <div class="sidebar-card-heading">
+
+                                    <h3>
+                                        Search tips
+                                    </h3>
+
+                                </div>
+
+                                <div class="tips-list">
+
+                                    <div class="tip-item">
+
+                                        <span class="tip-number">
+                                            1
+                                        </span>
+
+                                        <span class="tip-text">
+                                            Use specific words such as
+                                            “invoice”, “customer” or
+                                            “analytics”.
+                                        </span>
+
+                                    </div>
+
+                                    <div class="tip-item">
+
+                                        <span class="tip-number">
+                                            2
+                                        </span>
+
+                                        <span class="tip-text">
+                                            Press <strong>/</strong> anywhere
+                                            on this page to focus search.
+                                        </span>
+
+                                    </div>
+
+                                    <div class="tip-item">
+
+                                        <span class="tip-number">
+                                            3
+                                        </span>
+
+                                        <span class="tip-text">
+                                            Use the filters to narrow results
+                                            by resource type.
+                                        </span>
+
+                                    </div>
+
+                                    <div class="tip-item">
+
+                                        <span class="tip-number">
+                                            4
+                                        </span>
+
+                                        <span class="tip-text">
+                                            Favorite useful resources for
+                                            faster access later.
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+                        </aside>
+
+                    </section>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         GLOBAL SEARCH MODAL
+         ========================================================= -->
+
+    <div
+        id="globalSearchModal"
+        class="modal-overlay"
+        hidden
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-card search-modal-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="globalSearchTitle"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="modal-eyebrow">
+                        Veltrix
+                    </span>
+
+                    <h2 id="globalSearchTitle">
+                        Search workspace
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="global-search-input-wrap">
+
+                    <span>⌕</span>
+
+                    <input
+                        id="globalSearchInput"
+                        type="search"
+                        placeholder="Search pages, customers, orders..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+                <div
+                    id="globalSearchResults"
+                    class="global-search-results"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         QUICK CREATE MODAL
+         ========================================================= -->
+
+    <div
+        id="quickCreateModal"
+        class="modal-overlay"
+        hidden
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-card"
+            role="dialog"
+            aria-modal="true"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <span class="modal-eyebrow">
+                        Quick Action
+                    </span>
+
+                    <h2>
+                        Create something
+                    </h2>
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-modal-close
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="quick-create-grid">
+
+                    <button
+                        type="button"
+                        data-quick-action="order"
+                    >
+                        <span>▤</span>
+                        New Order
+                    </button>
+
+                    <button
+                        type="button"
+                        data-quick-action="customer"
+                    >
+                        <span>♙</span>
+                        New Customer
+                    </button>
+
+                    <button
+                        type="button"
+                        data-quick-action="product"
+                    >
+                        <span>◈</span>
+                        New Product
+                    </button>
+
+                    <button
+                        type="button"
+                        data-quick-action="invoice"
+                    >
+                        <span>▥</span>
+                        New Invoice
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         LOCAL TOAST
+         ========================================================= -->
+
+    <div
+        id="searchLocalToast"
+        class="search-local-toast"
+        role="status"
+        aria-live="polite"
+    >
+        <span id="searchToastIcon">✓</span>
+        <span id="searchToastText">Done</span>
+    </div>
+
+    <!-- =========================================================
+         SCREEN READER ANNOUNCER
+         ========================================================= -->
+
+    <div
+        id="searchAnnouncer"
+        class="sr-only"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
+
+    <!-- =========================================================
+         PAGE-SPECIFIC JAVASCRIPT
+         ========================================================= -->
+
+    <script>
+
+        (() => {
+
+            "use strict";
+
+            /* =====================================================
+               VELTRIX SEARCH ENGINE
+               ===================================================== */
+
+            const STORAGE_KEYS = {
+                recent: "veltrix.search.recent",
+                favorites: "veltrix.search.favorites"
+            };
+
+            const PAGE_SIZE = 8;
+
+            const state = {
+                query: "",
+                filter: "all",
+                sort: "relevance",
+                page: 1,
+                favorites: new Set(),
+                recent: [],
+                searching: false
+            };
+
+            /* =====================================================
+               SEARCH INDEX
+
+               This is application data, NOT a translation dictionary.
+               The central Google Translate system remains responsible
+               for UI language switching.
+               ===================================================== */
+
+            const SEARCH_INDEX = [
+
+                {
+                    id: "dashboard",
+                    type: "page",
+                    title: "Dashboard",
+                    description:
+                        "Main business overview with revenue, KPIs, recent orders, customer activity and monthly targets.",
+                    breadcrumb: "Overview",
+                    tags: [
+                        "home",
+                        "overview",
+                        "business",
+                        "revenue",
+                        "kpi"
+                    ],
+                    icon: "⌂",
+                    url: "../index.html"
+                },
+
+                {
+                    id: "analytics",
+                    type: "page",
+                    title: "Analytics",
+                    description:
+                        "Explore performance metrics, revenue trends, customer growth and business intelligence.",
+                    breadcrumb: "Overview / Analytics",
+                    tags: [
+                        "analytics",
+                        "reports",
+                        "charts",
+                        "metrics",
+                        "revenue"
+                    ],
+                    icon: "◫",
+                    url: "analytics.html"
+                },
+
+                {
+                    id: "orders",
+                    type: "page",
+                    title: "Orders",
+                    description:
+                        "Manage customer orders, order status, payment information and transaction activity.",
+                    breadcrumb: "Management / Orders",
+                    tags: [
+                        "sales",
+                        "transactions",
+                        "payments",
+                        "orders"
+                    ],
+                    icon: "▤",
+                    url: "orders.html"
+                },
+
+                {
+                    id: "customers",
+                    type: "page",
+                    title: "Customers",
+                    description:
+                        "Manage customer profiles, contact information, activity, segments and lifetime value.",
+                    breadcrumb: "Management / Customers",
+                    tags: [
+                        "clients",
+                        "users",
+                        "contacts",
+                        "crm"
+                    ],
+                    icon: "♙",
+                    url: "customers.html"
+                },
+
+                {
+                    id: "products",
+                    type: "page",
+                    title: "Products",
+                    description:
+                        "Manage your product catalog, inventory, pricing, categories and product performance.",
+                    breadcrumb: "Management / Products",
+                    tags: [
+                        "catalog",
+                        "inventory",
+                        "stock",
+                        "pricing"
+                    ],
+                    icon: "◈",
+                    url: "products.html"
+                },
+
+                {
+                    id: "invoices",
+                    type: "page",
+                    title: "Invoices",
+                    description:
+                        "Create, manage and track invoices, payment status, due dates and financial records.",
+                    breadcrumb: "Management / Invoices",
+                    tags: [
+                        "billing",
+                        "finance",
+                        "payment",
+                        "invoice"
+                    ],
+                    icon: "▥",
+                    url: "invoices.html"
+                },
+
+                {
+                    id: "messages",
+                    type: "page",
+                    title: "Messages",
+                    description:
+                        "Communicate with your team and customers using the Veltrix messaging workspace.",
+                    breadcrumb: "Communication / Messages",
+                    tags: [
+                        "chat",
+                        "communication",
+                        "team",
+                        "support"
+                    ],
+                    icon: "◌",
+                    url: "messages.html"
+                },
+
+                {
+                    id: "notifications",
+                    type: "page",
+                    title: "Notifications",
+                    description:
+                        "View alerts, activity updates, reminders, system notifications and important events.",
+                    breadcrumb: "Communication / Notifications",
+                    tags: [
+                        "alerts",
+                        "updates",
+                        "activity",
+                        "reminders"
+                    ],
+                    icon: "♢",
+                    url: "notifications.html"
+                },
+
+                {
+                    id: "calculator",
+                    type: "tool",
+                    title: "Calculator",
+                    description:
+                        "Perform business calculations, percentages, discounts, margins, taxes and totals.",
+                    breadcrumb: "Tools / Calculator",
+                    tags: [
+                        "math",
+                        "percentage",
+                        "discount",
+                        "tax",
+                        "profit"
+                    ],
+                    icon: "▦",
+                    url: "calculator.html"
+                },
+
+                {
+                    id: "ai-workspace",
+                    type: "tool",
+                    title: "AI Workspace",
+                    description:
+                        "Work with intelligent business assistance, prompts, productivity tools and AI workflows.",
+                    breadcrumb: "Tools / AI Workspace",
+                    tags: [
+                        "ai",
+                        "assistant",
+                        "automation",
+                        "productivity"
+                    ],
+                    icon: "✦",
+                    url: "ai-workspace.html"
+                },
+
+                {
+                    id: "starter-workspace",
+                    type: "tool",
+                    title: "Starter Workspace",
+                    description:
+                        "Build a custom workspace with reusable blocks, notes, statistics, callouts and layouts.",
+                    breadcrumb: "Tools / Starter Workspace",
+                    tags: [
+                        "builder",
+                        "workspace",
+                        "blocks",
+                        "custom"
+                    ],
+                    icon: "□",
+                    url: "blank.html"
+                },
+
+                {
+                    id: "settings",
+                    type: "page",
+                    title: "Settings",
+                    description:
+                        "Configure appearance, language, notifications, security, privacy and workspace preferences.",
+                    breadcrumb: "Account / Settings",
+                    tags: [
+                        "preferences",
+                        "language",
+                        "security",
+                        "privacy",
+                        "theme"
+                    ],
+                    icon: "⚙",
+                    url: "settings.html"
+                },
+
+                {
+                    id: "profile",
+                    type: "page",
+                    title: "Profile",
+                    description:
+                        "Manage your account profile, personal information, security and account preferences.",
+                    breadcrumb: "Account / Profile",
+                    tags: [
+                        "account",
+                        "user",
+                        "personal",
+                        "security"
+                    ],
+                    icon: "◎",
+                    url: "profile.html"
+                },
+
+                {
+                    id: "upgrade",
+                    type: "page",
+                    title: "Upgrade",
+                    description:
+                        "Compare Veltrix plans and unlock advanced features, higher limits and premium workspace tools.",
+                    breadcrumb: "Account / Upgrade",
+                    tags: [
+                        "pricing",
+                        "plans",
+                        "pro",
+                        "premium",
+                        "subscription"
+                    ],
+                    icon: "✧",
+                    url: "upgrade.html"
+                },
+
+                {
+                    id: "search",
+                    type: "tool",
+                    title: "Search Results",
+                    description:
+                        "Search across your Veltrix workspace and quickly discover pages, tools and resources.",
+                    breadcrumb: "Tools / Search",
+                    tags: [
+                        "search",
+                        "find",
+                        "discover",
+                        "results"
+                    ],
+                    icon: "⌕",
+                    url: "search-results.html"
+                },
+
+                {
+                    id: "404",
+                    type: "page",
+                    title: "404 Not Found",
+                    description:
+                        "Friendly fallback page displayed when a requested Veltrix route cannot be found.",
+                    breadcrumb: "System / 404",
+                    tags: [
+                        "error",
+                        "not found",
+                        "fallback"
+                    ],
+                    icon: "?"
+                    ,
+                    url: "404.html"
+                },
+
+                {
+                    id: "order-1001",
+                    type: "order",
+                    title: "Order #VX-1001",
+                    description:
+                        "Premium workspace package purchased by Olivia Martin with completed payment.",
+                    breadcrumb: "Orders / Recent Orders",
+                    tags: [
+                        "VX-1001",
+                        "completed",
+                        "paid",
+                        "olivia"
+                    ],
+                    icon: "▤",
+                    url: "orders.html"
+                },
+
+                {
+                    id: "order-1002",
+                    type: "order",
+                    title: "Order #VX-1002",
+                    description:
+                        "Business plan order awaiting payment confirmation and fulfillment.",
+                    breadcrumb: "Orders / Pending",
+                    tags: [
+                        "VX-1002",
+                        "pending",
+                        "payment",
+                        "business"
+                    ],
+                    icon: "▤",
+                    url: "orders.html"
+                },
+
+                {
+                    id: "order-1003",
+                    type: "order",
+                    title: "Order #VX-1003",
+                    description:
+                        "Enterprise workspace order marked as processing by the operations team.",
+                    breadcrumb: "Orders / Processing",
+                    tags: [
+                        "VX-1003",
+                        "processing",
+                        "enterprise"
+                    ],
+                    icon: "▤",
+                    url: "orders.html"
+                },
+
+                {
+                    id: "customer-001",
+                    type: "customer",
+                    title: "Olivia Martin",
+                    description:
+                        "Premium customer profile with recent activity and high lifetime value.",
+                    breadcrumb: "Customers / Premium",
+                    tags: [
+                        "customer",
+                        "premium",
+                        "olivia",
+                        "lifetime value"
+                    ],
+                    icon: "♙",
+                    url: "customers.html"
+                },
+
+                {
+                    id: "customer-002",
+                    type: "customer",
+                    title: "Daniel Carter",
+                    description:
+                        "Business customer with multiple orders and an active workspace.",
+                    breadcrumb: "Customers / Business",
+                    tags: [
+                        "customer",
+                        "daniel",
+                        "business",
+                        "active"
+                    ],
+                    icon: "♙",
+                    url: "customers.html"
+                },
+
+                {
+                    id: "customer-003",
+                    type: "customer",
+                    title: "Sophia Wilson",
+                    description:
+                        "Returning customer with recent invoice and product activity.",
+                    breadcrumb: "Customers / Returning",
+                    tags: [
+                        "customer",
+                        "sophia",
+                        "returning",
+                        "invoice"
+                    ],
+                    icon: "♙",
+                    url: "customers.html"
+                },
+
+                {
+                    id: "product-001",
+                    type: "product",
+                    title: "Veltrix Pro Workspace",
+                    description:
+                        "Premium workspace product with advanced analytics and automation capabilities.",
+                    breadcrumb: "Products / Premium",
+                    tags: [
+                        "product",
+                        "pro",
+                        "workspace",
+                        "premium"
+                    ],
+                    icon: "◈",
+                    url: "products.html"
+                },
+
+                {
+                    id: "product-002",
+                    type: "product",
+                    title: "Analytics Suite",
+                    description:
+                        "Advanced analytics product for dashboards, reports and performance tracking.",
+                    breadcrumb: "Products / Analytics",
+                    tags: [
+                        "product",
+                        "analytics",
+                        "reports",
+                        "dashboard"
+                    ],
+                    icon: "◈",
+                    url: "products.html"
+                },
+
+                {
+                    id: "product-003",
+                    type: "product",
+                    title: "Business Starter",
+                    description:
+                        "Entry-level workspace package designed for small teams and independent users.",
+                    breadcrumb: "Products / Starter",
+                    tags: [
+                        "product",
+                        "starter",
+                        "business",
+                        "workspace"
+                    ],
+                    icon: "◈",
+                    url: "products.html"
+                },
+
+                {
+                    id: "invoice-001",
+                    type: "invoice",
+                    title: "Invoice #INV-2026-001",
+                    description:
+                        "Paid invoice for the Veltrix Pro Workspace package.",
+                    breadcrumb: "Invoices / Paid",
+                    tags: [
+                        "invoice",
+                        "paid",
+                        "2026",
+                        "pro"
+                    ],
+                    icon: "▥",
+                    url: "invoices.html"
+                },
+
+                {
+                    id: "invoice-002",
+                    type: "invoice",
+                    title: "Invoice #INV-2026-002",
+                    description:
+                        "Pending invoice requiring payment before the due date.",
+                    breadcrumb: "Invoices / Pending",
+                    tags: [
+                        "invoice",
+                        "pending",
+                        "payment",
+                        "due"
+                    ],
+                    icon: "▥",
+                    url: "invoices.html"
+                },
+
+                {
+                    id: "invoice-003",
+                    type: "invoice",
+                    title: "Invoice #INV-2026-003",
+                    description:
+                        "Overdue invoice that requires attention from the finance team.",
+                    breadcrumb: "Invoices / Overdue",
+                    tags: [
+                        "invoice",
+                        "overdue",
+                        "finance",
+                        "attention"
+                    ],
+                    icon: "▥",
+                    url: "invoices.html"
+                }
+
+            ];
+
+            /* =====================================================
+               DOM HELPERS
+               ===================================================== */
+
+            const $ = (selector, root = document) =>
+                root.querySelector(selector);
+
+            const $$ = (selector, root = document) =>
+                Array.from(root.querySelectorAll(selector));
+
+            const elements = {
+                form: $("#searchForm"),
+                input: $("#searchInput"),
+                clear: $("#searchClear"),
+                suggestions: $("#searchSuggestions"),
+
+                resultsList: $("#resultsList"),
+                resultsLoading: $("#resultsLoading"),
+                empty: $("#searchEmpty"),
+
+                resultsTitle: $("#resultsTitle"),
+                resultsSubtitle: $("#resultsSubtitle"),
+
+                summaryResults: $("#summaryResults"),
+                summaryCategories: $("#summaryCategories"),
+                summaryTime: $("#summaryTime"),
+                summaryFavorites: $("#summaryFavorites"),
+
+                activeQueryText: $("#activeQueryText"),
+
+                sort: $("#sortSelect"),
+
+                pagination: $("#resultsPagination"),
+                paginationInfo: $("#paginationInfo"),
+                paginationNumbers: $("#paginationNumbers"),
+                previous: $("#previousPage"),
+                next: $("#nextPage"),
+
+                recentList: $("#recentList"),
+                clearRecent: $("#clearRecent"),
+
+                filterToggle: $("#filterToggle"),
+                mobileFilterPanel: $("#mobileFilterPanel"),
+
+                emptyAction: $("#emptyAction"),
+
+                toast: $("#searchLocalToast"),
+                toastText: $("#searchToastText"),
+                toastIcon: $("#searchToastIcon"),
+
+                announcer: $("#searchAnnouncer")
+            };
+
+            /* =====================================================
+               STORAGE
+               ===================================================== */
+
+            function loadStorage() {
+
+                try {
+
+                    const recent =
+                        JSON.parse(
+                            localStorage.getItem(
+                                STORAGE_KEYS.recent
+                            ) || "[]"
+                        );
+
+                    const favorites =
+                        JSON.parse(
+                            localStorage.getItem(
+                                STORAGE_KEYS.favorites
+                            ) || "[]"
+                        );
+
+                    state.recent =
+                        Array.isArray(recent)
+                            ? recent.slice(0, 8)
+                            : [];
+
+                    state.favorites =
+                        new Set(
+                            Array.isArray(favorites)
+                                ? favorites
+                                : []
+                        );
+
+                } catch (error) {
+
+                    state.recent = [];
+                    state.favorites = new Set();
+
+                }
+
+            }
+
+            function saveRecent() {
+
+                localStorage.setItem(
+                    STORAGE_KEYS.recent,
+                    JSON.stringify(
+                        state.recent.slice(0, 8)
+                    )
+                );
+
+            }
+
+            function saveFavorites() {
+
+                localStorage.setItem(
+                    STORAGE_KEYS.favorites,
+                    JSON.stringify(
+                        Array.from(state.favorites)
+                    )
+                );
+
+            }
+
+            /* =====================================================
+               TOAST
+               ===================================================== */
+
+            let toastTimer = null;
+
+            function showToast(
+                message,
+                icon = "✓"
+            ) {
+
+                if (!elements.toast) {
+                    return;
+                }
+
+                elements.toastText.textContent = message;
+                elements.toastIcon.textContent = icon;
+
+                elements.toast.classList.add("active");
+
+                clearTimeout(toastTimer);
+
+                toastTimer =
+                    setTimeout(() => {
+
+                        elements.toast.classList.remove(
+                            "active"
+                        );
+
+                    }, 2400);
+
+            }
+
+            /* =====================================================
+               ANNOUNCER
+               ===================================================== */
+
+            function announce(message) {
+
+                if (!elements.announcer) {
+                    return;
+                }
+
+                elements.announcer.textContent = "";
+
+                requestAnimationFrame(() => {
+
+                    elements.announcer.textContent =
+                        message;
+
+                });
+
+            }
+
+            /* =====================================================
+               ESCAPE HTML
+               ===================================================== */
+
+            function escapeHTML(value) {
+
+                return String(value)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+
+            }
+
+            /* =====================================================
+               HIGHLIGHT SEARCH TERM SAFELY
+               ===================================================== */
+
+            function highlight(
+                text,
+                query
+            ) {
+
+                const safe =
+                    escapeHTML(text);
+
+                if (!query) {
+                    return safe;
+                }
+
+                const terms =
+                    query
+                        .trim()
+                        .split(/\s+/)
+                        .filter(Boolean)
+                        .map(
+                            term =>
+                                term.replace(
+                                    /[.*+?^${}()|[\]\\]/g,
+                                    "\\$&"
+                                )
+                        );
+
+                if (!terms.length) {
+                    return safe;
+                }
+
+                const pattern =
+                    new RegExp(
+                        `(${terms.join("|")})`,
+                        "gi"
+                    );
+
+                return safe.replace(
+                    pattern,
+                    "<mark>$1</mark>"
+                );
+
+            }
+
+            /* =====================================================
+               NORMALIZE
+               ===================================================== */
+
+            function normalize(value) {
+
+                return String(value || "")
+                    .toLowerCase()
+                    .normalize("NFD")
+                    .replace(
+                        /[\u0300-\u036f]/g,
+                        ""
+                    );
+
+            }
+
+            /* =====================================================
+               SEARCH SCORE
+               ===================================================== */
+
+            function scoreResult(
+                item,
+                query
+            ) {
+
+                if (!query) {
+                    return 1;
+                }
+
+                const normalizedQuery =
+                    normalize(query);
+
+                const title =
+                    normalize(item.title);
+
+                const description =
+                    normalize(item.description);
+
+                const breadcrumb =
+                    normalize(item.breadcrumb);
+
+                const tags =
+                    normalize(item.tags.join(" "));
+
+                let score = 0;
+
+                if (
+                    title === normalizedQuery
+                ) {
+                    score += 100;
+                }
+
+                if (
+                    title.startsWith(
+                        normalizedQuery
+                    )
+                ) {
+                    score += 70;
+                }
+
+                if (
+                    title.includes(
+                        normalizedQuery
+                    )
+                ) {
+                    score += 50;
+                }
+
+                if (
+                    tags.includes(
+                        normalizedQuery
+                    )
+                ) {
+                    score += 35;
+                }
+
+                if (
+                    breadcrumb.includes(
+                        normalizedQuery
+                    )
+                ) {
+                    score += 20;
+                }
+
+                if (
+                    description.includes(
+                        normalizedQuery
+                    )
+                ) {
+                    score += 10;
+                }
+
+                const words =
+                    normalizedQuery
+                        .split(/\s+/)
+                        .filter(Boolean);
+
+                words.forEach(word => {
+
+                    if (title.includes(word)) {
+                        score += 18;
+                    }
+
+                    if (tags.includes(word)) {
+                        score += 12;
+                    }
+
+                    if (description.includes(word)) {
+                        score += 5;
+                    }
+
+                });
+
+                return score;
+
+            }
+
+            /* =====================================================
+               MATCH
+               ===================================================== */
+
+            function matchesQuery(
+                item,
+                query
+            ) {
+
+                if (!query) {
+                    return true;
+                }
+
+                const haystack =
+                    normalize([
+                        item.title,
+                        item.description,
+                        item.breadcrumb,
+                        item.tags.join(" ")
+                    ].join(" "));
+
+                const terms =
+                    normalize(query)
+                        .split(/\s+/)
+                        .filter(Boolean);
+
+                return terms.every(
+                    term =>
+                        haystack.includes(term)
+                );
+
+            }
+
+            /* =====================================================
+               FILTER
+               ===================================================== */
+
+            function applyFilter(
+                items
+            ) {
+
+                if (state.filter === "all") {
+                    return items;
+                }
+
+                return items.filter(
+                    item =>
+                        item.type === state.filter
+                );
+
+            }
+
+            /* =====================================================
+               SORT
+               ===================================================== */
+
+            function sortResults(
+                items
+            ) {
+
+                const sorted =
+                    [...items];
+
+                if (
+                    state.sort === "name"
+                ) {
+
+                    sorted.sort(
+                        (a, b) =>
+                            a.title.localeCompare(
+                                b.title
+                            )
+                    );
+
+                    return sorted;
+                }
+
+                if (
+                    state.sort === "type"
+                ) {
+
+                    sorted.sort(
+                        (a, b) => {
+
+                            const typeCompare =
+                                a.type.localeCompare(
+                                    b.type
+                                );
+
+                            if (
+                                typeCompare !== 0
+                            ) {
+                                return typeCompare;
+                            }
+
+                            return a.title.localeCompare(
+                                b.title
+                            );
+
+                        }
+                    );
+
+                    return sorted;
+                }
+
+                return sorted.sort(
+                    (a, b) =>
+                        scoreResult(
+                            b,
+                            state.query
+                        ) -
+                        scoreResult(
+                            a,
+                            state.query
+                        )
+                );
+
+            }
+
+            /* =====================================================
+               GET RESULTS
+               ===================================================== */
+
+            function getResults() {
+
+                const query =
+                    state.query.trim();
+
+                let results =
+                    SEARCH_INDEX.filter(
+                        item =>
+                            matchesQuery(
+                                item,
+                                query
+                            )
+                    );
+
+                results =
+                    applyFilter(results);
+
+                results =
+                    sortResults(results);
+
+                return results;
+
+            }
+
+            /* =====================================================
+               FILTER COUNTS
+               ===================================================== */
+
+            function updateFilterCounts() {
+
+                const query =
+                    state.query.trim();
+
+                const matching =
+                    SEARCH_INDEX.filter(
+                        item =>
+                            matchesQuery(
+                                item,
+                                query
+                            )
+                    );
+
+                const counts = {
+                    all: matching.length,
+                    page: 0,
+                    order: 0,
+                    customer: 0,
+                    product: 0,
+                    invoice: 0,
+                    tool: 0
+                };
+
+                matching.forEach(item => {
+
+                    if (
+                        Object.prototype.hasOwnProperty.call(
+                            counts,
+                            item.type
+                        )
+                    ) {
+
+                        counts[item.type]++;
+
+                    }
+
+                });
+
+                $$(
+                    "[data-count]"
+                ).forEach(element => {
+
+                    const type =
+                        element.dataset.count;
+
+                    element.textContent =
+                        counts[type] ?? 0;
+
+                });
+
+            }
+
+            /* =====================================================
+               TYPE LABEL
+               ===================================================== */
+
+            function typeLabel(
+                type
+            ) {
+
+                const labels = {
+                    page: "Page",
+                    order: "Order",
+                    customer: "Customer",
+                    product: "Product",
+                    invoice: "Invoice",
+                    tool: "Tool"
+                };
+
+                return labels[type] || type;
+
+            }
+
+            /* =====================================================
+               RESULT CARD
+               ===================================================== */
+
+            function createResultElement(
+                item
+            ) {
+
+                const article =
+                    document.createElement("article");
+
+                article.className =
+                    "result-item";
+
+                article.dataset.id =
+                    item.id;
+
+                const isFavorite =
+                    state.favorites.has(
+                        item.id
+                    );
+
+                article.innerHTML = `
+
+                    <div
+                        class="result-icon"
+                        aria-hidden="true"
+                    >
+                        ${escapeHTML(item.icon)}
+                    </div>
+
+                    <div class="result-content">
+
+                        <div class="result-meta">
+
+                            <span class="result-type">
+                                ${escapeHTML(
+                                    typeLabel(item.type)
+                                )}
+                            </span>
+
+                            <span class="result-breadcrumb">
+                                ${highlight(
+                                    item.breadcrumb,
+                                    state.query
+                                )}
+                            </span>
+
+                        </div>
+
+                        <h3 class="result-title">
+                            ${highlight(
+                                item.title,
+                                state.query
+                            )}
+                        </h3>
+
+                        <p class="result-description">
+                            ${highlight(
+                                item.description,
+                                state.query
+                            )}
+                        </p>
+
+                        <div class="result-tags">
+
+                            ${item.tags
+                                .slice(0, 5)
+                                .map(
+                                    tag =>
+                                        `<span class="result-tag">
+                                            ${highlight(
+                                                tag,
+                                                state.query
+                                            )}
+                                        </span>`
+                                )
+                                .join("")}
+
+                        </div>
+
+                    </div>
+
+                    <div class="result-actions">
+
+                        <button
+                            type="button"
+                            class="result-action favorite ${
+                                isFavorite
+                                    ? "active"
+                                    : ""
+                            }"
+                            data-favorite="${escapeHTML(
+                                item.id
+                            )}"
+                            aria-label="${
+                                isFavorite
+                                    ? "Remove favorite"
+                                    : "Add favorite"
+                            }"
+                            title="${
+                                isFavorite
+                                    ? "Remove favorite"
+                                    : "Add favorite"
+                            }"
+                        >
+                            ${
+                                isFavorite
+                                    ? "★"
+                                    : "☆"
+                            }
+                        </button>
+
+                        <button
+                            type="button"
+                            class="result-open"
+                            data-open-result="${escapeHTML(
+                                item.id
+                            )}"
+                        >
+                            Open →
+                        </button>
+
+                    </div>
+
+                `;
+
+                return article;
+
+            }
+
+            /* =====================================================
+               RENDER RESULTS
+               ===================================================== */
+
+            function renderResults() {
+
+                const results =
+                    getResults();
+
+                const total =
+                    results.length;
+
+                const start =
+                    (state.page - 1) *
+                    PAGE_SIZE;
+
+                const end =
+                    start + PAGE_SIZE;
+
+                const visible =
+                    results.slice(
+                        start,
+                        end
+                    );
+
+                elements.resultsList.innerHTML =
+                    "";
+
+                if (
+                    !state.query.trim() &&
+                    state.filter === "all"
+                ) {
+
+                    elements.resultsTitle.textContent =
+                        "All Veltrix resources";
+
+                    elements.resultsSubtitle.textContent =
+                        `${SEARCH_INDEX.length} resources available`;
+
+                } else {
+
+                    elements.resultsTitle.textContent =
+                        state.query
+                            ? `Results for “${state.query}”`
+                            : "Filtered resources";
+
+                    elements.resultsSubtitle.textContent =
+                        `${total} matching resource${
+                            total === 1 ? "" : "s"
+                        } found`;
+
+                }
+
+                elements.summaryResults.textContent =
+                    total;
+
+                const categories =
+                    new Set(
+                        results.map(
+                            item => item.type
+                        )
+                    );
+
+                elements.summaryCategories.textContent =
+                    categories.size;
+
+                elements.summaryFavorites.textContent =
+                    state.favorites.size;
+
+                elements.activeQueryText.textContent =
+                    state.query.trim()
+                        ? state.query.trim()
+                        : "All resources";
+
+                if (!visible.length) {
+
+                    elements.empty.classList.add(
+                        "active"
+                    );
+
+                    elements.resultsList.innerHTML =
+                        "";
+
+                    if (
+                        state.query.trim()
+                    ) {
+
+                        $("#emptyTitle").textContent =
+                            "No results found";
+
+                        $("#emptyText").textContent =
+                            `We couldn't find anything matching “${state.query}”. Try another keyword or remove a filter.`;
+
+                        elements.emptyAction.textContent =
+                            "Clear search";
+
+                    } else {
+
+                        $("#emptyTitle").textContent =
+                            "Nothing here yet";
+
+                        $("#emptyText").textContent =
+                            "No resources match the selected filter.";
+
+                        elements.emptyAction.textContent =
+                            "Show all resources";
+
+                    }
+
+                } else {
+
+                    elements.empty.classList.remove(
+                        "active"
+                    );
+
+                    visible.forEach(
+                        item => {
+
+                            elements.resultsList.appendChild(
+                                createResultElement(item)
+                            );
+
+                        }
+                    );
+
+                }
+
+                updatePagination(
+                    total
+                );
+
+                updateFilterCounts();
+
+                renderRecent();
+
+            }
+
+            /* =====================================================
+               PAGINATION
+               ===================================================== */
+
+            function updatePagination(
+                total
+            ) {
+
+                const totalPages =
+                    Math.max(
+                        1,
+                        Math.ceil(
+                            total / PAGE_SIZE
+                        )
+                    );
+
+                if (
+                    total <= PAGE_SIZE
+                ) {
+
+                    elements.pagination.classList.remove(
+                        "active"
+                    );
+
+                    return;
+
+                }
+
+                elements.pagination.classList.add(
+                    "active"
+                );
+
+                if (
+                    state.page > totalPages
+                ) {
+                    state.page = totalPages;
+                }
+
+                const start =
+                    (state.page - 1) *
+                    PAGE_SIZE +
+                    1;
+
+                const end =
+                    Math.min(
+                        state.page *
+                            PAGE_SIZE,
+                        total
+                    );
+
+                elements.paginationInfo.textContent =
+                    `Showing ${start}–${end} of ${total}`;
+
+                elements.previous.disabled =
+                    state.page <= 1;
+
+                elements.next.disabled =
+                    state.page >= totalPages;
+
+                elements.paginationNumbers.innerHTML =
+                    "";
+
+                const pages =
+                    getPageNumbers(
+                        state.page,
+                        totalPages
+                    );
+
+                pages.forEach(
+                    pageNumber => {
+
+                        if (
+                            pageNumber === "..."
+                        ) {
+
+                            const dots =
+                                document.createElement(
+                                    "span"
+                                );
+
+                            dots.className =
+                                "pagination-btn";
+
+                            dots.textContent =
+                                "...";
+
+                            dots.disabled =
+                                true;
+
+                            elements.paginationNumbers.appendChild(
+                                dots
+                            );
+
+                            return;
+
+                        }
+
+                        const button =
+                            document.createElement(
+                                "button"
+                            );
+
+                        button.type =
+                            "button";
+
+                        button.className =
+                            "pagination-btn" +
+                            (
+                                pageNumber ===
+                                state.page
+                                    ? " current"
+                                    : ""
+                            );
+
+                        button.textContent =
+                            pageNumber;
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                state.page =
+                                    pageNumber;
+
+                                renderResults();
+
+                                window.scrollTo({
+                                    top: 0,
+                                    behavior: "smooth"
+                                });
+
+                            }
+                        );
+
+                        elements.paginationNumbers.appendChild(
+                            button
+                        );
+
+                    }
+                );
+
+            }
+
+            function getPageNumbers(
+                current,
+                total
+            ) {
+
+                if (total <= 5) {
+
+                    return Array.from(
+                        {
+                            length: total
+                        },
+                        (_, i) => i + 1
+                    );
+
+                }
+
+                const pages = [];
+
+                pages.push(1);
+
+                if (current > 3) {
+                    pages.push("...");
+                }
+
+                const start =
+                    Math.max(
+                        2,
+                        current - 1
+                    );
+
+                const end =
+                    Math.min(
+                        total - 1,
+                        current + 1
+                    );
+
+                for (
+                    let i = start;
+                    i <= end;
+                    i++
+                ) {
+                    pages.push(i);
+                }
+
+                if (
+                    current <
+                    total - 2
+                ) {
+                    pages.push("...");
+                }
+
+                pages.push(total);
+
+                return pages;
+
+            }
+
+            /* =====================================================
+               SEARCH
+               ===================================================== */
+
+            function performSearch(
+                query,
+                options = {}
+            ) {
+
+                const start =
+                    performance.now();
+
+                state.query =
+                    String(query || "")
+                        .trim();
+
+                state.page = 1;
+
+                if (
+                    !options.keepFilter
+                ) {
+                    state.filter = "all";
+                }
+
+                syncFilterButtons();
+
+                if (
+                    state.query
+                ) {
+
+                    addRecentSearch(
+                        state.query
+                    );
+
+                }
+
+                updateURL();
+
+                setLoading(
+                    true
+                );
+
+                window.setTimeout(
+                    () => {
+
+                        renderResults();
+
+                        const elapsed =
+                            performance.now() -
+                            start;
+
+                        elements.summaryTime.textContent =
+                            `${Math.max(
+                                1,
+                                Math.round(elapsed)
+                            )}ms`;
+
+                        setLoading(
+                            false
+                        );
+
+                        announce(
+                            `${getResults().length} search results found`
+                        );
+
+                    },
+                    110
+                );
+
+            }
+
+            function setLoading(
+                active
+            ) {
+
+                state.searching =
+                    active;
+
+                elements.resultsLoading.classList.toggle(
+                    "active",
+                    active
+                );
+
+                if (active) {
+
+                    elements.resultsList.innerHTML =
+                        "";
+
+                    elements.empty.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+
+            /* =====================================================
+               URL
+               ===================================================== */
+
+            function updateURL() {
+
+                const url =
+                    new URL(
+                        window.location.href
+                    );
+
+                if (
+                    state.query
+                ) {
+
+                    url.searchParams.set(
+                        "q",
+                        state.query
+                    );
+
+                } else {
+
+                    url.searchParams.delete(
+                        "q"
+                    );
+
+                }
+
+                if (
+                    state.filter !== "all"
+                ) {
+
+                    url.searchParams.set(
+                        "type",
+                        state.filter
+                    );
+
+                } else {
+
+                    url.searchParams.delete(
+                        "type"
+                    );
+
+                }
+
+                window.history.replaceState(
+                    {},
+                    "",
+                    url
+                );
+
+            }
+
+            function loadURLState() {
+
+                const url =
+                    new URL(
+                        window.location.href
+                    );
+
+                const query =
+                    url.searchParams.get(
+                        "q"
+                    );
+
+                const type =
+                    url.searchParams.get(
+                        "type"
+                    );
+
+                if (
+                    query
+                ) {
+
+                    state.query =
+                        query;
+
+                    elements.input.value =
+                        query;
+
+                    elements.clear.classList.add(
+                        "visible"
+                    );
+
+                }
+
+                const allowedTypes = [
+                    "all",
+                    "page",
+                    "order",
+                    "customer",
+                    "product",
+                    "invoice",
+                    "tool"
+                ];
+
+                if (
+                    type &&
+                    allowedTypes.includes(type)
+                ) {
+
+                    state.filter =
+                        type;
+
+                }
+
+                syncFilterButtons();
+
+            }
+
+            /* =====================================================
+               RECENT SEARCHES
+               ===================================================== */
+
+            function addRecentSearch(
+                query
+            ) {
+
+                const clean =
+                    String(query)
+                        .trim();
+
+                if (!clean) {
+                    return;
+                }
+
+                state.recent =
+                    [
+                        clean,
+                        ...state.recent.filter(
+                            item =>
+                                normalize(item) !==
+                                normalize(clean)
+                        )
+                    ].slice(0, 8);
+
+                saveRecent();
+
+            }
+
+            function renderRecent() {
+
+                if (
+                    !elements.recentList
+                ) {
+                    return;
+                }
+
+                if (
+                    !state.recent.length
+                ) {
+
+                    elements.recentList.innerHTML =
+                        `
+                        <div class="recent-empty">
+                            Your recent searches will appear here.
+                        </div>
+                        `;
+
+                    return;
+
+                }
+
+                elements.recentList.innerHTML =
+                    "";
+
+                state.recent.forEach(
+                    query => {
+
+                        const button =
+                            document.createElement(
+                                "button"
+                            );
+
+                        button.type =
+                            "button";
+
+                        button.className =
+                            "recent-item";
+
+                        button.innerHTML =
+                            `
+                            <span class="recent-icon">
+                                ↗
+                            </span>
+
+                            <span class="recent-query">
+                                ${escapeHTML(query)}
+                            </span>
+                            `;
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                elements.input.value =
+                                    query;
+
+                                elements.clear.classList.add(
+                                    "visible"
+                                );
+
+                                performSearch(
+                                    query
+                                );
+
+                                elements.input.focus();
+
+                            }
+                        );
+
+                        elements.recentList.appendChild(
+                            button
+                        );
+
+                    }
+                );
+
+            }
+
+            /* =====================================================
+               FILTER BUTTONS
+               ===================================================== */
+
+            function syncFilterButtons() {
+
+                $$(
+                    "[data-filter]"
+                ).forEach(
+                    button => {
+
+                        button.classList.toggle(
+                            "active",
+                            button.dataset.filter ===
+                            state.filter
+                        );
+
+                    }
+                );
+
+            }
+
+            function setFilter(
+                filter
+            ) {
+
+                state.filter =
+                    filter;
+
+                state.page =
+                    1;
+
+                syncFilterButtons();
+
+                updateURL();
+
+                renderResults();
+
+            }
+
+            /* =====================================================
+               FAVORITES
+               ===================================================== */
+
+            function toggleFavorite(
+                id
+            ) {
+
+                if (
+                    state.favorites.has(id)
+                ) {
+
+                    state.favorites.delete(
+                        id
+                    );
+
+                    showToast(
+                        "Removed from favorites",
+                        "☆"
+                    );
+
+                } else {
+
+                    state.favorites.add(
+                        id
+                    );
+
+                    showToast(
+                        "Added to favorites",
+                        "★"
+                    );
+
+                }
+
+                saveFavorites();
+
+                renderResults();
+
+            }
+
+            /* =====================================================
+               OPEN RESULT
+               ===================================================== */
+
+            function openResult(
+                id
+            ) {
+
+                const item =
+                    SEARCH_INDEX.find(
+                        result =>
+                            result.id === id
+                    );
+
+                if (!item) {
+                    return;
+                }
+
+                addRecentSearch(
+                    item.title
+                );
+
+                saveRecent();
+
+                window.location.href =
+                    item.url;
+
+            }
+
+            /* =====================================================
+               EVENT DELEGATION
+               ===================================================== */
+
+            elements.resultsList.addEventListener(
+                "click",
+                event => {
+
+                    const favoriteButton =
+                        event.target.closest(
+                            "[data-favorite]"
+                        );
+
+                    if (
+                        favoriteButton
+                    ) {
+
+                        toggleFavorite(
+                            favoriteButton.dataset.favorite
+                        );
+
+                        return;
+
+                    }
+
+                    const openButton =
+                        event.target.closest(
+                            "[data-open-result]"
+                        );
+
+                    if (
+                        openButton
+                    ) {
+
+                        openResult(
+                            openButton.dataset.openResult
+                        );
+
+                    }
+
+                }
+            );
+
+            /* =====================================================
+               MAIN FORM
+               ===================================================== */
+
+            elements.form.addEventListener(
+                "submit",
+                event => {
+
+                    event.preventDefault();
+
+                    performSearch(
+                        elements.input.value
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               INPUT
+               ===================================================== */
+
+            elements.input.addEventListener(
+                "input",
+                () => {
+
+                    const hasValue =
+                        Boolean(
+                            elements.input.value.trim()
+                        );
+
+                    elements.clear.classList.toggle(
+                        "visible",
+                        hasValue
+                    );
+
+                    elements.suggestions.classList.toggle(
+                        "active",
+                        !hasValue
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               CLEAR
+               ===================================================== */
+
+            elements.clear.addEventListener(
+                "click",
+                () => {
+
+                    elements.input.value =
+                        "";
+
+                    elements.clear.classList.remove(
+                        "visible"
+                    );
+
+                    performSearch(
+                        ""
+                    );
+
+                    elements.input.focus();
+
+                }
+            );
+
+            /* =====================================================
+               EMPTY ACTION
+               ===================================================== */
+
+            elements.emptyAction.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        state.query
+                    ) {
+
+                        elements.input.value =
+                            "";
+
+                        elements.clear.classList.remove(
+                            "visible"
+                        );
+
+                        state.query =
+                            "";
+
+                        state.filter =
+                            "all";
+
+                        state.page =
+                            1;
+
+                        syncFilterButtons();
+
+                        updateURL();
+
+                        renderResults();
+
+                        elements.input.focus();
+
+                    } else {
+
+                        setFilter(
+                            "all"
+                        );
+
+                    }
+
+                }
+            );
+
+            /* =====================================================
+               SUGGESTIONS
+               ===================================================== */
+
+            $$(".suggestion-chip").forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const query =
+                                button.dataset.suggestion;
+
+                            elements.input.value =
+                                query;
+
+                            elements.clear.classList.add(
+                                "visible"
+                            );
+
+                            performSearch(
+                                query
+                            );
+
+                            elements.suggestions.classList.remove(
+                                "active"
+                            );
+
+                            elements.input.focus();
+
+                        }
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               FILTERS
+               ===================================================== */
+
+            $$(
+                "[data-filter]"
+            ).forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            setFilter(
+                                button.dataset.filter
+                            );
+
+                            if (
+                                elements.mobileFilterPanel
+                            ) {
+
+                                elements.mobileFilterPanel.classList.remove(
+                                    "active"
+                                );
+
+                                elements.filterToggle.setAttribute(
+                                    "aria-expanded",
+                                    "false"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               SORT
+               ===================================================== */
+
+            elements.sort.addEventListener(
+                "change",
+                () => {
+
+                    state.sort =
+                        elements.sort.value;
+
+                    state.page =
+                        1;
+
+                    renderResults();
+
+                }
+            );
+
+            /* =====================================================
+               MOBILE FILTER TOGGLE
+               ===================================================== */
+
+            elements.filterToggle.addEventListener(
+                "click",
+                () => {
+
+                    const active =
+                        elements.mobileFilterPanel.classList.toggle(
+                            "active"
+                        );
+
+                    elements.filterToggle.setAttribute(
+                        "aria-expanded",
+                        String(active)
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               PAGINATION
+               ===================================================== */
+
+            elements.previous.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        state.page <= 1
+                    ) {
+                        return;
+                    }
+
+                    state.page--;
+
+                    renderResults();
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+            elements.next.addEventListener(
+                "click",
+                () => {
+
+                    const totalPages =
+                        Math.ceil(
+                            getResults().length /
+                            PAGE_SIZE
+                        );
+
+                    if (
+                        state.page >=
+                        totalPages
+                    ) {
+                        return;
+                    }
+
+                    state.page++;
+
+                    renderResults();
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+            /* =====================================================
+               CLEAR RECENT
+               ===================================================== */
+
+            elements.clearRecent.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        !state.recent.length
+                    ) {
+
+                        showToast(
+                            "Recent searches are already empty",
+                            "i"
+                        );
+
+                        return;
+
+                    }
+
+                    state.recent =
+                        [];
+
+                    saveRecent();
+
+                    renderRecent();
+
+                    showToast(
+                        "Recent searches cleared",
+                        "✓"
+                    );
+
+                }
+            );
+
+            /* =====================================================
+               KEYBOARD SHORTCUTS
+               ===================================================== */
+
+            document.addEventListener(
+                "keydown",
+                event => {
+
+                    const target =
+                        event.target;
+
+                    const isTyping =
+                        target &&
+                        (
+                            target.tagName === "INPUT" ||
+                            target.tagName === "TEXTAREA" ||
+                            target.tagName === "SELECT" ||
+                            target.isContentEditable
+                        );
+
+                    if (
+                        event.key === "/" &&
+                        !isTyping
+                    ) {
+
+                        event.preventDefault();
+
+                        elements.input.focus();
+
+                        return;
+
+                    }
+
+                    if (
+                        (
+                            event.ctrlKey ||
+                            event.metaKey
+                        ) &&
+                        event.key.toLowerCase() === "k"
+                    ) {
+
+                        event.preventDefault();
+
+                        elements.input.focus();
+
+                    }
+
+                    if (
+                        event.key === "Escape" &&
+                        document.activeElement ===
+                        elements.input
+                    ) {
+
+                        elements.input.blur();
+
+                    }
+
+                }
+            );
+
+            /* =====================================================
+               WINDOW POP STATE
+               ===================================================== */
+
+            window.addEventListener(
+                "popstate",
+                () => {
+
+                    loadURLState();
+
+                    elements.input.value =
+                        state.query;
+
+                    elements.clear.classList.toggle(
+                        "visible",
+                        Boolean(state.query)
+                    );
+
+                    renderResults();
+
+                }
+            );
+
+            /* =====================================================
+               GLOBAL SEARCH INTEGRATION
+               ===================================================== */
+
+            document.addEventListener(
+                "click",
+                event => {
+
+                    const globalTrigger =
+                        event.target.closest(
+                            "[data-global-search]"
+                        );
+
+                    if (
+                        !globalTrigger
+                    ) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    if (
+                        window.Veltrix &&
+                        window.Veltrix.modal &&
+                        typeof
+                            window.Veltrix.modal.open ===
+                            "function"
+                    ) {
+
+                        window.Veltrix.modal.open(
+                            "globalSearchModal"
+                        );
+
+                    } else {
+
+                        elements.input.focus();
+
+                    }
+
+                }
+            );
+
+            /* =====================================================
+               PAGE VISIBILITY SYNC
+               ===================================================== */
+
+            document.addEventListener(
+                "visibilitychange",
+                () => {
+
+                    if (
+                        document.visibilityState ===
+                        "visible"
+                    ) {
+
+                        if (
+                            window.Veltrix &&
+                            window.Veltrix.language &&
+                            typeof
+                                window.Veltrix.language.getCurrent ===
+                                "function"
+                        ) {
+
+                            window.Veltrix.language.getCurrent();
+
+                        }
+
+                    }
+
+                }
+            );
+
+            /* =====================================================
+               INITIALIZE
+               ===================================================== */
+
+            function initialize() {
+
+                loadStorage();
+
+                loadURLState();
+
+                elements.input.value =
+                    state.query;
+
+                elements.clear.classList.toggle(
+                    "visible",
+                    Boolean(
+                        state.query
+                    )
+                );
+
+                renderRecent();
+
+                renderResults();
+
+                elements.suggestions.classList.toggle(
+                    "active",
+                    !state.query
+                );
+
+                /*
+                 * Give Google Translate / Veltrix engine time
+                 * to initialize without blocking search.
+                 */
+
+                setTimeout(
+                    () => {
+
+                        if (
+                            window.Veltrix &&
+                            window.Veltrix.translation
+                        ) {
+
+                            document.documentElement.dataset
+                                .veltrixSearchReady =
+                                "true";
+
+                        }
+
+                    },
+                    250
+                );
+
+            }
+
+            /* =====================================================
+               PUBLIC PAGE API
+               ===================================================== */
+
+            window.VeltrixSearch = {
+
+                search(query) {
+                    elements.input.value =
+                        query;
+
+                    performSearch(
+                        query
+                    );
+                },
+
+                clear() {
+
+                    elements.input.value =
+                        "";
+
+                    performSearch(
+                        ""
+                    );
+
+                },
+
+                filter(type) {
+
+                    setFilter(
+                        type
+                    );
+
+                },
+
+                getResults() {
+
+                    return getResults();
+
+                },
+
+                getState() {
+
+                    return {
+                        ...state,
+                        favorites:
+                            Array.from(
+                                state.favorites
+                            )
+                    };
+
+                },
+
+                favorite(id) {
+
+                    toggleFavorite(
+                        id
+                    );
+
+                }
+
+            };
+
+            /* =====================================================
+               START
+               ===================================================== */
+
+            if (
+                document.readyState ===
+                "loading"
+            ) {
+
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    initialize,
+                    {
+                        once: true
+                    }
+                );
+
+            } else {
+
+                initialize();
+
+            }
+
+        })();
+
+    </script>
+
+    <!-- =========================================================
+         VELTRIX GLOBAL ENGINE
+         ========================================================= -->
+
+    <script
+        src="../js/script.js"
+        defer
+    ></script>
+
+</body>
+</html>
