@@ -1,0 +1,5037 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Veltrix AI Workspace — intelligent business assistant and productivity workspace">
+  <meta name="theme-color" content="#07111f">
+
+  <title>AI Workspace — Veltrix</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    /* =========================================================
+       VELTRIX AI WORKSPACE
+       Page-specific premium styles
+       ========================================================= */
+
+    :root {
+      --ai-bg: #07111f;
+      --ai-panel: rgba(12, 25, 43, 0.88);
+      --ai-panel-2: rgba(16, 32, 54, 0.92);
+      --ai-border: rgba(255,255,255,.08);
+      --ai-border-strong: rgba(77, 226, 191, .22);
+      --ai-text: #f4f8ff;
+      --ai-muted: #8da0b8;
+      --ai-accent: #49e0bd;
+      --ai-accent-2: #5aa8ff;
+      --ai-purple: #a879ff;
+      --ai-danger: #ff667d;
+      --ai-warning: #ffc761;
+      --ai-success: #50e29b;
+      --ai-shadow: 0 24px 70px rgba(0,0,0,.28);
+      --ai-radius: 20px;
+      --ai-radius-sm: 14px;
+    }
+
+    body.ai-workspace-page {
+      overflow: hidden;
+    }
+
+    .ai-page {
+      min-height: calc(100vh - 72px);
+      height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 15%, rgba(73,224,189,.055), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(90,168,255,.045), transparent 28%);
+    }
+
+    /* =========================================================
+       AI SIDEBAR
+       ========================================================= */
+
+    .ai-sidebar {
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--ai-border);
+      background: rgba(7,17,31,.72);
+      backdrop-filter: blur(24px);
+      position: relative;
+      z-index: 10;
+    }
+
+    .ai-sidebar-top {
+      padding: 18px;
+      border-bottom: 1px solid var(--ai-border);
+    }
+
+    .ai-new-chat-btn {
+      width: 100%;
+      border: 1px solid rgba(73,224,189,.22);
+      background: linear-gradient(
+        135deg,
+        rgba(73,224,189,.13),
+        rgba(90,168,255,.08)
+      );
+      color: var(--ai-text);
+      border-radius: 14px;
+      padding: 13px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: .25s ease;
+      font-weight: 700;
+    }
+
+    .ai-new-chat-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(73,224,189,.48);
+      box-shadow: 0 12px 35px rgba(73,224,189,.11);
+    }
+
+    .ai-new-chat-btn svg {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 auto;
+    }
+
+    .ai-sidebar-search {
+      margin-top: 13px;
+      position: relative;
+    }
+
+    .ai-sidebar-search input {
+      width: 100%;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid var(--ai-border);
+      outline: none;
+      background: rgba(255,255,255,.035);
+      color: var(--ai-text);
+      padding: 0 38px 0 40px;
+      transition: .25s ease;
+    }
+
+    .ai-sidebar-search input:focus {
+      border-color: rgba(73,224,189,.35);
+      box-shadow: 0 0 0 4px rgba(73,224,189,.055);
+    }
+
+    .ai-sidebar-search svg {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      left: 14px;
+      top: 12px;
+      color: var(--ai-muted);
+      pointer-events: none;
+    }
+
+    .ai-sidebar-search button {
+      position: absolute;
+      right: 8px;
+      top: 7px;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      color: var(--ai-muted);
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    .ai-sidebar-search button:hover {
+      background: rgba(255,255,255,.06);
+      color: var(--ai-text);
+    }
+
+    .ai-history {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 16px 10px;
+    }
+
+    .ai-history::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .ai-history::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+    }
+
+    .ai-history-title {
+      color: var(--ai-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-weight: 800;
+      padding: 4px 10px 10px;
+    }
+
+    .ai-history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .ai-history-item {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ai-text);
+      border-radius: 12px;
+      padding: 9px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .ai-history-item:hover {
+      background: rgba(255,255,255,.045);
+    }
+
+    .ai-history-item.active {
+      background: rgba(73,224,189,.075);
+      border-color: rgba(73,224,189,.13);
+    }
+
+    .ai-history-item-icon {
+      width: 31px;
+      height: 31px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.055);
+      color: var(--ai-accent);
+      flex: 0 0 auto;
+    }
+
+    .ai-history-item-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ai-history-item-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .ai-history-item-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .ai-history-item-time {
+      font-size: 10px;
+      color: var(--ai-muted);
+      margin-top: 3px;
+    }
+
+    .ai-history-item-menu {
+      opacity: 0;
+      width: 26px;
+      height: 26px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--ai-muted);
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .ai-history-item:hover .ai-history-item-menu {
+      opacity: 1;
+    }
+
+    .ai-history-item-menu:hover {
+      color: var(--ai-text);
+      background: rgba(255,255,255,.07);
+    }
+
+    .ai-sidebar-bottom {
+      padding: 12px;
+      border-top: 1px solid var(--ai-border);
+    }
+
+    .ai-sidebar-action-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .ai-small-sidebar-btn {
+      min-height: 38px;
+      border: 1px solid var(--ai-border);
+      background: rgba(255,255,255,.025);
+      color: var(--ai-muted);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      transition: .2s ease;
+    }
+
+    .ai-small-sidebar-btn:hover {
+      color: var(--ai-text);
+      border-color: rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
+    }
+
+    .ai-small-sidebar-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* =========================================================
+       MAIN CHAT
+       ========================================================= */
+
+    .ai-main {
+      min-width: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-chat-header {
+      height: 68px;
+      min-height: 68px;
+      border-bottom: 1px solid var(--ai-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 22px;
+      background: rgba(7,17,31,.52);
+      backdrop-filter: blur(20px);
+      z-index: 8;
+    }
+
+    .ai-header-left {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ai-mobile-history-btn {
+      display: none;
+    }
+
+    .ai-model-button {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--ai-border);
+      background: rgba(255,255,255,.035);
+      color: var(--ai-text);
+      border-radius: 12px;
+      padding: 8px 11px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .ai-model-button:hover {
+      border-color: rgba(73,224,189,.25);
+      background: rgba(73,224,189,.045);
+    }
+
+    .ai-model-orb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 35% 30%, #ffffff, var(--ai-accent) 24%, var(--ai-accent-2) 65%, var(--ai-purple));
+      box-shadow: 0 0 20px rgba(73,224,189,.24);
+    }
+
+    .ai-model-orb svg {
+      width: 13px;
+      height: 13px;
+      color: #06121c;
+    }
+
+    .ai-model-name {
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .ai-model-status {
+      font-size: 10px;
+      color: var(--ai-success);
+      margin-left: 2px;
+    }
+
+    .ai-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .ai-header-btn {
+      width: 37px;
+      height: 37px;
+      border-radius: 10px;
+      border: 1px solid var(--ai-border);
+      background: rgba(255,255,255,.025);
+      color: var(--ai-muted);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .ai-header-btn:hover {
+      color: var(--ai-text);
+      background: rgba(255,255,255,.055);
+      border-color: rgba(255,255,255,.15);
+      transform: translateY(-1px);
+    }
+
+    .ai-header-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .ai-chat-scroll {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      position: relative;
+    }
+
+    .ai-chat-scroll::-webkit-scrollbar {
+      width: 7px;
+    }
+
+    .ai-chat-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.08);
+      border-radius: 20px;
+    }
+
+    .ai-chat-container {
+      width: min(920px, calc(100% - 42px));
+      margin: 0 auto;
+      padding: 35px 0 170px;
+    }
+
+    /* =========================================================
+       WELCOME
+       ========================================================= */
+
+    .ai-welcome {
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 35px 10px 15px;
+    }
+
+    .ai-welcome-logo {
+      width: 68px;
+      height: 68px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background:
+        linear-gradient(145deg, rgba(73,224,189,.17), rgba(90,168,255,.11));
+      border: 1px solid rgba(73,224,189,.18);
+      box-shadow:
+        0 0 0 8px rgba(73,224,189,.025),
+        0 20px 60px rgba(73,224,189,.08);
+      margin-bottom: 20px;
+    }
+
+    .ai-welcome-logo::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      border: 1px solid rgba(255,255,255,.04);
+      animation: aiPulse 2.7s ease-in-out infinite;
+    }
+
+    @keyframes aiPulse {
+      0%,100% {
+        transform: scale(1);
+        opacity: .3;
+      }
+      50% {
+        transform: scale(1.08);
+        opacity: .75;
+      }
+    }
+
+    .ai-welcome-logo svg {
+      width: 32px;
+      height: 32px;
+      color: var(--ai-accent);
+    }
+
+    .ai-welcome h1 {
+      margin: 0;
+      color: var(--ai-text);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.1;
+      letter-spacing: -.035em;
+    }
+
+    .ai-welcome p {
+      max-width: 600px;
+      color: var(--ai-muted);
+      font-size: 14px;
+      line-height: 1.75;
+      margin: 13px auto 25px;
+    }
+
+    /* =========================================================
+       SUGGESTIONS
+       ========================================================= */
+
+    .ai-suggestions {
+      width: 100%;
+      max-width: 760px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .ai-suggestion {
+      min-height: 74px;
+      text-align: left;
+      border: 1px solid var(--ai-border);
+      background: rgba(255,255,255,.025);
+      border-radius: 15px;
+      color: var(--ai-text);
+      padding: 13px 15px;
+      cursor: pointer;
+      transition: .25s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .ai-suggestion:hover {
+      transform: translateY(-3px);
+      border-color: rgba(73,224,189,.25);
+      background: rgba(73,224,189,.045);
+      box-shadow: 0 14px 34px rgba(0,0,0,.15);
+    }
+
+    .ai-suggestion-icon {
+      width: 33px;
+      height: 33px;
+      border-radius: 10px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      background: rgba(73,224,189,.08);
+      color: var(--ai-accent);
+    }
+
+    .ai-suggestion:nth-child(2) .ai-suggestion-icon {
+      background: rgba(90,168,255,.09);
+      color: var(--ai-accent-2);
+    }
+
+    .ai-suggestion:nth-child(3) .ai-suggestion-icon {
+      background: rgba(168,121,255,.09);
+      color: var(--ai-purple);
+    }
+
+    .ai-suggestion:nth-child(4) .ai-suggestion-icon {
+      background: rgba(255,199,97,.09);
+      color: var(--ai-warning);
+    }
+
+    .ai-suggestion-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ai-suggestion-content {
+      min-width: 0;
+    }
+
+    .ai-suggestion-title {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .ai-suggestion-text {
+      color: var(--ai-muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* =========================================================
+       MESSAGES
+       ========================================================= */
+
+    .ai-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .ai-message {
+      display: flex;
+      gap: 13px;
+      width: 100%;
+      animation: messageIn .3s ease both;
+    }
+
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ai-message.user {
+      justify-content: flex-end;
+    }
+
+    .ai-avatar {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border-radius: 11px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.055);
+      color: var(--ai-text);
+      border: 1px solid var(--ai-border);
+    }
+
+    .ai-message.assistant .ai-avatar {
+      background:
+        linear-gradient(145deg, rgba(73,224,189,.13), rgba(90,168,255,.10));
+      color: var(--ai-accent);
+      border-color: rgba(73,224,189,.16);
+    }
+
+    .ai-message.user .ai-avatar {
+      order: 2;
+      background: rgba(90,168,255,.1);
+      color: var(--ai-accent-2);
+    }
+
+    .ai-avatar svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .ai-message-body {
+      max-width: min(760px, calc(100% - 52px));
+      min-width: 0;
+    }
+
+    .ai-message.user .ai-message-body {
+      order: 1;
+    }
+
+    .ai-message-role {
+      color: var(--ai-muted);
+      font-size: 10px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .ai-message-content {
+      color: var(--ai-text);
+      font-size: 14px;
+      line-height: 1.75;
+      word-wrap: break-word;
+    }
+
+    .ai-message.user .ai-message-content {
+      background: rgba(90,168,255,.09);
+      border: 1px solid rgba(90,168,255,.13);
+      padding: 12px 15px;
+      border-radius: 16px 16px 5px 16px;
+    }
+
+    .ai-message.assistant .ai-message-content {
+      padding-top: 0;
+    }
+
+    .ai-message-content p {
+      margin: 0 0 11px;
+    }
+
+    .ai-message-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .ai-message-content strong {
+      color: #ffffff;
+    }
+
+    .ai-message-content ul,
+    .ai-message-content ol {
+      padding-left: 22px;
+      margin: 9px 0;
+    }
+
+    .ai-message-content li {
+      margin: 5px 0;
+    }
+
+    .ai-message-content code {
+      background: rgba(255,255,255,.07);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: .9em;
+    }
+
+    .ai-message-content pre {
+      overflow-x: auto;
+      background: #050c16;
+      border: 1px solid var(--ai-border);
+      border-radius: 12px;
+      padding: 15px;
+      margin: 12px 0;
+    }
+
+    .ai-message-content pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    .ai-message-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      opacity: .78;
+    }
+
+    .ai-message-action {
+      width: 30px;
+      height: 30px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ai-muted);
+      border-radius: 8px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: .18s ease;
+    }
+
+    .ai-message-action:hover {
+      color: var(--ai-text);
+      background: rgba(255,255,255,.055);
+      border-color: var(--ai-border);
+    }
+
+    .ai-message-action svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    /* =========================================================
+       TYPING
+       ========================================================= */
+
+    .ai-typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 0;
+    }
+
+    .ai-typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ai-muted);
+      animation: typingDot 1.2s infinite ease-in-out;
+    }
+
+    .ai-typing span:nth-child(2) {
+      animation-delay: .15s;
+    }
+
+    .ai-typing span:nth-child(3) {
+      animation-delay: .3s;
+    }
+
+    @keyframes typingDot {
+      0%,60%,100% {
+        transform: translateY(0);
+        opacity: .4;
+      }
+      30% {
+        transform: translateY(-4px);
+        opacity: 1;
+      }
+    }
+
+    /* =========================================================
+       INPUT AREA
+       ========================================================= */
+
+    .ai-composer-area {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 18px 20px 15px;
+      background:
+        linear-gradient(
+          to top,
+          rgba(7,17,31,1) 50%,
+          rgba(7,17,31,.96) 76%,
+          rgba(7,17,31,0)
+        );
+      z-index: 12;
+    }
+
+    .ai-composer-wrap {
+      width: min(850px, 100%);
+      margin: 0 auto;
+    }
+
+    .ai-attachment-preview {
+      display: none;
+      margin-bottom: 8px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ai-attachment-preview.visible {
+      display: flex;
+    }
+
+    .ai-attachment-chip {
+      max-width: 220px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(73,224,189,.075);
+      border: 1px solid rgba(73,224,189,.16);
+      color: var(--ai-text);
+      border-radius: 9px;
+      padding: 7px 9px;
+      font-size: 11px;
+    }
+
+    .ai-attachment-chip span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ai-attachment-chip button {
+      width: 20px;
+      height: 20px;
+      border: 0;
+      background: transparent;
+      color: var(--ai-muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .ai-composer {
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(13,26,44,.96);
+      border-radius: 19px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.28),
+        0 0 0 1px rgba(0,0,0,.1);
+      transition: .25s ease;
+      overflow: hidden;
+    }
+
+    .ai-composer:focus-within {
+      border-color: rgba(73,224,189,.35);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.32),
+        0 0 0 4px rgba(73,224,189,.045);
+    }
+
+    .ai-textarea {
+      width: 100%;
+      min-height: 58px;
+      max-height: 180px;
+      resize: none;
+      display: block;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ai-text);
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.65;
+      padding: 16px 17px 5px;
+    }
+
+    .ai-textarea::placeholder {
+      color: #6f8198;
+    }
+
+    .ai-composer-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 8px 8px;
+    }
+
+    .ai-composer-left,
+    .ai-composer-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ai-tool-btn {
+      min-width: 34px;
+      height: 34px;
+      padding: 0 8px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ai-muted);
+      border-radius: 9px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: .18s ease;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .ai-tool-btn:hover {
+      color: var(--ai-text);
+      background: rgba(255,255,255,.055);
+      border-color: var(--ai-border);
+    }
+
+    .ai-tool-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ai-send-btn {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--ai-accent), #36cda9);
+      color: #041018;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: .2s ease;
+      box-shadow: 0 8px 25px rgba(73,224,189,.15);
+    }
+
+    .ai-send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 11px 30px rgba(73,224,189,.25);
+    }
+
+    .ai-send-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .ai-send-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .ai-composer-hint {
+      text-align: center;
+      color: #61748a;
+      font-size: 9px;
+      margin-top: 8px;
+    }
+
+    /* =========================================================
+       INSIGHTS PANEL
+       ========================================================= */
+
+    .ai-right-panel {
+      display: none;
+      width: 310px;
+      height: 100%;
+      border-left: 1px solid var(--ai-border);
+      background: rgba(7,17,31,.72);
+      backdrop-filter: blur(24px);
+      padding: 18px;
+      overflow-y: auto;
+    }
+
+    .ai-right-panel.open {
+      display: block;
+    }
+
+    .ai-panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .ai-panel-heading h3 {
+      margin: 0;
+      color: var(--ai-text);
+      font-size: 14px;
+    }
+
+    .ai-panel-close {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ai-muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .ai-panel-close:hover {
+      background: rgba(255,255,255,.06);
+      color: var(--ai-text);
+    }
+
+    .ai-insight-card {
+      border: 1px solid var(--ai-border);
+      background: rgba(255,255,255,.025);
+      border-radius: 14px;
+      padding: 13px;
+      margin-bottom: 9px;
+    }
+
+    .ai-insight-label {
+      color: var(--ai-muted);
+      font-size: 10px;
+      margin-bottom: 7px;
+    }
+
+    .ai-insight-value {
+      color: var(--ai-text);
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -.03em;
+    }
+
+    .ai-insight-change {
+      color: var(--ai-success);
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .ai-mini-bars {
+      height: 100px;
+      display: flex;
+      align-items: flex-end;
+      gap: 7px;
+      margin-top: 13px;
+    }
+
+    .ai-mini-bar {
+      flex: 1;
+      min-width: 5px;
+      height: var(--h);
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(to top, rgba(73,224,189,.2), rgba(73,224,189,.8));
+      transition: .3s ease;
+    }
+
+    .ai-mini-bar:hover {
+      filter: brightness(1.2);
+      transform: scaleY(1.04);
+      transform-origin: bottom;
+    }
+
+    /* =========================================================
+       MODALS
+       ========================================================= */
+
+    .ai-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(2,7,13,.72);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .ai-modal-backdrop.open {
+      display: flex;
+    }
+
+    .ai-modal {
+      width: min(520px, 100%);
+      max-height: min(700px, calc(100vh - 40px));
+      overflow-y: auto;
+      border: 1px solid rgba(255,255,255,.1);
+      background: #0b192b;
+      border-radius: 20px;
+      box-shadow: 0 30px 100px rgba(0,0,0,.45);
+      animation: modalIn .22s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .ai-modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--ai-border);
+    }
+
+    .ai-modal-head h3 {
+      margin: 0;
+      color: var(--ai-text);
+      font-size: 16px;
+    }
+
+    .ai-modal-close {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--ai-muted);
+      background: transparent;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .ai-modal-close:hover {
+      color: var(--ai-text);
+      background: rgba(255,255,255,.06);
+    }
+
+    .ai-modal-body {
+      padding: 20px;
+    }
+
+    .ai-setting-group {
+      margin-bottom: 18px;
+    }
+
+    .ai-setting-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--ai-text);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .ai-setting-label span:last-child {
+      color: var(--ai-accent);
+    }
+
+    .ai-setting-select {
+      width: 100%;
+      height: 43px;
+      border: 1px solid var(--ai-border);
+      border-radius: 10px;
+      background: rgba(255,255,255,.035);
+      color: var(--ai-text);
+      outline: none;
+      padding: 0 12px;
+    }
+
+    .ai-range {
+      width: 100%;
+      accent-color: var(--ai-accent);
+    }
+
+    .ai-modal-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--ai-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .ai-modal-btn {
+      min-height: 38px;
+      border: 1px solid var(--ai-border);
+      border-radius: 10px;
+      padding: 0 14px;
+      color: var(--ai-text);
+      background: rgba(255,255,255,.035);
+      cursor: pointer;
+      font-weight: 700;
+      transition: .2s ease;
+    }
+
+    .ai-modal-btn:hover {
+      background: rgba(255,255,255,.07);
+    }
+
+    .ai-modal-btn.primary {
+      border-color: rgba(73,224,189,.2);
+      background: var(--ai-accent);
+      color: #041018;
+    }
+
+    /* =========================================================
+       MOBILE
+       ========================================================= */
+
+    @media (max-width: 1100px) {
+      .ai-page {
+        grid-template-columns: 250px minmax(0,1fr);
+      }
+
+      .ai-chat-container {
+        width: min(860px, calc(100% - 30px));
+      }
+    }
+
+    @media (max-width: 850px) {
+      .ai-page {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(300px, 88vw);
+        z-index: 10000;
+        transform: translateX(-105%);
+        transition: transform .28s ease;
+        box-shadow: 25px 0 80px rgba(0,0,0,.4);
+      }
+
+      .ai-sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .ai-mobile-history-btn {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid var(--ai-border);
+        background: rgba(255,255,255,.03);
+        color: var(--ai-muted);
+        place-items: center;
+        cursor: pointer;
+      }
+
+      .ai-mobile-history-btn svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .ai-chat-header {
+        padding: 0 12px;
+      }
+
+      .ai-header-actions {
+        gap: 4px;
+      }
+
+      .ai-header-btn:nth-child(2) {
+        display: none;
+      }
+
+      .ai-chat-container {
+        width: calc(100% - 22px);
+        padding-top: 20px;
+      }
+
+      .ai-welcome {
+        min-height: 380px;
+      }
+
+      .ai-suggestions {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-composer-area {
+        padding: 12px 10px 10px;
+      }
+
+      .ai-composer-hint {
+        display: none;
+      }
+
+      .ai-tool-btn span {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .ai-model-button {
+        max-width: 175px;
+      }
+
+      .ai-model-status {
+        display: none;
+      }
+
+      .ai-model-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .ai-header-btn {
+        width: 34px;
+        height: 34px;
+      }
+
+      .ai-welcome {
+        padding-top: 18px;
+      }
+
+      .ai-welcome-logo {
+        width: 58px;
+        height: 58px;
+        border-radius: 18px;
+      }
+
+      .ai-welcome-logo svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .ai-welcome h1 {
+        font-size: 28px;
+      }
+
+      .ai-welcome p {
+        font-size: 12px;
+      }
+
+      .ai-message {
+        gap: 8px;
+      }
+
+      .ai-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+      }
+
+      .ai-message-body {
+        max-width: calc(100% - 38px);
+      }
+
+      .ai-message-content {
+        font-size: 13px;
+      }
+
+      .ai-composer {
+        border-radius: 15px;
+      }
+
+      .ai-textarea {
+        min-height: 54px;
+        font-size: 13px;
+      }
+
+      .ai-tool-btn {
+        min-width: 31px;
+        height: 31px;
+        padding: 0 6px;
+      }
+
+      .ai-send-btn {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    /* =========================================================
+       LIGHT THEME SUPPORT
+       ========================================================= */
+
+    html[data-theme="light"] {
+      --ai-bg: #f4f8fc;
+      --ai-panel: rgba(255,255,255,.92);
+      --ai-panel-2: #ffffff;
+      --ai-border: rgba(14,31,51,.1);
+      --ai-border-strong: rgba(21,170,139,.22);
+      --ai-text: #112033;
+      --ai-muted: #65758a;
+      --ai-shadow: 0 24px 70px rgba(25,47,73,.12);
+    }
+
+    html[data-theme="light"] .ai-page,
+    body.ai-workspace-page[data-theme="light"] .ai-page {
+      background:
+        radial-gradient(circle at 50% 15%, rgba(21,170,139,.07), transparent 30%),
+        #f5f8fc;
+    }
+
+    html[data-theme="light"] .ai-sidebar,
+    html[data-theme="light"] .ai-right-panel {
+      background: rgba(247,250,253,.85);
+    }
+
+    html[data-theme="light"] .ai-chat-header {
+      background: rgba(247,250,253,.7);
+    }
+
+    html[data-theme="light"] .ai-composer-area {
+      background:
+        linear-gradient(
+          to top,
+          rgba(245,248,252,1) 50%,
+          rgba(245,248,252,.95) 76%,
+          rgba(245,248,252,0)
+        );
+    }
+
+    html[data-theme="light"] .ai-composer {
+      background: rgba(255,255,255,.98);
+      box-shadow: 0 18px 55px rgba(30,55,80,.13);
+    }
+
+    html[data-theme="light"] .ai-message-content strong {
+      color: #101d2c;
+    }
+
+    html[data-theme="light"] .ai-modal {
+      background: #ffffff;
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      .ai-welcome-logo::after,
+      .ai-message,
+      .ai-typing span {
+        animation: none !important;
+      }
+
+      * {
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body
+  id="veltrix-app"
+  class="app-body ai-workspace-page"
+  data-page="ai-workspace"
+  data-theme="dark"
+>
+
+  <!-- =======================================================
+       GLOBAL LOADER
+       ======================================================= -->
+  <div id="app-loader" class="app-loader" aria-hidden="true">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- =======================================================
+       BACKGROUND
+       ======================================================= -->
+  <div class="app-background" aria-hidden="true">
+    <div class="background-grid"></div>
+    <div class="background-glow background-glow-one"></div>
+    <div class="background-glow background-glow-two"></div>
+  </div>
+
+  <!-- =======================================================
+       MOBILE OVERLAY
+       ======================================================= -->
+  <div
+    id="mobile-overlay"
+    class="mobile-overlay"
+    data-sidebar-overlay
+    aria-hidden="true"
+  ></div>
+
+  <!-- =======================================================
+       GLOBAL SIDEBAR
+       ======================================================= -->
+  <aside
+    id="app-sidebar"
+    class="app-sidebar"
+    data-sidebar
+    aria-label="Main navigation"
+  >
+
+    <div class="sidebar-brand">
+      <a href="../index.html" class="brand-link" data-nav-link>
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 6.5 12 3l8 3.5v11L12 21l-8-3.5v-11Z"/>
+            <path d="m8 9 4-2 4 2-4 2-4-2Zm0 4 4 2 4-2"/>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>VELTRIX</strong>
+          <small>Business Platform</small>
+        </span>
+      </a>
+    </div>
+
+    <div class="workspace-selector" data-workspace-selector>
+      <button type="button" class="workspace-button" data-workspace-toggle>
+        <span class="workspace-avatar">V</span>
+        <span class="workspace-copy">
+          <strong data-current-workspace>Veltrix HQ</strong>
+          <small>Workspace</small>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m7 10 5 5 5-5"/>
+        </svg>
+      </button>
+
+      <div class="workspace-menu" data-workspace-menu>
+        <button type="button" data-workspace-option data-workspace="Veltrix HQ">
+          <span>V</span> Veltrix HQ
+        </button>
+        <button type="button" data-workspace-option data-workspace="Marketing">
+          <span>M</span> Marketing
+        </button>
+        <button type="button" data-workspace-option data-workspace="Sales Team">
+          <span>S</span> Sales Team
+        </button>
+        <button type="button" data-workspace-option data-workspace="Personal">
+          <span>P</span> Personal
+        </button>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+      <div class="sidebar-section-label">MAIN</div>
+
+      <a href="../index.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </span>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="analytics.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M4 19V9m6 10V5m6 14v-8m6 8V3"/>
+          </svg>
+        </span>
+        <span>Analytics</span>
+      </a>
+
+      <a href="orders.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 3h12l2 4v14H4V7l2-4Z"/>
+            <path d="M4 7h16M9 11h6"/>
+          </svg>
+        </span>
+        <span>Orders</span>
+      </a>
+
+      <a href="customers.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="9" cy="8" r="3"/>
+            <path d="M3 20c.5-3.3 2.5-5 6-5s5.5 1.7 6 5"/>
+            <path d="M16 5.5a3 3 0 0 1 0 5.8M17 15c2.4.2 3.8 1.8 4 4"/>
+          </svg>
+        </span>
+        <span>Customers</span>
+      </a>
+
+      <a href="products.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m12 3 9 5-9 5-9-5 9-5Z"/>
+            <path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>
+          </svg>
+        </span>
+        <span>Products</span>
+      </a>
+
+      <a href="invoices.html" class="sidebar-link" data-nav-link>
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3Z"/>
+            <path d="M8 8h8M8 12h8M8 16h5"/>
+          </svg>
+        </span>
+        <span>Invoices</span>
+      </a>
+
+      <div class="sidebar-section-label">COMMUNICATION</div>
+
+      <a href="messages.html" class="sidebar-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.7 8.7 0 0 1-3-.5L4 20l1.5-4A7.2 7.2 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z"/>
+          </svg>
+        </span>
+        <span>Messages</span>
+        <span class="sidebar-badge">4</span>
+      </a>
+
+      <a href="notifications.html" class="sidebar-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+            <path d="M10 21h4"/>
+          </svg>
+        </span>
+        <span>Notifications</span>
+        <span class="sidebar-badge">7</span>
+      </a>
+
+      <div class="sidebar-section-label">TOOLS</div>
+
+      <a href="calculator.html" class="sidebar-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="5" y="2.5" width="14" height="19" rx="2"/>
+            <path d="M8 6h8M8 11h2m2 0h2m2 0h0M8 15h2m2 0h2m2 0h0M8 19h2m2 0h2m2 0h0"/>
+          </svg>
+        </span>
+        <span>Calculator</span>
+      </a>
+
+      <a href="ai-workspace.html" class="sidebar-link active">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 3 13.8 8.2 19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>
+            <path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z"/>
+          </svg>
+        </span>
+        <span>AI Workspace</span>
+        <span class="sidebar-live-dot"></span>
+      </a>
+
+      <div class="sidebar-section-label">ACCOUNT</div>
+
+      <a href="settings.html" class="sidebar-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
+            <path d="m19.4 15 .1.1a2 2 0 0 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.2a2 2 0 0 1-4 0v-.2a2 2 0 0 0-3.4-1.4l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1A2 2 0 0 0 1.5 12a2 2 0 0 0 3.5-3.4l-.1-.1a2 2 0 0 1 2.8-2.8l.1.1A2 2 0 0 0 11.2 4a2 2 0 0 1 4 0 2 2 0 0 0 3.4 1.9l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1A2 2 0 0 0 23.5 12a2 2 0 0 0-3.5 3Z"/>
+          </svg>
+        </span>
+        <span>Settings</span>
+      </a>
+
+      <a href="profile.html" class="sidebar-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="8" r="3.5"/>
+            <path d="M4 21c.7-4.2 3.4-6.5 8-6.5s7.3 2.3 8 6.5"/>
+          </svg>
+        </span>
+        <span>Profile</span>
+      </a>
+
+      <a href="upgrade.html" class="sidebar-link sidebar-upgrade-link">
+        <span class="sidebar-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="m12 2 2.2 6.8H21l-5.5 4 2.1 6.7-5.6-4-5.6 4 2.1-6.7-5.5-4h6.8L12 2Z"/>
+          </svg>
+        </span>
+        <span>Upgrade</span>
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user-card">
+        <div class="sidebar-user-avatar">A</div>
+        <div class="sidebar-user-copy">
+          <strong>Admin User</strong>
+          <small>Administrator</small>
+        </div>
+        <button
+          type="button"
+          class="sidebar-user-menu"
+          data-action="profile-menu"
+          aria-label="Profile menu"
+        >
+          ⋯
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =======================================================
+       MAIN APPLICATION
+       ======================================================= -->
+  <div class="app-main">
+
+    <!-- TOPBAR -->
+    <header class="app-topbar">
+
+      <div class="topbar-left">
+
+        <button
+          type="button"
+          class="mobile-menu-btn"
+          data-mobile-menu
+          aria-label="Open menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          class="sidebar-collapse-btn"
+          data-sidebar-collapse
+          aria-label="Collapse sidebar"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M8 5v14M16 8l-4 4 4 4"/>
+          </svg>
+        </button>
+
+        <div class="breadcrumb">
+          <a href="../index.html" data-nav-link>Dashboard</a>
+          <span>/</span>
+          <strong>AI Workspace</strong>
+        </div>
+
+      </div>
+
+      <div class="topbar-right">
+
+        <button
+          type="button"
+          class="topbar-search-trigger"
+          data-global-search
+          aria-label="Search"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m20 20-4-4"/>
+          </svg>
+          <span>Search</span>
+          <kbd>⌘ K</kbd>
+        </button>
+
+        <button
+          type="button"
+          class="topbar-action"
+          data-quick-create
+          aria-label="Quick create"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </button>
+
+        <!-- LANGUAGE -->
+        <div class="topbar-dropdown language-dropdown" data-dropdown>
+          <button type="button" class="topbar-action language-trigger" data-dropdown-trigger>
+            <span class="language-current">EN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m7 10 5 5 5-5"/>
+            </svg>
+          </button>
+
+          <div class="dropdown-menu language-menu" data-language-menu>
+
+            <button type="button" data-language="en" data-language-code="en">English</button>
+            <button type="button" data-language="fr" data-language-code="fr">Français</button>
+            <button type="button" data-language="es" data-language-code="es">Español</button>
+            <button type="button" data-language="it" data-language-code="it">Italiano</button>
+            <button type="button" data-language="de" data-language-code="de">Deutsch</button>
+            <button type="button" data-language="pt" data-language-code="pt">Português</button>
+            <button type="button" data-language="nl" data-language-code="nl">Nederlands</button>
+            <button type="button" data-language="ru" data-language-code="ru">Русский</button>
+            <button type="button" data-language="tr" data-language-code="tr">Türkçe</button>
+            <button type="button" data-language="ar" data-language-code="ar">العربية</button>
+            <button type="button" data-language="zh" data-language-code="zh">中文</button>
+            <button type="button" data-language="ja" data-language-code="ja">日本語</button>
+            <button type="button" data-language="ko" data-language-code="ko">한국어</button>
+            <button type="button" data-language="hi" data-language-code="hi">हिन्दी</button>
+            <button type="button" data-language="id" data-language-code="id">Bahasa Indonesia</button>
+            <button type="button" data-language="vi" data-language-code="vi">Tiếng Việt</button>
+            <button type="button" data-language="pl" data-language-code="pl">Polski</button>
+            <button type="button" data-language="sv" data-language-code="sv">Svenska</button>
+            <button type="button" data-language="el" data-language-code="el">Ελληνικά</button>
+            <button type="button" data-language="cs" data-language-code="cs">Čeština</button>
+            <button type="button" data-language="da" data-language-code="da">Dansk</button>
+
+          </div>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div class="topbar-dropdown" data-dropdown>
+          <button
+            type="button"
+            class="topbar-action notification-trigger"
+            data-notifications
+            data-dropdown-trigger
+            aria-label="Notifications"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+              <path d="M10 21h4"/>
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+
+          <div class="dropdown-menu notification-menu">
+            <div class="notification-menu-head">
+              <strong>Notifications</strong>
+              <button type="button" data-mark-notifications-read>Mark all read</button>
+            </div>
+
+            <div class="notification-item">
+              <span class="notification-item-icon success">✓</span>
+              <div>
+                <strong>Payment received</strong>
+                <small>Your latest payment was completed.</small>
+              </div>
+            </div>
+
+            <div class="notification-item">
+              <span class="notification-item-icon info">i</span>
+              <div>
+                <strong>AI report ready</strong>
+                <small>Your business report is ready.</small>
+              </div>
+            </div>
+
+            <a href="notifications.html" data-nav-link class="notification-see-all">
+              View all notifications
+            </a>
+          </div>
+        </div>
+
+        <!-- THEME -->
+        <button
+          type="button"
+          class="topbar-action"
+          data-theme-toggle
+          aria-label="Toggle theme"
+        >
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 15.2A8.6 8.6 0 0 1 8.8 4 8.6 8.6 0 1 0 20 15.2Z"/>
+          </svg>
+
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/>
+          </svg>
+        </button>
+
+        <!-- PROFILE -->
+        <div class="topbar-profile" data-dropdown>
+          <button type="button" class="profile-trigger" data-dropdown-trigger>
+            <span class="profile-avatar">A</span>
+            <span class="profile-copy">
+              <strong>Admin</strong>
+              <small>Administrator</small>
+            </span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m7 10 5 5 5-5"/>
+            </svg>
+          </button>
+
+          <div class="dropdown-menu profile-menu">
+            <a href="profile.html">My profile</a>
+            <a href="settings.html">Settings</a>
+            <a href="upgrade.html">Upgrade plan</a>
+            <button type="button" data-action="logout">Sign out</button>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- =====================================================
+         AI PAGE
+         ===================================================== -->
+    <main class="ai-page">
+
+      <!-- AI HISTORY SIDEBAR -->
+      <aside class="ai-sidebar" id="ai-sidebar">
+
+        <div class="ai-sidebar-top">
+
+          <button type="button" class="ai-new-chat-btn" id="ai-new-chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            <span>New chat</span>
+          </button>
+
+          <div class="ai-sidebar-search">
+
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="m20 20-4-4"/>
+            </svg>
+
+            <input
+              type="search"
+              id="ai-chat-search"
+              placeholder="Search chats..."
+              autocomplete="off"
+            >
+
+            <button type="button" id="ai-clear-chat-search" aria-label="Clear search">
+              ×
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="ai-history">
+
+          <div class="ai-history-title">Recent conversations</div>
+
+          <div class="ai-history-list" id="ai-history-list">
+            <!-- populated by JS -->
+          </div>
+
+        </div>
+
+        <div class="ai-sidebar-bottom">
+
+          <div class="ai-sidebar-action-row">
+
+            <button type="button" class="ai-small-sidebar-btn" id="ai-export-all">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 3v12"/>
+                <path d="m7 10 5 5 5-5"/>
+                <path d="M5 21h14"/>
+              </svg>
+              <span>Export</span>
+            </button>
+
+            <button type="button" class="ai-small-sidebar-btn" id="ai-delete-all">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/>
+              </svg>
+              <span>Clear</span>
+            </button>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+      <!-- MAIN CHAT -->
+      <section class="ai-main">
+
+        <!-- CHAT HEADER -->
+        <header class="ai-chat-header">
+
+          <div class="ai-header-left">
+
+            <button
+              type="button"
+              class="ai-mobile-history-btn"
+              id="ai-mobile-history"
+              aria-label="Open chat history"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 6h16M4 12h16M4 18h10"/>
+              </svg>
+            </button>
+
+            <button type="button" class="ai-model-button" id="ai-model-button">
+
+              <span class="ai-model-orb">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 3 13.8 8.2 19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/>
+                </svg>
+              </span>
+
+              <span>
+                <span class="ai-model-name">Veltrix AI</span>
+                <span class="ai-model-status">● Online</span>
+              </span>
+
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="m7 10 5 5 5-5"/>
+              </svg>
+
+            </button>
+
+          </div>
+
+          <div class="ai-header-actions">
+
+            <button
+              type="button"
+              class="ai-header-btn"
+              id="ai-share-chat"
+              title="Share conversation"
+              aria-label="Share conversation"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="18" cy="5" r="2.5"/>
+                <circle cx="6" cy="12" r="2.5"/>
+                <circle cx="18" cy="19" r="2.5"/>
+                <path d="m8.3 10.8 7.4-4.5M8.3 13.2l7.4 4.5"/>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="ai-header-btn"
+              id="ai-open-insights"
+              title="Business insights"
+              aria-label="Business insights"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M4 19V9m5 10V5m6 14v-8m5 8V3"/>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="ai-header-btn"
+              id="ai-chat-settings"
+              title="AI settings"
+              aria-label="AI settings"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/>
+                <path d="M19 13.5v-3l-2-.7a7.3 7.3 0 0 0-.8-1.9l.9-1.9-2.1-2.1-1.9.9a7.3 7.3 0 0 0-1.9-.8l-.7-2h-3l-.7 2a7.3 7.3 0 0 0-1.9.8l-1.9-.9-2.1 2.1.9 1.9a7.3 7.3 0 0 0-.8 1.9l-2 .7v3l2 .7a7.3 7.3 0 0 0 .8 1.9l-.9 1.9 2.1 2.1 1.9-.9a7.3 7.3 0 0 0 1.9.8l.7 2h3l.7-2a7.3 7.3 0 0 0 1.9-.8l1.9.9 2.1-2.1-.9-1.9a7.3 7.3 0 0 0 .8-1.9l2-.7Z"/>
+              </svg>
+            </button>
+
+          </div>
+
+        </header>
+
+        <!-- CHAT SCROLL -->
+        <div class="ai-chat-scroll" id="ai-chat-scroll">
+
+          <div class="ai-chat-container">
+
+            <!-- WELCOME SCREEN -->
+            <section class="ai-welcome" id="ai-welcome">
+
+              <div class="ai-welcome-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2.5 13.9 8l5.6 2-5.6 2-1.9 5.5L10.1 12l-5.6-2 5.6-2L12 2.5Z"/>
+                  <path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/>
+                </svg>
+              </div>
+
+              <h1>How can I help you?</h1>
+
+              <p>
+                Ask Veltrix AI to analyze your business, create reports,
+                calculate metrics, draft content, or help you make smarter decisions.
+              </p>
+
+              <div class="ai-suggestions">
+
+                <button
+                  type="button"
+                  class="ai-suggestion"
+                  data-prompt="Analyze my business performance and give me the most important insights I should focus on."
+                >
+                  <span class="ai-suggestion-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 19V9m5 10V5m6 14v-8m5 8V3"/>
+                    </svg>
+                  </span>
+                  <span class="ai-suggestion-content">
+                    <span class="ai-suggestion-title">Analyze performance</span>
+                    <span class="ai-suggestion-text">Find trends, opportunities and risks.</span>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  class="ai-suggestion"
+                  data-prompt="Create a professional monthly business report with revenue, orders, customers, growth and recommendations."
+                >
+                  <span class="ai-suggestion-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M6 3h12v18H6z"/>
+                      <path d="M9 7h6M9 11h6M9 15h4"/>
+                    </svg>
+                  </span>
+                  <span class="ai-suggestion-content">
+                    <span class="ai-suggestion-title">Create a report</span>
+                    <span class="ai-suggestion-text">Generate a clear executive summary.</span>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  class="ai-suggestion"
+                  data-prompt="Write a professional customer follow-up email for a recent purchase."
+                >
+                  <span class="ai-suggestion-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <rect x="3" y="5" width="18" height="14" rx="2"/>
+                      <path d="m4 7 8 6 8-6"/>
+                    </svg>
+                  </span>
+                  <span class="ai-suggestion-content">
+                    <span class="ai-suggestion-title">Write an email</span>
+                    <span class="ai-suggestion-text">Create polished business communication.</span>
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  class="ai-suggestion"
+                  data-prompt="Give me five practical ways to improve sales and customer retention this month."
+                >
+                  <span class="ai-suggestion-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M12 3a7 7 0 0 0-4 12.7V19h8v-3.3A7 7 0 0 0 12 3Z"/>
+                      <path d="M9 22h6"/>
+                    </svg>
+                  </span>
+                  <span class="ai-suggestion-content">
+                    <span class="ai-suggestion-title">Get ideas</span>
+                    <span class="ai-suggestion-text">Discover practical growth opportunities.</span>
+                  </span>
+                </button>
+
+              </div>
+
+            </section>
+
+            <!-- MESSAGES -->
+            <section
+              class="ai-messages"
+              id="ai-messages"
+              aria-live="polite"
+            ></section>
+
+          </div>
+
+        </div>
+
+        <!-- COMPOSER -->
+        <div class="ai-composer-area">
+
+          <div class="ai-composer-wrap">
+
+            <div class="ai-attachment-preview" id="ai-attachment-preview"></div>
+
+            <form class="ai-composer" id="ai-composer">
+
+              <textarea
+                id="ai-input"
+                class="ai-textarea"
+                rows="1"
+                maxlength="12000"
+                placeholder="Message Veltrix AI..."
+                aria-label="Message Veltrix AI"
+              ></textarea>
+
+              <div class="ai-composer-toolbar">
+
+                <div class="ai-composer-left">
+
+                  <button
+                    type="button"
+                    class="ai-tool-btn"
+                    id="ai-attach"
+                    title="Attach file"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="m20.5 11.5-8.8 8.8a5 5 0 0 1-7.1-7.1l9.2-9.2a3.5 3.5 0 0 1 5 5l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.6-8.6"/>
+                    </svg>
+                    <span>Attach</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="ai-tool-btn"
+                    id="ai-tools"
+                    title="Tools"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M14.7 6.3 17.7 3.3l3 3-3 3"/>
+                      <path d="M13.5 7.5 20 14"/>
+                      <path d="m5 19 4.5-4.5"/>
+                      <path d="m3 21 2-2"/>
+                      <path d="M8 8h.01M12 4h.01M18 12h.01"/>
+                    </svg>
+                    <span>Tools</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="ai-tool-btn"
+                    id="ai-voice"
+                    title="Voice input"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <rect x="9" y="3" width="6" height="12" rx="3"/>
+                      <path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/>
+                    </svg>
+                    <span>Voice</span>
+                  </button>
+
+                  <input
+                    type="file"
+                    id="ai-file-input"
+                    hidden
+                    multiple
+                    accept=".txt,.csv,.json,.md,.pdf,.doc,.docx,.xls,.xlsx,image/*"
+                  >
+
+                </div>
+
+                <div class="ai-composer-right">
+
+                  <button
+                    type="button"
+                    class="ai-tool-btn"
+                    id="ai-save-prompt"
+                    title="Save prompt"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M6 3h12v18l-6-3-6 3V3Z"/>
+                    </svg>
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="ai-send-btn"
+                    id="ai-send"
+                    title="Send message"
+                    aria-label="Send message"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="m5 12 14-7-4 14-3-6-7-1Z"/>
+                    </svg>
+                  </button>
+
+                </div>
+
+              </div>
+
+            </form>
+
+            <div class="ai-composer-hint">
+              Veltrix AI can make mistakes. Review important business information before acting on it.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- =====================================================
+           RIGHT INSIGHTS PANEL
+           ===================================================== -->
+      <aside class="ai-right-panel" id="ai-right-panel">
+
+        <div class="ai-panel-heading">
+          <h3>Business insights</h3>
+
+          <button type="button" class="ai-panel-close" id="ai-close-insights">
+            ×
+          </button>
+        </div>
+
+        <div class="ai-insight-card">
+          <div class="ai-insight-label">Revenue this month</div>
+          <div class="ai-insight-value">$48,920</div>
+          <div class="ai-insight-change">↑ 18.4% vs previous month</div>
+        </div>
+
+        <div class="ai-insight-card">
+          <div class="ai-insight-label">Orders</div>
+          <div class="ai-insight-value">1,284</div>
+          <div class="ai-insight-change">↑ 12.7% growth</div>
+        </div>
+
+        <div class="ai-insight-card">
+          <div class="ai-insight-label">Customers</div>
+          <div class="ai-insight-value">8,642</div>
+          <div class="ai-insight-change">↑ 9.8% growth</div>
+        </div>
+
+        <div class="ai-insight-card">
+
+          <div class="ai-insight-label">Revenue trend</div>
+
+          <div class="ai-mini-bars">
+            <span class="ai-mini-bar" style="--h:38%"></span>
+            <span class="ai-mini-bar" style="--h:48%"></span>
+            <span class="ai-mini-bar" style="--h:42%"></span>
+            <span class="ai-mini-bar" style="--h:61%"></span>
+            <span class="ai-mini-bar" style="--h:57%"></span>
+            <span class="ai-mini-bar" style="--h:72%"></span>
+            <span class="ai-mini-bar" style="--h:68%"></span>
+            <span class="ai-mini-bar" style="--h:86%"></span>
+            <span class="ai-mini-bar" style="--h:78%"></span>
+            <span class="ai-mini-bar" style="--h:94%"></span>
+          </div>
+
+        </div>
+
+        <div class="ai-insight-card">
+
+          <div class="ai-insight-label">AI recommendation</div>
+
+          <div style="
+            color:var(--ai-text);
+            font-size:12px;
+            line-height:1.7;
+          ">
+            Customer retention is trending positively. Consider launching a targeted loyalty offer for high-value customers.
+          </div>
+
+          <button
+            type="button"
+            id="ai-use-recommendation"
+            style="
+              margin-top:11px;
+              width:100%;
+              min-height:36px;
+              border:1px solid rgba(73,224,189,.17);
+              border-radius:9px;
+              background:rgba(73,224,189,.06);
+              color:var(--ai-accent);
+              cursor:pointer;
+              font-size:11px;
+              font-weight:700;
+            "
+          >
+            Ask AI about this
+          </button>
+
+        </div>
+
+      </aside>
+
+    </main>
+
+  </div>
+
+  <!-- =======================================================
+       FILE ATTACHMENTS
+       ======================================================= -->
+
+  <div
+    class="ai-modal-backdrop"
+    id="ai-tools-modal"
+    aria-hidden="true"
+  >
+    <div class="ai-modal">
+
+      <div class="ai-modal-head">
+        <h3>AI tools</h3>
+
+        <button type="button" class="ai-modal-close" data-close-modal="ai-tools-modal">
+          ×
+        </button>
+      </div>
+
+      <div class="ai-modal-body">
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          style="width:100%;margin-bottom:8px"
+          data-tool-prompt="Summarize the following information clearly and give me the key takeaways:"
+        >
+          <span class="ai-suggestion-icon">✦</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Summarize</span>
+            <span class="ai-suggestion-text">Turn long information into key points.</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          style="width:100%;margin-bottom:8px"
+          data-tool-prompt="Analyze these business numbers and identify trends, risks and opportunities:"
+        >
+          <span class="ai-suggestion-icon">↗</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Analyze data</span>
+            <span class="ai-suggestion-text">Understand numbers and performance.</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          style="width:100%;margin-bottom:8px"
+          data-tool-prompt="Create a professional executive report based on the following information:"
+        >
+          <span class="ai-suggestion-icon">▤</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Generate report</span>
+            <span class="ai-suggestion-text">Create structured business reporting.</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion"
+          style="width:100%"
+          data-tool-prompt="Translate and professionally rewrite the following content:"
+        >
+          <span class="ai-suggestion-icon">文</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Translate & rewrite</span>
+            <span class="ai-suggestion-text">Improve and translate your content.</span>
+          </span>
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =======================================================
+       AI SETTINGS MODAL
+       ======================================================= -->
+
+  <div
+    class="ai-modal-backdrop"
+    id="ai-settings-modal"
+    aria-hidden="true"
+  >
+
+    <div class="ai-modal">
+
+      <div class="ai-modal-head">
+
+        <h3>AI settings</h3>
+
+        <button
+          type="button"
+          class="ai-modal-close"
+          data-close-modal="ai-settings-modal"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div class="ai-modal-body">
+
+        <div class="ai-setting-group">
+
+          <div class="ai-setting-label">
+            <span>Assistant mode</span>
+          </div>
+
+          <select class="ai-setting-select" id="ai-mode">
+            <option value="balanced">Balanced</option>
+            <option value="creative">Creative</option>
+            <option value="precise">Precise</option>
+            <option value="business">Business analyst</option>
+          </select>
+
+        </div>
+
+        <div class="ai-setting-group">
+
+          <div class="ai-setting-label">
+            <span>Response length</span>
+            <span id="ai-length-value">Medium</span>
+          </div>
+
+          <input
+            type="range"
+            class="ai-range"
+            id="ai-length"
+            min="1"
+            max="3"
+            value="2"
+          >
+
+        </div>
+
+        <div class="ai-setting-group">
+
+          <div class="ai-setting-label">
+            <span>Creativity</span>
+            <span id="ai-creativity-value">50%</span>
+          </div>
+
+          <input
+            type="range"
+            class="ai-range"
+            id="ai-creativity"
+            min="0"
+            max="100"
+            value="50"
+          >
+
+        </div>
+
+        <div class="ai-setting-group">
+
+          <div class="ai-setting-label">
+            <span>Remember conversation context</span>
+            <span>
+              <input
+                type="checkbox"
+                id="ai-memory"
+                checked
+              >
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="ai-modal-footer">
+
+        <button
+          type="button"
+          class="ai-modal-btn"
+          data-close-modal="ai-settings-modal"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="ai-modal-btn primary"
+          id="ai-save-settings"
+        >
+          Save settings
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =======================================================
+       MODEL MODAL
+       ======================================================= -->
+
+  <div
+    class="ai-modal-backdrop"
+    id="ai-model-modal"
+    aria-hidden="true"
+  >
+
+    <div class="ai-modal">
+
+      <div class="ai-modal-head">
+        <h3>Select AI mode</h3>
+
+        <button type="button" class="ai-modal-close" data-close-modal="ai-model-modal">
+          ×
+        </button>
+      </div>
+
+      <div class="ai-modal-body">
+
+        <button
+          type="button"
+          class="ai-suggestion ai-model-choice"
+          data-model="Veltrix AI"
+          style="width:100%;margin-bottom:8px"
+        >
+          <span class="ai-suggestion-icon">✦</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Veltrix AI</span>
+            <span class="ai-suggestion-text">Balanced assistant for everyday business tasks.</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion ai-model-choice"
+          data-model="Veltrix Analyst"
+          style="width:100%;margin-bottom:8px"
+        >
+          <span class="ai-suggestion-icon">▥</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Veltrix Analyst</span>
+            <span class="ai-suggestion-text">Focused on numbers, trends and business analysis.</span>
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="ai-suggestion ai-model-choice"
+          data-model="Veltrix Creative"
+          style="width:100%"
+        >
+          <span class="ai-suggestion-icon">✧</span>
+          <span class="ai-suggestion-content">
+            <span class="ai-suggestion-title">Veltrix Creative</span>
+            <span class="ai-suggestion-text">Focused on ideas, writing and creative content.</span>
+          </span>
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =======================================================
+       HIDDEN SHARE DATA
+       ======================================================= -->
+
+  <textarea id="ai-export-buffer" hidden></textarea>
+
+  <!-- =======================================================
+       GLOBAL SCRIPT
+       ======================================================= -->
+  <script src="../js/script.js" defer></script>
+
+  <!-- =======================================================
+       AI WORKSPACE ENGINE
+       ======================================================= -->
+  <script>
+  (() => {
+    "use strict";
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+    const elements = {
+      page: $(".ai-page"),
+      sidebar: $("#ai-sidebar"),
+      mobileHistory: $("#ai-mobile-history"),
+      newChat: $("#ai-new-chat"),
+      chatSearch: $("#ai-chat-search"),
+      clearChatSearch: $("#ai-clear-chat-search"),
+      historyList: $("#ai-history-list"),
+      chatScroll: $("#ai-chat-scroll"),
+      welcome: $("#ai-welcome"),
+      messages: $("#ai-messages"),
+      composer: $("#ai-composer"),
+      input: $("#ai-input"),
+      send: $("#ai-send"),
+      attach: $("#ai-attach"),
+      fileInput: $("#ai-file-input"),
+      attachmentPreview: $("#ai-attachment-preview"),
+      voice: $("#ai-voice"),
+      tools: $("#ai-tools"),
+      savePrompt: $("#ai-save-prompt"),
+      modelButton: $("#ai-model-button"),
+      modelModal: $("#ai-model-modal"),
+      settingsButton: $("#ai-chat-settings"),
+      settingsModal: $("#ai-settings-modal"),
+      saveSettings: $("#ai-save-settings"),
+      toolsModal: $("#ai-tools-modal"),
+      insights: $("#ai-right-panel"),
+      openInsights: $("#ai-open-insights"),
+      closeInsights: $("#ai-close-insights"),
+      share: $("#ai-share-chat"),
+      exportAll: $("#ai-export-all"),
+      deleteAll: $("#ai-delete-all"),
+      useRecommendation: $("#ai-use-recommendation"),
+      mode: $("#ai-mode"),
+      length: $("#ai-length"),
+      lengthValue: $("#ai-length-value"),
+      creativity: $("#ai-creativity"),
+      creativityValue: $("#ai-creativity-value"),
+      memory: $("#ai-memory")
+    };
+
+    /* =========================================================
+       STORAGE
+       ========================================================= */
+
+    const STORAGE_KEY = "veltrix_ai_workspace_v1";
+    const SETTINGS_KEY = "veltrix_ai_settings_v1";
+
+    const defaultSettings = {
+      mode: "balanced",
+      length: 2,
+      creativity: 50,
+      memory: true,
+      model: "Veltrix AI"
+    };
+
+    let settings = loadSettings();
+
+    let state = {
+      chats: [],
+      activeChatId: null,
+      attachments: [],
+      isGenerating: false,
+      recognition: null
+    };
+
+    function loadSettings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+        return {
+          ...defaultSettings,
+          ...(saved || {})
+        };
+      } catch {
+        return { ...defaultSettings };
+      }
+    }
+
+    function saveSettings() {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    }
+
+    function loadChats() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+        if (
+          saved &&
+          Array.isArray(saved.chats)
+        ) {
+          state.chats = saved.chats;
+          state.activeChatId = saved.activeChatId || null;
+        }
+      } catch {
+        state.chats = [];
+        state.activeChatId = null;
+      }
+    }
+
+    function saveChats() {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          chats: state.chats,
+          activeChatId: state.activeChatId
+        })
+      );
+    }
+
+    /* =========================================================
+       ID / DATE
+       ========================================================= */
+
+    function createId(prefix = "chat") {
+      return prefix + "_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2, 9);
+    }
+
+    function formatTime(timestamp) {
+      const date = new Date(timestamp);
+
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const now = new Date();
+
+      const isToday =
+        date.toDateString() === now.toDateString();
+
+      if (isToday) {
+        return formatTime(timestamp);
+      }
+
+      return date.toLocaleDateString([], {
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    function toast(message, type = "info") {
+
+      if (
+        window.Veltrix &&
+        window.Veltrix.toast &&
+        typeof window.Veltrix.toast.show === "function"
+      ) {
+        window.Veltrix.toast.show(message, type);
+        return;
+      }
+
+      let container = document.getElementById("ai-local-toast-container");
+
+      if (!container) {
+        container = document.createElement("div");
+        container.id = "ai-local-toast-container";
+
+        Object.assign(container.style, {
+          position: "fixed",
+          right: "18px",
+          bottom: "18px",
+          zIndex: "100000",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px"
+        });
+
+        document.body.appendChild(container);
+      }
+
+      const item = document.createElement("div");
+
+      Object.assign(item.style, {
+        background: "#102239",
+        color: "#fff",
+        border: "1px solid rgba(255,255,255,.1)",
+        borderRadius: "10px",
+        padding: "11px 14px",
+        fontSize: "12px",
+        boxShadow: "0 15px 45px rgba(0,0,0,.3)",
+        maxWidth: "320px"
+      });
+
+      item.textContent = message;
+
+      container.appendChild(item);
+
+      setTimeout(() => {
+        item.style.opacity = "0";
+        item.style.transform = "translateY(5px)";
+
+        setTimeout(() => item.remove(), 250);
+      }, 2600);
+    }
+
+    /* =========================================================
+       DEFAULT CHAT
+       ========================================================= */
+
+    function createChat(title = "New conversation") {
+
+      const chat = {
+        id: createId(),
+        title,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        messages: []
+      };
+
+      state.chats.unshift(chat);
+      state.activeChatId = chat.id;
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+
+      return chat;
+    }
+
+    function getActiveChat() {
+      return state.chats.find(
+        chat => chat.id === state.activeChatId
+      ) || null;
+    }
+
+    function ensureChat() {
+
+      let chat = getActiveChat();
+
+      if (!chat) {
+        chat = createChat("New conversation");
+      }
+
+      return chat;
+    }
+
+    /* =========================================================
+       HISTORY
+       ========================================================= */
+
+    function renderHistory(filter = "") {
+
+      if (!elements.historyList) {
+        return;
+      }
+
+      const query = filter.trim().toLowerCase();
+
+      const chats = [...state.chats]
+        .sort((a, b) => b.updatedAt - a.updatedAt)
+        .filter(chat => {
+          if (!query) return true;
+
+          const titleMatch =
+            String(chat.title || "")
+              .toLowerCase()
+              .includes(query);
+
+          const messageMatch =
+            chat.messages.some(message =>
+              String(message.content || "")
+                .toLowerCase()
+                .includes(query)
+            );
+
+          return titleMatch || messageMatch;
+        });
+
+      elements.historyList.innerHTML = "";
+
+      if (!chats.length) {
+
+        const empty = document.createElement("div");
+
+        empty.style.cssText = `
+          padding:25px 12px;
+          text-align:center;
+          color:var(--ai-muted);
+          font-size:11px;
+          line-height:1.6;
+        `;
+
+        empty.textContent =
+          query
+            ? "No conversations found."
+            : "Your conversations will appear here.";
+
+        elements.historyList.appendChild(empty);
+
+        return;
+      }
+
+      chats.forEach(chat => {
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className =
+          "ai-history-item" +
+          (chat.id === state.activeChatId ? " active" : "");
+
+        button.dataset.chatId = chat.id;
+
+        const icon = document.createElement("span");
+        icon.className = "ai-history-item-icon";
+        icon.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8">
+            <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5
+                     8.7 8.7 0 0 1-3-.5L4 20l1.5-4
+                     A7.2 7.2 0 0 1 4 11.5
+                     7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z"/>
+          </svg>
+        `;
+
+        const content = document.createElement("span");
+        content.className = "ai-history-item-content";
+
+        const title = document.createElement("span");
+        title.className = "ai-history-item-title";
+        title.textContent = chat.title || "New conversation";
+
+        const time = document.createElement("span");
+        time.className = "ai-history-item-time";
+        time.textContent = formatDate(chat.updatedAt);
+
+        content.appendChild(title);
+        content.appendChild(time);
+
+        const menu = document.createElement("button");
+        menu.type = "button";
+        menu.className = "ai-history-item-menu";
+        menu.innerHTML = "⋯";
+        menu.title = "Delete conversation";
+
+        menu.addEventListener("click", event => {
+          event.stopPropagation();
+          deleteChat(chat.id);
+        });
+
+        button.appendChild(icon);
+        button.appendChild(content);
+        button.appendChild(menu);
+
+        button.addEventListener("click", () => {
+          openChat(chat.id);
+        });
+
+        elements.historyList.appendChild(button);
+      });
+    }
+
+    function openChat(chatId) {
+
+      const chat = state.chats.find(
+        item => item.id === chatId
+      );
+
+      if (!chat) return;
+
+      state.activeChatId = chatId;
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+
+      if (window.innerWidth <= 850) {
+        elements.sidebar?.classList.remove("mobile-open");
+      }
+    }
+
+    function deleteChat(chatId) {
+
+      const chat = state.chats.find(
+        item => item.id === chatId
+      );
+
+      if (!chat) return;
+
+      const confirmed = window.confirm(
+        `Delete "${chat.title || "this conversation"}"?`
+      );
+
+      if (!confirmed) return;
+
+      state.chats = state.chats.filter(
+        item => item.id !== chatId
+      );
+
+      if (state.activeChatId === chatId) {
+        state.activeChatId =
+          state.chats[0]?.id || null;
+      }
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+
+      toast("Conversation deleted.", "success");
+    }
+
+    /* =========================================================
+       MESSAGE RENDERING
+       ========================================================= */
+
+    function escapeHTML(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatAIContent(value) {
+
+      let html = escapeHTML(value);
+
+      html = html.replace(
+        /```([\s\S]*?)```/g,
+        "<pre><code>$1</code></pre>"
+      );
+
+      html = html.replace(
+        /\*\*(.*?)\*\*/g,
+        "<strong>$1</strong>"
+      );
+
+      html = html.replace(
+        /`([^`]+)`/g,
+        "<code>$1</code>"
+      );
+
+      html = html.replace(
+        /\n\n/g,
+        "</p><p>"
+      );
+
+      html = html.replace(
+        /\n/g,
+        "<br>"
+      );
+
+      return "<p>" + html + "</p>";
+    }
+
+    function renderMessages() {
+
+      const chat = getActiveChat();
+
+      elements.messages.innerHTML = "";
+
+      if (!chat || !chat.messages.length) {
+        elements.welcome.style.display = "flex";
+        return;
+      }
+
+      elements.welcome.style.display = "none";
+
+      chat.messages.forEach((message, index) => {
+
+        const row = document.createElement("article");
+
+        row.className =
+          "ai-message " +
+          (message.role === "user"
+            ? "user"
+            : "assistant");
+
+        const avatar = document.createElement("div");
+
+        avatar.className = "ai-avatar";
+
+        avatar.innerHTML =
+          message.role === "user"
+            ? `
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="8" r="3.5"/>
+                <path d="M4 21c.7-4.2 3.4-6.5 8-6.5s7.3 2.3 8 6.5"/>
+              </svg>
+            `
+            : `
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.6">
+                <path d="M12 2.5 13.9 8l5.6 2-5.6 2L12 17l-1.9-5L4.5 10l5.6-2L12 2.5Z"/>
+                <path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/>
+              </svg>
+            `;
+
+        const body = document.createElement("div");
+        body.className = "ai-message-body";
+
+        const role = document.createElement("div");
+        role.className = "ai-message-role";
+        role.textContent =
+          message.role === "user"
+            ? "You"
+            : "Veltrix AI";
+
+        const content = document.createElement("div");
+        content.className = "ai-message-content";
+
+        content.innerHTML =
+          message.role === "user"
+            ? formatAIContent(message.content)
+            : formatAIContent(message.content);
+
+        body.appendChild(role);
+        body.appendChild(content);
+
+        if (message.role === "assistant") {
+
+          const actions = document.createElement("div");
+          actions.className = "ai-message-actions";
+
+          const copy = createMessageAction(
+            "Copy",
+            `
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8">
+                <rect x="8" y="8" width="11" height="11" rx="2"/>
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+              </svg>
+            `
+          );
+
+          copy.addEventListener("click", () => {
+            copyText(message.content);
+          });
+
+          const regenerate = createMessageAction(
+            "Regenerate",
+            `
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8">
+                <path d="M20 11a8 8 0 0 0-14.8-4L4 9"/>
+                <path d="M4 4v5h5"/>
+                <path d="M4 13a8 8 0 0 0 14.8 4L20 15"/>
+                <path d="M20 20v-5h-5"/>
+              </svg>
+            `
+          );
+
+          regenerate.addEventListener("click", () => {
+            regenerateMessage(index);
+          });
+
+          const save = createMessageAction(
+            "Save",
+            `
+              <svg viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8">
+                <path d="M6 3h12v18l-6-3-6 3V3Z"/>
+              </svg>
+            `
+          );
+
+          save.addEventListener("click", () => {
+            saveText(message.content);
+          });
+
+          actions.appendChild(copy);
+          actions.appendChild(regenerate);
+          actions.appendChild(save);
+
+          body.appendChild(actions);
+        }
+
+        row.appendChild(avatar);
+        row.appendChild(body);
+
+        elements.messages.appendChild(row);
+      });
+
+      requestAnimationFrame(scrollToBottom);
+    }
+
+    function createMessageAction(title, icon) {
+
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "ai-message-action";
+      button.title = title;
+      button.innerHTML = icon;
+
+      return button;
+    }
+
+    /* =========================================================
+       CLIPBOARD
+       ========================================================= */
+
+    async function copyText(text) {
+
+      try {
+
+        await navigator.clipboard.writeText(text);
+
+        toast("Copied to clipboard.", "success");
+
+      } catch {
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        try {
+          document.execCommand("copy");
+          toast("Copied to clipboard.", "success");
+        } catch {
+          toast("Could not copy the text.", "error");
+        }
+
+        textarea.remove();
+      }
+    }
+
+    function saveText(text) {
+
+      const blob = new Blob(
+        [text],
+        { type: "text/plain;charset=utf-8" }
+      );
+
+      const url = URL.createObjectURL(blob);
+
+      const anchor = document.createElement("a");
+
+      anchor.href = url;
+      anchor.download = "veltrix-ai-response.txt";
+
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+
+      URL.revokeObjectURL(url);
+
+      toast("Response saved.", "success");
+    }
+
+    /* =========================================================
+       SEND MESSAGE
+       ========================================================= */
+
+    async function sendMessage(rawText = null) {
+
+      if (state.isGenerating) {
+        return;
+      }
+
+      const text =
+        rawText !== null
+          ? String(rawText).trim()
+          : elements.input.value.trim();
+
+      if (!text && !state.attachments.length) {
+        toast("Write a message first.", "info");
+        elements.input.focus();
+        return;
+      }
+
+      const chat = ensureChat();
+
+      const attachmentText =
+        state.attachments.length
+          ? "\n\nAttached files:\n" +
+            state.attachments
+              .map(file => `• ${file.name}`)
+              .join("\n")
+          : "";
+
+      const finalUserText = text + attachmentText;
+
+      const userMessage = {
+        id: createId("msg"),
+        role: "user",
+        content: finalUserText,
+        createdAt: Date.now()
+      };
+
+      chat.messages.push(userMessage);
+
+      if (
+        !chat.messages.some(
+          message => message.role === "assistant"
+        )
+      ) {
+        chat.title =
+          text.length > 42
+            ? text.slice(0, 42).trim() + "…"
+            : text || "File analysis";
+      }
+
+      chat.updatedAt = Date.now();
+
+      elements.input.value = "";
+      autoResizeTextarea();
+
+      clearAttachments();
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+
+      showTyping();
+
+      state.isGenerating = true;
+      updateSendState();
+
+      await delay(
+        650 +
+        Math.min(
+          1100,
+          finalUserText.length * 6
+        )
+      );
+
+      const response = generateResponse(
+        finalUserText,
+        chat
+      );
+
+      hideTyping();
+
+      chat.messages.push({
+        id: createId("msg"),
+        role: "assistant",
+        content: response,
+        createdAt: Date.now()
+      });
+
+      chat.updatedAt = Date.now();
+
+      state.isGenerating = false;
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+      updateSendState();
+
+      elements.input.focus();
+    }
+
+    function delay(ms) {
+      return new Promise(resolve =>
+        setTimeout(resolve, ms)
+      );
+    }
+
+    /* =========================================================
+       TYPING
+       ========================================================= */
+
+    let typingElement = null;
+
+    function showTyping() {
+
+      if (typingElement) return;
+
+      typingElement = document.createElement("article");
+
+      typingElement.className =
+        "ai-message assistant";
+
+      typingElement.innerHTML = `
+        <div class="ai-avatar">
+          <svg viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.6">
+            <path d="M12 2.5 13.9 8l5.6 2-5.6 2L12 17l-1.9-5L4.5 10l5.6-2L12 2.5Z"/>
+          </svg>
+        </div>
+
+        <div class="ai-message-body">
+          <div class="ai-message-role">Veltrix AI</div>
+          <div class="ai-message-content">
+            <div class="ai-typing">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      elements.messages.appendChild(typingElement);
+
+      requestAnimationFrame(scrollToBottom);
+    }
+
+    function hideTyping() {
+
+      if (typingElement) {
+        typingElement.remove();
+        typingElement = null;
+      }
+    }
+
+    /* =========================================================
+       DEMO AI ENGINE
+       ========================================================= */
+
+    function generateResponse(input, chat) {
+
+      const lower = input.toLowerCase();
+
+      /* ---- greeting ---- */
+
+      if (
+        /^(hi|hello|hey|bonjour|salut|hola|مرحبا|سلام|أهلا)/i.test(
+          input.trim()
+        )
+      ) {
+        return `Hello! 👋
+
+I'm **Veltrix AI**, your business workspace assistant.
+
+I can help you with:
+- Business analysis
+- Sales and revenue insights
+- Reports and summaries
+- Customer communication
+- Calculations
+- Ideas and strategy
+- Content writing
+- Data interpretation
+
+What would you like to work on?`;
+      }
+
+      /* ---- report ---- */
+
+      if (
+        lower.includes("report") ||
+        lower.includes("monthly") ||
+        lower.includes("تقرير")
+      ) {
+        return `# Monthly Business Report
+
+## Executive summary
+
+Your business is showing a positive growth pattern across the main performance indicators.
+
+### Key metrics
+
+- **Revenue:** $48,920
+- **Orders:** 1,284
+- **Customers:** 8,642
+- **Revenue growth:** +18.4%
+- **Order growth:** +12.7%
+- **Customer growth:** +9.8%
+
+### What stands out
+
+1. Revenue is growing faster than order volume, which may indicate a stronger average order value.
+2. Customer growth remains healthy and gives the business additional room for expansion.
+3. Retention should remain a priority because existing customers are usually cheaper to convert than new customers.
+
+### Recommended next steps
+
+- Identify the top 10% highest-value customers.
+- Create a targeted retention or loyalty campaign.
+- Review products with the highest conversion rate.
+- Compare acquisition cost against customer lifetime value.
+- Monitor the next 30 days before making major budget changes.`;
+      }
+
+      /* ---- analysis ---- */
+
+      if (
+        lower.includes("analy") ||
+        lower.includes("performance") ||
+        lower.includes("insight") ||
+        lower.includes("تحليل")
+      ) {
+        return `## Performance analysis
+
+Based on the business indicators available in this workspace, the overall direction is positive.
+
+**1. Revenue**
+Revenue is currently the strongest growth indicator at approximately **+18.4%**.
+
+**2. Orders**
+Orders are up around **12.7%**, suggesting demand is increasing.
+
+**3. Customers**
+The customer base is growing by approximately **9.8%**.
+
+### Main opportunity
+
+The gap between revenue growth and order growth suggests that **average order value may be improving**.
+
+### Main recommendation
+
+Focus on:
+- Higher-value bundles
+- Cross-selling
+- Customer retention
+- Repeat purchases
+- High-performing products
+
+If you provide a CSV or spreadsheet with your actual numbers, I can structure the data into a more detailed analysis.`;
+      }
+
+      /* ---- sales ---- */
+
+      if (
+        lower.includes("sales") ||
+        lower.includes("sell") ||
+        lower.includes("مبيعات") ||
+        lower.includes("بيع")
+      ) {
+        return `## Sales strategy
+
+Here are five practical actions you can test:
+
+1. **Increase average order value**  
+   Create bundles that combine complementary products.
+
+2. **Target repeat customers**  
+   Offer personalized promotions to customers who already purchased.
+
+3. **Improve your best product pages**  
+   Focus on products that already generate traffic and conversions.
+
+4. **Use limited-time offers carefully**  
+   Give customers a clear reason to purchase now without training them to wait for discounts.
+
+5. **Track conversion by channel**  
+   Compare traffic, orders and revenue rather than looking only at visitor numbers.
+
+The most important metric is not simply more traffic — it's **profitable conversion and retention**.`;
+      }
+
+      /* ---- customer ---- */
+
+      if (
+        lower.includes("customer") ||
+        lower.includes("client") ||
+        lower.includes("عميل") ||
+        lower.includes("زبون")
+      ) {
+        return `## Customer strategy
+
+A strong customer strategy usually has three stages:
+
+**Acquire → Convert → Retain**
+
+### Acquisition
+Bring qualified visitors through channels where your ideal customers already spend time.
+
+### Conversion
+Reduce friction:
+- Clear product value
+- Strong calls to action
+- Simple checkout
+- Transparent pricing
+
+### Retention
+After a purchase:
+- Send useful follow-ups
+- Recommend relevant products
+- Reward repeat customers
+- Ask for feedback
+
+### Priority
+
+If resources are limited, I'd prioritize **retention and repeat purchases** first because existing customers already understand your product and require less education.`;
+      }
+
+      /* ---- email ---- */
+
+      if (
+        lower.includes("email") ||
+        lower.includes("mail") ||
+        lower.includes("رسالة") ||
+        lower.includes("إيميل")
+      ) {
+        return `## Customer follow-up email
+
+**Subject: Thank you for your recent purchase**
+
+Hi,
+
+Thank you for choosing us. We really appreciate your recent purchase.
+
+We hope you're enjoying your order. If you have any questions or need help with anything, our team is always happy to assist.
+
+We'd also love to hear your feedback — your experience helps us improve.
+
+Thank you again for your support.
+
+Best regards,  
+**Veltrix Team**`;
+      }
+
+      /* ---- calculate ---- */
+
+      if (
+        lower.includes("calculate") ||
+        lower.includes("percentage") ||
+        lower.includes("%") ||
+        lower.includes("احسب") ||
+        lower.includes("نسبة")
+      ) {
+        const numbers =
+          input.match(/-?\d+(?:\.\d+)?/g);
+
+        if (numbers && numbers.length >= 2) {
+
+          const a = Number(numbers[0]);
+          const b = Number(numbers[1]);
+
+          const percentage =
+            b !== 0
+              ? ((a / b) * 100).toFixed(2)
+              : "undefined";
+
+          const difference =
+            (a - b).toFixed(2);
+
+          const growth =
+            b !== 0
+              ? (((a - b) / Math.abs(b)) * 100).toFixed(2)
+              : "undefined";
+
+          return `## Calculation
+
+**Value A:** ${a}
+
+**Value B:** ${b}
+
+**A as a percentage of B:** ${percentage}%
+
+**Difference:** ${difference}
+
+**Growth from B to A:** ${growth}%`;
+        }
+
+        return `I can calculate percentages, differences, growth rates and other business metrics.
+
+For example, try:
+
+**"Calculate the percentage of 350 from 500"**
+
+or:
+
+**"Revenue was 12000 last month and 15000 this month. Calculate growth."**`;
+      }
+
+      /* ---- ideas ---- */
+
+      if (
+        lower.includes("idea") ||
+        lower.includes("ideas") ||
+        lower.includes("strategy") ||
+        lower.includes("فكرة") ||
+        lower.includes("أفكار")
+      ) {
+        return `## Growth ideas
+
+Here are several ideas worth testing:
+
+### 1. Customer loyalty
+Create rewards for customers who purchase repeatedly.
+
+### 2. Product bundles
+Combine complementary products into a higher-value package.
+
+### 3. Personalized offers
+Use customer behavior to create more relevant promotions.
+
+### 4. Educational content
+Create content that solves problems related to your products.
+
+### 5. Referral program
+Give existing customers a reason to recommend your business.
+
+**Best practice:** don't launch everything at once. Choose one idea, define a measurable goal, test it, then keep or improve it based on the results.`;
+      }
+
+      /* ---- summarize ---- */
+
+      if (
+        lower.includes("summarize") ||
+        lower.includes("summary") ||
+        lower.includes("لخص") ||
+        lower.includes("تلخيص")
+      ) {
+        return `## Summary
+
+The main objective appears to be improving business performance through better use of data, stronger customer retention and more focused growth actions.
+
+### Key takeaways
+
+- Revenue growth is positive.
+- Customer growth is healthy.
+- Increasing average order value is a potential opportunity.
+- Retention should remain a major priority.
+- Decisions should be based on measurable results.
+
+If you paste the exact content you want summarized, I can produce a more specific summary.`;
+      }
+
+      /* ---- translation ---- */
+
+      if (
+        lower.includes("translate") ||
+        lower.includes("ترجم") ||
+        lower.includes("translation")
+      ) {
+        return `I can help translate and professionally rewrite your content.
+
+Send me the exact text and tell me the target language, for example:
+
+**"Translate this to French: [your text]"**
+
+I can also preserve the tone — professional, casual, marketing, friendly, or formal.`;
+      }
+
+      /* ---- code ---- */
+
+      if (
+        lower.includes("html") ||
+        lower.includes("javascript") ||
+        lower.includes("css") ||
+        lower.includes("code") ||
+        lower.includes("كود")
+      ) {
+        return `I can help you structure and improve front-end code.
+
+For example, I can work with:
+
+\`\`\`html
+<section class="example">
+  <h2>Veltrix</h2>
+  <p>Business management made simple.</p>
+</section>
+\`\`\`
+
+For a real project, send me the existing file or describe the feature you want to build, and I can organize the implementation into a clean, maintainable structure.`;
+      }
+
+      /* ---- help ---- */
+
+      if (
+        lower.includes("help") ||
+        lower.includes("what can you") ||
+        lower.includes("ماذا تستطيع") ||
+        lower.includes("ساعدني")
+      ) {
+        return `## What I can do
+
+I can act as a business and productivity assistant inside Veltrix.
+
+**Business**
+- Analyze performance
+- Explain trends
+- Find opportunities
+- Build reports
+
+**Productivity**
+- Summarize information
+- Organize ideas
+- Create plans
+- Draft emails
+
+**Numbers**
+- Calculate percentages
+- Compare values
+- Explain growth
+- Interpret metrics
+
+**Content**
+- Write marketing copy
+- Rewrite text
+- Create professional messages
+
+Try asking me something specific and I'll get started.`;
+      }
+
+      /* ---- fallback ---- */
+
+      const length =
+        settings.length === 1
+          ? "short"
+          : settings.length === 3
+            ? "long"
+            : "medium";
+
+      if (length === "short") {
+        return `I understand your request.
+
+The best next step is to break it into a clear objective, the available information, and the desired result.
+
+If you give me more details, I can make the answer much more specific.`;
+      }
+
+      if (length === "long") {
+        return `I understand what you're asking.
+
+To give you a useful answer, I'd approach the request in three stages:
+
+### 1. Define the objective
+First, identify exactly what outcome you want.
+
+### 2. Review the available information
+The quality of a recommendation depends heavily on the data, context and constraints available.
+
+### 3. Turn the analysis into action
+Once the objective and information are clear, we can turn the result into specific steps with measurable outcomes.
+
+For this Veltrix demo workspace, I can already help with business analysis, sales, customer strategy, reports, calculations, writing and productivity.
+
+If you want a more precise answer, send me the exact task, the numbers or the text you're working with.`;
+      }
+
+      return `I understand your request.
+
+Here's how I'd approach it:
+
+**Goal:** identify the result you want.
+
+**Information:** use the relevant numbers, text or business context.
+
+**Action:** turn the result into practical next steps.
+
+I can help you with business analysis, sales, customer strategy, reports, calculations, writing and more.
+
+If you give me the specific details, I'll make the answer more precise.`;
+    }
+
+    /* =========================================================
+       REGENERATE
+       ========================================================= */
+
+    async function regenerateMessage(index) {
+
+      if (state.isGenerating) return;
+
+      const chat = getActiveChat();
+
+      if (!chat) return;
+
+      const target = chat.messages[index];
+
+      if (
+        !target ||
+        target.role !== "assistant"
+      ) {
+        return;
+      }
+
+      const previousUser =
+        [...chat.messages]
+          .slice(0, index)
+          .reverse()
+          .find(message => message.role === "user");
+
+      if (!previousUser) {
+        toast("There is no user message to regenerate.", "info");
+        return;
+      }
+
+      chat.messages.splice(index, 1);
+
+      saveChats();
+      renderMessages();
+
+      state.isGenerating = true;
+      updateSendState();
+      showTyping();
+
+      await delay(850);
+
+      const response =
+        generateResponse(
+          previousUser.content,
+          chat
+        );
+
+      hideTyping();
+
+      chat.messages.splice(index, 0, {
+        id: createId("msg"),
+        role: "assistant",
+        content: response,
+        createdAt: Date.now()
+      });
+
+      chat.updatedAt = Date.now();
+
+      state.isGenerating = false;
+
+      saveChats();
+      renderMessages();
+      renderHistory();
+      updateSendState();
+
+      toast("Response regenerated.", "success");
+    }
+
+    /* =========================================================
+       NEW CHAT
+       ========================================================= */
+
+    function newChat() {
+
+      if (state.isGenerating) {
+        toast("Please wait for the current response.", "info");
+        return;
+      }
+
+      createChat("New conversation");
+
+      elements.input.value = "";
+      clearAttachments();
+
+      elements.input.focus();
+
+      toast("New conversation started.", "success");
+    }
+
+    /* =========================================================
+       CLEAR ALL
+       ========================================================= */
+
+    function clearAllChats() {
+
+      if (!state.chats.length) {
+        toast("There are no conversations to clear.", "info");
+        return;
+      }
+
+      const confirmed = window.confirm(
+        "Delete all AI conversations?"
+      );
+
+      if (!confirmed) return;
+
+      state.chats = [];
+      state.activeChatId = null;
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+
+      toast("All conversations cleared.", "success");
+    }
+
+    /* =========================================================
+       EXPORT
+       ========================================================= */
+
+    function exportChat(chat = getActiveChat()) {
+
+      if (!chat) {
+        toast("There is no conversation to export.", "info");
+        return;
+      }
+
+      let output =
+        `VELTRIX AI WORKSPACE\n` +
+        `${chat.title}\n` +
+        `${"=".repeat(60)}\n\n`;
+
+      chat.messages.forEach(message => {
+
+        output +=
+          `${message.role === "user" ? "YOU" : "VELTRIX AI"}\n` +
+          `${"-".repeat(20)}\n` +
+          `${message.content}\n\n`;
+      });
+
+      const blob = new Blob(
+        [output],
+        { type: "text/plain;charset=utf-8" }
+      );
+
+      const url = URL.createObjectURL(blob);
+
+      const anchor = document.createElement("a");
+
+      anchor.href = url;
+
+      anchor.download =
+        (chat.title || "veltrix-ai-chat")
+          .replace(/[^\w\-]+/g, "-")
+          .toLowerCase() +
+        ".txt";
+
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+
+      URL.revokeObjectURL(url);
+
+      toast("Conversation exported.", "success");
+    }
+
+    function exportAllChats() {
+
+      if (!state.chats.length) {
+        toast("There are no conversations to export.", "info");
+        return;
+      }
+
+      let output =
+        "VELTRIX AI — ALL CONVERSATIONS\n\n";
+
+      [...state.chats]
+        .sort((a,b) => b.updatedAt - a.updatedAt)
+        .forEach(chat => {
+
+          output +=
+            `\n${chat.title}\n` +
+            `${"=".repeat(60)}\n`;
+
+          chat.messages.forEach(message => {
+
+            output +=
+              `\n${message.role.toUpperCase()}:\n` +
+              `${message.content}\n`;
+          });
+
+          output += "\n";
+        });
+
+      const blob = new Blob(
+        [output],
+        { type: "text/plain;charset=utf-8" }
+      );
+
+      const url = URL.createObjectURL(blob);
+
+      const anchor = document.createElement("a");
+
+      anchor.href = url;
+      anchor.download = "veltrix-ai-conversations.txt";
+
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+
+      URL.revokeObjectURL(url);
+
+      toast("All conversations exported.", "success");
+    }
+
+    /* =========================================================
+       ATTACHMENTS
+       ========================================================= */
+
+    function handleFiles(files) {
+
+      if (!files || !files.length) {
+        return;
+      }
+
+      [...files].forEach(file => {
+
+        if (
+          !state.attachments.some(
+            item =>
+              item.name === file.name &&
+              item.size === file.size
+          )
+        ) {
+          state.attachments.push(file);
+        }
+      });
+
+      renderAttachments();
+
+      toast(
+        `${files.length} file${files.length > 1 ? "s" : ""} attached.`,
+        "success"
+      );
+    }
+
+    function renderAttachments() {
+
+      elements.attachmentPreview.innerHTML = "";
+
+      if (!state.attachments.length) {
+        elements.attachmentPreview.classList.remove("visible");
+        return;
+      }
+
+      elements.attachmentPreview.classList.add("visible");
+
+      state.attachments.forEach((file, index) => {
+
+        const chip = document.createElement("div");
+
+        chip.className = "ai-attachment-chip";
+
+        chip.innerHTML = `
+          <svg width="14" height="14"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="1.8">
+            <path d="M7 3h7l4 4v14H7z"/>
+            <path d="M14 3v5h4"/>
+          </svg>
+          <span>${escapeHTML(file.name)}</span>
+        `;
+
+        const remove = document.createElement("button");
+
+        remove.type = "button";
+        remove.innerHTML = "×";
+        remove.title = "Remove";
+
+        remove.addEventListener("click", () => {
+
+          state.attachments.splice(index, 1);
+
+          renderAttachments();
+        });
+
+        chip.appendChild(remove);
+
+        elements.attachmentPreview.appendChild(chip);
+      });
+    }
+
+    function clearAttachments() {
+
+      state.attachments = [];
+
+      if (elements.fileInput) {
+        elements.fileInput.value = "";
+      }
+
+      renderAttachments();
+    }
+
+    /* =========================================================
+       TEXTAREA
+       ========================================================= */
+
+    function autoResizeTextarea() {
+
+      const input = elements.input;
+
+      if (!input) return;
+
+      input.style.height = "auto";
+
+      input.style.height =
+        Math.min(
+          input.scrollHeight,
+          180
+        ) + "px";
+    }
+
+    function updateSendState() {
+
+      if (!elements.send) return;
+
+      elements.send.disabled =
+        state.isGenerating;
+    }
+
+    function scrollToBottom() {
+
+      if (!elements.chatScroll) return;
+
+      elements.chatScroll.scrollTo({
+        top: elements.chatScroll.scrollHeight,
+        behavior: "smooth"
+      });
+    }
+
+    /* =========================================================
+       MODALS
+       ========================================================= */
+
+    function openModal(modal) {
+
+      if (!modal) return;
+
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+
+      const firstInput =
+        modal.querySelector(
+          "input, select, button"
+        );
+
+      setTimeout(() => {
+        firstInput?.focus();
+      }, 50);
+    }
+
+    function closeModal(modal) {
+
+      if (!modal) return;
+
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function closeAllAIModals() {
+      $$(".ai-modal-backdrop").forEach(closeModal);
+    }
+
+    /* =========================================================
+       TOOLS
+       ========================================================= */
+
+    function useTool(prompt) {
+
+      closeModal(elements.toolsModal);
+
+      elements.input.value = prompt + " ";
+
+      autoResizeTextarea();
+      elements.input.focus();
+
+      toast("Tool prompt inserted.", "success");
+    }
+
+    /* =========================================================
+       MODEL
+       ========================================================= */
+
+    function updateModelName() {
+
+      const name =
+        elements.modelButton?.querySelector(
+          ".ai-model-name"
+        );
+
+      if (name) {
+        name.textContent = settings.model;
+      }
+    }
+
+    /* =========================================================
+       SETTINGS UI
+       ========================================================= */
+
+    function syncSettingsUI() {
+
+      if (elements.mode) {
+        elements.mode.value = settings.mode;
+      }
+
+      if (elements.length) {
+        elements.length.value = settings.length;
+      }
+
+      if (elements.creativity) {
+        elements.creativity.value =
+          settings.creativity;
+      }
+
+      if (elements.memory) {
+        elements.memory.checked =
+          settings.memory;
+      }
+
+      updateLengthLabel();
+      updateCreativityLabel();
+      updateModelName();
+    }
+
+    function updateLengthLabel() {
+
+      if (!elements.lengthValue) return;
+
+      const values = {
+        1: "Short",
+        2: "Medium",
+        3: "Long"
+      };
+
+      elements.lengthValue.textContent =
+        values[elements.length.value] ||
+        "Medium";
+    }
+
+    function updateCreativityLabel() {
+
+      if (!elements.creativityValue) return;
+
+      elements.creativityValue.textContent =
+        `${elements.creativity.value}%`;
+    }
+
+    /* =========================================================
+       VOICE INPUT
+       ========================================================= */
+
+    function startVoiceInput() {
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+
+        toast(
+          "Voice input is not supported by this browser.",
+          "info"
+        );
+
+        return;
+      }
+
+      if (state.recognition) {
+
+        try {
+          state.recognition.stop();
+        } catch {}
+
+        state.recognition = null;
+
+        toast("Voice input stopped.", "info");
+
+        return;
+      }
+
+      const recognition =
+        new SpeechRecognition();
+
+      recognition.lang =
+        document.documentElement.lang ||
+        "en-US";
+
+      recognition.interimResults = true;
+      recognition.continuous = false;
+
+      let finalText = "";
+
+      recognition.onstart = () => {
+        toast("Listening… speak now.", "success");
+      };
+
+      recognition.onresult = event => {
+
+        let interim = "";
+
+        for (
+          let i = event.resultIndex;
+          i < event.results.length;
+          i++
+        ) {
+
+          const transcript =
+            event.results[i][0].transcript;
+
+          if (event.results[i].isFinal) {
+            finalText += transcript;
+          } else {
+            interim += transcript;
+          }
+        }
+
+        elements.input.value =
+          finalText + interim;
+
+        autoResizeTextarea();
+      };
+
+      recognition.onerror = () => {
+
+        toast(
+          "Voice input could not be completed.",
+          "error"
+        );
+
+        state.recognition = null;
+      };
+
+      recognition.onend = () => {
+
+        state.recognition = null;
+
+        if (finalText.trim()) {
+          toast("Voice text added.", "success");
+        }
+      };
+
+      state.recognition = recognition;
+
+      recognition.start();
+    }
+
+    /* =========================================================
+       SHARE
+       ========================================================= */
+
+    async function shareChat() {
+
+      const chat = getActiveChat();
+
+      if (!chat) {
+        toast("Start a conversation before sharing.", "info");
+        return;
+      }
+
+      const text =
+        chat.messages
+          .map(message =>
+            `${message.role === "user" ? "You" : "Veltrix AI"}:\n${message.content}`
+          )
+          .join("\n\n");
+
+      if (
+        navigator.share
+      ) {
+
+        try {
+
+          await navigator.share({
+            title: `Veltrix AI — ${chat.title}`,
+            text
+          });
+
+          toast("Conversation shared.", "success");
+
+        } catch (error) {
+
+          if (error?.name !== "AbortError") {
+            toast("Sharing was cancelled or unavailable.", "info");
+          }
+        }
+
+        return;
+      }
+
+      await copyText(text);
+
+      toast(
+        "Sharing is not available, so the conversation was copied instead.",
+        "info"
+      );
+    }
+
+    /* =========================================================
+       SEARCH
+       ========================================================= */
+
+    function clearChatSearch() {
+
+      elements.chatSearch.value = "";
+
+      renderHistory();
+
+      elements.chatSearch.focus();
+    }
+
+    /* =========================================================
+       INSIGHTS
+       ========================================================= */
+
+    function toggleInsights(force = null) {
+
+      if (!elements.insights) return;
+
+      if (force === true) {
+        elements.insights.classList.add("open");
+        return;
+      }
+
+      if (force === false) {
+        elements.insights.classList.remove("open");
+        return;
+      }
+
+      elements.insights.classList.toggle("open");
+    }
+
+    /* =========================================================
+       EVENT BINDINGS
+       ========================================================= */
+
+    function bindEvents() {
+
+      elements.newChat?.addEventListener(
+        "click",
+        newChat
+      );
+
+      elements.chatSearch?.addEventListener(
+        "input",
+        event => {
+          renderHistory(event.target.value);
+        }
+      );
+
+      elements.clearChatSearch?.addEventListener(
+        "click",
+        clearChatSearch
+      );
+
+      elements.mobileHistory?.addEventListener(
+        "click",
+        () => {
+          elements.sidebar?.classList.toggle("mobile-open");
+        }
+      );
+
+      elements.composer?.addEventListener(
+        "submit",
+        event => {
+          event.preventDefault();
+          sendMessage();
+        }
+      );
+
+      elements.input?.addEventListener(
+        "input",
+        () => {
+          autoResizeTextarea();
+        }
+      );
+
+      elements.input?.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Enter" &&
+            !event.shiftKey
+          ) {
+            event.preventDefault();
+            sendMessage();
+          }
+        }
+      );
+
+      elements.attach?.addEventListener(
+        "click",
+        () => elements.fileInput?.click()
+      );
+
+      elements.fileInput?.addEventListener(
+        "change",
+        event => {
+          handleFiles(event.target.files);
+        }
+      );
+
+      elements.voice?.addEventListener(
+        "click",
+        startVoiceInput
+      );
+
+      elements.tools?.addEventListener(
+        "click",
+        () => openModal(elements.toolsModal)
+      );
+
+      elements.savePrompt?.addEventListener(
+        "click",
+        () => {
+
+          const value =
+            elements.input.value.trim();
+
+          if (!value) {
+            toast("Write a prompt before saving it.", "info");
+            return;
+          }
+
+          const saved =
+            JSON.parse(
+              localStorage.getItem(
+                "veltrix_saved_prompts"
+              ) || "[]"
+            );
+
+          saved.unshift({
+            text: value,
+            createdAt: Date.now()
+          });
+
+          localStorage.setItem(
+            "veltrix_saved_prompts",
+            JSON.stringify(saved.slice(0, 50))
+          );
+
+          toast("Prompt saved.", "success");
+        }
+      );
+
+      elements.modelButton?.addEventListener(
+        "click",
+        () => openModal(elements.modelModal)
+      );
+
+      elements.settingsButton?.addEventListener(
+        "click",
+        () => openModal(elements.settingsModal)
+      );
+
+      elements.openInsights?.addEventListener(
+        "click",
+        () => toggleInsights()
+      );
+
+      elements.closeInsights?.addEventListener(
+        "click",
+        () => toggleInsights(false)
+      );
+
+      elements.share?.addEventListener(
+        "click",
+        shareChat
+      );
+
+      elements.exportAll?.addEventListener(
+        "click",
+        exportAllChats
+      );
+
+      elements.deleteAll?.addEventListener(
+        "click",
+        clearAllChats
+      );
+
+      elements.useRecommendation?.addEventListener(
+        "click",
+        () => {
+
+          toggleInsights(false);
+
+          elements.input.value =
+            "Analyze the AI recommendation about customer retention and give me a practical action plan.";
+
+          autoResizeTextarea();
+          elements.input.focus();
+
+          toast("Recommendation added to the chat.", "success");
+        }
+      );
+
+      elements.length?.addEventListener(
+        "input",
+        updateLengthLabel
+      );
+
+      elements.creativity?.addEventListener(
+        "input",
+        updateCreativityLabel
+      );
+
+      elements.saveSettings?.addEventListener(
+        "click",
+        () => {
+
+          settings.mode =
+            elements.mode.value;
+
+          settings.length =
+            Number(elements.length.value);
+
+          settings.creativity =
+            Number(elements.creativity.value);
+
+          settings.memory =
+            elements.memory.checked;
+
+          saveSettings();
+          syncSettingsUI();
+
+          closeModal(elements.settingsModal);
+
+          toast("AI settings saved.", "success");
+        }
+      );
+
+      $$("[data-close-modal]").forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const id =
+              button.dataset.closeModal;
+
+            closeModal(
+              document.getElementById(id)
+            );
+          }
+        );
+      });
+
+      $$(".ai-modal-backdrop").forEach(backdrop => {
+
+        backdrop.addEventListener(
+          "click",
+          event => {
+
+            if (event.target === backdrop) {
+              closeModal(backdrop);
+            }
+          }
+        );
+      });
+
+      $$(".ai-model-choice").forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            settings.model =
+              button.dataset.model ||
+              "Veltrix AI";
+
+            saveSettings();
+            updateModelName();
+
+            closeModal(elements.modelModal);
+
+            toast(
+              `${settings.model} selected.`,
+              "success"
+            );
+          }
+        );
+      });
+
+      $$("[data-tool-prompt]").forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+            useTool(
+              button.dataset.toolPrompt || ""
+            );
+          }
+        );
+      });
+
+      $$(".ai-suggestion[data-prompt]").forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const prompt =
+              button.dataset.prompt;
+
+            sendMessage(prompt);
+          }
+        );
+      });
+
+      document.addEventListener(
+        "keydown",
+        event => {
+
+          if (
+            event.key === "Escape"
+          ) {
+
+            closeAllAIModals();
+
+            elements.sidebar?.classList.remove(
+              "mobile-open"
+            );
+          }
+
+          if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+          ) {
+
+            event.preventDefault();
+
+            const globalSearch =
+              document.querySelector(
+                "[data-global-search]"
+              );
+
+            globalSearch?.click();
+          }
+        }
+      );
+
+      window.addEventListener(
+        "resize",
+        () => {
+
+          if (
+            window.innerWidth > 850
+          ) {
+            elements.sidebar?.classList.remove(
+              "mobile-open"
+            );
+          }
+        }
+      );
+    }
+
+    /* =========================================================
+       INITIAL DEMO CHAT
+       ========================================================= */
+
+    function createInitialDemoChat() {
+
+      if (state.chats.length) {
+        return;
+      }
+
+      const chat = createChat(
+        "Welcome to Veltrix AI"
+      );
+
+      chat.messages.push({
+        id: createId("msg"),
+        role: "assistant",
+        content:
+          `Welcome to **Veltrix AI** 👋
+
+I'm ready to help you work smarter.
+
+You can ask me to:
+- Analyze business performance
+- Create reports
+- Calculate percentages
+- Write customer emails
+- Generate strategies
+- Summarize information
+- Interpret business data
+
+Choose one of the suggestions below or type your own request.`,
+        createdAt: Date.now()
+      });
+
+      chat.updatedAt = Date.now();
+
+      saveChats();
+      renderHistory();
+      renderMessages();
+    }
+
+    /* =========================================================
+       PAGE API
+       ========================================================= */
+
+    window.VeltrixAIWorkspace = {
+
+      getState() {
+        return state;
+      },
+
+      getSettings() {
+        return { ...settings };
+      },
+
+      newChat,
+
+      sendMessage,
+
+      openChat,
+
+      exportChat,
+
+      exportAllChats,
+
+      clearAllChats,
+
+      toggleInsights,
+
+      focusInput() {
+        elements.input?.focus();
+      }
+    };
+
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
+
+    function init() {
+
+      loadChats();
+
+      if (
+        !state.chats.length
+      ) {
+        createInitialDemoChat();
+      } else {
+
+        if (
+          !state.activeChatId ||
+          !state.chats.some(
+            chat =>
+              chat.id === state.activeChatId
+          )
+        ) {
+          state.activeChatId =
+            state.chats[0].id;
+        }
+
+        renderHistory();
+        renderMessages();
+      }
+
+      syncSettingsUI();
+      bindEvents();
+      autoResizeTextarea();
+      updateSendState();
+
+      /*
+       * Small delay so the global Veltrix engine can finish
+       * theme/language initialization before the AI workspace
+       * starts observing the page.
+       */
+      setTimeout(() => {
+
+        renderHistory();
+        renderMessages();
+
+      }, 350);
+    }
+
+    if (
+      document.readyState === "loading"
+    ) {
+      document.addEventListener(
+        "DOMContentLoaded",
+        init,
+        { once: true }
+      );
+    } else {
+      init();
+    }
+
+  })();
+  </script>
+
+</body>
+</html>
