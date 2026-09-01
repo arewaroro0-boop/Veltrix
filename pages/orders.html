@@ -1,1 +1,6370 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="description"
+        content="Veltrix Orders — A powerful order management command center."
+    >
+
+    <meta
+        name="keywords"
+        content="Veltrix, orders, order management, ecommerce dashboard, sales, shipping"
+    >
+
+    <meta name="author" content="Veltrix">
+
+    <meta name="theme-color" content="#0b1020">
+
+    <title>Veltrix — Orders</title>
+
+    <!-- =========================================================
+         FONTS
+    ========================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- =========================================================
+         ICONS
+    ========================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- =========================================================
+         GLOBAL STYLE
+    ========================================================== -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- =========================================================
+         CHART.JS
+    ========================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- =========================================================
+         EARLY THEME
+    ========================================================== -->
+    <script>
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem("veltrix-theme");
+
+                if (savedTheme === "dark" || savedTheme === "light") {
+                    document.documentElement.dataset.theme = savedTheme;
+                } else {
+                    document.documentElement.dataset.theme = "dark";
+                }
+            } catch (error) {
+                document.documentElement.dataset.theme = "dark";
+            }
+        })();
+    </script>
+</head>
+
+<body
+    id="veltrix-app"
+    class="app-body orders-page"
+    data-page="orders"
+    data-theme="dark"
+>
+
+<!-- =========================================================
+     PAGE LOADER
+========================================================== -->
+<div
+    class="page-loader"
+    id="pageLoader"
+    aria-hidden="true"
+>
+    <div class="loader-orbit">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="loader-brand">
+        <span class="loader-brand-mark">V</span>
+        <span>Veltrix</span>
+    </div>
+
+    <div class="loader-progress">
+        <span></span>
+    </div>
+</div>
+
+
+<!-- =========================================================
+     BACKGROUND EFFECTS
+========================================================== -->
+<div class="app-background" aria-hidden="true">
+    <div class="background-grid"></div>
+    <div class="background-glow background-glow-one"></div>
+    <div class="background-glow background-glow-two"></div>
+    <div class="background-glow background-glow-three"></div>
+</div>
+
+
+<!-- =========================================================
+     MOBILE SIDEBAR OVERLAY
+========================================================== -->
+<div
+    class="mobile-sidebar-overlay"
+    id="mobileSidebarOverlay"
+    data-sidebar-overlay
+    aria-hidden="true"
+></div>
+
+
+<!-- =========================================================
+     TOAST CONTAINER
+========================================================== -->
+<div
+    class="toast-container"
+    id="toastContainer"
+    aria-live="polite"
+    aria-atomic="true"
+></div>
+
+
+<!-- =========================================================
+     APPLICATION SHELL
+========================================================== -->
+<div class="app-shell">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+    <aside
+        class="sidebar"
+        id="mainSidebar"
+        data-sidebar
+    >
+
+        <!-- SIDEBAR HEADER -->
+        <div class="sidebar-header">
+
+            <a
+                href="../index.html"
+                class="brand"
+                data-nav
+                aria-label="Veltrix Home"
+            >
+
+                <span class="brand-mark">
+                    <span>V</span>
+                </span>
+
+                <span class="brand-content">
+                    <strong>Veltrix</strong>
+                    <small>Business OS</small>
+                </span>
+
+            </a>
+
+            <button
+                type="button"
+                class="sidebar-close mobile-only"
+                data-sidebar-close
+                aria-label="Close sidebar"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- WORKSPACE SELECTOR -->
+        <div class="workspace-selector-wrapper">
+
+            <button
+                type="button"
+                class="workspace-selector"
+                data-workspace-toggle
+            >
+
+                <span class="workspace-icon">
+                    <i class="fa-solid fa-cubes"></i>
+                </span>
+
+                <span class="workspace-information">
+                    <small>Workspace</small>
+                    <strong data-current-workspace>Veltrix Store</strong>
+                </span>
+
+                <i class="fa-solid fa-chevron-down workspace-arrow"></i>
+
+            </button>
+
+
+            <div
+                class="workspace-menu dropdown-menu"
+                data-workspace-menu
+            >
+
+                <button
+                    type="button"
+                    class="workspace-option active"
+                    data-workspace="Veltrix Store"
+                >
+                    <span class="workspace-option-icon">
+                        <i class="fa-solid fa-store"></i>
+                    </span>
+
+                    <span>
+                        <strong>Veltrix Store</strong>
+                        <small>Online business</small>
+                    </span>
+
+                    <i class="fa-solid fa-check"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="workspace-option"
+                    data-workspace="Creative Studio"
+                >
+                    <span class="workspace-option-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </span>
+
+                    <span>
+                        <strong>Creative Studio</strong>
+                        <small>Design workspace</small>
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="workspace-option"
+                    data-workspace="Agency Hub"
+                >
+                    <span class="workspace-option-icon">
+                        <i class="fa-solid fa-building"></i>
+                    </span>
+
+                    <span>
+                        <strong>Agency Hub</strong>
+                        <small>Client management</small>
+                    </span>
+                </button>
+
+
+                <div class="workspace-divider"></div>
+
+                <button
+                    type="button"
+                    class="workspace-create"
+                    data-action="create-workspace"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create workspace</span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav class="sidebar-navigation">
+
+            <!-- OVERVIEW -->
+            <div class="nav-section">
+
+                <div class="nav-section-title">
+                    <span>Overview</span>
+                </div>
+
+
+                <a
+                    href="../index.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="home"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-grid-2"></i>
+                    </span>
+
+                    <span class="nav-label">Dashboard</span>
+                </a>
+
+
+                <a
+                    href="analytics.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="analytics"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </span>
+
+                    <span class="nav-label">Analytics</span>
+
+                    <span class="nav-badge">Live</span>
+                </a>
+
+            </div>
+
+
+            <!-- MANAGEMENT -->
+            <div class="nav-section">
+
+                <div class="nav-section-title">
+                    <span>Management</span>
+                </div>
+
+
+                <a
+                    href="orders.html"
+                    class="nav-item active"
+                    data-nav
+                    data-page-link="orders"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </span>
+
+                    <span class="nav-label">Orders</span>
+
+                    <span class="nav-count">24</span>
+                </a>
+
+
+                <a
+                    href="customers.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="customers"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </span>
+
+                    <span class="nav-label">Customers</span>
+                </a>
+
+
+                <a
+                    href="products.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="products"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </span>
+
+                    <span class="nav-label">Products</span>
+                </a>
+
+
+                <a
+                    href="invoices.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="invoices"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </span>
+
+                    <span class="nav-label">Invoices</span>
+                </a>
+
+            </div>
+
+
+            <!-- COMMUNICATION -->
+            <div class="nav-section">
+
+                <div class="nav-section-title">
+                    <span>Communication</span>
+                </div>
+
+
+                <a
+                    href="messages.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="messages"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-comments"></i>
+                    </span>
+
+                    <span class="nav-label">Messages</span>
+
+                    <span class="nav-count notification-count">5</span>
+                </a>
+
+
+                <a
+                    href="notifications.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="notifications"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </span>
+
+                    <span class="nav-label">Notifications</span>
+
+                    <span class="nav-live-dot"></span>
+                </a>
+
+            </div>
+
+
+            <!-- TOOLS -->
+            <div class="nav-section">
+
+                <div class="nav-section-title">
+                    <span>Tools</span>
+                </div>
+
+
+                <a
+                    href="calculator.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="calculator"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-calculator"></i>
+                    </span>
+
+                    <span class="nav-label">Calculator</span>
+                </a>
+
+
+                <a
+                    href="ai-workspace.html"
+                    class="nav-item"
+                    data-nav
+                    data-page-link="ai-workspace"
+                >
+                    <span class="nav-icon">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </span>
+
+                    <span class="nav-label">AI Workspace</span>
+
+                    <span class="nav-ai-badge">AI</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+
+            <!-- UPGRADE -->
+            <div class="upgrade-card">
+
+                <div class="upgrade-glow"></div>
+
+                <div class="upgrade-icon">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+
+                <strong>Unlock Veltrix Pro</strong>
+
+                <p>
+                    Get advanced analytics, automation and unlimited workspaces.
+                </p>
+
+                <a
+                    href="upgrade.html"
+                    class="upgrade-button"
+                    data-nav
+                >
+                    Upgrade now
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+
+            <!-- SETTINGS -->
+            <a
+                href="settings.html"
+                class="nav-item sidebar-settings-link"
+                data-nav
+                data-page-link="settings"
+            >
+                <span class="nav-icon">
+                    <i class="fa-solid fa-gear"></i>
+                </span>
+
+                <span class="nav-label">Settings</span>
+            </a>
+
+
+            <!-- USER -->
+            <div class="sidebar-user">
+
+                <button
+                    type="button"
+                    class="sidebar-user-button"
+                    data-profile-menu-toggle
+                >
+
+                    <span class="user-avatar">
+                        <span>A</span>
+                        <span class="user-online"></span>
+                    </span>
+
+                    <span class="user-details">
+                        <strong>Arwa</strong>
+                        <small>Administrator</small>
+                    </span>
+
+                    <i class="fa-solid fa-ellipsis"></i>
+
+                </button>
+
+
+                <div
+                    class="profile-mini-menu dropdown-menu"
+                    data-profile-menu
+                >
+
+                    <a
+                        href="profile.html"
+                        data-nav
+                    >
+                        <i class="fa-solid fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+
+                    <a
+                        href="settings.html"
+                        data-nav
+                    >
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <div class="menu-divider"></div>
+
+                    <button
+                        type="button"
+                        data-action="logout"
+                    >
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Log out</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN AREA
+    ====================================================== -->
+    <main class="main-area">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    data-sidebar-open
+                    aria-label="Open menu"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-collapse-button"
+                    data-sidebar-collapse
+                    aria-label="Collapse sidebar"
+                >
+                    <i class="fa-solid fa-sidebar"></i>
+                </button>
+
+
+                <div class="breadcrumb">
+
+                    <a href="../index.html" data-nav>
+                        Veltrix
+                    </a>
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                    <span>Orders</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-center">
+
+                <button
+                    type="button"
+                    class="global-search-trigger"
+                    data-search-open
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <span>Search anything...</span>
+
+                    <kbd>⌘ K</kbd>
+
+                </button>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <!-- QUICK CREATE -->
+                <button
+                    type="button"
+                    class="topbar-action quick-create-trigger"
+                    data-quick-create-open
+                    aria-label="Quick create"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="topbar-action-label">Create</span>
+                </button>
+
+
+                <!-- LANGUAGE -->
+                <div class="topbar-dropdown language-dropdown">
+
+                    <button
+                        type="button"
+                        class="topbar-action language-trigger"
+                        data-language-toggle
+                        aria-label="Language"
+                    >
+                        <i class="fa-solid fa-globe"></i>
+                        <span data-current-language-label>EN</span>
+                        <i class="fa-solid fa-chevron-down tiny-chevron"></i>
+                    </button>
+
+
+                    <div
+                        class="language-menu dropdown-menu"
+                        data-language-menu
+                    >
+
+                        <!-- 21 LANGUAGES -->
+
+                        <button
+                            type="button"
+                            class="language-option active"
+                            data-language="en"
+                        >
+                            <span>English</span>
+                            <small>EN</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="fr"
+                        >
+                            <span>Français</span>
+                            <small>FR</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="es"
+                        >
+                            <span>Español</span>
+                            <small>ES</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="it"
+                        >
+                            <span>Italiano</span>
+                            <small>IT</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="de"
+                        >
+                            <span>Deutsch</span>
+                            <small>DE</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="pt"
+                        >
+                            <span>Português</span>
+                            <small>PT</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="nl"
+                        >
+                            <span>Nederlands</span>
+                            <small>NL</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="ru"
+                        >
+                            <span>Русский</span>
+                            <small>RU</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="tr"
+                        >
+                            <span>Türkçe</span>
+                            <small>TR</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="ar"
+                        >
+                            <span>العربية</span>
+                            <small>AR</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="zh"
+                        >
+                            <span>中文</span>
+                            <small>ZH</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="ja"
+                        >
+                            <span>日本語</span>
+                            <small>JA</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="ko"
+                        >
+                            <span>한국어</span>
+                            <small>KO</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="hi"
+                        >
+                            <span>हिन्दी</span>
+                            <small>HI</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="id"
+                        >
+                            <span>Bahasa Indonesia</span>
+                            <small>ID</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="vi"
+                        >
+                            <span>Tiếng Việt</span>
+                            <small>VI</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="pl"
+                        >
+                            <span>Polski</span>
+                            <small>PL</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="sv"
+                        >
+                            <span>Svenska</span>
+                            <small>SV</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="el"
+                        >
+                            <span>Ελληνικά</span>
+                            <small>EL</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="cs"
+                        >
+                            <span>Čeština</span>
+                            <small>CS</small>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="language-option"
+                            data-language="da"
+                        >
+                            <span>Dansk</span>
+                            <small>DA</small>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+                <div class="topbar-dropdown">
+
+                    <button
+                        type="button"
+                        class="topbar-action notification-trigger"
+                        data-notification-toggle
+                        aria-label="Notifications"
+                    >
+
+                        <i class="fa-solid fa-bell"></i>
+
+                        <span
+                            class="notification-dot"
+                            data-notification-dot
+                        ></span>
+
+                    </button>
+
+
+                    <div
+                        class="notification-dropdown dropdown-menu"
+                        data-notification-menu
+                    >
+
+                        <div class="notification-header">
+
+                            <div>
+                                <strong>Notifications</strong>
+                                <span>5 new</span>
+                            </div>
+
+                            <button
+                                type="button"
+                                data-action="mark-notifications-read"
+                            >
+                                Mark all read
+                            </button>
+
+                        </div>
+
+
+                        <div class="notification-list">
+
+                            <button
+                                type="button"
+                                class="notification-item unread"
+                            >
+                                <span class="notification-item-icon order">
+                                    <i class="fa-solid fa-bag-shopping"></i>
+                                </span>
+
+                                <span class="notification-item-content">
+                                    <strong>New order received</strong>
+                                    <small>Order #ORD-10482 · 2 min ago</small>
+                                </span>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="notification-item unread"
+                            >
+                                <span class="notification-item-icon payment">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </span>
+
+                                <span class="notification-item-content">
+                                    <strong>Payment confirmed</strong>
+                                    <small>Order #ORD-10479 · 8 min ago</small>
+                                </span>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="notification-item"
+                            >
+                                <span class="notification-item-icon shipping">
+                                    <i class="fa-solid fa-truck"></i>
+                                </span>
+
+                                <span class="notification-item-content">
+                                    <strong>Shipment dispatched</strong>
+                                    <small>Order #ORD-10471 · 22 min ago</small>
+                                </span>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="notification-item"
+                            >
+                                <span class="notification-item-icon warning">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </span>
+
+                                <span class="notification-item-content">
+                                    <strong>Delivery delayed</strong>
+                                    <small>Order #ORD-10466 · 1 hour ago</small>
+                                </span>
+                            </button>
+
+                        </div>
+
+
+                        <a
+                            href="notifications.html"
+                            class="notification-footer"
+                            data-nav
+                        >
+                            View all notifications
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- THEME -->
+                <button
+                    type="button"
+                    class="topbar-action theme-toggle"
+                    data-theme-toggle
+                    aria-label="Toggle theme"
+                >
+                    <i class="fa-solid fa-sun theme-icon-light"></i>
+                    <i class="fa-solid fa-moon theme-icon-dark"></i>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+        <div class="page-content orders-content">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
+            <section class="page-header orders-page-header">
+
+                <div class="page-header-main">
+
+                    <div class="page-title-icon orders-title-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+
+                    <div>
+
+                        <div class="page-eyebrow">
+                            <span class="live-indicator"></span>
+                            LIVE ORDER CENTER
+                        </div>
+
+                        <h1>Order Command Center</h1>
+
+                        <p>
+                            Monitor, manage and fulfill every order from one powerful workspace.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="page-header-actions">
+
+                    <button
+                        type="button"
+                        class="button button-secondary"
+                        data-action="export-orders"
+                    >
+                        <i class="fa-solid fa-file-export"></i>
+                        <span>Export</span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="button button-secondary"
+                        data-action="print-orders"
+                    >
+                        <i class="fa-solid fa-print"></i>
+                        <span>Print</span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="button button-primary"
+                        data-action="create-order"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Create order</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 COMMAND STRIP
+            ================================================== -->
+            <section class="orders-command-strip">
+
+                <div class="command-strip-status">
+
+                    <span class="command-live-dot"></span>
+
+                    <div>
+                        <strong>Order operations are live</strong>
+                        <small>Last synchronized just now</small>
+                    </div>
+
+                </div>
+
+
+                <div class="command-strip-metrics">
+
+                    <div class="command-metric">
+                        <span>Today</span>
+                        <strong>128 orders</strong>
+                    </div>
+
+                    <div class="command-metric">
+                        <span>Revenue</span>
+                        <strong>$18,942</strong>
+                    </div>
+
+                    <div class="command-metric positive">
+                        <span>Growth</span>
+                        <strong>+18.4%</strong>
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="command-refresh"
+                    data-action="refresh-orders"
+                    title="Refresh orders"
+                >
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 STATUS RAIL
+            ================================================== -->
+            <section class="order-status-rail">
+
+                <button
+                    type="button"
+                    class="status-rail-item active"
+                    data-order-status-filter="all"
+                >
+
+                    <span class="status-rail-icon all">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>All orders</strong>
+                        <small>1,284 total</small>
+                    </span>
+
+                    <span class="status-rail-count">
+                        1,284
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-rail-item"
+                    data-order-status-filter="pending"
+                >
+
+                    <span class="status-rail-icon pending">
+                        <i class="fa-regular fa-clock"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>Pending</strong>
+                        <small>Needs review</small>
+                    </span>
+
+                    <span class="status-rail-count warning">
+                        24
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-rail-item"
+                    data-order-status-filter="processing"
+                >
+
+                    <span class="status-rail-icon processing">
+                        <i class="fa-solid fa-gear"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>Processing</strong>
+                        <small>Being prepared</small>
+                    </span>
+
+                    <span class="status-rail-count">
+                        46
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-rail-item"
+                    data-order-status-filter="shipped"
+                >
+
+                    <span class="status-rail-icon shipped">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>Shipped</strong>
+                        <small>On the way</small>
+                    </span>
+
+                    <span class="status-rail-count">
+                        83
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-rail-item"
+                    data-order-status-filter="delivered"
+                >
+
+                    <span class="status-rail-icon delivered">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>Delivered</strong>
+                        <small>Completed</small>
+                    </span>
+
+                    <span class="status-rail-count success">
+                        1,086
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="status-rail-item"
+                    data-order-status-filter="cancelled"
+                >
+
+                    <span class="status-rail-icon cancelled">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </span>
+
+                    <span class="status-rail-content">
+                        <strong>Cancelled</strong>
+                        <small>Closed orders</small>
+                    </span>
+
+                    <span class="status-rail-count danger">
+                        45
+                    </span>
+
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 MAIN COMMAND GRID
+            ================================================== -->
+            <section class="orders-command-grid">
+
+
+                <!-- =================================================
+                     LIVE ORDER FEED
+                ================================================== -->
+                <div class="glass-card live-orders-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon live">
+                                <i class="fa-solid fa-signal"></i>
+                            </div>
+
+                            <div>
+                                <h2>Live Orders Feed</h2>
+                                <p>Real-time activity from your store</p>
+                            </div>
+
+                        </div>
+
+
+                        <span class="live-status-pill">
+                            <span></span>
+                            Live
+                        </span>
+
+                    </div>
+
+
+                    <div class="live-feed-list">
+
+                        <div
+                            class="live-order-item"
+                            data-order-id="ORD-10482"
+                        >
+
+                            <div class="live-order-avatar">
+                                <span>SM</span>
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+
+                            <div class="live-order-main">
+
+                                <div class="live-order-top">
+                                    <strong>Sarah Mitchell</strong>
+                                    <span>2 min ago</span>
+                                </div>
+
+                                <p>
+                                    placed an order for
+                                    <strong>3 products</strong>
+                                </p>
+
+                                <div class="live-order-bottom">
+
+                                    <span class="order-reference">
+                                        #ORD-10482
+                                    </span>
+
+                                    <span class="order-live-price">
+                                        $284.00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="order-status-badge pending">
+                                Pending
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="live-order-item"
+                            data-order-id="ORD-10481"
+                        >
+
+                            <div class="live-order-avatar purple">
+                                <span>DL</span>
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+
+                            <div class="live-order-main">
+
+                                <div class="live-order-top">
+                                    <strong>Daniel Lee</strong>
+                                    <span>5 min ago</span>
+                                </div>
+
+                                <p>
+                                    payment confirmed for
+                                    <strong>Order #10481</strong>
+                                </p>
+
+                                <div class="live-order-bottom">
+
+                                    <span class="order-reference">
+                                        #ORD-10481
+                                    </span>
+
+                                    <span class="order-live-price">
+                                        $129.90
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="order-status-badge processing">
+                                Processing
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="live-order-item"
+                            data-order-id="ORD-10480"
+                        >
+
+                            <div class="live-order-avatar orange">
+                                <span>EM</span>
+                                <i class="fa-solid fa-truck"></i>
+                            </div>
+
+                            <div class="live-order-main">
+
+                                <div class="live-order-top">
+                                    <strong>Emma Wilson</strong>
+                                    <span>9 min ago</span>
+                                </div>
+
+                                <p>
+                                    shipment was marked
+                                    <strong>ready for pickup</strong>
+                                </p>
+
+                                <div class="live-order-bottom">
+
+                                    <span class="order-reference">
+                                        #ORD-10480
+                                    </span>
+
+                                    <span class="order-live-price">
+                                        $459.00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="order-status-badge shipped">
+                                Shipped
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="live-order-item"
+                            data-order-id="ORD-10479"
+                        >
+
+                            <div class="live-order-avatar green">
+                                <span>AK</span>
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+
+                            <div class="live-order-main">
+
+                                <div class="live-order-top">
+                                    <strong>Adam King</strong>
+                                    <span>14 min ago</span>
+                                </div>
+
+                                <p>
+                                    order was successfully
+                                    <strong>delivered</strong>
+                                </p>
+
+                                <div class="live-order-bottom">
+
+                                    <span class="order-reference">
+                                        #ORD-10479
+                                    </span>
+
+                                    <span class="order-live-price">
+                                        $89.00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="order-status-badge delivered">
+                                Delivered
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="live-order-item"
+                            data-order-id="ORD-10478"
+                        >
+
+                            <div class="live-order-avatar pink">
+                                <span>NM</span>
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </div>
+
+                            <div class="live-order-main">
+
+                                <div class="live-order-top">
+                                    <strong>Nora Martin</strong>
+                                    <span>21 min ago</span>
+                                </div>
+
+                                <p>
+                                    requested a
+                                    <strong>refund</strong>
+                                </p>
+
+                                <div class="live-order-bottom">
+
+                                    <span class="order-reference">
+                                        #ORD-10478
+                                    </span>
+
+                                    <span class="order-live-price">
+                                        $215.00
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <span class="order-status-badge refund">
+                                Refund
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="card-footer-action"
+                        data-action="view-live-orders"
+                    >
+                        View live activity
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     ORDER MINI ANALYTICS
+                ================================================== -->
+                <div class="glass-card order-performance-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon purple">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </div>
+
+                            <div>
+                                <h2>Order Performance</h2>
+                                <p>Today's order velocity</p>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="card-more-button"
+                            data-action="order-performance-menu"
+                        >
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="performance-highlight">
+
+                        <div>
+
+                            <span class="performance-label">
+                                Conversion rate
+                            </span>
+
+                            <strong>
+                                7.84%
+                            </strong>
+
+                            <span class="performance-change positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                1.28%
+                            </span>
+
+                        </div>
+
+
+                        <div class="performance-ring">
+                            <svg
+                                viewBox="0 0 120 120"
+                                aria-hidden="true"
+                            >
+
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="ring-background"
+                                ></circle>
+
+                                <circle
+                                    cx="60"
+                                    cy="60"
+                                    r="48"
+                                    class="ring-progress"
+                                    stroke-dasharray="301.59"
+                                    stroke-dashoffset="77"
+                                ></circle>
+
+                            </svg>
+
+                            <span>74%</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="performance-chart-wrapper">
+
+                        <canvas
+                            id="ordersVelocityChart"
+                            height="170"
+                        ></canvas>
+
+                    </div>
+
+
+                    <div class="performance-footer">
+
+                        <div>
+                            <span>Avg. order value</span>
+                            <strong>$147.62</strong>
+                        </div>
+
+                        <div>
+                            <span>Avg. processing</span>
+                            <strong>2h 18m</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 ALERT STRIP
+            ================================================== -->
+            <section class="order-alert-strip">
+
+                <div class="order-alert-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <div class="order-alert-content">
+
+                    <strong>
+                        7 orders need your attention
+                    </strong>
+
+                    <span>
+                        4 pending payments · 2 delayed shipments · 1 address issue
+                    </span>
+
+                </div>
+
+                <button
+                    type="button"
+                    data-action="review-alerts"
+                >
+                    Review issues
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
+                 SEARCH + FILTER BAR
+            ================================================== -->
+            <section class="orders-filter-panel glass-card">
+
+                <div class="orders-filter-main">
+
+                    <div class="orders-search-box">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <input
+                            type="search"
+                            id="orderSearch"
+                            data-table-search
+                            placeholder="Search order, customer, email or product..."
+                            autocomplete="off"
+                        >
+
+                        <kbd>/</kbd>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-filter-toggle
+                    >
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Filters</span>
+                        <span class="filter-count">3</span>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-action="date-filter"
+                    >
+                        <i class="fa-regular fa-calendar"></i>
+                        <span>Last 30 days</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-action="payment-filter"
+                    >
+                        <i class="fa-regular fa-credit-card"></i>
+                        <span>Payment</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="orders-filter-actions">
+
+                    <button
+                        type="button"
+                        class="icon-filter-button"
+                        data-action="save-filter"
+                        title="Save filter"
+                    >
+                        <i class="fa-regular fa-bookmark"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-filter-button"
+                        data-action="reset-filters"
+                        title="Reset filters"
+                    >
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- ADVANCED FILTERS -->
+                <div
+                    class="advanced-filter-area"
+                    data-filter-area
+                >
+
+                    <div class="advanced-filter-grid">
+
+                        <div class="filter-field">
+
+                            <label>Status</label>
+
+                            <select
+                                data-order-filter="status"
+                                class="custom-select"
+                            >
+                                <option value="all">All statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="filter-field">
+
+                            <label>Payment method</label>
+
+                            <select
+                                data-order-filter="payment"
+                                class="custom-select"
+                            >
+                                <option value="all">All payments</option>
+                                <option value="card">Card</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="bank">Bank transfer</option>
+                                <option value="cod">Cash on delivery</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="filter-field">
+
+                            <label>Minimum value</label>
+
+                            <input
+                                type="number"
+                                data-order-filter="min"
+                                placeholder="$0"
+                            >
+
+                        </div>
+
+
+                        <div class="filter-field">
+
+                            <label>Maximum value</label>
+
+                            <input
+                                type="number"
+                                data-order-filter="max"
+                                placeholder="$10,000"
+                            >
+
+                        </div>
+
+
+                        <div class="filter-field">
+
+                            <label>Fulfillment</label>
+
+                            <select
+                                data-order-filter="fulfillment"
+                                class="custom-select"
+                            >
+                                <option value="all">All fulfillment</option>
+                                <option value="warehouse">Warehouse</option>
+                                <option value="dropship">Dropship</option>
+                                <option value="pickup">Store pickup</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="filter-field filter-field-action">
+
+                            <button
+                                type="button"
+                                class="button button-primary"
+                                data-action="apply-order-filters"
+                            >
+                                Apply filters
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ORDERS WORKSPACE
+            ================================================== -->
+            <section class="orders-workspace glass-card">
+
+                <!-- TABLE HEADER -->
+                <div class="orders-workspace-header">
+
+                    <div class="workspace-title-area">
+
+                        <div>
+                            <h2>Orders</h2>
+
+                            <p>
+                                Showing
+                                <strong data-orders-visible-count>24</strong>
+                                of 1,284 orders
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="workspace-tools">
+
+                        <div class="view-toggle">
+
+                            <button
+                                type="button"
+                                class="view-toggle-button active"
+                                data-orders-view="table"
+                                title="Table view"
+                            >
+                                <i class="fa-solid fa-table-list"></i>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="view-toggle-button"
+                                data-orders-view="board"
+                                title="Board view"
+                            >
+                                <i class="fa-solid fa-table-columns"></i>
+                            </button>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="workspace-tool-button"
+                            data-action="column-settings"
+                        >
+                            <i class="fa-solid fa-table-columns"></i>
+                            Columns
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ORDERS TABLE
+                ================================================== -->
+                <div class="orders-table-wrapper">
+
+                    <table
+                        class="orders-table"
+                        id="ordersTable"
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="checkbox-column">
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-select-all-orders
+                                        >
+                                        <span></span>
+                                    </label>
+                                </th>
+
+                                <th
+                                    data-sort="order"
+                                    class="sortable"
+                                >
+                                    Order
+                                    <i class="fa-solid fa-sort"></i>
+                                </th>
+
+                                <th>Customer</th>
+
+                                <th>Items</th>
+
+                                <th
+                                    data-sort="date"
+                                    class="sortable"
+                                >
+                                    Date
+                                    <i class="fa-solid fa-sort"></i>
+                                </th>
+
+                                <th
+                                    data-sort="total"
+                                    class="sortable"
+                                >
+                                    Total
+                                    <i class="fa-solid fa-sort"></i>
+                                </th>
+
+                                <th>Payment</th>
+
+                                <th>Status</th>
+
+                                <th class="action-column">
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="ordersTableBody">
+
+
+                            <!-- ORDER 10482 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10482"
+                                data-status="pending"
+                                data-payment="card"
+                                data-total="284"
+                                data-customer="Sarah Mitchell"
+                                data-email="sarah.mitchell@example.com"
+                                data-product="Veltrix Pro Keyboard"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10482"
+                                    >
+                                        #ORD-10482
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar">
+                                            SM
+                                        </span>
+
+                                        <div>
+                                            <strong>Sarah Mitchell</strong>
+                                            <small>sarah.mitchell@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        3 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Sep 01, 2026</strong>
+                                        <small>19:02</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $284.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge pending">
+                                        <span></span>
+                                        Pending
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10482"
+                                        title="View order"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                        title="More"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10481 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10481"
+                                data-status="processing"
+                                data-payment="paypal"
+                                data-total="129.90"
+                                data-customer="Daniel Lee"
+                                data-email="daniel.lee@example.com"
+                                data-product="Wireless Studio Headphones"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10481"
+                                    >
+                                        #ORD-10481
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-brands fa-instagram"></i>
+                                        Instagram
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar purple">
+                                            DL
+                                        </span>
+
+                                        <div>
+                                            <strong>Daniel Lee</strong>
+                                            <small>daniel.lee@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        1 item
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Sep 01, 2026</strong>
+                                        <small>18:56</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $129.90
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-brands fa-paypal"></i>
+                                        PayPal
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge processing">
+                                        <span></span>
+                                        Processing
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10481"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10480 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10480"
+                                data-status="shipped"
+                                data-payment="card"
+                                data-total="459"
+                                data-customer="Emma Wilson"
+                                data-email="emma.wilson@example.com"
+                                data-product="Veltrix Smart Display"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10480"
+                                    >
+                                        #ORD-10480
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar orange">
+                                            EW
+                                        </span>
+
+                                        <div>
+                                            <strong>Emma Wilson</strong>
+                                            <small>emma.wilson@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        2 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 31, 2026</strong>
+                                        <small>23:44</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $459.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge shipped">
+                                        <span></span>
+                                        Shipped
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10480"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10479 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10479"
+                                data-status="delivered"
+                                data-payment="card"
+                                data-total="89"
+                                data-customer="Adam King"
+                                data-email="adam.king@example.com"
+                                data-product="Minimal Desk Lamp"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10479"
+                                    >
+                                        #ORD-10479
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-mobile-screen"></i>
+                                        Mobile
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar green">
+                                            AK
+                                        </span>
+
+                                        <div>
+                                            <strong>Adam King</strong>
+                                            <small>adam.king@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        1 item
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 31, 2026</strong>
+                                        <small>21:15</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $89.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge delivered">
+                                        <span></span>
+                                        Delivered
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10479"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10478 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10478"
+                                data-status="pending"
+                                data-payment="cod"
+                                data-total="215"
+                                data-customer="Nora Martin"
+                                data-email="nora.martin@example.com"
+                                data-product="Veltrix Travel Pack"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10478"
+                                    >
+                                        #ORD-10478
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar pink">
+                                            NM
+                                        </span>
+
+                                        <div>
+                                            <strong>Nora Martin</strong>
+                                            <small>nora.martin@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        4 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 31, 2026</strong>
+                                        <small>19:40</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $215.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method pending-payment">
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        COD
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge pending">
+                                        <span></span>
+                                        Pending
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10478"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10477 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10477"
+                                data-status="delivered"
+                                data-payment="paypal"
+                                data-total="342"
+                                data-customer="Michael Carter"
+                                data-email="michael.carter@example.com"
+                                data-product="Creator Bundle"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10477"
+                                    >
+                                        #ORD-10477
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-brands fa-facebook"></i>
+                                        Facebook
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar blue">
+                                            MC
+                                        </span>
+
+                                        <div>
+                                            <strong>Michael Carter</strong>
+                                            <small>michael.carter@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        5 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 31, 2026</strong>
+                                        <small>16:22</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $342.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-brands fa-paypal"></i>
+                                        PayPal
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge delivered">
+                                        <span></span>
+                                        Delivered
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10477"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10476 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10476"
+                                data-status="processing"
+                                data-payment="card"
+                                data-total="578"
+                                data-customer="Olivia Brown"
+                                data-email="olivia.brown@example.com"
+                                data-product="Studio Creator Kit"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10476"
+                                    >
+                                        #ORD-10476
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar yellow">
+                                            OB
+                                        </span>
+
+                                        <div>
+                                            <strong>Olivia Brown</strong>
+                                            <small>olivia.brown@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        2 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 31, 2026</strong>
+                                        <small>14:38</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $578.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge processing">
+                                        <span></span>
+                                        Processing
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10476"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10475 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10475"
+                                data-status="shipped"
+                                data-payment="card"
+                                data-total="194"
+                                data-customer="James Anderson"
+                                data-email="james.anderson@example.com"
+                                data-product="Travel Essentials"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10475"
+                                    >
+                                        #ORD-10475
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar red">
+                                            JA
+                                        </span>
+
+                                        <div>
+                                            <strong>James Anderson</strong>
+                                            <small>james.anderson@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        3 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 30, 2026</strong>
+                                        <small>20:15</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $194.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Card
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge shipped">
+                                        <span></span>
+                                        Shipped
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10475"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10474 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10474"
+                                data-status="cancelled"
+                                data-payment="card"
+                                data-total="76"
+                                data-customer="Sophia Davis"
+                                data-email="sophia.davis@example.com"
+                                data-product="Desk Organizer"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10474"
+                                    >
+                                        #ORD-10474
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-globe"></i>
+                                        Online
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar violet">
+                                            SD
+                                        </span>
+
+                                        <div>
+                                            <strong>Sophia Davis</strong>
+                                            <small>sophia.davis@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        1 item
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 30, 2026</strong>
+                                        <small>18:02</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $76.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method refunded">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        Refunded
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge cancelled">
+                                        <span></span>
+                                        Cancelled
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10474"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- ORDER 10473 -->
+                            <tr
+                                class="order-row"
+                                data-order
+                                data-order-id="ORD-10473"
+                                data-status="delivered"
+                                data-payment="bank"
+                                data-total="920"
+                                data-customer="William Scott"
+                                data-email="william.scott@example.com"
+                                data-product="Business Pro Bundle"
+                            >
+
+                                <td>
+                                    <label class="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            data-order-checkbox
+                                        >
+                                        <span></span>
+                                    </label>
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="order-number-button"
+                                        data-order-open="ORD-10473"
+                                    >
+                                        #ORD-10473
+                                    </button>
+
+                                    <span class="order-channel">
+                                        <i class="fa-solid fa-building"></i>
+                                        B2B
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="table-customer">
+
+                                        <span class="customer-table-avatar cyan">
+                                            WS
+                                        </span>
+
+                                        <div>
+                                            <strong>William Scott</strong>
+                                            <small>william.scott@example.com</small>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+                                    <span class="item-count">
+                                        8 items
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <div class="date-cell">
+                                        <strong>Aug 30, 2026</strong>
+                                        <small>15:48</small>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <strong class="order-total">
+                                        $920.00
+                                    </strong>
+                                </td>
+
+
+                                <td>
+
+                                    <span class="payment-method paid">
+                                        <i class="fa-solid fa-building-columns"></i>
+                                        Bank
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="order-status-badge delivered">
+                                        <span></span>
+                                        Delivered
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-order-open="ORD-10473"
+                                    >
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="row-action-button"
+                                        data-action="order-more"
+                                    >
+                                        <i class="fa-solid fa-ellipsis"></i>
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- TABLE FOOTER -->
+                <div class="orders-table-footer">
+
+                    <div class="bulk-actions">
+
+                        <span
+                            class="selected-count"
+                            data-selected-count
+                        >
+                            0 selected
+                        </span>
+
+                        <button
+                            type="button"
+                            class="bulk-action-button"
+                            data-action="bulk-status"
+                            disabled
+                        >
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            Change status
+                        </button>
+
+                        <button
+                            type="button"
+                            class="bulk-action-button"
+                            data-action="bulk-export"
+                            disabled
+                        >
+                            <i class="fa-solid fa-file-export"></i>
+                            Export
+                        </button>
+
+                    </div>
+
+
+                    <div class="pagination">
+
+                        <span class="pagination-info">
+                            1–10 of 1,284
+                        </span>
+
+                        <button
+                            type="button"
+                            class="pagination-button"
+                            disabled
+                        >
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="pagination-button active"
+                        >
+                            1
+                        </button>
+
+                        <button
+                            type="button"
+                            class="pagination-button"
+                        >
+                            2
+                        </button>
+
+                        <button
+                            type="button"
+                            class="pagination-button"
+                        >
+                            3
+                        </button>
+
+                        <span class="pagination-dots">...</span>
+
+                        <button
+                            type="button"
+                            class="pagination-button"
+                        >
+                            129
+                        </button>
+
+                        <button
+                            type="button"
+                            class="pagination-button"
+                        >
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 LOWER INSIGHT GRID
+            ================================================== -->
+            <section class="orders-lower-grid">
+
+
+                <!-- =================================================
+                     SHIPPING & FULFILLMENT
+                ================================================== -->
+                <div class="glass-card fulfillment-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon orange">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+
+                            <div>
+                                <h2>Shipping & Fulfillment</h2>
+                                <p>Today's delivery pipeline</p>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="card-more-button"
+                            data-action="shipping-menu"
+                        >
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="fulfillment-progress">
+
+                        <div class="fulfillment-progress-header">
+
+                            <span>
+                                Fulfillment completion
+                            </span>
+
+                            <strong>
+                                82%
+                            </strong>
+
+                        </div>
+
+
+                        <div class="large-progress">
+                            <span style="width: 82%;"></span>
+                        </div>
+
+
+                        <div class="fulfillment-meta">
+
+                            <span>
+                                <i class="fa-solid fa-circle"></i>
+                                1,086 delivered
+                            </span>
+
+                            <span>
+                                <i class="fa-solid fa-circle"></i>
+                                83 shipped
+                            </span>
+
+                            <span>
+                                <i class="fa-solid fa-circle"></i>
+                                46 processing
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="carrier-list">
+
+                        <div class="carrier-item">
+
+                            <div class="carrier-brand">
+                                <span class="carrier-logo">
+                                    <i class="fa-solid fa-box"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Standard Delivery</strong>
+                                    <small>Regional carrier</small>
+                                </div>
+                            </div>
+
+                            <strong>54</strong>
+
+                        </div>
+
+
+                        <div class="carrier-item">
+
+                            <div class="carrier-brand">
+                                <span class="carrier-logo purple">
+                                    <i class="fa-solid fa-plane"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Express Delivery</strong>
+                                    <small>Priority shipping</small>
+                                </div>
+                            </div>
+
+                            <strong>21</strong>
+
+                        </div>
+
+
+                        <div class="carrier-item">
+
+                            <div class="carrier-brand">
+                                <span class="carrier-logo green">
+                                    <i class="fa-solid fa-store"></i>
+                                </span>
+
+                                <div>
+                                    <strong>Store Pickup</strong>
+                                    <small>Ready for collection</small>
+                                </div>
+                            </div>
+
+                            <strong>8</strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PAYMENT OVERVIEW
+                ================================================== -->
+                <div class="glass-card payment-overview-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon green">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+
+                            <div>
+                                <h2>Payment Overview</h2>
+                                <p>Transaction health</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-main-stat">
+
+                        <div>
+                            <span>Total collected</span>
+
+                            <strong>
+                                $18,942.00
+                            </strong>
+
+                            <small class="positive">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                12.8% from yesterday
+                            </small>
+                        </div>
+
+
+                        <div class="payment-chart-mini">
+                            <canvas
+                                id="paymentMethodChart"
+                                width="150"
+                                height="150"
+                            ></canvas>
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-method-list">
+
+                        <div class="payment-method-row">
+
+                            <span class="payment-method-name">
+                                <span class="payment-dot card"></span>
+                                Cards
+                            </span>
+
+                            <strong>
+                                $10,421
+                            </strong>
+
+                            <span>
+                                55%
+                            </span>
+
+                        </div>
+
+
+                        <div class="payment-method-row">
+
+                            <span class="payment-method-name">
+                                <span class="payment-dot paypal"></span>
+                                PayPal
+                            </span>
+
+                            <strong>
+                                $4,835
+                            </strong>
+
+                            <span>
+                                26%
+                            </span>
+
+                        </div>
+
+
+                        <div class="payment-method-row">
+
+                            <span class="payment-method-name">
+                                <span class="payment-dot bank"></span>
+                                Bank
+                            </span>
+
+                            <strong>
+                                $2,384
+                            </strong>
+
+                            <span>
+                                13%
+                            </span>
+
+                        </div>
+
+
+                        <div class="payment-method-row">
+
+                            <span class="payment-method-name">
+                                <span class="payment-dot cash"></span>
+                                COD
+                            </span>
+
+                            <strong>
+                                $1,302
+                            </strong>
+
+                            <span>
+                                6%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ORDER NOTES
+                ================================================== -->
+                <div class="glass-card order-notes-card">
+
+                    <div class="card-header">
+
+                        <div class="card-heading">
+
+                            <div class="card-icon pink">
+                                <i class="fa-solid fa-note-sticky"></i>
+                            </div>
+
+                            <div>
+                                <h2>Attention Queue</h2>
+                                <p>Orders requiring action</p>
+                            </div>
+
+                        </div>
+
+                        <span class="queue-count">
+                            7
+                        </span>
+
+                    </div>
+
+
+                    <div class="attention-list">
+
+                        <button
+                            type="button"
+                            class="attention-item"
+                            data-order-open="ORD-10462"
+                        >
+
+                            <span class="attention-icon danger">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+
+                            <span class="attention-content">
+
+                                <strong>
+                                    Address verification
+                                </strong>
+
+                                <small>
+                                    #ORD-10462 · 12 minutes ago
+                                </small>
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="attention-item"
+                            data-order-open="ORD-10458"
+                        >
+
+                            <span class="attention-icon warning">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </span>
+
+                            <span class="attention-content">
+
+                                <strong>
+                                    Payment failed
+                                </strong>
+
+                                <small>
+                                    #ORD-10458 · 28 minutes ago
+                                </small>
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="attention-item"
+                            data-order-open="ORD-10451"
+                        >
+
+                            <span class="attention-icon orange">
+                                <i class="fa-solid fa-truck"></i>
+                            </span>
+
+                            <span class="attention-content">
+
+                                <strong>
+                                    Shipment delayed
+                                </strong>
+
+                                <small>
+                                    #ORD-10451 · 43 minutes ago
+                                </small>
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="attention-item"
+                            data-order-open="ORD-10442"
+                        >
+
+                            <span class="attention-icon purple">
+                                <i class="fa-solid fa-box-open"></i>
+                            </span>
+
+                            <span class="attention-content">
+
+                                <strong>
+                                    Stock unavailable
+                                </strong>
+
+                                <small>
+                                    #ORD-10442 · 1 hour ago
+                                </small>
+
+                            </span>
+
+                            <i class="fa-solid fa-chevron-right"></i>
+
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="card-footer-action"
+                        data-action="view-attention-queue"
+                    >
+                        Open attention queue
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BULK ACTION CTA
+            ================================================== -->
+            <section class="orders-bottom-cta">
+
+                <div class="orders-bottom-cta-content">
+
+                    <div class="cta-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div>
+
+                        <span>Automate your order workflow</span>
+
+                        <strong>
+                            Let Veltrix handle repetitive order operations.
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="orders-bottom-cta-actions">
+
+                    <button
+                        type="button"
+                        class="button button-secondary"
+                        data-action="automation-settings"
+                    >
+                        <i class="fa-solid fa-sliders"></i>
+                        Automation settings
+                    </button>
+
+                    <a
+                        href="upgrade.html"
+                        class="button button-primary"
+                        data-nav
+                    >
+                        Explore Pro
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================== -->
+            <footer class="app-footer">
+
+                <div class="footer-left">
+                    <span>
+                        © 2026 Veltrix
+                    </span>
+
+                    <span class="footer-separator">•</span>
+
+                    <span>
+                        Order Command Center
+                    </span>
+                </div>
+
+
+                <div class="footer-right">
+
+                    <a href="#" data-action="help">
+                        Help center
+                    </a>
+
+                    <a href="#" data-action="privacy">
+                        Privacy
+                    </a>
+
+                    <a href="#" data-action="status">
+                        System status
+                        <span class="status-online-dot"></span>
+                    </a>
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     ORDER DETAILS DRAWER
+========================================================== -->
+<div
+    class="drawer-overlay"
+    id="orderDrawerOverlay"
+    data-order-drawer-overlay
+></div>
+
+
+<aside
+    class="order-details-drawer"
+    id="orderDetailsDrawer"
+    data-order-drawer
+    aria-hidden="true"
+>
+
+    <!-- DRAWER HEADER -->
+    <div class="drawer-header">
+
+        <div>
+
+            <span class="drawer-eyebrow">
+                ORDER DETAILS
+            </span>
+
+            <h2 data-drawer-order-id>
+                #ORD-10482
+            </h2>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="drawer-close"
+            data-order-drawer-close
+            aria-label="Close order details"
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+    </div>
+
+
+    <!-- DRAWER STATUS -->
+    <div class="drawer-status-section">
+
+        <div class="drawer-status-header">
+
+            <span>
+                Current status
+            </span>
+
+            <span
+                class="order-status-badge pending"
+                data-drawer-status
+            >
+                <span></span>
+                Pending
+            </span>
+
+        </div>
+
+
+        <div class="status-change-buttons">
+
+            <button
+                type="button"
+                data-drawer-status-change="pending"
+            >
+                Pending
+            </button>
+
+            <button
+                type="button"
+                data-drawer-status-change="processing"
+            >
+                Processing
+            </button>
+
+            <button
+                type="button"
+                data-drawer-status-change="shipped"
+            >
+                Shipped
+            </button>
+
+            <button
+                type="button"
+                data-drawer-status-change="delivered"
+            >
+                Delivered
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMER -->
+    <div class="drawer-section">
+
+        <div class="drawer-section-heading">
+            <span>
+                Customer
+            </span>
+
+            <button
+                type="button"
+                data-action="open-customer"
+            >
+                View profile
+            </button>
+        </div>
+
+
+        <div class="drawer-customer">
+
+            <span
+                class="drawer-customer-avatar"
+                data-drawer-avatar
+            >
+                SM
+            </span>
+
+            <div>
+
+                <strong data-drawer-customer>
+                    Sarah Mitchell
+                </strong>
+
+                <span data-drawer-email>
+                    sarah.mitchell@example.com
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ORDER ITEMS -->
+    <div class="drawer-section">
+
+        <div class="drawer-section-heading">
+
+            <span>
+                Products
+            </span>
+
+            <span data-drawer-items-count>
+                3 items
+            </span>
+
+        </div>
+
+
+        <div class="drawer-products">
+
+            <div class="drawer-product">
+
+                <div class="drawer-product-image">
+                    <i class="fa-solid fa-keyboard"></i>
+                </div>
+
+                <div class="drawer-product-content">
+
+                    <strong>
+                        Veltrix Pro Keyboard
+                    </strong>
+
+                    <small>
+                        Black · Qty 1
+                    </small>
+
+                </div>
+
+                <strong>
+                    $149.00
+                </strong>
+
+            </div>
+
+
+            <div class="drawer-product">
+
+                <div class="drawer-product-image purple">
+                    <i class="fa-solid fa-headphones"></i>
+                </div>
+
+                <div class="drawer-product-content">
+
+                    <strong>
+                        Studio Headphones
+                    </strong>
+
+                    <small>
+                        Wireless · Qty 1
+                    </small>
+
+                </div>
+
+                <strong>
+                    $89.00
+                </strong>
+
+            </div>
+
+
+            <div class="drawer-product">
+
+                <div class="drawer-product-image orange">
+                    <i class="fa-solid fa-cable-car"></i>
+                </div>
+
+                <div class="drawer-product-content">
+
+                    <strong>
+                        USB-C Hub
+                    </strong>
+
+                    <small>
+                        8-port · Qty 1
+                    </small>
+
+                </div>
+
+                <strong>
+                    $46.00
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOTAL -->
+    <div class="drawer-total-card">
+
+        <div>
+            <span>Subtotal</span>
+            <strong>$284.00</strong>
+        </div>
+
+        <div>
+            <span>Shipping</span>
+            <strong>$0.00</strong>
+        </div>
+
+        <div>
+            <span>Tax</span>
+            <strong>$0.00</strong>
+        </div>
+
+        <div class="drawer-total-final">
+            <span>Total</span>
+            <strong>$284.00</strong>
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+    <div class="drawer-section">
+
+        <div class="drawer-section-heading">
+            <span>Payment</span>
+            <span class="payment-confirmed">
+                <i class="fa-solid fa-circle-check"></i>
+                Paid
+            </span>
+        </div>
+
+
+        <div class="drawer-payment">
+
+            <span class="drawer-payment-icon">
+                <i class="fa-regular fa-credit-card"></i>
+            </span>
+
+            <div>
+
+                <strong>
+                    Visa ending in 4242
+                </strong>
+
+                <small>
+                    Transaction ID: TXN-84291
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SHIPPING -->
+    <div class="drawer-section">
+
+        <div class="drawer-section-heading">
+            <span>Shipping</span>
+
+            <button
+                type="button"
+                data-action="edit-shipping"
+            >
+                Edit
+            </button>
+        </div>
+
+
+        <div class="shipping-address">
+
+            <i class="fa-solid fa-location-dot"></i>
+
+            <div>
+
+                <strong>
+                    Sarah Mitchell
+                </strong>
+
+                <span>
+                    42 Market Street<br>
+                    New York, NY 10001<br>
+                    United States
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TIMELINE -->
+    <div class="drawer-section">
+
+        <div class="drawer-section-heading">
+            <span>Order timeline</span>
+        </div>
+
+
+        <div class="order-timeline">
+
+            <div class="timeline-item completed">
+
+                <span class="timeline-dot">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Order placed
+                    </strong>
+
+                    <small>
+                        Sep 01 · 19:02
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item completed">
+
+                <span class="timeline-dot">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Payment confirmed
+                    </strong>
+
+                    <small>
+                        Sep 01 · 19:03
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item current">
+
+                <span class="timeline-dot">
+                    <i class="fa-solid fa-circle"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Waiting for processing
+                    </strong>
+
+                    <small>
+                        Current step
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot">
+                    <i class="fa-solid fa-circle"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Shipment
+                    </strong>
+
+                    <small>
+                        Waiting
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <span class="timeline-dot">
+                    <i class="fa-solid fa-circle"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Delivery
+                    </strong>
+
+                    <small>
+                        Waiting
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DRAWER ACTIONS -->
+    <div class="drawer-actions">
+
+        <button
+            type="button"
+            class="button button-secondary"
+            data-action="print-invoice"
+        >
+            <i class="fa-solid fa-print"></i>
+            Print invoice
+        </button>
+
+
+        <button
+            type="button"
+            class="button button-secondary"
+            data-action="download-invoice"
+        >
+            <i class="fa-solid fa-download"></i>
+            Download
+        </button>
+
+
+        <button
+            type="button"
+            class="button button-danger"
+            data-action="refund-order"
+        >
+            <i class="fa-solid fa-rotate-left"></i>
+            Refund
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     GLOBAL SEARCH MODAL
+========================================================== -->
+<div
+    class="modal-overlay"
+    data-modal-overlay
+    data-modal="search"
+>
+
+    <div
+        class="modal search-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="searchModalTitle"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    VELTRIX SEARCH
+                </span>
+
+                <h2 id="searchModalTitle">
+                    Search your workspace
+                </h2>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                data-modal-close
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="modal-search">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="search"
+                data-global-search-input
+                placeholder="Search orders, customers, products..."
+                autocomplete="off"
+            >
+
+            <kbd>ESC</kbd>
+
+        </div>
+
+
+        <div
+            class="global-search-results"
+            data-search-results
+        >
+
+            <div class="search-empty-state">
+
+                <span>
+                    <i class="fa-solid fa-sparkles"></i>
+                </span>
+
+                <strong>
+                    Start typing to search
+                </strong>
+
+                <p>
+                    Search across your entire Veltrix workspace.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     QUICK CREATE MODAL
+========================================================== -->
+<div
+    class="modal-overlay"
+    data-modal-overlay
+    data-modal="quick-create"
+>
+
+    <div
+        class="modal quick-create-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="modal-eyebrow">
+                    QUICK CREATE
+                </span>
+
+                <h2>
+                    What do you want to create?
+                </h2>
+
+            </div>
+
+            <button
+                type="button"
+                class="modal-close"
+                data-modal-close
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="quick-create-grid">
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-order"
+            >
+
+                <span class="quick-create-icon blue">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </span>
+
+                <strong>
+                    New order
+                </strong>
+
+                <small>
+                    Create a customer order
+                </small>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-customer"
+            >
+
+                <span class="quick-create-icon purple">
+                    <i class="fa-solid fa-user-plus"></i>
+                </span>
+
+                <strong>
+                    Customer
+                </strong>
+
+                <small>
+                    Add a new customer
+                </small>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-product"
+            >
+
+                <span class="quick-create-icon orange">
+                    <i class="fa-solid fa-box-open"></i>
+                </span>
+
+                <strong>
+                    Product
+                </strong>
+
+                <small>
+                    Add a product to catalog
+                </small>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-invoice"
+            >
+
+                <span class="quick-create-icon green">
+                    <i class="fa-solid fa-file-invoice"></i>
+                </span>
+
+                <strong>
+                    Invoice
+                </strong>
+
+                <small>
+                    Generate a new invoice
+                </small>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-message"
+            >
+
+                <span class="quick-create-icon pink">
+                    <i class="fa-solid fa-comment"></i>
+                </span>
+
+                <strong>
+                    Message
+                </strong>
+
+                <small>
+                    Start a conversation
+                </small>
+
+            </button>
+
+
+            <button
+                type="button"
+                class="quick-create-card"
+                data-action="create-report"
+            >
+
+                <span class="quick-create-icon cyan">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </span>
+
+                <strong>
+                    Report
+                </strong>
+
+                <small>
+                    Generate a business report
+                </small>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     UPGRADE MODAL
+========================================================== -->
+<div
+    class="modal-overlay"
+    data-modal-overlay
+    data-modal="upgrade"
+>
+
+    <div
+        class="modal upgrade-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="upgrade-modal-glow"></div>
+
+        <button
+            type="button"
+            class="modal-close"
+            data-modal-close
+        >
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+
+        <div class="upgrade-modal-icon">
+            <i class="fa-solid fa-crown"></i>
+        </div>
+
+
+        <span class="modal-eyebrow">
+            VELTRIX PRO
+        </span>
+
+
+        <h2>
+            Unlock the full command center.
+        </h2>
+
+
+        <p>
+            Automate workflows, unlock advanced analytics and manage unlimited
+            operations with Veltrix Pro.
+        </p>
+
+
+        <div class="upgrade-features">
+
+            <span>
+                <i class="fa-solid fa-check"></i>
+                Unlimited orders
+            </span>
+
+            <span>
+                <i class="fa-solid fa-check"></i>
+                Advanced automation
+            </span>
+
+            <span>
+                <i class="fa-solid fa-check"></i>
+                AI-powered insights
+            </span>
+
+            <span>
+                <i class="fa-solid fa-check"></i>
+                Priority support
+            </span>
+
+        </div>
+
+
+        <div class="upgrade-modal-actions">
+
+            <a
+                href="upgrade.html"
+                class="button button-primary"
+                data-nav
+            >
+                View plans
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <button
+                type="button"
+                class="button button-secondary"
+                data-modal-close
+            >
+                Maybe later
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CONFIRMATION MODAL
+========================================================== -->
+<div
+    class="modal-overlay"
+    data-modal-overlay
+    data-modal="confirmation"
+>
+
+    <div
+        class="modal confirmation-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="confirmation-icon warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <h2 data-confirmation-title>
+            Are you sure?
+        </h2>
+
+        <p data-confirmation-message>
+            This action cannot be undone.
+        </p>
+
+
+        <div class="confirmation-actions">
+
+            <button
+                type="button"
+                class="button button-secondary"
+                data-confirmation-cancel
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                class="button button-danger"
+                data-confirmation-confirm
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     HIDDEN GOOGLE TRANSLATE ELEMENT
+========================================================== -->
+<div
+    id="google_translate_element"
+    aria-hidden="true"
+></div>
+
+
+<!-- =========================================================
+     OFFLINE INDICATOR
+========================================================== -->
+<div
+    class="offline-indicator"
+    data-offline-indicator
+>
+
+    <i class="fa-solid fa-wifi"></i>
+
+    <span>
+        You are offline
+    </span>
+
+</div>
+
+
+<!-- =========================================================
+     BACK TO TOP
+========================================================== -->
+<button
+    type="button"
+    class="back-to-top"
+    data-back-to-top
+    aria-label="Back to top"
+>
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+
+<!-- =========================================================
+     SCREEN READER ANNOUNCER
+========================================================== -->
+<div
+    class="sr-only"
+    id="screenReaderAnnouncer"
+    aria-live="polite"
+    aria-atomic="true"
+></div>
+
+
+<!-- =========================================================
+     GLOBAL SCRIPT
+========================================================== -->
+<script src="../js/script.js" defer></script>
+
+
+<!-- =========================================================
+     ORDERS PAGE ENGINE
+========================================================== -->
+<script>
+(function () {
+
+    "use strict";
+
+
+    /* =========================================================
+       WAIT FOR GLOBAL VELTRIX
+    ========================================================== */
+
+    function ready(callback) {
+
+        if (document.readyState === "loading") {
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                callback,
+                { once: true }
+            );
+
+        } else {
+
+            callback();
+
+        }
+
+    }
+
+
+    ready(function () {
+
+
+        /* =====================================================
+           ELEMENTS
+        ====================================================== */
+
+        const drawer =
+            document.querySelector("[data-order-drawer]");
+
+        const drawerOverlay =
+            document.querySelector("[data-order-drawer-overlay]");
+
+        const drawerClose =
+            document.querySelector("[data-order-drawer-close]");
+
+        const drawerOrderId =
+            document.querySelector("[data-drawer-order-id]");
+
+        const drawerStatus =
+            document.querySelector("[data-drawer-status]");
+
+        const drawerCustomer =
+            document.querySelector("[data-drawer-customer]");
+
+        const drawerEmail =
+            document.querySelector("[data-drawer-email]");
+
+        const drawerAvatar =
+            document.querySelector("[data-drawer-avatar]");
+
+        const orderRows =
+            Array.from(
+                document.querySelectorAll("[data-order]")
+            );
+
+        const orderSearch =
+            document.querySelector("#orderSearch");
+
+        const selectedCount =
+            document.querySelector("[data-selected-count]");
+
+        const bulkButtons =
+            document.querySelectorAll(
+                '[data-action="bulk-status"], [data-action="bulk-export"]'
+            );
+
+        const selectAll =
+            document.querySelector("[data-select-all-orders]");
+
+
+        /* =====================================================
+           ORDER DATA
+        ====================================================== */
+
+        const orderDatabase = {
+
+            "ORD-10482": {
+                id: "ORD-10482",
+                status: "pending",
+                customer: "Sarah Mitchell",
+                email: "sarah.mitchell@example.com",
+                avatar: "SM",
+                total: "$284.00",
+                items: "3 items"
+            },
+
+            "ORD-10481": {
+                id: "ORD-10481",
+                status: "processing",
+                customer: "Daniel Lee",
+                email: "daniel.lee@example.com",
+                avatar: "DL",
+                total: "$129.90",
+                items: "1 item"
+            },
+
+            "ORD-10480": {
+                id: "ORD-10480",
+                status: "shipped",
+                customer: "Emma Wilson",
+                email: "emma.wilson@example.com",
+                avatar: "EW",
+                total: "$459.00",
+                items: "2 items"
+            },
+
+            "ORD-10479": {
+                id: "ORD-10479",
+                status: "delivered",
+                customer: "Adam King",
+                email: "adam.king@example.com",
+                avatar: "AK",
+                total: "$89.00",
+                items: "1 item"
+            },
+
+            "ORD-10478": {
+                id: "ORD-10478",
+                status: "pending",
+                customer: "Nora Martin",
+                email: "nora.martin@example.com",
+                avatar: "NM",
+                total: "$215.00",
+                items: "4 items"
+            },
+
+            "ORD-10477": {
+                id: "ORD-10477",
+                status: "delivered",
+                customer: "Michael Carter",
+                email: "michael.carter@example.com",
+                avatar: "MC",
+                total: "$342.00",
+                items: "5 items"
+            },
+
+            "ORD-10476": {
+                id: "ORD-10476",
+                status: "processing",
+                customer: "Olivia Brown",
+                email: "olivia.brown@example.com",
+                avatar: "OB",
+                total: "$578.00",
+                items: "2 items"
+            },
+
+            "ORD-10475": {
+                id: "ORD-10475",
+                status: "shipped",
+                customer: "James Anderson",
+                email: "james.anderson@example.com",
+                avatar: "JA",
+                total: "$194.00",
+                items: "3 items"
+            },
+
+            "ORD-10474": {
+                id: "ORD-10474",
+                status: "cancelled",
+                customer: "Sophia Davis",
+                email: "sophia.davis@example.com",
+                avatar: "SD",
+                total: "$76.00",
+                items: "1 item"
+            },
+
+            "ORD-10473": {
+                id: "ORD-10473",
+                status: "delivered",
+                customer: "William Scott",
+                email: "william.scott@example.com",
+                avatar: "WS",
+                total: "$920.00",
+                items: "8 items"
+            }
+
+        };
+
+
+        /* =====================================================
+           STATUS LABEL
+        ====================================================== */
+
+        function statusLabel(status) {
+
+            const labels = {
+
+                pending: "Pending",
+
+                processing: "Processing",
+
+                shipped: "Shipped",
+
+                delivered: "Delivered",
+
+                cancelled: "Cancelled"
+
+            };
+
+            return labels[status] || status;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        function toast(message, type) {
+
+            if (
+                window.Veltrix &&
+                window.Veltrix.toast &&
+                typeof window.Veltrix.toast.show === "function"
+            ) {
+
+                window.Veltrix.toast.show(
+                    message,
+                    type || "success"
+                );
+
+                return;
+
+            }
+
+
+            const container =
+                document.querySelector("#toastContainer");
+
+            if (!container) return;
+
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "toast toast-" + (type || "success");
+
+            item.innerHTML = `
+                <span class="toast-icon">
+                    <i class="fa-solid fa-check"></i>
+                </span>
+                <span class="toast-content">
+                    ${message}
+                </span>
+                <button type="button" class="toast-close">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+
+            container.appendChild(item);
+
+
+            requestAnimationFrame(function () {
+
+                item.classList.add("show");
+
+            });
+
+
+            setTimeout(function () {
+
+                item.classList.remove("show");
+
+                setTimeout(function () {
+
+                    item.remove();
+
+                }, 300);
+
+            }, 3500);
+
+        }
+
+
+        /* =====================================================
+           OPEN DRAWER
+        ====================================================== */
+
+        function openOrder(orderId) {
+
+            const order =
+                orderDatabase[orderId];
+
+            if (!order) {
+
+                toast(
+                    "Order information is not available.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (drawerOrderId) {
+
+                drawerOrderId.textContent =
+                    "#" + order.id;
+
+            }
+
+
+            if (drawerCustomer) {
+
+                drawerCustomer.textContent =
+                    order.customer;
+
+            }
+
+
+            if (drawerEmail) {
+
+                drawerEmail.textContent =
+                    order.email;
+
+            }
+
+
+            if (drawerAvatar) {
+
+                drawerAvatar.textContent =
+                    order.avatar;
+
+            }
+
+
+            updateDrawerStatus(
+                order.status
+            );
+
+
+            if (drawer) {
+
+                drawer.classList.add("open");
+
+                drawer.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                document.body.classList.add(
+                    "drawer-open"
+                );
+
+            }
+
+
+            if (drawerOverlay) {
+
+                drawerOverlay.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CLOSE DRAWER
+        ====================================================== */
+
+        function closeOrderDrawer() {
+
+            if (drawer) {
+
+                drawer.classList.remove("open");
+
+                drawer.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+            }
+
+
+            if (drawerOverlay) {
+
+                drawerOverlay.classList.remove(
+                    "active"
+                );
+
+            }
+
+
+            document.body.classList.remove(
+                "drawer-open"
+            );
+
+        }
+
+
+        /* =====================================================
+           UPDATE DRAWER STATUS
+        ====================================================== */
+
+        function updateDrawerStatus(status) {
+
+            if (!drawerStatus) return;
+
+
+            drawerStatus.className =
+                "order-status-badge " + status;
+
+
+            drawerStatus.innerHTML = `
+                <span></span>
+                ${statusLabel(status)}
+            `;
+
+
+            document
+                .querySelectorAll(
+                    "[data-drawer-status-change]"
+                )
+                .forEach(function (button) {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.drawerStatusChange === status
+                    );
+
+                });
+
+        }
+
+
+        /* =====================================================
+           DRAWER OPEN EVENTS
+        ====================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const trigger =
+                    event.target.closest(
+                        "[data-order-open]"
+                    );
+
+                if (!trigger) return;
+
+
+                const orderId =
+                    trigger.dataset.orderOpen;
+
+                openOrder(orderId);
+
+            }
+        );
+
+
+        /* =====================================================
+           DRAWER CLOSE
+        ====================================================== */
+
+        if (drawerClose) {
+
+            drawerClose.addEventListener(
+                "click",
+                closeOrderDrawer
+            );
+
+        }
+
+
+        if (drawerOverlay) {
+
+            drawerOverlay.addEventListener(
+                "click",
+                closeOrderDrawer
+            );
+
+        }
+
+
+        /* =====================================================
+           ESCAPE DRAWER
+        ====================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    drawer &&
+                    drawer.classList.contains("open")
+                ) {
+
+                    closeOrderDrawer();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           DRAWER STATUS CHANGES
+        ====================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const button =
+                    event.target.closest(
+                        "[data-drawer-status-change]"
+                    );
+
+                if (!button) return;
+
+
+                const status =
+                    button.dataset.drawerStatusChange;
+
+
+                const currentId =
+                    drawerOrderId
+                        ? drawerOrderId.textContent.replace("#", "")
+                        : null;
+
+
+                if (
+                    currentId &&
+                    orderDatabase[currentId]
+                ) {
+
+                    orderDatabase[currentId].status =
+                        status;
+
+                }
+
+
+                updateDrawerStatus(status);
+
+
+                const row =
+                    document.querySelector(
+                        `[data-order-id="${currentId}"]`
+                    );
+
+
+                if (row) {
+
+                    row.dataset.status =
+                        status;
+
+
+                    const badge =
+                        row.querySelector(
+                            ".order-status-badge"
+                        );
+
+
+                    if (badge) {
+
+                        badge.className =
+                            "order-status-badge " + status;
+
+                        badge.innerHTML = `
+                            <span></span>
+                            ${statusLabel(status)}
+                        `;
+
+                    }
+
+                }
+
+
+                toast(
+                    "Order status changed to " +
+                    statusLabel(status) +
+                    ".",
+                    "success"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           SEARCH ORDERS
+        ====================================================== */
+
+        function searchOrders() {
+
+            if (!orderSearch) return;
+
+
+            const query =
+                orderSearch.value
+                    .trim()
+                    .toLowerCase();
+
+
+            let visible = 0;
+
+
+            orderRows.forEach(function (row) {
+
+                const searchableText =
+                    row.textContent.toLowerCase();
+
+
+                const matches =
+                    !query ||
+                    searchableText.includes(query);
+
+
+                row.style.display =
+                    matches ? "" : "none";
+
+
+                if (matches) {
+
+                    visible++;
+
+                }
+
+            });
+
+
+            const counter =
+                document.querySelector(
+                    "[data-orders-visible-count]"
+                );
+
+
+            if (counter) {
+
+                counter.textContent =
+                    visible;
+
+            }
+
+        }
+
+
+        if (orderSearch) {
+
+            orderSearch.addEventListener(
+                "input",
+                searchOrders
+            );
+
+        }
+
+
+        /* =====================================================
+           STATUS RAIL FILTER
+        ====================================================== */
+
+        document
+            .querySelectorAll(
+                "[data-order-status-filter]"
+            )
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        document
+                            .querySelectorAll(
+                                "[data-order-status-filter]"
+                            )
+                            .forEach(function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            });
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        const selected =
+                            button.dataset.orderStatusFilter;
+
+
+                        let visible = 0;
+
+
+                        orderRows.forEach(function (row) {
+
+                            const rowStatus =
+                                row.dataset.status;
+
+
+                            const matches =
+                                selected === "all" ||
+                                rowStatus === selected;
+
+
+                            row.style.display =
+                                matches ? "" : "none";
+
+
+                            if (matches) {
+
+                                visible++;
+
+                            }
+
+                        });
+
+
+                        const counter =
+                            document.querySelector(
+                                "[data-orders-visible-count]"
+                            );
+
+
+                        if (counter) {
+
+                            counter.textContent =
+                                visible;
+
+                        }
+
+
+                        toast(
+                            selected === "all"
+                                ? "Showing all orders."
+                                : "Showing " +
+                                  statusLabel(selected) +
+                                  " orders.",
+                            "info"
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /* =====================================================
+           SELECT ALL
+        ====================================================== */
+
+        function updateSelectedCount() {
+
+            const checked =
+                Array.from(
+                    document.querySelectorAll(
+                        "[data-order-checkbox]:checked"
+                    )
+                );
+
+
+            const count =
+                checked.length;
+
+
+            if (selectedCount) {
+
+                selectedCount.textContent =
+                    count + " selected";
+
+            }
+
+
+            bulkButtons.forEach(function (button) {
+
+                button.disabled =
+                    count === 0;
+
+            });
+
+
+            if (selectAll) {
+
+                const allVisible =
+                    orderRows.filter(function (row) {
+
+                        return row.style.display !== "none";
+
+                    });
+
+
+                const selectedVisible =
+                    allVisible.filter(function (row) {
+
+                        const checkbox =
+                            row.querySelector(
+                                "[data-order-checkbox]"
+                            );
+
+                        return checkbox &&
+                            checkbox.checked;
+
+                    });
+
+
+                selectAll.checked =
+                    allVisible.length > 0 &&
+                    selectedVisible.length === allVisible.length;
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "change",
+            function (event) {
+
+                if (
+                    event.target.matches(
+                        "[data-order-checkbox]"
+                    )
+                ) {
+
+                    updateSelectedCount();
+
+                }
+
+            }
+        );
+
+
+        if (selectAll) {
+
+            selectAll.addEventListener(
+                "change",
+                function () {
+
+                    orderRows.forEach(function (row) {
+
+                        if (
+                            row.style.display === "none"
+                        ) return;
+
+
+                        const checkbox =
+                            row.querySelector(
+                                "[data-order-checkbox]"
+                            );
+
+
+                        if (checkbox) {
+
+                            checkbox.checked =
+                                selectAll.checked;
+
+                        }
+
+                    });
+
+
+                    updateSelectedCount();
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           VIEW TOGGLE
+        ====================================================== */
+
+        document
+            .querySelectorAll(
+                "[data-orders-view]"
+            )
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        document
+                            .querySelectorAll(
+                                "[data-orders-view]"
+                            )
+                            .forEach(function (item) {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            });
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        const view =
+                            button.dataset.ordersView;
+
+
+                        if (view === "board") {
+
+                            toast(
+                                "Board view is ready for workflow customization.",
+                                "info"
+                            );
+
+                        } else {
+
+                            toast(
+                                "Table view enabled.",
+                                "success"
+                            );
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ====================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const actionElement =
+                    event.target.closest(
+                        "[data-action]"
+                    );
+
+                if (!actionElement) return;
+
+
+                const action =
+                    actionElement.dataset.action;
+
+
+                switch (action) {
+
+                    case "refresh-orders":
+
+                        actionElement.classList.add(
+                            "is-spinning"
+                        );
+
+
+                        setTimeout(function () {
+
+                            actionElement.classList.remove(
+                                "is-spinning"
+                            );
+
+
+                            toast(
+                                "Orders refreshed successfully.",
+                                "success"
+                            );
+
+                        }, 900);
+
+                        break;
+
+
+                    case "export-orders":
+
+                        toast(
+                            "Orders export prepared.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "print-orders":
+
+                        window.print();
+
+                        break;
+
+
+                    case "create-order":
+
+                        if (
+                            window.Veltrix &&
+                            window.Veltrix.modal
+                        ) {
+
+                            window.Veltrix.modal.open(
+                                "quick-create"
+                            );
+
+                        } else {
+
+                            toast(
+                                "Order creation workspace opened.",
+                                "info"
+                            );
+
+                        }
+
+                        break;
+
+
+                    case "refund-order":
+
+                        toast(
+                            "Refund workflow opened for this order.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "download-invoice":
+
+                        toast(
+                            "Invoice download prepared.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "print-invoice":
+
+                        window.print();
+
+                        break;
+
+
+                    case "save-filter":
+
+                        toast(
+                            "Current filter has been saved.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "reset-filters":
+
+                        document
+                            .querySelectorAll(
+                                "[data-order-filter]"
+                            )
+                            .forEach(function (field) {
+
+                                field.value = "all";
+
+                            });
+
+
+                        if (orderSearch) {
+
+                            orderSearch.value = "";
+
+                        }
+
+
+                        orderRows.forEach(function (row) {
+
+                            row.style.display = "";
+
+                        });
+
+
+                        toast(
+                            "Filters reset.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "apply-order-filters":
+
+                        toast(
+                            "Order filters applied.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "review-alerts":
+
+                        toast(
+                            "Attention queue opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "view-attention-queue":
+
+                        toast(
+                            "Showing all orders that need attention.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "automation-settings":
+
+                        toast(
+                            "Automation settings opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "column-settings":
+
+                        toast(
+                            "Column customization opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "bulk-export":
+
+                        toast(
+                            "Selected orders prepared for export.",
+                            "success"
+                        );
+
+                        break;
+
+
+                    case "bulk-status":
+
+                        toast(
+                            "Bulk status editor opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "order-more":
+
+                        toast(
+                            "Order actions menu opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "date-filter":
+
+                        toast(
+                            "Date filter selector opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "payment-filter":
+
+                        toast(
+                            "Payment filter selector opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "shipping-menu":
+
+                        toast(
+                            "Shipping settings opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "order-performance-menu":
+
+                        toast(
+                            "Performance options opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "open-customer":
+
+                        toast(
+                            "Customer profile opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "edit-shipping":
+
+                        toast(
+                            "Shipping address editor opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "help":
+
+                        toast(
+                            "Help center opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "privacy":
+
+                        toast(
+                            "Privacy settings opened.",
+                            "info"
+                        );
+
+                        break;
+
+
+                    case "status":
+
+                        toast(
+                            "All systems operational.",
+                            "success"
+                        );
+
+                        break;
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           ORDERS VELOCITY CHART
+        ====================================================== */
+
+        const velocityCanvas =
+            document.querySelector(
+                "#ordersVelocityChart"
+            );
+
+
+        if (
+            velocityCanvas &&
+            window.Chart
+        ) {
+
+            new Chart(
+                velocityCanvas.getContext("2d"),
+                {
+
+                    type: "line",
+
+                    data: {
+
+                        labels: [
+                            "08:00",
+                            "10:00",
+                            "12:00",
+                            "14:00",
+                            "16:00",
+                            "18:00",
+                            "20:00"
+                        ],
+
+                        datasets: [
+
+                            {
+                                label: "Orders",
+                                data: [
+                                    14,
+                                    21,
+                                    17,
+                                    29,
+                                    34,
+                                    31,
+                                    42
+                                ],
+
+                                borderWidth: 3,
+
+                                pointRadius: 0,
+
+                                tension: 0.4,
+
+                                fill: true
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            }
+
+                        },
+
+                        scales: {
+
+                            x: {
+                                display: false
+                            },
+
+                            y: {
+                                display: false
+                            }
+
+                        },
+
+                        interaction: {
+                            intersect: false,
+                            mode: "index"
+                        }
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           PAYMENT CHART
+        ====================================================== */
+
+        const paymentCanvas =
+            document.querySelector(
+                "#paymentMethodChart"
+            );
+
+
+        if (
+            paymentCanvas &&
+            window.Chart
+        ) {
+
+            new Chart(
+                paymentCanvas.getContext("2d"),
+                {
+
+                    type: "doughnut",
+
+                    data: {
+
+                        labels: [
+                            "Cards",
+                            "PayPal",
+                            "Bank",
+                            "COD"
+                        ],
+
+                        datasets: [
+
+                            {
+                                data: [
+                                    55,
+                                    26,
+                                    13,
+                                    6
+                                ],
+
+                                borderWidth: 0,
+
+                                hoverOffset: 5
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive: true,
+
+                        maintainAspectRatio: false,
+
+                        cutout: "72%",
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            }
+
+                        }
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           KEYBOARD SEARCH
+        ====================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "/" &&
+                    document.activeElement.tagName !== "INPUT" &&
+                    document.activeElement.tagName !== "TEXTAREA"
+                ) {
+
+                    event.preventDefault();
+
+
+                    if (orderSearch) {
+
+                        orderSearch.focus();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           INITIALIZE
+        ====================================================== */
+
+        updateSelectedCount();
+
+
+        /* =====================================================
+           DEMO LIVE FEED UPDATE
+        ====================================================== */
+
+        let liveTick = 0;
+
+
+        setInterval(function () {
+
+            liveTick++;
+
+
+            const indicator =
+                document.querySelector(
+                    ".command-live-dot"
+                );
+
+
+            if (indicator) {
+
+                indicator.classList.add(
+                    "pulse-now"
+                );
+
+
+                setTimeout(function () {
+
+                    indicator.classList.remove(
+                        "pulse-now"
+                    );
+
+                }, 500);
+
+            }
+
+        }, 7000);
+
+
+        /* =====================================================
+           PAGE READY
+        ====================================================== */
+
+        document.body.classList.add(
+            "orders-page-ready"
+        );
+
+    });
+
+})();
+</script>
+
+
+</body>
+</html>
