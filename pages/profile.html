@@ -1,0 +1,5363 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile — Veltrix</title>
+
+    <meta
+        name="description"
+        content="Veltrix Business Management Platform — Profile"
+    >
+    <meta name="theme-color" content="#0b1220">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* =========================================================
+           VELTRIX PROFILE PAGE
+           Self-contained page layer
+        ========================================================= */
+
+        :root {
+            --profile-accent: #14b8a6;
+            --profile-accent-2: #22c55e;
+            --profile-purple: #8b5cf6;
+            --profile-blue: #3b82f6;
+            --profile-danger: #ef4444;
+            --profile-warning: #f59e0b;
+
+            --profile-card-bg: rgba(255, 255, 255, 0.035);
+            --profile-card-border: rgba(255, 255, 255, 0.08);
+            --profile-soft-bg: rgba(255, 255, 255, 0.025);
+            --profile-muted: #94a3b8;
+            --profile-text: #f8fafc;
+        }
+
+        body.light-mode,
+        body[data-theme="light"] {
+            --profile-card-bg: rgba(15, 23, 42, 0.025);
+            --profile-card-border: rgba(15, 23, 42, 0.08);
+            --profile-soft-bg: rgba(15, 23, 42, 0.025);
+            --profile-muted: #64748b;
+            --profile-text: #0f172a;
+        }
+
+        .profile-page {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .profile-hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 260px;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 26px;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(20, 184, 166, .20), transparent 28%),
+                radial-gradient(circle at 90% 10%, rgba(139, 92, 246, .20), transparent 30%),
+                radial-gradient(circle at 70% 100%, rgba(34, 197, 94, .10), transparent 30%),
+                var(--profile-card-bg);
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .16),
+                inset 0 1px 0 rgba(255,255,255,.04);
+            margin-bottom: 24px;
+        }
+
+        .profile-hero::before {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: -160px;
+            top: -200px;
+            border-radius: 50%;
+            background: rgba(20, 184, 166, .10);
+            filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .profile-hero::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            left: 28%;
+            bottom: -220px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, .10);
+            filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .profile-cover {
+            height: 110px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--profile-card-border);
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(20,184,166,.14),
+                    rgba(59,130,246,.10),
+                    rgba(139,92,246,.16)
+                );
+        }
+
+        .profile-cover-grid {
+            position: absolute;
+            inset: 0;
+            opacity: .28;
+            background-image:
+                linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        .profile-cover-orb {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(1px);
+        }
+
+        .profile-cover-orb.one {
+            width: 130px;
+            height: 130px;
+            background: rgba(20,184,166,.18);
+            right: 14%;
+            top: -70px;
+        }
+
+        .profile-cover-orb.two {
+            width: 90px;
+            height: 90px;
+            background: rgba(139,92,246,.20);
+            right: 34%;
+            top: 25px;
+        }
+
+        .profile-cover-orb.three {
+            width: 70px;
+            height: 70px;
+            background: rgba(34,197,94,.15);
+            left: 20%;
+            top: -30px;
+        }
+
+        .profile-hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: flex-end;
+            gap: 22px;
+            padding: 0 28px 28px;
+            margin-top: -52px;
+        }
+
+        /* =========================================================
+           AVATAR
+        ========================================================= */
+
+        .profile-avatar-wrap {
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        .profile-avatar {
+            width: 126px;
+            height: 126px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 5px solid rgba(11,18,32,.95);
+            background:
+                linear-gradient(145deg, #14b8a6, #0f766e);
+            box-shadow:
+                0 0 0 2px rgba(20,184,166,.25),
+                0 18px 45px rgba(0,0,0,.28);
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            user-select: none;
+        }
+
+        body.light-mode .profile-avatar,
+        body[data-theme="light"] .profile-avatar {
+            border-color: white;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            right: 3px;
+            bottom: 5px;
+            width: 36px;
+            height: 36px;
+            border: 2px solid rgba(11,18,32,.9);
+            border-radius: 50%;
+            background: var(--profile-accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .22s ease;
+            box-shadow: 0 8px 20px rgba(20,184,166,.28);
+        }
+
+        body.light-mode .avatar-edit-btn,
+        body[data-theme="light"] .avatar-edit-btn {
+            border-color: white;
+        }
+
+        .avatar-edit-btn:hover {
+            transform: scale(1.08) rotate(4deg);
+            box-shadow:
+                0 0 0 6px rgba(20,184,166,.10),
+                0 12px 25px rgba(20,184,166,.32);
+        }
+
+        .profile-online-dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: 8px;
+            bottom: 42px;
+            border: 3px solid #0b1220;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 16px rgba(34,197,94,.65);
+        }
+
+        body.light-mode .profile-online-dot,
+        body[data-theme="light"] .profile-online-dot {
+            border-color: white;
+        }
+
+        /* =========================================================
+           HERO DETAILS
+        ========================================================= */
+
+        .profile-main-info {
+            min-width: 0;
+            flex: 1;
+            padding-top: 58px;
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .profile-name {
+            margin: 0;
+            color: var(--profile-text);
+            font-size: clamp(25px, 3vw, 34px);
+            line-height: 1.1;
+            letter-spacing: -.04em;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 23px;
+            height: 23px;
+            border-radius: 50%;
+            color: white;
+            background: linear-gradient(145deg, #3b82f6, #2563eb);
+            box-shadow: 0 5px 15px rgba(59,130,246,.25);
+        }
+
+        .profile-role {
+            margin: 7px 0 0;
+            color: var(--profile-muted);
+            font-size: 14px;
+        }
+
+        .profile-location {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 13px;
+            color: var(--profile-muted);
+            font-size: 13px;
+        }
+
+        .profile-location span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 60px;
+        }
+
+        .profile-btn {
+            min-height: 42px;
+            padding: 0 15px;
+            border-radius: 12px;
+            border: 1px solid var(--profile-card-border);
+            background: rgba(255,255,255,.045);
+            color: var(--profile-text);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: .22s ease;
+            font-weight: 650;
+            font-size: 13px;
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(20,184,166,.35);
+            box-shadow: 0 12px 25px rgba(0,0,0,.12);
+        }
+
+        .profile-btn.primary {
+            color: white;
+            border-color: transparent;
+            background: linear-gradient(135deg, #14b8a6, #0f766e);
+            box-shadow: 0 10px 24px rgba(20,184,166,.20);
+        }
+
+        .profile-btn.primary:hover {
+            box-shadow:
+                0 0 0 5px rgba(20,184,166,.08),
+                0 15px 30px rgba(20,184,166,.28);
+        }
+
+        .profile-btn.danger {
+            color: #fca5a5;
+        }
+
+        .profile-btn svg {
+            width: 16px;
+            height: 16px;
+            flex: 0 0 auto;
+        }
+
+        /* =========================================================
+           GRID
+        ========================================================= */
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(300px, .75fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .profile-left,
+        .profile-right {
+            min-width: 0;
+            display: grid;
+            gap: 24px;
+        }
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .profile-card {
+            position: relative;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 20px;
+            background: var(--profile-card-bg);
+            overflow: hidden;
+            transition:
+                transform .25s ease,
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .profile-card:hover {
+            border-color: rgba(20,184,166,.18);
+            box-shadow: 0 18px 45px rgba(0,0,0,.09);
+        }
+
+        .profile-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 21px 22px;
+            border-bottom: 1px solid var(--profile-card-border);
+        }
+
+        .profile-card-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 750;
+            color: var(--profile-text);
+        }
+
+        .profile-card-subtitle {
+            margin: 5px 0 0;
+            color: var(--profile-muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .profile-card-body {
+            padding: 22px;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .profile-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 18px;
+        }
+
+        .profile-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .profile-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--profile-text);
+        }
+
+        .profile-input,
+        .profile-select,
+        .profile-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 45px;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 11px;
+            background: rgba(255,255,255,.025);
+            color: var(--profile-text);
+            outline: none;
+            padding: 0 13px;
+            font: inherit;
+            transition: .2s ease;
+        }
+
+        .profile-textarea {
+            min-height: 100px;
+            padding: 12px 13px;
+            resize: vertical;
+        }
+
+        .profile-input:focus,
+        .profile-select:focus,
+        .profile-textarea:focus {
+            border-color: rgba(20,184,166,.65);
+            box-shadow:
+                0 0 0 4px rgba(20,184,166,.08),
+                0 0 22px rgba(20,184,166,.08);
+        }
+
+        .profile-input::placeholder,
+        .profile-textarea::placeholder {
+            color: var(--profile-muted);
+        }
+
+        .profile-input-group {
+            position: relative;
+        }
+
+        .profile-input-group .profile-input {
+            padding-right: 45px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border: 0;
+            background: transparent;
+            color: var(--profile-muted);
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .password-toggle:hover {
+            background: rgba(255,255,255,.06);
+            color: var(--profile-text);
+        }
+
+        .field-hint {
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--profile-muted);
+        }
+
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid var(--profile-card-border);
+        }
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0,1fr));
+            gap: 12px;
+        }
+
+        .profile-stat {
+            padding: 17px;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 16px;
+            background: var(--profile-soft-bg);
+            transition: .22s ease;
+        }
+
+        .profile-stat:hover {
+            transform: translateY(-3px);
+            border-color: rgba(20,184,166,.22);
+            box-shadow: 0 12px 30px rgba(0,0,0,.08);
+        }
+
+        .profile-stat-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: rgba(20,184,166,.10);
+            color: #5eead4;
+            margin-bottom: 12px;
+        }
+
+        .profile-stat-value {
+            font-size: 21px;
+            line-height: 1;
+            font-weight: 800;
+            color: var(--profile-text);
+        }
+
+        .profile-stat-label {
+            margin-top: 7px;
+            color: var(--profile-muted);
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           INFO LIST
+        ========================================================= */
+
+        .profile-info-list {
+            display: grid;
+            gap: 0;
+        }
+
+        .profile-info-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--profile-card-border);
+        }
+
+        .profile-info-row:last-child {
+            border-bottom: 0;
+        }
+
+        .info-label {
+            color: var(--profile-muted);
+            font-size: 12px;
+        }
+
+        .info-value {
+            color: var(--profile-text);
+            font-size: 13px;
+            font-weight: 650;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        /* =========================================================
+           STATUS BADGES
+        ========================================================= */
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 25px;
+            padding: 0 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+        .status-badge.success {
+            color: #86efac;
+            background: rgba(34,197,94,.10);
+        }
+
+        .status-badge.warning {
+            color: #fcd34d;
+            background: rgba(245,158,11,.10);
+        }
+
+        .status-badge.info {
+            color: #93c5fd;
+            background: rgba(59,130,246,.10);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        /* =========================================================
+           SECURITY SCORE
+        ========================================================= */
+
+        .security-score {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 17px;
+            border-radius: 15px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(20,184,166,.08),
+                    rgba(34,197,94,.04)
+                );
+            border: 1px solid rgba(20,184,166,.14);
+            margin-bottom: 16px;
+        }
+
+        .security-score-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            background:
+                conic-gradient(
+                    var(--profile-accent) 0 82%,
+                    rgba(255,255,255,.08) 82% 100%
+                );
+            position: relative;
+        }
+
+        .security-score-circle::after {
+            content: "";
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            background: #0b1220;
+        }
+
+        body.light-mode .security-score-circle::after,
+        body[data-theme="light"] .security-score-circle::after {
+            background: #fff;
+        }
+
+        .security-score-number {
+            position: relative;
+            z-index: 2;
+            font-weight: 850;
+            font-size: 15px;
+            color: var(--profile-text);
+        }
+
+        .security-score-title {
+            color: var(--profile-text);
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .security-score-text {
+            color: var(--profile-muted);
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           TOGGLE
+        ========================================================= */
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--profile-card-border);
+        }
+
+        .setting-row:last-child {
+            border-bottom: 0;
+        }
+
+        .setting-copy {
+            min-width: 0;
+        }
+
+        .setting-title {
+            color: var(--profile-text);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .setting-description {
+            margin-top: 4px;
+            color: var(--profile-muted);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .profile-toggle {
+            position: relative;
+            width: 46px;
+            height: 25px;
+            flex: 0 0 auto;
+        }
+
+        .profile-toggle input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .toggle-track {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: rgba(148,163,184,.22);
+            border: 1px solid var(--profile-card-border);
+            cursor: pointer;
+            transition: .22s ease;
+        }
+
+        .toggle-track::after {
+            content: "";
+            position: absolute;
+            width: 19px;
+            height: 19px;
+            top: 2px;
+            left: 2px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            transition: .22s ease;
+            box-shadow: 0 3px 7px rgba(0,0,0,.25);
+        }
+
+        .profile-toggle input:checked + .toggle-track {
+            background: rgba(20,184,166,.35);
+            border-color: rgba(20,184,166,.55);
+        }
+
+        .profile-toggle input:checked + .toggle-track::after {
+            transform: translateX(21px);
+            background: #14b8a6;
+            box-shadow: 0 0 14px rgba(20,184,166,.55);
+        }
+
+        /* =========================================================
+           SESSION CARDS
+        ========================================================= */
+
+        .session-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .session-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 14px;
+            background: var(--profile-soft-bg);
+            transition: .2s ease;
+        }
+
+        .session-item:hover {
+            border-color: rgba(20,184,166,.20);
+        }
+
+        .session-device {
+            width: 40px;
+            height: 40px;
+            flex: 0 0 auto;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5eead4;
+            background: rgba(20,184,166,.10);
+        }
+
+        .session-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .session-name {
+            color: var(--profile-text);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .session-meta {
+            color: var(--profile-muted);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .session-current {
+            color: #86efac;
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .session-remove {
+            width: 32px;
+            height: 32px;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--profile-muted);
+            cursor: pointer;
+        }
+
+        .session-remove:hover {
+            color: #fca5a5;
+            background: rgba(239,68,68,.08);
+        }
+
+        /* =========================================================
+           ACTIVITY
+        ========================================================= */
+
+        .activity-list {
+            position: relative;
+            display: grid;
+            gap: 0;
+        }
+
+        .activity-list::before {
+            content: "";
+            position: absolute;
+            left: 17px;
+            top: 20px;
+            bottom: 20px;
+            width: 1px;
+            background: var(--profile-card-border);
+        }
+
+        .activity-item {
+            position: relative;
+            display: flex;
+            gap: 13px;
+            padding: 12px 0;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            flex: 0 0 auto;
+            z-index: 2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b1220;
+            border: 1px solid var(--profile-card-border);
+            color: #5eead4;
+        }
+
+        body.light-mode .activity-icon,
+        body[data-theme="light"] .activity-icon {
+            background: #fff;
+        }
+
+        .activity-content {
+            min-width: 0;
+            padding-top: 2px;
+        }
+
+        .activity-title {
+            color: var(--profile-text);
+            font-size: 12px;
+            font-weight: 650;
+        }
+
+        .activity-time {
+            color: var(--profile-muted);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           SOCIAL
+        ========================================================= */
+
+        .social-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid var(--profile-card-border);
+            border-radius: 13px;
+            background: var(--profile-soft-bg);
+        }
+
+        .social-icon {
+            width: 37px;
+            height: 37px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,.05);
+            color: var(--profile-text);
+        }
+
+        .social-copy {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .social-name {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--profile-text);
+        }
+
+        .social-handle {
+            font-size: 10px;
+            color: var(--profile-muted);
+            margin-top: 3px;
+        }
+
+        .social-action {
+            min-height: 30px;
+            padding: 0 9px;
+            border-radius: 8px;
+            border: 1px solid var(--profile-card-border);
+            background: transparent;
+            color: var(--profile-text);
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .social-action:hover {
+            border-color: rgba(20,184,166,.35);
+            color: #5eead4;
+        }
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        .progress-wrap {
+            margin-top: 14px;
+        }
+
+        .progress-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--profile-muted);
+            font-size: 10px;
+        }
+
+        .progress-track {
+            height: 7px;
+            border-radius: 999px;
+            background: rgba(148,163,184,.10);
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 82%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #14b8a6, #22c55e);
+            box-shadow: 0 0 14px rgba(20,184,166,.25);
+            transition: width .5s ease;
+        }
+
+        /* =========================================================
+           UPLOAD MODAL
+        ========================================================= */
+
+        .profile-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(2,6,23,.72);
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-modal.active {
+            display: flex;
+        }
+
+        .profile-modal-box {
+            width: min(470px, 100%);
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 22px;
+            background: #0f172a;
+            box-shadow: 0 30px 90px rgba(0,0,0,.45);
+            overflow: hidden;
+            animation: profileModalIn .22s ease;
+        }
+
+        body.light-mode .profile-modal-box,
+        body[data-theme="light"] .profile-modal-box {
+            background: #fff;
+            border-color: rgba(15,23,42,.10);
+        }
+
+        @keyframes profileModalIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-modal-head {
+            padding: 19px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--profile-card-border);
+        }
+
+        .profile-modal-title {
+            color: var(--profile-text);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .profile-modal-close {
+            width: 34px;
+            height: 34px;
+            border: 0;
+            border-radius: 9px;
+            background: rgba(255,255,255,.05);
+            color: var(--profile-muted);
+            cursor: pointer;
+        }
+
+        .profile-modal-body {
+            padding: 20px;
+        }
+
+        .upload-dropzone {
+            border: 1px dashed rgba(20,184,166,.38);
+            border-radius: 17px;
+            padding: 32px 20px;
+            text-align: center;
+            background: rgba(20,184,166,.035);
+            transition: .2s ease;
+        }
+
+        .upload-dropzone.dragover {
+            background: rgba(20,184,166,.09);
+            border-color: rgba(20,184,166,.75);
+            transform: scale(1.01);
+        }
+
+        .upload-icon {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 13px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5eead4;
+            background: rgba(20,184,166,.10);
+        }
+
+        .upload-title {
+            color: var(--profile-text);
+            font-size: 14px;
+            font-weight: 750;
+        }
+
+        .upload-text {
+            color: var(--profile-muted);
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1150px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-right {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .profile-hero-content {
+                align-items: flex-start;
+                flex-wrap: wrap;
+                padding: 0 20px 22px;
+            }
+
+            .profile-main-info {
+                padding-top: 58px;
+                min-width: calc(100% - 150px);
+            }
+
+            .profile-actions {
+                width: 100%;
+                padding-top: 0;
+                margin-left: 148px;
+            }
+
+            .profile-stats {
+                grid-template-columns: repeat(2, minmax(0,1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .profile-page {
+                padding-bottom: 45px;
+            }
+
+            .profile-cover {
+                height: 90px;
+            }
+
+            .profile-avatar {
+                width: 105px;
+                height: 105px;
+            }
+
+            .profile-main-info {
+                padding-top: 58px;
+                min-width: 100%;
+            }
+
+            .profile-name {
+                font-size: 25px;
+            }
+
+            .profile-actions {
+                margin-left: 0;
+            }
+
+            .profile-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-field.full {
+                grid-column: auto;
+            }
+
+            .profile-right {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card-header,
+            .profile-card-body {
+                padding: 17px;
+            }
+
+            .profile-stats {
+                gap: 8px;
+            }
+
+            .profile-stat {
+                padding: 13px;
+            }
+
+            .profile-hero-content {
+                gap: 15px;
+            }
+
+            .profile-location {
+                gap: 8px;
+            }
+
+            .profile-btn {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .profile-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .profile-stat-value {
+                font-size: 18px;
+            }
+
+            .profile-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .profile-actions .profile-btn:last-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+            .profile-card,
+            .profile-btn,
+            .profile-stat,
+            .avatar-edit-btn,
+            .social-action,
+            .session-item {
+                transition: none !important;
+            }
+
+            .profile-modal-box {
+                animation: none !important;
+            }
+        }
+
+        /* =========================================================
+           PRINT
+        ========================================================= */
+
+        @media print {
+            .profile-actions,
+            .avatar-edit-btn,
+            .profile-btn,
+            .profile-modal {
+                display: none !important;
+            }
+
+            .profile-page {
+                max-width: 100%;
+            }
+
+            .profile-card,
+            .profile-hero {
+                box-shadow: none !important;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="veltrix-page"
+    data-page="profile"
+    data-title="Profile"
+>
+
+<!-- =========================================================
+     GLOBAL GOOGLE TRANSLATE TARGET
+========================================================= -->
+
+<div id="google_translate_element" aria-hidden="true"></div>
+
+<!-- =========================================================
+     MOBILE OVERLAY
+========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+    data-sidebar-overlay
+    aria-hidden="true"
+></div>
+
+<!-- =========================================================
+     APP SHELL
+========================================================= -->
+
+<div class="app-shell" id="appShell">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+        data-sidebar
+        aria-label="Main navigation"
+    >
+
+        <div class="sidebar-header">
+
+            <a
+                href="../index.html"
+                class="brand"
+                aria-label="Veltrix Dashboard"
+            >
+                <span class="brand-mark">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+
+                <span class="brand-copy">
+                    <strong>VELTRIX</strong>
+                    <small>Business Platform</small>
+                </span>
+            </a>
+
+            <button
+                type="button"
+                class="sidebar-close mobile-only"
+                data-sidebar-close
+                aria-label="Close navigation"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <!-- Workspace -->
+
+        <div class="workspace-switcher" data-workspace>
+
+            <button
+                type="button"
+                class="workspace-button"
+                data-workspace-toggle
+                aria-expanded="false"
+            >
+                <span class="workspace-avatar">V</span>
+
+                <span class="workspace-copy">
+                    <strong data-workspace-name>Veltrix HQ</strong>
+                    <small>Business Workspace</small>
+                </span>
+
+                <span class="workspace-arrow">⌄</span>
+            </button>
+
+            <div
+                class="workspace-menu"
+                data-workspace-menu
+                hidden
+            >
+                <button
+                    type="button"
+                    data-workspace-select="Veltrix HQ"
+                >
+                    <span>VH</span>
+                    Veltrix HQ
+                </button>
+
+                <button
+                    type="button"
+                    data-workspace-select="Creative Studio"
+                >
+                    <span>CS</span>
+                    Creative Studio
+                </button>
+
+                <button
+                    type="button"
+                    data-workspace-select="Personal"
+                >
+                    <span>PS</span>
+                    Personal
+                </button>
+
+                <button
+                    type="button"
+                    data-workspace-create
+                >
+                    ＋ Create workspace
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section">
+                <span class="nav-label">MAIN</span>
+
+                <a
+                    href="../index.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="dashboard"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+
+                <a
+                    href="analytics.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="analytics"
+                >
+                    <span class="nav-icon">◩</span>
+                    <span class="nav-text">Analytics</span>
+                </a>
+
+                <a
+                    href="orders.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="orders"
+                >
+                    <span class="nav-icon">▤</span>
+                    <span class="nav-text">Orders</span>
+                </a>
+
+                <a
+                    href="customers.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="customers"
+                >
+                    <span class="nav-icon">♙</span>
+                    <span class="nav-text">Customers</span>
+                </a>
+
+                <a
+                    href="products.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="products"
+                >
+                    <span class="nav-icon">◇</span>
+                    <span class="nav-text">Products</span>
+                </a>
+
+                <a
+                    href="invoices.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="invoices"
+                >
+                    <span class="nav-icon">▥</span>
+                    <span class="nav-text">Invoices</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+
+                <span class="nav-label">COMMUNICATION</span>
+
+                <a
+                    href="messages.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="messages"
+                >
+                    <span class="nav-icon">◌</span>
+                    <span class="nav-text">Messages</span>
+                    <span class="nav-badge">4</span>
+                </a>
+
+                <a
+                    href="notifications.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="notifications"
+                >
+                    <span class="nav-icon">♢</span>
+                    <span class="nav-text">Notifications</span>
+                    <span class="nav-badge">7</span>
+                </a>
+
+            </div>
+
+            <div class="nav-section">
+
+                <span class="nav-label">TOOLS</span>
+
+                <a
+                    href="calculator.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="calculator"
+                >
+                    <span class="nav-icon">▦</span>
+                    <span class="nav-text">Calculator</span>
+                </a>
+
+                <a
+                    href="ai-workspace.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="ai-workspace"
+                >
+                    <span class="nav-icon">✦</span>
+                    <span class="nav-text">AI Workspace</span>
+                    <span class="nav-ai-badge">AI</span>
+                </a>
+
+            </div>
+
+            <div class="nav-section">
+
+                <span class="nav-label">ACCOUNT</span>
+
+                <a
+                    href="settings.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="settings"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span class="nav-text">Settings</span>
+                </a>
+
+                <a
+                    href="profile.html"
+                    class="nav-link active"
+                    data-nav-link
+                    data-page-link="profile"
+                    aria-current="page"
+                >
+                    <span class="nav-icon">●</span>
+                    <span class="nav-text">Profile</span>
+                </a>
+
+                <a
+                    href="upgrade.html"
+                    class="nav-link"
+                    data-nav-link
+                    data-page-link="upgrade"
+                >
+                    <span class="nav-icon">◆</span>
+                    <span class="nav-text">Upgrade</span>
+                </a>
+
+            </div>
+
+        </nav>
+
+        <!-- Sidebar footer -->
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-upgrade-card">
+
+                <div class="upgrade-glow"></div>
+
+                <div class="upgrade-icon">✦</div>
+
+                <div class="upgrade-copy">
+                    <strong>Unlock Pro</strong>
+                    <span>More power for your workspace.</span>
+                </div>
+
+                <a
+                    href="upgrade.html"
+                    class="upgrade-link"
+                >
+                    Upgrade
+                </a>
+
+            </div>
+
+            <div class="sidebar-user">
+
+                <div class="sidebar-user-avatar">
+                    <span data-sidebar-initials>AR</span>
+                </div>
+
+                <div class="sidebar-user-info">
+                    <strong data-sidebar-user-name>Arwa</strong>
+                    <span data-sidebar-user-email>hello@veltrix.app</span>
+                </div>
+
+                <button
+                    type="button"
+                    class="sidebar-user-more"
+                    data-profile-menu
+                    aria-label="Account menu"
+                >
+                    ⋮
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- =====================================================
+         MAIN AREA
+    ====================================================== -->
+
+    <main class="main-content">
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    data-mobile-menu
+                    aria-label="Open menu"
+                >
+                    ☰
+                </button>
+
+                <button
+                    type="button"
+                    class="sidebar-collapse-button"
+                    data-sidebar-collapse
+                    aria-label="Collapse sidebar"
+                >
+                    ‹
+                </button>
+
+                <div class="breadcrumb">
+
+                    <a href="../index.html">
+                        Veltrix
+                    </a>
+
+                    <span>/</span>
+
+                    <span>Account</span>
+
+                    <span>/</span>
+
+                    <strong>Profile</strong>
+
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <!-- Search -->
+
+                <button
+                    type="button"
+                    class="topbar-icon-button"
+                    data-global-search
+                    aria-label="Search"
+                >
+                    ⌕
+                </button>
+
+                <!-- Quick create -->
+
+                <button
+                    type="button"
+                    class="quick-create-button"
+                    data-quick-create
+                >
+                    <span>＋</span>
+                    <span>Quick Create</span>
+                </button>
+
+                <!-- Language -->
+
+                <div
+                    class="topbar-dropdown language-dropdown"
+                    data-language-dropdown
+                >
+
+                    <button
+                        type="button"
+                        class="topbar-language-button"
+                        data-language-toggle
+                        aria-expanded="false"
+                    >
+                        <span data-current-language-flag>EN</span>
+                        <span data-current-language-label>English</span>
+                        <span>⌄</span>
+                    </button>
+
+                    <div
+                        class="topbar-dropdown-menu language-menu"
+                        data-language-menu
+                        hidden
+                    >
+                        <!-- Populated by TranslationManager -->
+                    </div>
+
+                </div>
+
+                <!-- Notifications -->
+
+                <button
+                    type="button"
+                    class="topbar-icon-button notification-button"
+                    data-notifications
+                    aria-label="Notifications"
+                >
+                    ♢
+                    <span class="notification-count">7</span>
+                </button>
+
+                <!-- Theme -->
+
+                <button
+                    type="button"
+                    class="topbar-icon-button"
+                    data-theme-toggle
+                    aria-label="Toggle theme"
+                >
+                    ◐
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================== -->
+
+        <div class="content-wrapper">
+
+            <div class="profile-page">
+
+                <!-- =================================================
+                     HERO
+                ================================================== -->
+
+                <section class="profile-hero">
+
+                    <div class="profile-cover">
+                        <div class="profile-cover-grid"></div>
+                        <div class="profile-cover-orb one"></div>
+                        <div class="profile-cover-orb two"></div>
+                        <div class="profile-cover-orb three"></div>
+                    </div>
+
+                    <div class="profile-hero-content">
+
+                        <div class="profile-avatar-wrap">
+
+                            <div
+                                class="profile-avatar"
+                                id="profileAvatar"
+                                data-profile-avatar
+                            >
+                                <span data-avatar-initials>AR</span>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="avatar-edit-btn"
+                                id="openAvatarUpload"
+                                aria-label="Change profile photo"
+                                title="Change profile photo"
+                            >
+                                ✎
+                            </button>
+
+                            <span
+                                class="profile-online-dot"
+                                title="Online"
+                            ></span>
+
+                        </div>
+
+                        <div class="profile-main-info">
+
+                            <div class="profile-name-row">
+
+                                <h1
+                                    class="profile-name"
+                                    data-profile-display-name
+                                >
+                                    Arwa
+                                </h1>
+
+                                <span
+                                    class="verified-badge"
+                                    title="Verified account"
+                                >
+                                    ✓
+                                </span>
+
+                            </div>
+
+                            <p class="profile-role">
+                                Workspace Owner · Veltrix HQ
+                            </p>
+
+                            <div class="profile-location">
+
+                                <span>
+                                    ◉
+                                    <span data-profile-location>
+                                        Algeria
+                                    </span>
+                                </span>
+
+                                <span>
+                                    ●
+                                    Joined
+                                    <span data-profile-joined>
+                                        January 2026
+                                    </span>
+                                </span>
+
+                                <span>
+                                    ◷
+                                    <span data-profile-timezone>
+                                        UTC+01:00
+                                    </span>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="profile-actions">
+
+                            <button
+                                type="button"
+                                class="profile-btn primary"
+                                id="heroEditProfile"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 20h9"/>
+                                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/>
+                                </svg>
+                                Edit profile
+                            </button>
+
+                            <button
+                                type="button"
+                                class="profile-btn"
+                                id="shareProfile"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="18" cy="5" r="3"/>
+                                    <circle cx="6" cy="12" r="3"/>
+                                    <circle cx="18" cy="19" r="3"/>
+                                    <path d="m8.59 13.51 6.83 3.98"/>
+                                    <path d="m15.41 6.51-6.82 3.98"/>
+                                </svg>
+                                Share
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- =================================================
+                     STATS
+                ================================================== -->
+
+                <section class="profile-stats">
+
+                    <div class="profile-stat">
+
+                        <div class="profile-stat-icon">
+                            ◈
+                        </div>
+
+                        <div
+                            class="profile-stat-value"
+                            data-stat-projects
+                        >
+                            24
+                        </div>
+
+                        <div class="profile-stat-label">
+                            Projects completed
+                        </div>
+
+                    </div>
+
+                    <div class="profile-stat">
+
+                        <div class="profile-stat-icon">
+                            ◷
+                        </div>
+
+                        <div
+                            class="profile-stat-value"
+                            data-stat-hours
+                        >
+                            1,284
+                        </div>
+
+                        <div class="profile-stat-label">
+                            Workspace hours
+                        </div>
+
+                    </div>
+
+                    <div class="profile-stat">
+
+                        <div class="profile-stat-icon">
+                            ◆
+                        </div>
+
+                        <div
+                            class="profile-stat-value"
+                            data-stat-tasks
+                        >
+                            186
+                        </div>
+
+                        <div class="profile-stat-label">
+                            Tasks completed
+                        </div>
+
+                    </div>
+
+                    <div class="profile-stat">
+
+                        <div class="profile-stat-icon">
+                            ★
+                        </div>
+
+                        <div
+                            class="profile-stat-value"
+                            data-stat-streak
+                        >
+                            42
+                        </div>
+
+                        <div class="profile-stat-label">
+                            Day activity streak
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <div style="height:24px"></div>
+
+                <!-- =================================================
+                     MAIN LAYOUT
+                ================================================== -->
+
+                <div class="profile-layout">
+
+                    <!-- =================================================
+                         LEFT COLUMN
+                    ================================================== -->
+
+                    <div class="profile-left">
+
+                        <!-- =============================================
+                             PERSONAL INFORMATION
+                        ============================================== -->
+
+                        <section
+                            class="profile-card"
+                            id="personalInformation"
+                        >
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Personal information
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Manage the information shown on your Veltrix profile.
+                                    </p>
+                                </div>
+
+                                <span class="status-badge success">
+                                    <span class="status-dot"></span>
+                                    Profile active
+                                </span>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <form
+                                    id="profileInformationForm"
+                                    novalidate
+                                >
+
+                                    <div class="profile-form-grid">
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileFirstName"
+                                            >
+                                                First name
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profileFirstName"
+                                                name="firstName"
+                                                type="text"
+                                                value="Arwa"
+                                                autocomplete="given-name"
+                                                maxlength="60"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileLastName"
+                                            >
+                                                Last name
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profileLastName"
+                                                name="lastName"
+                                                type="text"
+                                                value=""
+                                                autocomplete="family-name"
+                                                maxlength="60"
+                                                placeholder="Your last name"
+                                            >
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileUsername"
+                                            >
+                                                Username
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profileUsername"
+                                                name="username"
+                                                type="text"
+                                                value="arwa"
+                                                autocomplete="username"
+                                                maxlength="40"
+                                            >
+
+                                            <span class="field-hint">
+                                                Your unique public profile name.
+                                            </span>
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileJobTitle"
+                                            >
+                                                Job title
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profileJobTitle"
+                                                name="jobTitle"
+                                                type="text"
+                                                value="Workspace Owner"
+                                                maxlength="80"
+                                            >
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileEmail"
+                                            >
+                                                Email address
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profileEmail"
+                                                name="email"
+                                                type="email"
+                                                value="hello@veltrix.app"
+                                                autocomplete="email"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profilePhone"
+                                            >
+                                                Phone number
+                                            </label>
+
+                                            <input
+                                                class="profile-input"
+                                                id="profilePhone"
+                                                name="phone"
+                                                type="tel"
+                                                value=""
+                                                placeholder="+213 ..."
+                                                autocomplete="tel"
+                                            >
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileCountry"
+                                            >
+                                                Country
+                                            </label>
+
+                                            <select
+                                                class="profile-select"
+                                                id="profileCountry"
+                                                name="country"
+                                            >
+                                                <option value="DZ" selected>Algeria</option>
+                                                <option value="FR">France</option>
+                                                <option value="US">United States</option>
+                                                <option value="GB">United Kingdom</option>
+                                                <option value="CA">Canada</option>
+                                                <option value="DE">Germany</option>
+                                                <option value="ES">Spain</option>
+                                                <option value="IT">Italy</option>
+                                                <option value="TR">Türkiye</option>
+                                                <option value="JP">Japan</option>
+                                                <option value="KR">South Korea</option>
+                                                <option value="OTHER">Other</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="profile-field">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileTimezone"
+                                            >
+                                                Time zone
+                                            </label>
+
+                                            <select
+                                                class="profile-select"
+                                                id="profileTimezone"
+                                                name="timezone"
+                                            >
+                                                <option value="UTC-08:00">UTC−08:00</option>
+                                                <option value="UTC-05:00">UTC−05:00</option>
+                                                <option value="UTC+00:00">UTC+00:00</option>
+                                                <option value="UTC+01:00" selected>UTC+01:00</option>
+                                                <option value="UTC+02:00">UTC+02:00</option>
+                                                <option value="UTC+03:00">UTC+03:00</option>
+                                                <option value="UTC+04:00">UTC+04:00</option>
+                                                <option value="UTC+05:30">UTC+05:30</option>
+                                                <option value="UTC+08:00">UTC+08:00</option>
+                                                <option value="UTC+09:00">UTC+09:00</option>
+                                            </select>
+
+                                        </div>
+
+                                        <div class="profile-field full">
+
+                                            <label
+                                                class="profile-label"
+                                                for="profileBio"
+                                            >
+                                                Bio
+                                            </label>
+
+                                            <textarea
+                                                class="profile-textarea"
+                                                id="profileBio"
+                                                name="bio"
+                                                maxlength="300"
+                                                placeholder="Tell your team a little about yourself..."
+                                            >Building ideas, managing projects and creating better digital experiences with Veltrix.</textarea>
+
+                                            <span
+                                                class="field-hint"
+                                                id="bioCounter"
+                                            >
+                                                0 / 300
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-footer">
+
+                                        <button
+                                            type="button"
+                                            class="profile-btn"
+                                            id="resetProfileForm"
+                                        >
+                                            Reset
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="profile-btn primary"
+                                        >
+                                            Save changes
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             SECURITY
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Account security
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Keep your account protected with stronger security controls.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="security-score">
+
+                                    <div class="security-score-circle">
+                                        <span class="security-score-number">
+                                            82%
+                                        </span>
+                                    </div>
+
+                                    <div>
+                                        <div class="security-score-title">
+                                            Strong security
+                                        </div>
+
+                                        <div class="security-score-text">
+                                            Your account is protected by several active security controls.
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Two-factor authentication
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Require an additional verification step when signing in.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="profileTwoFactor"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Login alerts
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Get notified when your account is accessed from a new device.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="profileLoginAlerts"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Security emails
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Receive important security and account notifications.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="profileSecurityEmails"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="form-footer">
+
+                                    <button
+                                        type="button"
+                                        class="profile-btn primary"
+                                        id="openPasswordChange"
+                                    >
+                                        Change password
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             RECENT ACTIVITY
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Recent account activity
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        A quick overview of recent profile and security events.
+                                    </p>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="profile-btn"
+                                    id="viewAllActivity"
+                                >
+                                    View all
+                                </button>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="activity-list">
+
+                                    <div class="activity-item">
+
+                                        <div class="activity-icon">
+                                            ✓
+                                        </div>
+
+                                        <div class="activity-content">
+
+                                            <div class="activity-title">
+                                                Profile information was updated
+                                            </div>
+
+                                            <div class="activity-time">
+                                                Today · 18:42
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="activity-item">
+
+                                        <div class="activity-icon">
+                                            ◈
+                                        </div>
+
+                                        <div class="activity-content">
+
+                                            <div class="activity-title">
+                                                New workspace session started
+                                            </div>
+
+                                            <div class="activity-time">
+                                                Today · 16:08
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="activity-item">
+
+                                        <div class="activity-icon">
+                                            ✦
+                                        </div>
+
+                                        <div class="activity-content">
+
+                                            <div class="activity-title">
+                                                AI Workspace was opened
+                                            </div>
+
+                                            <div class="activity-time">
+                                                Yesterday · 21:31
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="activity-item">
+
+                                        <div class="activity-icon">
+                                            ⚙
+                                        </div>
+
+                                        <div class="activity-content">
+
+                                            <div class="activity-title">
+                                                Account preferences were synchronized
+                                            </div>
+
+                                            <div class="activity-time">
+                                                2 days ago · 12:15
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                    <!-- =================================================
+                         RIGHT COLUMN
+                    ================================================== -->
+
+                    <div class="profile-right">
+
+                        <!-- =============================================
+                             ACCOUNT OVERVIEW
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Account overview
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Your current account details.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="profile-info-list">
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Account ID</span>
+                                        <span
+                                            class="info-value"
+                                            id="accountId"
+                                        >
+                                            VX-2026-0842
+                                        </span>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Plan</span>
+                                        <span class="status-badge info">
+                                            Pro Trial
+                                        </span>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Workspace</span>
+                                        <span
+                                            class="info-value"
+                                            data-workspace-name
+                                        >
+                                            Veltrix HQ
+                                        </span>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Language</span>
+                                        <span
+                                            class="info-value"
+                                            data-profile-language
+                                        >
+                                            English
+                                        </span>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Member since</span>
+                                        <span class="info-value">
+                                            January 2026
+                                        </span>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <span class="info-label">Status</span>
+                                        <span class="status-badge success">
+                                            <span class="status-dot"></span>
+                                            Active
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             PROFILE COMPLETION
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Profile completion
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Complete your profile to unlock the best experience.
+                                    </p>
+                                </div>
+
+                                <strong
+                                    id="profileCompletionPercent"
+                                    style="font-size:13px;color:#5eead4;"
+                                >
+                                    82%
+                                </strong>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="progress-wrap">
+
+                                    <div class="progress-head">
+                                        <span>Completion</span>
+                                        <span id="profileCompletionText">
+                                            82 / 100
+                                        </span>
+                                    </div>
+
+                                    <div class="progress-track">
+                                        <div
+                                            class="progress-fill"
+                                            id="profileCompletionBar"
+                                            style="width:82%"
+                                        ></div>
+                                    </div>
+
+                                </div>
+
+                                <div style="height:14px"></div>
+
+                                <div class="profile-info-list">
+
+                                    <div class="profile-info-row">
+
+                                        <span class="info-label">
+                                            Profile photo
+                                        </span>
+
+                                        <span
+                                            class="status-badge success"
+                                            id="photoCompletion"
+                                        >
+                                            Complete
+                                        </span>
+
+                                    </div>
+
+                                    <div class="profile-info-row">
+
+                                        <span class="info-label">
+                                            Personal information
+                                        </span>
+
+                                        <span class="status-badge success">
+                                            Complete
+                                        </span>
+
+                                    </div>
+
+                                    <div class="profile-info-row">
+
+                                        <span class="info-label">
+                                            Bio
+                                        </span>
+
+                                        <span class="status-badge success">
+                                            Complete
+                                        </span>
+
+                                    </div>
+
+                                    <div class="profile-info-row">
+
+                                        <span class="info-label">
+                                            Phone number
+                                        </span>
+
+                                        <span
+                                            class="status-badge warning"
+                                            id="phoneCompletion"
+                                        >
+                                            Add phone
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             SESSIONS
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Active sessions
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Devices currently connected to your account.
+                                    </p>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="profile-btn"
+                                    id="signOutOtherSessions"
+                                >
+                                    Sign out others
+                                </button>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div
+                                    class="session-list"
+                                    id="sessionList"
+                                >
+
+                                    <div
+                                        class="session-item"
+                                        data-session="current"
+                                    >
+
+                                        <div class="session-device">
+                                            ▣
+                                        </div>
+
+                                        <div class="session-details">
+
+                                            <div class="session-name">
+                                                Windows · Chrome
+                                            </div>
+
+                                            <div class="session-meta">
+                                                Current session · Active now
+                                            </div>
+
+                                        </div>
+
+                                        <span class="session-current">
+                                            Current
+                                        </span>
+
+                                    </div>
+
+                                    <div
+                                        class="session-item"
+                                        data-session="mobile"
+                                    >
+
+                                        <div class="session-device">
+                                            ▯
+                                        </div>
+
+                                        <div class="session-details">
+
+                                            <div class="session-name">
+                                                Android device
+                                            </div>
+
+                                            <div class="session-meta">
+                                                Last active 2 hours ago
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="session-remove"
+                                            data-remove-session="mobile"
+                                            aria-label="Sign out Android device"
+                                        >
+                                            ×
+                                        </button>
+
+                                    </div>
+
+                                    <div
+                                        class="session-item"
+                                        data-session="laptop"
+                                    >
+
+                                        <div class="session-device">
+                                            ▣
+                                        </div>
+
+                                        <div class="session-details">
+
+                                            <div class="session-name">
+                                                Windows · Edge
+                                            </div>
+
+                                            <div class="session-meta">
+                                                Last active yesterday
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="session-remove"
+                                            data-remove-session="laptop"
+                                            aria-label="Sign out Edge device"
+                                        >
+                                            ×
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             SOCIAL CONNECTIONS
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Connected accounts
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Manage services connected to your profile.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="social-list">
+
+                                    <div
+                                        class="social-item"
+                                        data-social="google"
+                                    >
+
+                                        <div class="social-icon">
+                                            G
+                                        </div>
+
+                                        <div class="social-copy">
+
+                                            <div class="social-name">
+                                                Google
+                                            </div>
+
+                                            <div
+                                                class="social-handle"
+                                                data-social-status
+                                            >
+                                                Connected
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="social-action"
+                                            data-social-toggle="google"
+                                        >
+                                            Disconnect
+                                        </button>
+
+                                    </div>
+
+                                    <div
+                                        class="social-item"
+                                        data-social="github"
+                                    >
+
+                                        <div class="social-icon">
+                                            ◇
+                                        </div>
+
+                                        <div class="social-copy">
+
+                                            <div class="social-name">
+                                                GitHub
+                                            </div>
+
+                                            <div
+                                                class="social-handle"
+                                                data-social-status
+                                            >
+                                                Not connected
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="social-action"
+                                            data-social-toggle="github"
+                                        >
+                                            Connect
+                                        </button>
+
+                                    </div>
+
+                                    <div
+                                        class="social-item"
+                                        data-social="calendar"
+                                    >
+
+                                        <div class="social-icon">
+                                            □
+                                        </div>
+
+                                        <div class="social-copy">
+
+                                            <div class="social-name">
+                                                Calendar
+                                            </div>
+
+                                            <div
+                                                class="social-handle"
+                                                data-social-status
+                                            >
+                                                Connected
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            class="social-action"
+                                            data-social-toggle="calendar"
+                                        >
+                                            Disconnect
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                        <!-- =============================================
+                             PREFERENCES
+                        ============================================== -->
+
+                        <section class="profile-card">
+
+                            <div class="profile-card-header">
+
+                                <div>
+                                    <h2 class="profile-card-title">
+                                        Profile preferences
+                                    </h2>
+
+                                    <p class="profile-card-subtitle">
+                                        Customize how your account behaves.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <div class="profile-card-body">
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Public profile
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Allow workspace members to view your profile.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="publicProfileToggle"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Activity visibility
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Show your recent activity to workspace members.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="activityVisibilityToggle"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-row">
+
+                                    <div class="setting-copy">
+
+                                        <div class="setting-title">
+                                            Product tips
+                                        </div>
+
+                                        <div class="setting-description">
+                                            Receive useful tips about Veltrix features.
+                                        </div>
+
+                                    </div>
+
+                                    <label class="profile-toggle">
+
+                                        <input
+                                            type="checkbox"
+                                            id="productTipsToggle"
+                                            checked
+                                        >
+
+                                        <span class="toggle-track"></span>
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- =========================================================
+     AVATAR UPLOAD MODAL
+========================================================= -->
+
+<div
+    class="profile-modal"
+    id="avatarModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="avatarModalTitle"
+>
+
+    <div class="profile-modal-box">
+
+        <div class="profile-modal-head">
+
+            <div
+                class="profile-modal-title"
+                id="avatarModalTitle"
+            >
+                Change profile photo
+            </div>
+
+            <button
+                type="button"
+                class="profile-modal-close"
+                id="closeAvatarModal"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="profile-modal-body">
+
+            <div
+                class="upload-dropzone"
+                id="avatarDropzone"
+            >
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <div class="upload-title">
+                    Upload a new profile photo
+                </div>
+
+                <div class="upload-text">
+                    PNG, JPG or WEBP · Recommended square image
+                </div>
+
+                <div class="upload-actions">
+
+                    <button
+                        type="button"
+                        class="profile-btn primary"
+                        id="chooseAvatarButton"
+                    >
+                        Choose image
+                    </button>
+
+                    <button
+                        type="button"
+                        class="profile-btn"
+                        id="removeAvatarButton"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+                <input
+                    type="file"
+                    id="avatarFileInput"
+                    accept="image/png,image/jpeg,image/webp"
+                    hidden
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+     PASSWORD MODAL
+========================================================= -->
+
+<div
+    class="profile-modal"
+    id="passwordModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="passwordModalTitle"
+>
+
+    <div class="profile-modal-box">
+
+        <div class="profile-modal-head">
+
+            <div
+                class="profile-modal-title"
+                id="passwordModalTitle"
+            >
+                Change password
+            </div>
+
+            <button
+                type="button"
+                class="profile-modal-close"
+                id="closePasswordModal"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="profile-modal-body">
+
+            <form
+                id="passwordForm"
+                novalidate
+            >
+
+                <div class="profile-field">
+
+                    <label
+                        class="profile-label"
+                        for="currentPassword"
+                    >
+                        Current password
+                    </label>
+
+                    <div class="profile-input-group">
+
+                        <input
+                            class="profile-input"
+                            id="currentPassword"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-password-toggle="currentPassword"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="profile-field">
+
+                    <label
+                        class="profile-label"
+                        for="newPassword"
+                    >
+                        New password
+                    </label>
+
+                    <div class="profile-input-group">
+
+                        <input
+                            class="profile-input"
+                            id="newPassword"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-password-toggle="newPassword"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="field-hint"
+                        id="passwordStrength"
+                    >
+                        Use at least 8 characters with a mix of letters, numbers and symbols.
+                    </div>
+
+                </div>
+
+                <div style="height:14px"></div>
+
+                <div class="profile-field">
+
+                    <label
+                        class="profile-label"
+                        for="confirmPassword"
+                    >
+                        Confirm new password
+                    </label>
+
+                    <div class="profile-input-group">
+
+                        <input
+                            class="profile-input"
+                            id="confirmPassword"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-password-toggle="confirmPassword"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="form-footer">
+
+                    <button
+                        type="button"
+                        class="profile-btn"
+                        id="cancelPasswordChange"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="profile-btn primary"
+                    >
+                        Update password
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+     SCRIPT
+========================================================= -->
+
+<script src="../js/script.js" defer></script>
+
+<script>
+(function () {
+    "use strict";
+
+    /* =========================================================
+       VELTRIX PROFILE PAGE ENGINE
+    ========================================================= */
+
+    const PROFILE_STORAGE_KEY = "veltrix_profile_data_v1";
+    const PROFILE_SETTINGS_KEY = "veltrix_profile_settings_v1";
+    const SOCIAL_STORAGE_KEY = "veltrix_social_connections_v1";
+    const SESSIONS_STORAGE_KEY = "veltrix_sessions_v1";
+
+    const DEFAULT_PROFILE = {
+        firstName: "Arwa",
+        lastName: "",
+        username: "arwa",
+        jobTitle: "Workspace Owner",
+        email: "hello@veltrix.app",
+        phone: "",
+        country: "DZ",
+        timezone: "UTC+01:00",
+        bio: "Building ideas, managing projects and creating better digital experiences with Veltrix.",
+        avatar: ""
+    };
+
+    const DEFAULT_SETTINGS = {
+        twoFactor: true,
+        loginAlerts: true,
+        securityEmails: true,
+        publicProfile: true,
+        activityVisibility: true,
+        productTips: true
+    };
+
+    const DEFAULT_SOCIAL = {
+        google: true,
+        github: false,
+        calendar: true
+    };
+
+    let profileData = loadJSON(
+        PROFILE_STORAGE_KEY,
+        DEFAULT_PROFILE
+    );
+
+    let profileSettings = loadJSON(
+        PROFILE_SETTINGS_KEY,
+        DEFAULT_SETTINGS
+    );
+
+    let socialConnections = loadJSON(
+        SOCIAL_STORAGE_KEY,
+        DEFAULT_SOCIAL
+    );
+
+    let sessions = loadJSON(
+        SESSIONS_STORAGE_KEY,
+        {
+            mobile: true,
+            laptop: true
+        }
+    );
+
+    /* =========================================================
+       UTILITIES
+    ========================================================= */
+
+    function loadJSON(key, fallback) {
+
+        try {
+
+            const raw = localStorage.getItem(key);
+
+            if (!raw) {
+                return structuredCloneSafe(fallback);
+            }
+
+            const parsed = JSON.parse(raw);
+
+            return {
+                ...structuredCloneSafe(fallback),
+                ...parsed
+            };
+
+        } catch (error) {
+
+            console.warn(
+                "[Veltrix Profile] Failed to load data.",
+                error
+            );
+
+            return structuredCloneSafe(fallback);
+        }
+    }
+
+    function saveJSON(key, value) {
+
+        try {
+
+            localStorage.setItem(
+                key,
+                JSON.stringify(value)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "[Veltrix Profile] Failed to save data.",
+                error
+            );
+
+        }
+    }
+
+    function structuredCloneSafe(value) {
+
+        return JSON.parse(
+            JSON.stringify(value)
+        );
+    }
+
+    function $(selector, root = document) {
+        return root.querySelector(selector);
+    }
+
+    function $$(selector, root = document) {
+        return Array.from(
+            root.querySelectorAll(selector)
+        );
+    }
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function getDisplayName() {
+
+        const first = String(
+            profileData.firstName || ""
+        ).trim();
+
+        const last = String(
+            profileData.lastName || ""
+        ).trim();
+
+        return (
+            [first, last]
+                .filter(Boolean)
+                .join(" ")
+                .trim()
+            || "Veltrix User"
+        );
+    }
+
+    function getInitials(name = getDisplayName()) {
+
+        const parts = String(name)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+        if (!parts.length) {
+            return "VX";
+        }
+
+        if (parts.length === 1) {
+
+            return parts[0]
+                .slice(0, 2)
+                .toUpperCase();
+
+        }
+
+        return (
+            parts[0][0] +
+            parts[parts.length - 1][0]
+        ).toUpperCase();
+    }
+
+    function notify(message, type = "success") {
+
+        if (
+            window.Veltrix &&
+            window.Veltrix.toast &&
+            typeof window.Veltrix.toast.show === "function"
+        ) {
+
+            window.Veltrix.toast.show(
+                message,
+                type
+            );
+
+            return;
+        }
+
+        let toast = document.getElementById(
+            "profileFallbackToast"
+        );
+
+        if (!toast) {
+
+            toast = document.createElement("div");
+
+            toast.id = "profileFallbackToast";
+
+            Object.assign(
+                toast.style,
+                {
+                    position: "fixed",
+                    right: "20px",
+                    bottom: "20px",
+                    zIndex: "100000",
+                    maxWidth: "340px",
+                    padding: "13px 16px",
+                    borderRadius: "12px",
+                    background: "#0f172a",
+                    color: "#fff",
+                    border: "1px solid rgba(255,255,255,.12)",
+                    boxShadow: "0 15px 40px rgba(0,0,0,.3)",
+                    fontSize: "13px"
+                }
+            );
+
+            document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        clearTimeout(
+            toast._timer
+        );
+
+        toast._timer = setTimeout(
+            () => {
+                toast.remove();
+            },
+            3000
+        );
+    }
+
+    /* =========================================================
+       PROFILE RENDERING
+    ========================================================= */
+
+    function renderProfile() {
+
+        const displayName = getDisplayName();
+        const initials = getInitials(displayName);
+
+        $$("[data-profile-display-name]")
+            .forEach(element => {
+                element.textContent = displayName;
+            });
+
+        $$("[data-avatar-initials]")
+            .forEach(element => {
+                element.textContent = initials;
+            });
+
+        $$("[data-sidebar-initials]")
+            .forEach(element => {
+                element.textContent = initials;
+            });
+
+        $$("[data-sidebar-user-name]")
+            .forEach(element => {
+                element.textContent = displayName;
+            });
+
+        $$("[data-sidebar-user-email]")
+            .forEach(element => {
+                element.textContent =
+                    profileData.email || "No email";
+            });
+
+        const location = $("#profileCountry");
+
+        if (location) {
+            const option = location.options[
+                location.selectedIndex
+            ];
+
+            const text =
+                option ?
+                option.textContent :
+                "Algeria";
+
+            const display = $(
+                "[data-profile-location]"
+            );
+
+            if (display) {
+                display.textContent = text;
+            }
+        }
+
+        $$("[data-profile-timezone]")
+            .forEach(element => {
+                element.textContent =
+                    profileData.timezone ||
+                    "UTC+01:00";
+            });
+
+        const avatar = $(
+            "[data-profile-avatar]"
+        );
+
+        if (avatar) {
+
+            if (profileData.avatar) {
+
+                avatar.innerHTML =
+                    '<img src="' +
+                    escapeHTML(profileData.avatar) +
+                    '" alt="' +
+                    escapeHTML(displayName) +
+                    '">';
+
+            } else {
+
+                avatar.innerHTML =
+                    '<span data-avatar-initials>' +
+                    escapeHTML(initials) +
+                    '</span>';
+            }
+        }
+
+        updateProfileCompletion();
+    }
+
+    function fillForm() {
+
+        const fields = {
+            profileFirstName: profileData.firstName,
+            profileLastName: profileData.lastName,
+            profileUsername: profileData.username,
+            profileJobTitle: profileData.jobTitle,
+            profileEmail: profileData.email,
+            profilePhone: profileData.phone,
+            profileCountry: profileData.country,
+            profileTimezone: profileData.timezone,
+            profileBio: profileData.bio
+        };
+
+        Object.entries(fields)
+            .forEach(([id, value]) => {
+
+                const element =
+                    document.getElementById(id);
+
+                if (!element) {
+                    return;
+                }
+
+                element.value = value ?? "";
+            });
+
+        updateBioCounter();
+    }
+
+    function collectProfileForm() {
+
+        return {
+            firstName: $("#profileFirstName")?.value.trim() || "",
+            lastName: $("#profileLastName")?.value.trim() || "",
+            username: $("#profileUsername")?.value.trim() || "",
+            jobTitle: $("#profileJobTitle")?.value.trim() || "",
+            email: $("#profileEmail")?.value.trim() || "",
+            phone: $("#profilePhone")?.value.trim() || "",
+            country: $("#profileCountry")?.value || "DZ",
+            timezone: $("#profileTimezone")?.value || "UTC+01:00",
+            bio: $("#profileBio")?.value.trim() || "",
+            avatar: profileData.avatar || ""
+        };
+    }
+
+    /* =========================================================
+       PROFILE COMPLETION
+    ========================================================= */
+
+    function updateProfileCompletion() {
+
+        const checks = [
+            Boolean(profileData.avatar),
+            Boolean(profileData.firstName),
+            Boolean(profileData.username),
+            Boolean(profileData.email),
+            Boolean(profileData.jobTitle),
+            Boolean(profileData.country),
+            Boolean(profileData.timezone),
+            Boolean(profileData.bio),
+            Boolean(profileData.phone),
+            Boolean(profileData.lastName)
+        ];
+
+        const completed =
+            checks.filter(Boolean).length;
+
+        const percentage =
+            Math.round(
+                completed /
+                checks.length *
+                100
+            );
+
+        const bar = $(
+            "#profileCompletionBar"
+        );
+
+        const percent = $(
+            "#profileCompletionPercent"
+        );
+
+        const text = $(
+            "#profileCompletionText"
+        );
+
+        if (bar) {
+            bar.style.width =
+                percentage + "%";
+        }
+
+        if (percent) {
+            percent.textContent =
+                percentage + "%";
+        }
+
+        if (text) {
+            text.textContent =
+                percentage + " / 100";
+        }
+
+        const photoStatus = $(
+            "#photoCompletion"
+        );
+
+        if (photoStatus) {
+
+            if (profileData.avatar) {
+
+                photoStatus.textContent =
+                    "Complete";
+
+                photoStatus.className =
+                    "status-badge success";
+
+            } else {
+
+                photoStatus.textContent =
+                    "Add photo";
+
+                photoStatus.className =
+                    "status-badge warning";
+            }
+        }
+
+        const phoneStatus = $(
+            "#phoneCompletion"
+        );
+
+        if (phoneStatus) {
+
+            if (profileData.phone) {
+
+                phoneStatus.textContent =
+                    "Complete";
+
+                phoneStatus.className =
+                    "status-badge success";
+
+            } else {
+
+                phoneStatus.textContent =
+                    "Add phone";
+
+                phoneStatus.className =
+                    "status-badge warning";
+            }
+        }
+    }
+
+    /* =========================================================
+       BIO COUNTER
+    ========================================================= */
+
+    function updateBioCounter() {
+
+        const bio = $(
+            "#profileBio"
+        );
+
+        const counter = $(
+            "#bioCounter"
+        );
+
+        if (!bio || !counter) {
+            return;
+        }
+
+        counter.textContent =
+            bio.value.length +
+            " / 300";
+    }
+
+    /* =========================================================
+       SAVE PROFILE
+    ========================================================= */
+
+    function saveProfile() {
+
+        const nextProfile =
+            collectProfileForm();
+
+        if (!nextProfile.firstName) {
+
+            notify(
+                "Please enter your first name.",
+                "error"
+            );
+
+            $("#profileFirstName")?.focus();
+
+            return false;
+        }
+
+        if (
+            nextProfile.email &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                .test(nextProfile.email)
+        ) {
+
+            notify(
+                "Please enter a valid email address.",
+                "error"
+            );
+
+            $("#profileEmail")?.focus();
+
+            return false;
+        }
+
+        profileData =
+            nextProfile;
+
+        saveJSON(
+            PROFILE_STORAGE_KEY,
+            profileData
+        );
+
+        renderProfile();
+
+        syncVeltrixProfile();
+
+        notify(
+            "Profile changes saved successfully."
+        );
+
+        return true;
+    }
+
+    function syncVeltrixProfile() {
+
+        try {
+
+            localStorage.setItem(
+                "veltrix_user_name",
+                getDisplayName()
+            );
+
+            localStorage.setItem(
+                "veltrix_user_email",
+                profileData.email || ""
+            );
+
+        } catch (error) {
+            console.warn(error);
+        }
+    }
+
+    /* =========================================================
+       AVATAR
+    ========================================================= */
+
+    function openAvatarModal() {
+
+        $("#avatarModal")
+            ?.classList.add("active");
+
+    }
+
+    function closeAvatarModal() {
+
+        $("#avatarModal")
+            ?.classList.remove("active");
+
+    }
+
+    function processAvatarFile(file) {
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+
+            notify(
+                "Please select a valid image file.",
+                "error"
+            );
+
+            return;
+        }
+
+        const maxSize =
+            5 * 1024 * 1024;
+
+        if (file.size > maxSize) {
+
+            notify(
+                "The image must be smaller than 5 MB.",
+                "error"
+            );
+
+            return;
+        }
+
+        const reader =
+            new FileReader();
+
+        reader.onload = function (event) {
+
+            profileData.avatar =
+                event.target.result;
+
+            saveJSON(
+                PROFILE_STORAGE_KEY,
+                profileData
+            );
+
+            renderProfile();
+
+            closeAvatarModal();
+
+            notify(
+                "Profile photo updated."
+            );
+        };
+
+        reader.onerror = function () {
+
+            notify(
+                "Could not read the selected image.",
+                "error"
+            );
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function removeAvatar() {
+
+        if (!profileData.avatar) {
+
+            notify(
+                "There is no profile photo to remove."
+            );
+
+            return;
+        }
+
+        profileData.avatar = "";
+
+        saveJSON(
+            PROFILE_STORAGE_KEY,
+            profileData
+        );
+
+        renderProfile();
+
+        closeAvatarModal();
+
+        notify(
+            "Profile photo removed."
+        );
+    }
+
+    /* =========================================================
+       PASSWORD
+    ========================================================= */
+
+    function openPasswordModal() {
+
+        const modal = $(
+            "#passwordModal"
+        );
+
+        if (!modal) {
+            return;
+        }
+
+        modal.classList.add("active");
+
+        setTimeout(
+            () => {
+                $("#currentPassword")?.focus();
+            },
+            80
+        );
+    }
+
+    function closePasswordModal() {
+
+        $("#passwordModal")
+            ?.classList.remove("active");
+
+        $("#passwordForm")
+            ?.reset();
+
+        const strength = $(
+            "#passwordStrength"
+        );
+
+        if (strength) {
+
+            strength.textContent =
+                "Use at least 8 characters with a mix of letters, numbers and symbols.";
+        }
+    }
+
+    function calculatePasswordStrength(password) {
+
+        let score = 0;
+
+        if (password.length >= 8) {
+            score++;
+        }
+
+        if (password.length >= 12) {
+            score++;
+        }
+
+        if (/[a-z]/.test(password)) {
+            score++;
+        }
+
+        if (/[A-Z]/.test(password)) {
+            score++;
+        }
+
+        if (/\d/.test(password)) {
+            score++;
+        }
+
+        if (/[^A-Za-z0-9]/.test(password)) {
+            score++;
+        }
+
+        return Math.min(
+            score,
+            6
+        );
+    }
+
+    function updatePasswordStrength() {
+
+        const input = $(
+            "#newPassword"
+        );
+
+        const output = $(
+            "#passwordStrength"
+        );
+
+        if (!input || !output) {
+            return;
+        }
+
+        const password =
+            input.value;
+
+        if (!password) {
+
+            output.textContent =
+                "Use at least 8 characters with a mix of letters, numbers and symbols.";
+
+            return;
+        }
+
+        const score =
+            calculatePasswordStrength(
+                password
+            );
+
+        if (score <= 2) {
+
+            output.textContent =
+                "Password strength: Weak";
+
+        } else if (score <= 4) {
+
+            output.textContent =
+                "Password strength: Good";
+
+        } else {
+
+            output.textContent =
+                "Password strength: Strong";
+        }
+    }
+
+    function handlePasswordSubmit(event) {
+
+        event.preventDefault();
+
+        const current =
+            $("#currentPassword")?.value || "";
+
+        const next =
+            $("#newPassword")?.value || "";
+
+        const confirm =
+            $("#confirmPassword")?.value || "";
+
+        if (!current) {
+
+            notify(
+                "Enter your current password.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (next.length < 8) {
+
+            notify(
+                "The new password must contain at least 8 characters.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (next !== confirm) {
+
+            notify(
+                "The passwords do not match.",
+                "error"
+            );
+
+            return;
+        }
+
+        /*
+         * Demo/template behavior:
+         * No real password is stored in localStorage.
+         * A production backend should perform the actual
+         * authentication/password update.
+         */
+
+        closePasswordModal();
+
+        notify(
+            "Password update request completed in demo mode."
+        );
+    }
+
+    /* =========================================================
+       SOCIAL CONNECTIONS
+    ========================================================= */
+
+    function renderSocialConnections() {
+
+        $$("[data-social]")
+            .forEach(item => {
+
+                const key =
+                    item.dataset.social;
+
+                const connected =
+                    Boolean(
+                        socialConnections[key]
+                    );
+
+                const status =
+                    $(
+                        "[data-social-status]",
+                        item
+                    );
+
+                const button =
+                    $(
+                        "[data-social-toggle]",
+                        item
+                    );
+
+                if (status) {
+
+                    status.textContent =
+                        connected ?
+                        "Connected" :
+                        "Not connected";
+                }
+
+                if (button) {
+
+                    button.textContent =
+                        connected ?
+                        "Disconnect" :
+                        "Connect";
+                }
+            });
+    }
+
+    function toggleSocial(key) {
+
+        if (
+            !Object.prototype.hasOwnProperty.call(
+                socialConnections,
+                key
+            )
+        ) {
+            return;
+        }
+
+        socialConnections[key] =
+            !socialConnections[key];
+
+        saveJSON(
+            SOCIAL_STORAGE_KEY,
+            socialConnections
+        );
+
+        renderSocialConnections();
+
+        const serviceNames = {
+            google: "Google",
+            github: "GitHub",
+            calendar: "Calendar"
+        };
+
+        const name =
+            serviceNames[key] ||
+            "Service";
+
+        notify(
+            socialConnections[key]
+                ? name + " connected."
+                : name + " disconnected."
+        );
+    }
+
+    /* =========================================================
+       SETTINGS
+    ========================================================= */
+
+    function applySettingsToUI() {
+
+        const mapping = {
+            profileTwoFactor: "twoFactor",
+            profileLoginAlerts: "loginAlerts",
+            profileSecurityEmails: "securityEmails",
+            publicProfileToggle: "publicProfile",
+            activityVisibilityToggle: "activityVisibility",
+            productTipsToggle: "productTips"
+        };
+
+        Object.entries(mapping)
+            .forEach(([id, key]) => {
+
+                const element =
+                    document.getElementById(id);
+
+                if (!element) {
+                    return;
+                }
+
+                element.checked =
+                    Boolean(
+                        profileSettings[key]
+                    );
+            });
+    }
+
+    function saveSetting(key, value) {
+
+        profileSettings[key] =
+            Boolean(value);
+
+        saveJSON(
+            PROFILE_SETTINGS_KEY,
+            profileSettings
+        );
+    }
+
+    /* =========================================================
+       LANGUAGE SYNC
+    ========================================================= */
+
+    function syncProfileLanguage() {
+
+        let languageName = "English";
+
+        try {
+
+            if (
+                window.Veltrix &&
+                window.Veltrix.language &&
+                typeof window.Veltrix.language.getAll === "function"
+            ) {
+
+                const current =
+                    window.Veltrix.language.get();
+
+                const languages =
+                    window.Veltrix.language.getAll();
+
+                const found =
+                    languages.find(
+                        item =>
+                            item.code === current ||
+                            item.id === current
+                    );
+
+                if (found) {
+
+                    languageName =
+                        found.name ||
+                        found.label ||
+                        found.nativeName ||
+                        current;
+                }
+
+            } else {
+
+                const cookie =
+                    document.cookie
+                        .split("; ")
+                        .find(
+                            item =>
+                                item.startsWith(
+                                    "googtrans="
+                                )
+                        );
+
+                if (cookie) {
+
+                    const value =
+                        decodeURIComponent(
+                            cookie.split("=")[1]
+                        );
+
+                    const code =
+                        value.split("/").pop();
+
+                    const names = {
+                        en: "English",
+                        fr: "French",
+                        es: "Spanish",
+                        it: "Italian",
+                        de: "German",
+                        pt: "Portuguese",
+                        nl: "Dutch",
+                        ru: "Russian",
+                        tr: "Turkish",
+                        ar: "Arabic",
+                        zh: "Chinese",
+                        ja: "Japanese",
+                        ko: "Korean",
+                        hi: "Hindi",
+                        id: "Indonesian",
+                        vi: "Vietnamese",
+                        pl: "Polish",
+                        sv: "Swedish",
+                        el: "Greek",
+                        cs: "Czech",
+                        da: "Danish"
+                    };
+
+                    languageName =
+                        names[code] ||
+                        languageName;
+                }
+            }
+
+        } catch (error) {
+            console.warn(error);
+        }
+
+        $$("[data-profile-language]")
+            .forEach(element => {
+                element.textContent =
+                    languageName;
+            });
+    }
+
+    /* =========================================================
+       SHARE PROFILE
+    ========================================================= */
+
+    async function shareProfile() {
+
+        const shareData = {
+            title:
+                getDisplayName() +
+                " · Veltrix Profile",
+
+            text:
+                "View my Veltrix profile.",
+
+            url:
+                window.location.href
+        };
+
+        try {
+
+            if (
+                navigator.share
+            ) {
+
+                await navigator.share(
+                    shareData
+                );
+
+                notify(
+                    "Profile share dialog opened."
+                );
+
+                return;
+            }
+
+            await navigator.clipboard.writeText(
+                window.location.href
+            );
+
+            notify(
+                "Profile link copied to clipboard."
+            );
+
+        } catch (error) {
+
+            if (
+                error &&
+                error.name === "AbortError"
+            ) {
+                return;
+            }
+
+            notify(
+                "Unable to share the profile right now.",
+                "error"
+            );
+        }
+    }
+
+    /* =========================================================
+       SESSIONS
+    ========================================================= */
+
+    function removeSession(key) {
+
+        if (!sessions[key]) {
+            return;
+        }
+
+        sessions[key] = false;
+
+        saveJSON(
+            SESSIONS_STORAGE_KEY,
+            sessions
+        );
+
+        const element = $(
+            '[data-session="' +
+            key +
+            '"]'
+        );
+
+        if (element) {
+
+            element.style.opacity = "0";
+
+            element.style.transform =
+                "translateX(15px)";
+
+            setTimeout(
+                () => {
+                    element.remove();
+                },
+                220
+            );
+        }
+
+        notify(
+            "The selected session has been signed out."
+        );
+    }
+
+    function signOutOtherSessions() {
+
+        let removed = 0;
+
+        Object.keys(sessions)
+            .forEach(key => {
+
+                if (sessions[key]) {
+
+                    sessions[key] =
+                        false;
+
+                    removed++;
+                }
+
+            });
+
+        saveJSON(
+            SESSIONS_STORAGE_KEY,
+            sessions
+        );
+
+        $$(".session-item")
+            .forEach(item => {
+
+                if (
+                    item.dataset.session !==
+                    "current"
+                ) {
+
+                    item.style.opacity = "0";
+                    item.style.transform =
+                        "translateX(15px)";
+                }
+
+            });
+
+        setTimeout(
+            () => {
+
+                $$(".session-item")
+                    .forEach(item => {
+
+                        if (
+                            item.dataset.session !==
+                            "current"
+                        ) {
+                            item.remove();
+                        }
+
+                    });
+
+            },
+            220
+        );
+
+        notify(
+            removed
+                ? "All other sessions have been signed out."
+                : "There are no other active sessions."
+        );
+    }
+
+    /* =========================================================
+       EDIT PROFILE
+    ========================================================= */
+
+    function focusProfileEditor() {
+
+        const section = $(
+            "#personalInformation"
+        );
+
+        if (!section) {
+            return;
+        }
+
+        section.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+        setTimeout(
+            () => {
+                $("#profileFirstName")
+                    ?.focus();
+            },
+            500
+        );
+    }
+
+    /* =========================================================
+       ACCOUNT ID COPY
+    ========================================================= */
+
+    async function copyAccountId() {
+
+        const element =
+            $("#accountId");
+
+        if (!element) {
+            return;
+        }
+
+        const value =
+            element.textContent.trim();
+
+        try {
+
+            await navigator.clipboard.writeText(
+                value
+            );
+
+            notify(
+                "Account ID copied."
+            );
+
+        } catch (error) {
+
+            notify(
+                "Could not copy the account ID.",
+                "error"
+            );
+        }
+    }
+
+    /* =========================================================
+       RESET PROFILE FORM
+    ========================================================= */
+
+    function resetProfileForm() {
+
+        fillForm();
+
+        notify(
+            "Unsaved profile changes were reset."
+        );
+    }
+
+    /* =========================================================
+       PASSWORD VISIBILITY
+    ========================================================= */
+
+    function setupPasswordToggles() {
+
+        $$("[data-password-toggle]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const targetId =
+                            button.dataset.passwordToggle;
+
+                        const input =
+                            document.getElementById(
+                                targetId
+                            );
+
+                        if (!input) {
+                            return;
+                        }
+
+                        const visible =
+                            input.type ===
+                            "text";
+
+                        input.type =
+                            visible ?
+                            "password" :
+                            "text";
+
+                        button.setAttribute(
+                            "aria-label",
+                            visible
+                                ? "Show password"
+                                : "Hide password"
+                        );
+                    }
+                );
+
+            });
+    }
+
+    /* =========================================================
+       AVATAR DRAG & DROP
+    ========================================================= */
+
+    function setupAvatarDropzone() {
+
+        const zone =
+            $("#avatarDropzone");
+
+        if (!zone) {
+            return;
+        }
+
+        ["dragenter", "dragover"]
+            .forEach(eventName => {
+
+                zone.addEventListener(
+                    eventName,
+                    event => {
+
+                        event.preventDefault();
+
+                        zone.classList.add(
+                            "dragover"
+                        );
+                    }
+                );
+            });
+
+        ["dragleave", "drop"]
+            .forEach(eventName => {
+
+                zone.addEventListener(
+                    eventName,
+                    event => {
+
+                        event.preventDefault();
+
+                        zone.classList.remove(
+                            "dragover"
+                        );
+                    }
+                );
+            });
+
+        zone.addEventListener(
+            "drop",
+            event => {
+
+                const files =
+                    event.dataTransfer?.files;
+
+                if (
+                    files &&
+                    files.length
+                ) {
+
+                    processAvatarFile(
+                        files[0]
+                    );
+                }
+            }
+        );
+    }
+
+    /* =========================================================
+       KEYBOARD SUPPORT
+    ========================================================= */
+
+    function setupKeyboardShortcuts() {
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeAvatarModal();
+                    closePasswordModal();
+
+                    return;
+                }
+
+                if (
+                    (event.ctrlKey ||
+                    event.metaKey) &&
+                    event.key.toLowerCase() ===
+                    "s"
+                ) {
+
+                    if (
+                        document.activeElement &&
+                        (
+                            document.activeElement.tagName ===
+                            "INPUT" ||
+                            document.activeElement.tagName ===
+                            "TEXTAREA" ||
+                            document.activeElement.tagName ===
+                            "SELECT"
+                        )
+                    ) {
+
+                        event.preventDefault();
+
+                        saveProfile();
+                    }
+                }
+
+            }
+        );
+    }
+
+    /* =========================================================
+       EVENT BINDINGS
+    ========================================================= */
+
+    function bindEvents() {
+
+        const form =
+            $("#profileInformationForm");
+
+        form?.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+                saveProfile();
+            }
+        );
+
+        $("#resetProfileForm")
+            ?.addEventListener(
+                "click",
+                resetProfileForm
+            );
+
+        $("#heroEditProfile")
+            ?.addEventListener(
+                "click",
+                focusProfileEditor
+            );
+
+        $("#shareProfile")
+            ?.addEventListener(
+                "click",
+                shareProfile
+            );
+
+        $("#openAvatarUpload")
+            ?.addEventListener(
+                "click",
+                openAvatarModal
+            );
+
+        $("#closeAvatarModal")
+            ?.addEventListener(
+                "click",
+                closeAvatarModal
+            );
+
+        $("#chooseAvatarButton")
+            ?.addEventListener(
+                "click",
+                () => {
+                    $("#avatarFileInput")?.click();
+                }
+            );
+
+        $("#avatarFileInput")
+            ?.addEventListener(
+                "change",
+                event => {
+
+                    const file =
+                        event.target.files?.[0];
+
+                    processAvatarFile(
+                        file
+                    );
+
+                    event.target.value = "";
+                }
+            );
+
+        $("#removeAvatarButton")
+            ?.addEventListener(
+                "click",
+                removeAvatar
+            );
+
+        $("#openPasswordChange")
+            ?.addEventListener(
+                "click",
+                openPasswordModal
+            );
+
+        $("#closePasswordModal")
+            ?.addEventListener(
+                "click",
+                closePasswordModal
+            );
+
+        $("#cancelPasswordChange")
+            ?.addEventListener(
+                "click",
+                closePasswordModal
+            );
+
+        $("#passwordForm")
+            ?.addEventListener(
+                "submit",
+                handlePasswordSubmit
+            );
+
+        $("#newPassword")
+            ?.addEventListener(
+                "input",
+                updatePasswordStrength
+            );
+
+        $("#profileBio")
+            ?.addEventListener(
+                "input",
+                updateBioCounter
+            );
+
+        $$(".profile-toggle input")
+            .forEach(toggle => {
+
+                toggle.addEventListener(
+                    "change",
+                    () => {
+
+                        const id =
+                            toggle.id;
+
+                        const map = {
+                            profileTwoFactor:
+                                "twoFactor",
+
+                            profileLoginAlerts:
+                                "loginAlerts",
+
+                            profileSecurityEmails:
+                                "securityEmails",
+
+                            publicProfileToggle:
+                                "publicProfile",
+
+                            activityVisibilityToggle:
+                                "activityVisibility",
+
+                            productTipsToggle:
+                                "productTips"
+                        };
+
+                        const key =
+                            map[id];
+
+                        if (key) {
+
+                            saveSetting(
+                                key,
+                                toggle.checked
+                            );
+
+                            notify(
+                                "Preference updated."
+                            );
+                        }
+                    }
+                );
+
+            });
+
+        $$("[data-social-toggle]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        toggleSocial(
+                            button.dataset.socialToggle
+                        );
+                    }
+                );
+            });
+
+        $$("[data-remove-session]")
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        removeSession(
+                            button.dataset.removeSession
+                        );
+                    }
+                );
+            });
+
+        $("#signOutOtherSessions")
+            ?.addEventListener(
+                "click",
+                signOutOtherSessions
+            );
+
+        $("#viewAllActivity")
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    notify(
+                        "Showing the complete activity log is available from the account activity module."
+                    );
+                }
+            );
+
+        $("#accountId")
+            ?.addEventListener(
+                "click",
+                copyAccountId
+            );
+
+        /* Modal backdrop */
+
+        ["avatarModal", "passwordModal"]
+            .forEach(id => {
+
+                const modal =
+                    document.getElementById(id);
+
+                modal?.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            modal
+                        ) {
+
+                            modal.classList.remove(
+                                "active"
+                            );
+                        }
+                    }
+                );
+
+            });
+    }
+
+    /* =========================================================
+       GOOGLE TRANSLATE / VELTRIX LANGUAGE OBSERVER
+    ========================================================= */
+
+    function observeLanguageChanges() {
+
+        let previous =
+            localStorage.getItem(
+                "veltrix_language"
+            );
+
+        setInterval(
+            () => {
+
+                let current =
+                    localStorage.getItem(
+                        "veltrix_language"
+                    );
+
+                if (
+                    !current &&
+                    window.Veltrix &&
+                    window.Veltrix.language &&
+                    typeof window.Veltrix.language.get ===
+                    "function"
+                ) {
+
+                    try {
+                        current =
+                            window.Veltrix.language.get();
+                    } catch (_) {}
+                }
+
+                if (
+                    current &&
+                    current !== previous
+                ) {
+
+                    previous =
+                        current;
+
+                    syncProfileLanguage();
+                }
+
+            },
+            700
+        );
+    }
+
+    /* =========================================================
+       INITIALIZATION
+    ========================================================= */
+
+    function initProfilePage() {
+
+        fillForm();
+
+        renderProfile();
+
+        applySettingsToUI();
+
+        renderSocialConnections();
+
+        syncProfileLanguage();
+
+        setupPasswordToggles();
+
+        setupAvatarDropzone();
+
+        setupKeyboardShortcuts();
+
+        bindEvents();
+
+        observeLanguageChanges();
+
+        syncVeltrixProfile();
+
+        /*
+         * Make account ID visually copyable.
+         */
+        const accountId =
+            $("#accountId");
+
+        if (accountId) {
+
+            accountId.style.cursor =
+                "pointer";
+
+            accountId.title =
+                "Click to copy";
+        }
+
+        /*
+         * Keep country display synchronized.
+         */
+        $("#profileCountry")
+            ?.addEventListener(
+                "change",
+                () => {
+
+                    const option =
+                        $("#profileCountry")
+                            .selectedOptions[0];
+
+                    const target =
+                        $(
+                            "[data-profile-location]"
+                        );
+
+                    if (
+                        target &&
+                        option
+                    ) {
+
+                        target.textContent =
+                            option.textContent;
+                    }
+                }
+            );
+
+        /*
+         * Keep timezone display synchronized.
+         */
+        $("#profileTimezone")
+            ?.addEventListener(
+                "change",
+                event => {
+
+                    $$("[data-profile-timezone]")
+                        .forEach(
+                            element => {
+                                element.textContent =
+                                    event.target.value;
+                            }
+                        );
+                }
+            );
+
+        /*
+         * Close profile modals with Escape.
+         */
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeAvatarModal();
+                    closePasswordModal();
+                }
+            }
+        );
+
+        console.info(
+            "[Veltrix] Profile page initialized."
+        );
+    }
+
+    /* =========================================================
+       WAIT FOR GLOBAL VELTRIX ENGINE
+    ========================================================= */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initProfilePage,
+            {
+                once: true
+            }
+        );
+
+    } else {
+
+        initProfilePage();
+    }
+
+})();
+</script>
+
+</body>
+</html>
